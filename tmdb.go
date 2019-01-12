@@ -1,7 +1,8 @@
 package tmdb
 
 import (
-	"io/ioutil"
+	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -12,20 +13,35 @@ type Client struct {
 
 const baseURL = "https://api.themoviedb.org/3"
 
-func (c *Client) get(url string) (interface{}, error) {
+func (c *Client) get(url string, data interface{}) error {
+
 	res, err := http.Get(url)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	defer res.Body.Close()
 
-	data, err := ioutil.ReadAll(res.Body)
-
-	if err != nil {
-		return nil, err
+	if res.StatusCode != http.StatusOK {
+		return fmt.Errorf("Code (%d): Something went wrong", res.StatusCode)
 	}
 
-	return data, nil
+	err = json.NewDecoder(res.Body).Decode(data)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) fmtOptions(o map[string]string) string {
+	options := ""
+
+	for v, k := range o {
+		options += fmt.Sprintf("&%s=%s", v, k)
+	}
+
+	return options
 }
