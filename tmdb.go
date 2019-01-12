@@ -29,6 +29,7 @@ func (c *Client) get(url string, data interface{}) error {
 
 	defer res.Body.Close()
 
+	// TODO: Write better error messages.
 	if res.StatusCode != http.StatusOK {
 		return fmt.Errorf("Code (%d): Something went wrong", res.StatusCode)
 	}

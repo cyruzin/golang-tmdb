@@ -1,13 +1,10 @@
 package tmdb
 
 import (
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
-
-var tmdb = Client{APIKey: os.Getenv("APIKey")}
 
 func TestGetMovieDetails(t *testing.T) {
 	bumblebee, err := tmdb.GetMovieDetails(424783, nil)
