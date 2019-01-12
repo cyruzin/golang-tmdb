@@ -1,6 +1,8 @@
 package tmdb
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Movies type is a struct for movies JSON response.
 type Movies struct {
@@ -52,13 +54,11 @@ type Movies struct {
 func (c *Client) GetDetails(id int) (*Movies, error) {
 	tmdbURL := fmt.Sprintf("%s/movie/%d?api_key=%s", baseURL, id, c.APIKey)
 
-	var m = &Movies{}
-
-	err := c.get(tmdbURL, c)
+	data, err := c.get(tmdbURL)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return m, nil
+	return data.(*Movies), nil
 }

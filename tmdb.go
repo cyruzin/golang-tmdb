@@ -1,7 +1,7 @@
 package tmdb
 
 import (
-	"encoding/json"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -12,20 +12,20 @@ type Client struct {
 
 const baseURL = "https://api.themoviedb.org/3"
 
-func (c *Client) get(url string, data interface{}) error {
+func (c *Client) get(url string) (interface{}, error) {
 	res, err := http.Get(url)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	defer res.Body.Close()
 
-	err = json.NewDecoder(res.Body).Decode(data)
+	data, err := ioutil.ReadAll(res.Body)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return data, nil
 }
