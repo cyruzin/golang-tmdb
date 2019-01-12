@@ -5,14 +5,14 @@ import (
 	"net/http"
 )
 
-// TMDB type is a struct for...
-type TMDB struct {
+// Client type is a struct for...
+type Client struct {
 	APIKey string
 }
 
 const baseURL = "https://api.themoviedb.org/3"
 
-func (t *TMDB) get(url string, data interface{}) error {
+func (c *Client) get(url string, data interface{}) error {
 	res, err := http.Get(url)
 
 	if err != nil {

@@ -49,12 +49,12 @@ type Movies struct {
 //
 // https://developers.themoviedb.org/3/movies
 //
-func (t *TMDB) GetDetails(id int) (*Movies, error) {
-	tmdbURL := fmt.Sprintf("%s/movie/%d?api_key=%s", baseURL, id, t.APIKey)
+func (c *Client) GetDetails(id int) (*Movies, error) {
+	tmdbURL := fmt.Sprintf("%s/movie/%d?api_key=%s", baseURL, id, c.APIKey)
 
 	var m = &Movies{}
 
-	err := t.get(tmdbURL, t)
+	err := c.get(tmdbURL, c)
 
 	if err != nil {
 		return nil, err
