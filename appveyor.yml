@@ -1,0 +1,30 @@
+# version format
+version: "{build}"
+
+# Operating system (build VM template)
+os: Windows Server 2012 R2
+
+#image: Previous Visual Studio 2017
+
+clone_folder: c:\gopath\src\github.com\cyruzin\golang-tmdb
+
+# environment variables
+environment:
+    GOPATH: c:\gopath
+   
+# scripts that run after cloning repository
+install:
+  - set PATH=C:\msys64\mingw64\bin;%PATH%
+  - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+  - go get -v -t -d ./...
+
+# to run your custom scripts instead of automatic MSBuild
+build_script:
+  - go vet ./...
+  - go test -v -race ./...
+
+# to disable automatic tests
+test: off
+
+# to disable deployment
+deploy: off
