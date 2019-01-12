@@ -52,15 +52,15 @@ type Movies struct {
 	VoteCount   int64   `json:"vote_count"`
 }
 
-// GetDetails returns a movie details info.
+// GetMovieDetails returns the details of a movie.
 //
 // https://developers.themoviedb.org/3/movies
 //
-func (c *Client) GetDetails(id int, o map[string]string) (*Movies, error) {
+func (c *Client) GetMovieDetails(id int, o map[string]string) (*Movies, error) {
 
 	options := c.fmtOptions(o)
 
-	tmdbURL := fmt.Sprintf("%s/movie/%d?api_key=%s%s", baseURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf("%s%s%d?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 
 	var m Movies
 

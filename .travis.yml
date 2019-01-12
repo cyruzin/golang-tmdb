@@ -1,0 +1,22 @@
+language: go
+
+sudo: false
+
+go:
+  - master
+
+git:
+  depth: 1
+
+# Overalls configuration
+before_install:
+  - go get github.com/mattn/goveralls
+
+# Overalls / Test scripts 
+script:
+  - $GOPATH/bin/goveralls -service=travis-ci
+  - go test -v -race ./...
+
+# Do not notify
+notifications:
+  email: false

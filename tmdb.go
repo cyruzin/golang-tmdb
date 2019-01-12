@@ -11,7 +11,13 @@ type Client struct {
 	APIKey string
 }
 
-const baseURL = "https://api.themoviedb.org/3"
+const (
+	baseURL   = "https://api.themoviedb.org/3"
+	imageURL  = "https://image.tmdb.org/t/p"
+	movieURL  = "/movie/"
+	tvURL     = "/tv/"
+	peopleURL = "/people/"
+)
 
 func (c *Client) get(url string, data interface{}) error {
 
@@ -39,8 +45,10 @@ func (c *Client) get(url string, data interface{}) error {
 func (c *Client) fmtOptions(o map[string]string) string {
 	options := ""
 
-	for v, k := range o {
-		options += fmt.Sprintf("&%s=%s", v, k)
+	if len(o) > 0 {
+		for k, v := range o {
+			options += fmt.Sprintf("&%s=%s", k, v)
+		}
 	}
 
 	return options
