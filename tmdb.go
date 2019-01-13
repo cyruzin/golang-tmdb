@@ -76,8 +76,5 @@ func (c *Client) decodeError(r *http.Response) error {
 	if err != nil {
 		return fmt.Errorf("couldn't decode error: (%d) [%s]", len(resBody), resBody)
 	}
-	if e.StatusMessage == "" {
-		e.StatusMessage = fmt.Sprintf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
-	}
 	return e
 }
