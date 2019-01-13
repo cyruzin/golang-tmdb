@@ -1,6 +1,7 @@
 package tmdb
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
@@ -52,8 +53,8 @@ type Movies struct {
 	VoteCount   int64   `json:"vote_count"`
 }
 
-// AlternativeTitles type is a struct for alternative titles JSON response.
-type AlternativeTitles struct {
+// MovieAlternativeTitles type is a struct for alternative titles JSON response.
+type MovieAlternativeTitles struct {
 	ID     int `json:"id"`
 	Titles []struct {
 		Iso3166_1 string `json:"iso_3166_1"`
@@ -62,36 +63,60 @@ type AlternativeTitles struct {
 	} `json:"titles"`
 }
 
+// MovieChanges type is a struct for changes JSON response.
+type MovieChanges struct {
+	Changes []struct {
+		Key   string `json:"key"`
+		Items []struct {
+			ID            json.RawMessage `json:"id"`
+			Action        json.RawMessage `json:"action"`
+			Time          json.RawMessage `json:"time"`
+			Iso639_1      json.RawMessage `json:"iso_639_1"`
+			Value         json.RawMessage `json:"value"`
+			OriginalValue json.RawMessage `json:"original_value"`
+		} `json:"items"`
+	} `json:"changes"`
+}
+
 // GetMovieDetails get the primary information about a movie.
+//
+// Options: language and append_to_response.
 //
 // https://developers.themoviedb.org/3/movies
 //
 func (c *Client) GetMovieDetails(id int, o map[string]string) (*Movies, error) {
-
 	options := c.fmtOptions(o)
-
 	tmdbURL := fmt.Sprintf("%s%s%d?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
-
 	var m Movies
-
 	err := c.get(tmdbURL, &m)
-
 	return &m, err
 }
 
 // GetMovieAlternativeTitles get all of the alternative titles for a movie.
 //
-// https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
+// Options: country.
 //
-func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*AlternativeTitles, error) {
-
+// https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
+func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*MovieAlternativeTitles, error) {
 	options := c.fmtOptions(o)
-
 	tmdbURL := fmt.Sprintf("%s%s%d/alternative_titles?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
-
-	var a AlternativeTitles
-
+	var a MovieAlternativeTitles
 	err := c.get(tmdbURL, &a)
+	return &a, err
+}
 
+// GetMovieChanges get the changes for a movie.
+// By default only the last 24 hours are returned.
+// You can query up to 14 days in a single query by using
+// the start_date and end_date query parameters.
+//
+// Options: start_date and end_date.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
+func (c *Client) GetMovieChanges(id int, o map[string]string) (*MovieChanges, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/changes?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+	var a MovieChanges
+	err := c.get(tmdbURL, &a)
 	return &a, err
 }

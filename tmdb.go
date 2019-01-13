@@ -30,37 +30,28 @@ const (
 )
 
 func (c *Client) get(url string, data interface{}) error {
-
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-
 	res, err := http.Get(url)
-
 	if err != nil {
 		return err
 	}
-
 	defer res.Body.Close()
-
 	if res.StatusCode != http.StatusOK {
 		return c.decodeError(res)
 	}
-
 	err = json.NewDecoder(res.Body).Decode(data)
-
 	return err
 }
 
 func (c *Client) fmtOptions(o map[string]string) string {
 	options := ""
-
 	if len(o) > 0 {
 		for k, v := range o {
 			options += fmt.Sprintf("&%s=%s", k, v)
 		}
 	}
-
 	return options
 }
 
@@ -70,28 +61,20 @@ func (e Error) Error() string {
 
 func (c *Client) decodeError(r *http.Response) error {
 	resBody, err := ioutil.ReadAll(r.Body)
-
 	if err != nil {
 		return err
 	}
-
 	if len(resBody) == 0 {
 		return fmt.Errorf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
 	}
-
 	buf := bytes.NewBuffer(resBody)
-
 	var e Error
-
 	err = json.NewDecoder(buf).Decode(&e)
-
 	if err != nil {
 		return fmt.Errorf("couldn't decode error: (%d) [%s]", len(resBody), resBody)
 	}
-
 	if e.StatusMessage == "" {
 		e.StatusMessage = fmt.Sprintf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
 	}
-
 	return e
 }
