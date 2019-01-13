@@ -25,9 +25,9 @@ func (suite *TMBDTestSuite) TestGetFail() {
 
 	suite.Contains(err.Error(), "no such host")
 
-	err = suite.get("https://api.themoviedb.org/3/movieeee/75780?language=en-US", nil)
+	err = suite.get("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil)
 
-	suite.Contains(err.Error(), "Unauthorized")
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 
 	err = suite.get("", nil)
 

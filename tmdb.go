@@ -81,18 +81,17 @@ func (c *Client) decodeError(r *http.Response) error {
 
 	buf := bytes.NewBuffer(resBody)
 
-	var e struct {
-		E Error `json:"error"`
-	}
+	var e Error
 
 	err = json.NewDecoder(buf).Decode(&e)
+
 	if err != nil {
 		return fmt.Errorf("couldn't decode error: (%d) [%s]", len(resBody), resBody)
 	}
 
-	if e.E.StatusMessage == "" {
-		e.E.StatusMessage = fmt.Sprintf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
+	if e.StatusMessage == "" {
+		e.StatusMessage = fmt.Sprintf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
 	}
 
-	return e.E
+	return e
 }
