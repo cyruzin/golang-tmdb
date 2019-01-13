@@ -89,7 +89,10 @@ func (c *Client) GetMovieDetails(id int, o map[string]string) (*Movies, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	var m Movies
 	err := c.get(tmdbURL, &m)
-	return &m, err
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
 }
 
 // GetMovieAlternativeTitles get all of the alternative titles for a movie.
@@ -100,9 +103,12 @@ func (c *Client) GetMovieDetails(id int, o map[string]string) (*Movies, error) {
 func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*MovieAlternativeTitles, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/alternative_titles?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
-	var a MovieAlternativeTitles
-	err := c.get(tmdbURL, &a)
-	return &a, err
+	var m MovieAlternativeTitles
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
 }
 
 // GetMovieChanges get the changes for a movie.
@@ -116,7 +122,10 @@ func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*MovieA
 func (c *Client) GetMovieChanges(id int, o map[string]string) (*MovieChanges, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/changes?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
-	var a MovieChanges
-	err := c.get(tmdbURL, &a)
-	return &a, err
+	var m MovieChanges
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
 }

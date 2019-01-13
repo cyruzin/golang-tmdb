@@ -11,6 +11,11 @@ func (suite *TMBDTestSuite) TestGetMovieDetails() {
 	suite.Equal("Bumblebee", bumblebee.Title)
 }
 
+func (suite *TMBDTestSuite) TestGetMovieDetailsFail() {
+	_, err := suite.GetMovieDetails(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
 func (suite *TMBDTestSuite) TestGetMovieDetailsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
@@ -29,6 +34,11 @@ func (suite *TMBDTestSuite) TestGetMovieAlternativeTitles() {
 	}
 }
 
+func (suite *TMBDTestSuite) TestGetMovieAlternativeTitlesFail() {
+	_, err := suite.GetMovieAlternativeTitles(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
 func (suite *TMBDTestSuite) TestGetMovieAlternativeTitlesWithOptions() {
 	options := make(map[string]string)
 	options["country"] = "RU"
@@ -45,6 +55,13 @@ func (suite *TMBDTestSuite) TestGetMovieChanges() {
 			suite.NotNil(v.ID)
 		}
 	}
+}
+
+// The API isn't handling zero values for this end-point.
+// TODO: Fix this test later.
+func (suite *TMBDTestSuite) TestGetMovieChangesFail() {
+	_, err := suite.GetMovieChanges(0, nil)
+	suite.Nil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieChangesWithOptions() {

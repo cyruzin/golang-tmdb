@@ -35,14 +35,17 @@ func (c *Client) get(url string, data interface{}) error {
 	}
 	res, err := http.Get(url)
 	if err != nil {
-		return err
+		return fmt.Errorf("could not fetch the url: %s", err)
 	}
 	defer res.Body.Close()
 	if res.StatusCode != http.StatusOK {
 		return c.decodeError(res)
 	}
 	err = json.NewDecoder(res.Body).Decode(data)
-	return err
+	if err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
+	}
+	return nil
 }
 
 func (c *Client) fmtOptions(o map[string]string) string {
@@ -62,7 +65,7 @@ func (e Error) Error() string {
 func (c *Client) decodeError(r *http.Response) error {
 	resBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		return err
+		return fmt.Errorf("could not read body response: %s", err)
 	}
 	if len(resBody) == 0 {
 		return fmt.Errorf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
