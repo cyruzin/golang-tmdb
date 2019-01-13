@@ -3,7 +3,7 @@ language: go
 sudo: false
 
 go:
-  - master
+  - tip
 
 git:
   depth: 1
