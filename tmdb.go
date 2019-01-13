@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 )
 
 // Client type is a struct for...
@@ -52,7 +53,7 @@ func (c *Client) fmtOptions(o map[string]string) string {
 	options := ""
 	if len(o) > 0 {
 		for k, v := range o {
-			options += fmt.Sprintf("&%s=%s", k, v)
+			options += fmt.Sprintf("&%s=%s", k, url.QueryEscape(v))
 		}
 	}
 	return options
