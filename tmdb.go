@@ -3,6 +3,7 @@ package tmdb
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -29,6 +30,10 @@ const (
 )
 
 func (c *Client) get(url string, data interface{}) error {
+
+	if url == "" {
+		return errors.New("url field is empty")
+	}
 
 	res, err := http.Get(url)
 

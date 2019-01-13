@@ -23,9 +23,13 @@ func TestSuite(t *testing.T) {
 func (suite *TMBDTestSuite) TestGetFail() {
 	err := suite.get("http://www.testfakewebsite.org", nil)
 
-	suite.NotNil(err)
+	suite.Contains(err.Error(), "no such host")
 
 	err = suite.get("https://api.themoviedb.org/3/movieeee/75780?language=en-US", nil)
 
-	suite.NotNil(err)
+	suite.Contains(err.Error(), "Unauthorized")
+
+	err = suite.get("", nil)
+
+	suite.Equal("url field is empty", err.Error())
 }
