@@ -44,11 +44,7 @@ func (c *Client) get(url string, data interface{}) error {
 
 	err = json.NewDecoder(res.Body).Decode(data)
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func (c *Client) fmtOptions(o map[string]string) string {

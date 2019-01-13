@@ -76,11 +76,7 @@ func (c *Client) GetMovieDetails(id int, o map[string]string) (*Movies, error) {
 
 	err := c.get(tmdbURL, &m)
 
-	if err != nil {
-		return nil, err
-	}
-
-	return &m, nil
+	return &m, err
 }
 
 // GetMovieAlternativeTitles get all of the alternative titles for a movie.
@@ -97,9 +93,5 @@ func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*Altern
 
 	err := c.get(tmdbURL, &a)
 
-	if err != nil {
-		return nil, err
-	}
-
-	return &a, nil
+	return &a, err
 }
