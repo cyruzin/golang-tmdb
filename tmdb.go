@@ -68,7 +68,7 @@ func (c *Client) decodeError(r *http.Response) error {
 		return fmt.Errorf("could not read body response: %s", err)
 	}
 	if len(resBody) == 0 {
-		return fmt.Errorf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
+		return fmt.Errorf("[%d]: empty body %s", r.StatusCode, http.StatusText(r.StatusCode))
 	}
 	buf := bytes.NewBuffer(resBody)
 	var e Error
