@@ -1,14 +1,23 @@
 package tmdb
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
 // Client type is a struct for...
 type Client struct {
 	APIKey string
+}
+
+// Error type represents an error returned by the TMDB API.
+type Error struct {
+	StatusMessage string `json:"status_message,omitempty"`
+	Success       bool   `json:"success,omitempty"`
+	StatusCode    int    `json:"status_code,omitempty"`
 }
 
 const (
@@ -29,9 +38,8 @@ func (c *Client) get(url string, data interface{}) error {
 
 	defer res.Body.Close()
 
-	// TODO: Write better error messages.
 	if res.StatusCode != http.StatusOK {
-		return fmt.Errorf("Code (%d): Something went wrong", res.StatusCode)
+		return c.decodeError(res)
 	}
 
 	err = json.NewDecoder(res.Body).Decode(data)
@@ -53,4 +61,37 @@ func (c *Client) fmtOptions(o map[string]string) string {
 	}
 
 	return options
+}
+
+func (e Error) Error() string {
+	return e.StatusMessage
+}
+
+func (c *Client) decodeError(r *http.Response) error {
+	resBody, err := ioutil.ReadAll(r.Body)
+
+	if err != nil {
+		return err
+	}
+
+	if len(resBody) == 0 {
+		return fmt.Errorf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
+	}
+
+	buf := bytes.NewBuffer(resBody)
+
+	var e struct {
+		E Error `json:"error"`
+	}
+
+	err = json.NewDecoder(buf).Decode(&e)
+	if err != nil {
+		return fmt.Errorf("couldn't decode error: (%d) [%s]", len(resBody), resBody)
+	}
+
+	if e.E.StatusMessage == "" {
+		e.E.StatusMessage = fmt.Sprintf("[%d]: %s", r.StatusCode, http.StatusText(r.StatusCode))
+	}
+
+	return e.E
 }

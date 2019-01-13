@@ -14,7 +14,7 @@ func TestGetFail(t *testing.T) {
 
 	assert.NotNil(t, err)
 
-	err = tmdb.get("https://api.themoviedb.org/3/movie/75780?language=en-US", nil)
+	err = tmdb.get("https://api.themoviedb.org/3/movieeee/75780?language=en-US", nil)
 
 	assert.NotNil(t, err)
 }
