@@ -52,7 +52,17 @@ type Movies struct {
 	VoteCount   int64   `json:"vote_count"`
 }
 
-// GetMovieDetails returns the details of a movie.
+// AlternativeTitles type is a struct for alternative titles JSON response.
+type AlternativeTitles struct {
+	ID     int `json:"id"`
+	Titles []struct {
+		Iso3166_1 string `json:"iso_3166_1"`
+		Title     string `json:"title"`
+		Type      string `json:"type"`
+	} `json:"titles"`
+}
+
+// GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
 //
@@ -71,4 +81,25 @@ func (c *Client) GetMovieDetails(id int, o map[string]string) (*Movies, error) {
 	}
 
 	return &m, nil
+}
+
+// GetMovieAlternativeTitles get all of the alternative titles for a movie.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
+//
+func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*AlternativeTitles, error) {
+
+	options := c.fmtOptions(o)
+
+	tmdbURL := fmt.Sprintf("%s%s%d/alternative_titles?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+
+	var a AlternativeTitles
+
+	err := c.get(tmdbURL, &a)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &a, nil
 }

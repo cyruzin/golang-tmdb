@@ -4,17 +4,28 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 )
 
-var tmdb = Client{APIKey: os.Getenv("APIKey")}
+type TMBDTestSuite struct {
+	suite.Suite
+	Client
+}
 
-func TestGetFail(t *testing.T) {
-	err := tmdb.get("http://www.testfakewebsite.org", nil)
+func (suite *TMBDTestSuite) SetupTest() {
+	suite.APIKey = os.Getenv("APIKey")
+}
 
-	assert.NotNil(t, err)
+func TestSuite(t *testing.T) {
+	suite.Run(t, new(TMBDTestSuite))
+}
 
-	err = tmdb.get("https://api.themoviedb.org/3/movieeee/75780?language=en-US", nil)
+func (suite *TMBDTestSuite) TestGetFail() {
+	err := suite.get("http://www.testfakewebsite.org", nil)
 
-	assert.NotNil(t, err)
+	suite.NotNil(err)
+
+	err = suite.get("https://api.themoviedb.org/3/movieeee/75780?language=en-US", nil)
+
+	suite.NotNil(err)
 }
