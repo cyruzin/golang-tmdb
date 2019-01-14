@@ -77,3 +77,44 @@ func (suite *TMBDTestSuite) TestGetMovieChangesWithOptions() {
 		}
 	}
 }
+
+func (suite *TMBDTestSuite) TestGetMovieCredits() {
+	bumblebee, err := suite.GetMovieCredits(bumblebeeID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieCreditsFail() {
+	_, err := suite.GetMovieCredits(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieExternalIDs() {
+	bumblebee, err := suite.GetMovieExternalIDs(bumblebeeID, nil)
+	suite.Nil(err)
+	suite.Equal("bumblebeemovie", bumblebee.FacebookID)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieExternalIDsFail() {
+	_, err := suite.GetMovieExternalIDs(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieImages() {
+	bumblebee, err := suite.GetMovieImages(bumblebeeID, nil)
+	suite.Nil(err)
+	suite.Equal("/8bZ7guF94ZyCzi7MLHzXz6E5Lv8.jpg", bumblebee.Backdrops[0].FilePath)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieImagesFail() {
+	_, err := suite.GetMovieImages(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieImagesWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	bumblebee, err := suite.GetMovieImages(bumblebeeID, options)
+	suite.Nil(err)
+	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+}
