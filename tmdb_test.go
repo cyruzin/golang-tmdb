@@ -43,6 +43,11 @@ func (suite *TMBDTestSuite) TestPostFail() {
 	b := []byte(`{"title": "test"}`)
 	err = suite.post("https://jsonplaceholder.typicode.com/todos", bytes.NewBuffer(b), 0)
 	suite.Contains(err.Error(), "could not decode the data")
+	var a struct {
+		ID int `json:"id"`
+	}
+	err = suite.post("https://jsonplaceholder.typicode.com/todos", bytes.NewBuffer(b), &a)
+	suite.Nil(err)
 }
 
 func (suite *TMBDTestSuite) TestDecodeDataFail() {
