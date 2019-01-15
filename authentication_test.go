@@ -12,6 +12,10 @@ func (suite *TMBDTestSuite) TestCreateRequestTokenFail() {
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
 
+// TODO: How to validate a token that needs a browser?
+// func (suite *TMBDTestSuite) TestCreateSession() {
+// }
+
 func (suite *TMBDTestSuite) TestCreateSessionDenied() {
 	session, err := suite.CreateSession("kpaishQpkpfVmbi")
 	suite.Nil(session)

@@ -64,7 +64,7 @@ func (c *Client) post(url string, params, data interface{}) error {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
 	defer res.Body.Close()
-	if res.StatusCode != http.StatusOK {
+	if res.StatusCode != http.StatusCreated {
 		return c.decodeError(res)
 	}
 	err = json.NewDecoder(res.Body).Decode(data)
