@@ -11,6 +11,11 @@ type RequestToken struct {
 	RequestToken string `json:"request_token"`
 }
 
+// AccessToken type is a struct for access token JSON request.
+type AccessToken struct {
+	AccessToken string `json:"access_token"`
+}
+
 // Session type is a struct for session JSON response.
 type Session struct {
 	Success   bool   `json:"success"`
@@ -78,6 +83,26 @@ func (c *Client) CreateSession(rt string) (*Session, error) {
 // 	}
 // 	a := RequestToken{}
 // 	err := c.post(tmdbURL, &loginSession, &a)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &a, nil
+// }
+
+// CreateSessionFromV4 creates a new session id.
+//
+// Use this method to create a v3 session ID if you already have
+// a valid v4 access token. The v4 token needs to be authenticated by the user.
+// Your standard "read token" will not validate to create a session ID.
+//
+// Query String: api_key.
+//
+// https://developers.themoviedb.org/3/authentication/create-session-from-v4-access-token
+// func (c *Client) CreateSessionFromV4(at string) (*Session, error) {
+// 	tmdbURL := fmt.Sprintf("%s%ssession/convert/4?api_key=%s", baseURL, authenticationURL, c.APIKey)
+// 	accessToken := AccessToken{AccessToken: at}
+// 	a := Session{}
+// 	err := c.post(tmdbURL, &accessToken, &a)
 // 	if err != nil {
 // 		return nil, err
 // 	}
