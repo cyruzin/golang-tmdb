@@ -10,7 +10,7 @@ type Movies struct {
 	Adult               bool   `json:"adult"`
 	BackdropPath        string `json:"backdrop_path"`
 	BelongsToCollection struct {
-		ID           int    `json:"id"`
+		ID           int64  `json:"id"`
 		Name         string `json:"name"`
 		PosterPath   string `json:"poster_path"`
 		BackdropPath string `json:"backdrop_path"`
@@ -22,7 +22,7 @@ type Movies struct {
 	} `json:"genres"`
 	Homepage            string  `json:"homepage"`
 	ID                  int64   `json:"id"`
-	IMDBID              string  `json:"imdb_id"`
+	IMDbID              string  `json:"imdb_id"`
 	OriginalLanguage    string  `json:"original_language"`
 	OriginalTitle       string  `json:"original_title"`
 	Overview            string  `json:"overview"`

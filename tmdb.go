@@ -10,7 +10,7 @@ import (
 	"net/url"
 )
 
-// Client type is a struct for...
+// Client type is a struct to instantiate this pkg.
 type Client struct {
 	APIKey string
 }
@@ -23,11 +23,13 @@ type Error struct {
 }
 
 const (
-	baseURL   = "https://api.themoviedb.org/3"
-	imageURL  = "https://image.tmdb.org/t/p"
-	movieURL  = "/movie/"
-	tvURL     = "/tv/"
-	peopleURL = "/people/"
+	baseURL           = "https://api.themoviedb.org/3"
+	imageURL          = "https://image.tmdb.org/t/p"
+	permissionURL     = "https://www.themoviedb.org/authenticate/"
+	authenticationURL = "/authentication/"
+	movieURL          = "/movie/"
+	tvURL             = "/tv/"
+	peopleURL         = "/people/"
 )
 
 func (c *Client) get(url string, data interface{}) error {
@@ -47,6 +49,30 @@ func (c *Client) get(url string, data interface{}) error {
 		return fmt.Errorf("could not decode the data: %s", err)
 	}
 	return nil
+}
+
+func (c *Client) post(url string, params, data interface{}) error {
+	if url == "" {
+		return errors.New("url field is empty")
+	}
+	paramsJSON, err := json.Marshal(&params)
+	if err != nil {
+		return errors.New("couldn't marshall the data")
+	}
+	res, err := http.Post(url, "application/json", bytes.NewBuffer(paramsJSON))
+	if err != nil {
+		return fmt.Errorf("could not fetch the url: %s", err)
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		return c.decodeError(res)
+	}
+	err = json.NewDecoder(res.Body).Decode(data)
+	if err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
+	}
+	return nil
+
 }
 
 func (c *Client) fmtOptions(o map[string]string) string {

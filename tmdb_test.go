@@ -31,6 +31,15 @@ func (suite *TMBDTestSuite) TestGetFail() {
 	suite.Equal("url field is empty", err.Error())
 }
 
+func (suite *TMBDTestSuite) TestPostFail() {
+	err := suite.post("http://www.testfakewebsite.org", nil, nil)
+	suite.Contains(err.Error(), "no such host")
+	err = suite.post("https://api.themoviedb.org/3/authentication/session/new", nil, nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	err = suite.post("", nil, nil)
+	suite.Equal("url field is empty", err.Error())
+}
+
 func (suite *TMBDTestSuite) TestDecodeDataFail() {
 	b := []byte(`{}`)
 	err := suite.get("https://www.google.com.br", b)
