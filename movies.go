@@ -166,6 +166,21 @@ type MovieReleaseDates struct {
 	} `json:"results"`
 }
 
+// MovieVideos type is a struct for videos JSON response.
+type MovieVideos struct {
+	ID      int64 `json:"id"`
+	Results []struct {
+		ID        string `json:"id"`
+		Iso639_1  string `json:"iso_639_1"`
+		Iso3166_1 string `json:"iso_3166_1"`
+		Key       string `json:"key"`
+		Name      string `json:"name"`
+		Site      string `json:"site"`
+		Size      int    `json:"size"`
+		Type      string `json:"type"`
+	} `json:"results"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -343,6 +358,25 @@ func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/release_dates?api_key=%s", baseURL, movieURL, id, c.APIKey)
 	m := MovieReleaseDates{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieVideos get the videos that have been added to a movie.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key and language.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-videos
+//
+func (c *Client) GetMovieVideos(id int, o map[string]string) (*MovieVideos, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/videos?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+	m := MovieVideos{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err

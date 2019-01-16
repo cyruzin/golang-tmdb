@@ -153,3 +153,22 @@ func (suite *TMBDTestSuite) TestGetMovieAccountStatesWithOptions() {
 	_, err := suite.GetMovieAccountStates(jackReacherID, options)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
+
+func (suite *TMBDTestSuite) TestGetMovieVideos() {
+	bumblebee, err := suite.GetMovieVideos(bumblebeeID, nil)
+	suite.Nil(err)
+	suite.Equal("5b1638bc0e0a262df10146ed", bumblebee.Results[0].ID)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieVideosFail() {
+	_, err := suite.GetMovieVideos(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieVideosWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	bumblebee, err := suite.GetMovieVideos(bumblebeeID, options)
+	suite.Nil(err)
+	suite.Equal("5b1638bc0e0a262df10146ed", bumblebee.Results[0].ID)
+}
