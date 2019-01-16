@@ -3,6 +3,7 @@ package tmdb
 const (
 	bumblebeeID   = 424783
 	jackReacherID = 75780
+	aquamanID     = 297802
 )
 
 func (suite *TMBDTestSuite) TestGetMovieDetails() {
@@ -220,4 +221,23 @@ func (suite *TMBDTestSuite) TestGetMovieSimilarWithOptions() {
 	jackreacher, err := suite.GetMovieSimilar(jackReacherID, options)
 	suite.Nil(err)
 	suite.Equal(int64(1), jackreacher.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieReviews() {
+	aquaman, err := suite.GetMovieReviews(aquamanID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), aquaman.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieReviewsFail() {
+	_, err := suite.GetMovieReviews(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieReviewsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	aquaman, err := suite.GetMovieReviews(aquamanID, options)
+	suite.Nil(err)
+	suite.Equal(int64(1), aquaman.Page)
 }

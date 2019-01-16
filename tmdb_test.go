@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/suite"
 )
@@ -16,6 +17,7 @@ type TMBDTestSuite struct {
 
 func (suite *TMBDTestSuite) SetupTest() {
 	suite.APIKey = os.Getenv("APIKey")
+	time.Sleep(1 * time.Second)
 }
 
 func TestSuite(t *testing.T) {

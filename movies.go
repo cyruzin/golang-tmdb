@@ -225,6 +225,20 @@ type MovieSimilar struct {
 	*MovieRecommendations
 }
 
+// MovieReviews type is a struct for reviews JSON response.
+type MovieReviews struct {
+	ID      int64 `json:"id"`
+	Page    int64 `json:"page"`
+	Results []struct {
+		ID      string `json:"id"`
+		Author  string `json:"author"`
+		Content string `json:"content"`
+		URL     string `json:"url"`
+	} `json:"results"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -356,7 +370,7 @@ func (c *Client) GetMovieExternalIDs(id int, o map[string]string) (*MovieExterna
 // Querying images with a language parameter will filter the results.
 // If you want to include a fallback language (especially useful for backdrops)
 // you can use the include_image_language parameter. This should be a comma
-// seperated value like so: include_image_language=en,null.
+// separated value like so: include_image_language=en,null.
 //
 // Path Parameters: movie_id.
 //
@@ -475,6 +489,24 @@ func (c *Client) GetMovieSimilar(id int, o map[string]string) (*MovieSimilar, er
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/similar?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	m := MovieSimilar{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieReviews get the user reviews for a movie.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key, language and page.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-reviews
+func (c *Client) GetMovieReviews(id int, o map[string]string) (*MovieReviews, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/reviews?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+	m := MovieReviews{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
