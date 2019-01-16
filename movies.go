@@ -134,6 +134,15 @@ type MovieImages struct {
 	} `json:"posters"`
 }
 
+// MovieKeywords type is a struct for movie keywords JSON response.
+type MovieKeywords struct {
+	ID       int64 `json:"id"`
+	Keywords []struct {
+		ID   int64  `json:"id"`
+		Name string `json:"name"`
+	} `json:"keywords"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -251,6 +260,23 @@ func (c *Client) GetMovieImages(id int, o map[string]string) (*MovieImages, erro
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/images?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	m := MovieImages{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieKeywords the keywords that have been added to a movie..
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-keywords
+func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
+	tmdbURL := fmt.Sprintf("%s%s%d/keywords?api_key=%s", baseURL, movieURL, id, c.APIKey)
+	m := MovieKeywords{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err

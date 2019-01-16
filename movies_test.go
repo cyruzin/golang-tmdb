@@ -118,3 +118,14 @@ func (suite *TMBDTestSuite) TestGetMovieImagesWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(bumblebeeID), bumblebee.ID)
 }
+
+func (suite *TMBDTestSuite) TestGetMovieKeywords() {
+	bumblebee, err := suite.GetMovieKeywords(bumblebeeID)
+	suite.Nil(err)
+	suite.Equal("technology", bumblebee.Keywords[0].Name)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieKeywordsFail() {
+	_, err := suite.GetMovieKeywords(0)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
