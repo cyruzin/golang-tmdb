@@ -241,3 +241,22 @@ func (suite *TMBDTestSuite) TestGetMovieReviewsWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(1), aquaman.Page)
 }
+
+func (suite *TMBDTestSuite) TestGetMovieLists() {
+	aquaman, err := suite.GetMovieLists(aquamanID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), aquaman.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieListsFail() {
+	_, err := suite.GetMovieLists(0, nil)
+	suite.Equal("Internal error: Something went wrong, contact TMDb.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieListsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	aquaman, err := suite.GetMovieLists(aquamanID, options)
+	suite.Nil(err)
+	suite.Equal(int64(1), aquaman.Page)
+}

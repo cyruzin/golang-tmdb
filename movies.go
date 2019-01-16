@@ -239,6 +239,24 @@ type MovieReviews struct {
 	TotalResults int64 `json:"total_results"`
 }
 
+// MovieLists type is a struct for lists JSON response.
+type MovieLists struct {
+	ID      int64 `json:"id"`
+	Page    int64 `json:"page"`
+	Results []struct {
+		Description   string `json:"description"`
+		FavoriteCount int64  `json:"favorite_count"`
+		ID            int64  `json:"id"`
+		ItemCount     int64  `json:"item_count"`
+		Iso639_1      string `json:"iso_639_1"`
+		ListType      string `json:"list_type"`
+		Name          string `json:"name"`
+		PosterPath    string `json:"poster_path"`
+	} `json:"results"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -507,6 +525,24 @@ func (c *Client) GetMovieReviews(id int, o map[string]string) (*MovieReviews, er
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/reviews?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	m := MovieReviews{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieLists get a list of lists that this movie belongs to.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key, language and page.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-lists
+func (c *Client) GetMovieLists(id int, o map[string]string) (*MovieLists, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/lists?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+	m := MovieLists{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
