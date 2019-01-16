@@ -183,3 +183,22 @@ func (suite *TMBDTestSuite) TestGetMovieTranslationsFail() {
 	_, err := suite.GetMovieTranslations(0)
 	suite.Equal("The resource you requested could not be found.", err.Error())
 }
+
+func (suite *TMBDTestSuite) TestGetMovieRecommendations() {
+	bumblebee, err := suite.GetMovieRecommendations(bumblebeeID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), bumblebee.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieRecommendationsFail() {
+	_, err := suite.GetMovieRecommendations(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieRecommendationsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	jackreacher, err := suite.GetMovieRecommendations(jackReacherID, options)
+	suite.Nil(err)
+	suite.Equal(int64(1), jackreacher.Page)
+}

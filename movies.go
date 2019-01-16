@@ -197,6 +197,29 @@ type MovieTranslations struct {
 	} `json:"translations"`
 }
 
+// MovieRecommendations type is a struct for recommendations JSON response.
+type MovieRecommendations struct {
+	Page    int64 `json:"page"`
+	Results []struct {
+		PosterPath       string  `json:"poster_path"`
+		Adult            bool    `json:"adult"`
+		Overview         string  `json:"overview"`
+		ReleaseDate      string  `json:"release_date"`
+		GenreIDs         []int64 `json:"genre_ids"`
+		ID               int64   `json:"id"`
+		OriginalTitle    string  `json:"original_title"`
+		OriginalLanguage string  `json:"original_language"`
+		Title            string  `json:"title"`
+		BackdropPath     string  `json:"backdrop_path"`
+		Popularity       float32 `json:"popularity"`
+		VoteCount        int64   `json:"vote_count"`
+		Video            bool    `json:"video"`
+		VoteAverage      float32 `json:"vote_average"`
+	} `json:"results"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -408,6 +431,24 @@ func (c *Client) GetMovieVideos(id int, o map[string]string) (*MovieVideos, erro
 func (c *Client) GetMovieTranslations(id int) (*MovieTranslations, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/translations?api_key=%s", baseURL, movieURL, id, c.APIKey)
 	m := MovieTranslations{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieRecommendations get a list of recommended movies for a movie.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key, language and page.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-recommendations
+func (c *Client) GetMovieRecommendations(id int, o map[string]string) (*MovieRecommendations, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/recommendations?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+	m := MovieRecommendations{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
