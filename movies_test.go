@@ -172,3 +172,14 @@ func (suite *TMBDTestSuite) TestGetMovieVideosWithOptions() {
 	suite.Nil(err)
 	suite.Equal("5b1638bc0e0a262df10146ed", bumblebee.Results[0].ID)
 }
+
+func (suite *TMBDTestSuite) TestGetMovieTranslations() {
+	bumblebee, err := suite.GetMovieTranslations(bumblebeeID)
+	suite.Nil(err)
+	suite.Equal("DK", bumblebee.Translation[0].Iso3166_1)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieTranslationsFail() {
+	_, err := suite.GetMovieTranslations(0)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}

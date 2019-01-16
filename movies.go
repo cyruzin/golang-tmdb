@@ -181,6 +181,22 @@ type MovieVideos struct {
 	} `json:"results"`
 }
 
+// MovieTranslations type is a struct for translations JSON response.
+type MovieTranslations struct {
+	ID          int64 `json:"id"`
+	Translation []struct {
+		Iso639_1    string `json:"iso_639_1"`
+		Iso3166_1   string `json:"iso_3166_1"`
+		Name        string `json:"name"`
+		EnglishName string `json:"english_name"`
+		Data        struct {
+			Title    string `json:"title"`
+			Overview string `json:"overview"`
+			Homepage string `json:"homepage"`
+		} `json:"data"`
+	} `json:"translations"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -354,7 +370,6 @@ func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 // Query String: api_key.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-release-dates
-//
 func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/release_dates?api_key=%s", baseURL, movieURL, id, c.APIKey)
 	m := MovieReleaseDates{}
@@ -372,11 +387,27 @@ func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
 // Query String: api_key and language.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-videos
-//
 func (c *Client) GetMovieVideos(id int, o map[string]string) (*MovieVideos, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/videos?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	m := MovieVideos{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieTranslations get a list of translations that have been created for a movie.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-translations
+func (c *Client) GetMovieTranslations(id int) (*MovieTranslations, error) {
+	tmdbURL := fmt.Sprintf("%s%s%d/translations?api_key=%s", baseURL, movieURL, id, c.APIKey)
+	m := MovieTranslations{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
