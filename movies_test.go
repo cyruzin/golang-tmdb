@@ -202,3 +202,22 @@ func (suite *TMBDTestSuite) TestGetMovieRecommendationsWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(1), jackreacher.Page)
 }
+
+func (suite *TMBDTestSuite) TestGetMovieSimilar() {
+	bumblebee, err := suite.GetMovieSimilar(bumblebeeID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), bumblebee.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieSimilarFail() {
+	_, err := suite.GetMovieSimilar(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieSimilarWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	jackreacher, err := suite.GetMovieSimilar(jackReacherID, options)
+	suite.Nil(err)
+	suite.Equal(int64(1), jackreacher.Page)
+}

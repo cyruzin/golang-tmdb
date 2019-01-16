@@ -220,6 +220,11 @@ type MovieRecommendations struct {
 	TotalResults int64 `json:"total_results"`
 }
 
+// MovieSimilar type is a struct for similar movies JSON response.
+type MovieSimilar struct {
+	*MovieRecommendations
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -449,6 +454,27 @@ func (c *Client) GetMovieRecommendations(id int, o map[string]string) (*MovieRec
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/recommendations?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	m := MovieRecommendations{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieSimilar get a list of similar movies.
+//
+// This is not the same as the "Recommendation" system you see on the website.
+// These items are assembled by looking at keywords and genres.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key, language and page.
+//
+// https://developers.themoviedb.org/3/movies/get-similar-movies
+func (c *Client) GetMovieSimilar(id int, o map[string]string) (*MovieSimilar, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/similar?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+	m := MovieSimilar{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
