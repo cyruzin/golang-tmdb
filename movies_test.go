@@ -129,3 +129,27 @@ func (suite *TMBDTestSuite) TestGetMovieKeywordsFail() {
 	_, err := suite.GetMovieKeywords(0)
 	suite.Equal("The resource you requested could not be found.", err.Error())
 }
+
+func (suite *TMBDTestSuite) TestGetMovieReleaseDates() {
+	bumblebee, err := suite.GetMovieReleaseDates(bumblebeeID)
+	suite.Nil(err)
+	suite.Equal("ZW", bumblebee.Results[0].Iso3166_1)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieReleaseDatesFail() {
+	_, err := suite.GetMovieReleaseDates(0)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieAccountStatesFail() {
+	_, err := suite.GetMovieAccountStates(0, nil)
+	suite.Equal("Authentication failed: You do not have permissions to access the service.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieAccountStatesWithOptions() {
+	suite.Client.APIKey = ""
+	options := make(map[string]string)
+	options["session_id"] = "koQubnkaZ"
+	_, err := suite.GetMovieAccountStates(jackReacherID, options)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}

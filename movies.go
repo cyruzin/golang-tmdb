@@ -5,8 +5,8 @@ import (
 	"fmt"
 )
 
-// Movies type is a struct for movies JSON response.
-type Movies struct {
+// MovieDetails type is a struct for movie details JSON response.
+type MovieDetails struct {
 	Adult               bool   `json:"adult"`
 	BackdropPath        string `json:"backdrop_path"`
 	BelongsToCollection struct {
@@ -53,6 +53,14 @@ type Movies struct {
 	VoteCount   int64   `json:"vote_count"`
 }
 
+// MovieAccountStates type is a struct for account states JSON response.
+type MovieAccountStates struct {
+	ID        int64           `json:"id"`
+	Favorite  bool            `json:"favorite"`
+	Rated     json.RawMessage `json:"rated"`
+	Watchlist bool            `json:"watchlist"`
+}
+
 // MovieAlternativeTitles type is a struct for alternative titles JSON response.
 type MovieAlternativeTitles struct {
 	ID     int `json:"id"`
@@ -78,7 +86,7 @@ type MovieChanges struct {
 	} `json:"changes"`
 }
 
-// MovieCredits type is a struct for movie credits JSON response.
+// MovieCredits type is a struct for credits JSON response.
 type MovieCredits struct {
 	ID   int64 `json:"id"`
 	Cast []struct {
@@ -111,7 +119,7 @@ type MovieExternalIDs struct {
 	ID          int64  `json:"id"`
 }
 
-// MovieImages type is a struct for movie images JSON response.
+// MovieImages type is a struct for images JSON response.
 type MovieImages struct {
 	ID        int64 `json:"id"`
 	Backdrops []struct {
@@ -134,13 +142,28 @@ type MovieImages struct {
 	} `json:"posters"`
 }
 
-// MovieKeywords type is a struct for movie keywords JSON response.
+// MovieKeywords type is a struct for keywords JSON response.
 type MovieKeywords struct {
 	ID       int64 `json:"id"`
 	Keywords []struct {
 		ID   int64  `json:"id"`
 		Name string `json:"name"`
 	} `json:"keywords"`
+}
+
+// MovieReleaseDates type is a struct for release dates JSON response.
+type MovieReleaseDates struct {
+	ID      int64 `json:"id"`
+	Results []struct {
+		Iso3166_1    string `json:"iso_3166_1"`
+		ReleaseDates []struct {
+			Certification string `json:"certification"`
+			Iso639_1      string `json:"iso_639_1"`
+			ReleaseDate   string `json:"release_date"`
+			Type          int    `json:"type"`
+			Note          string `json:"note"`
+		} `json:"release_dates"`
+	} `json:"results"`
 }
 
 // GetMovieDetails get the primary information about a movie.
@@ -151,10 +174,35 @@ type MovieKeywords struct {
 //
 // https://developers.themoviedb.org/3/movies
 //
-func (c *Client) GetMovieDetails(id int, o map[string]string) (*Movies, error) {
+func (c *Client) GetMovieDetails(id int, o map[string]string) (*MovieDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
-	m := Movies{}
+	m := MovieDetails{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieAccountStates grab the following account states for a session:
+//
+// Movie rating.
+//
+// If it belongs to your watchlist.
+//
+// If it belongs to your favourite list.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key, session_id, guest_session_id.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-account-states
+//
+func (c *Client) GetMovieAccountStates(id int, o map[string]string) (*MovieAccountStates, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/account_states?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
+	m := MovieAccountStates{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
@@ -267,7 +315,7 @@ func (c *Client) GetMovieImages(id int, o map[string]string) (*MovieImages, erro
 	return &m, nil
 }
 
-// GetMovieKeywords the keywords that have been added to a movie..
+// GetMovieKeywords the keywords that have been added to a movie.
 //
 // Path Parameters: movie_id.
 //
@@ -277,6 +325,24 @@ func (c *Client) GetMovieImages(id int, o map[string]string) (*MovieImages, erro
 func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/keywords?api_key=%s", baseURL, movieURL, id, c.APIKey)
 	m := MovieKeywords{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieReleaseDates get the release date along with the certification for a movie.
+//
+// Path Parameters: movie_id.
+//
+// Query String: api_key.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-release-dates
+//
+func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
+	tmdbURL := fmt.Sprintf("%s%s%d/release_dates?api_key=%s", baseURL, movieURL, id, c.APIKey)
+	m := MovieReleaseDates{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
