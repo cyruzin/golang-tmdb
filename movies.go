@@ -262,7 +262,7 @@ type MovieLatest struct {
 	*MovieDetails
 }
 
-// MovieNowPlaying type is a struct for now playing movies JSON response.
+// MovieNowPlaying type is a struct for now playing JSON response.
 type MovieNowPlaying struct {
 	Page    int64 `json:"page"`
 	Results []struct {
@@ -277,17 +277,43 @@ type MovieNowPlaying struct {
 		ID               int64   `json:"id"`
 		OriginalTitle    string  `json:"original_title"`
 		OriginalLanguage string  `json:"original_language"`
-		Title            string  `json:""`
-		BackdropPath     string  `json:""`
-		Popularity       float32 `json:""`
-		VoteCount        int64   `json:""`
-		Video            bool    `json:""`
-		VoteAverage      float32 `json:""`
+		Title            string  `json:"title"`
+		BackdropPath     string  `json:"backdrop_path"`
+		Popularity       float32 `json:"popularity"`
+		VoteCount        int64   `json:"vote_count"`
+		Video            bool    `json:"video"`
+		VoteAverage      float32 `json:"vote_average"`
 	} `json:"results"`
 	Dates struct {
 		Maximum string `json:"maximum"`
 		Minimum string `json:"minimum"`
 	} `json:"dates"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
+// MoviePopular type is a struct for popular JSON response.
+type MoviePopular struct {
+	Page    int64 `json:"page"`
+	Results []struct {
+		PosterPath  string `json:"poster_path"`
+		Adult       bool   `json:"adult"`
+		Overview    string `json:"overview"`
+		ReleaseDate string `json:"release_date"`
+		Genres      []struct {
+			ID   int64  `json:"id"`
+			Name string `json:"name"`
+		} `json:"genres"`
+		ID               int64   `json:"id"`
+		OriginalTitle    string  `json:"original_title"`
+		OriginalLanguage string  `json:"original_language"`
+		Title            string  `json:"title"`
+		BackdropPath     string  `json:"backdrop_path"`
+		Popularity       float32 `json:"popularity"`
+		VoteCount        int64   `json:"vote_count"`
+		Video            bool    `json:"video"`
+		VoteAverage      float32 `json:"vote_average"`
+	} `json:"results"`
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`
 }
@@ -553,6 +579,21 @@ func (c *Client) GetMovieNowPlaying(o map[string]string) (*MovieNowPlaying, erro
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%snow_playing?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
 	m := MovieNowPlaying{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMoviePopular get a list of the current popular movies on TMDb.
+// This list updates daily.
+//
+// https://developers.themoviedb.org/3/movies/get-popular-movies
+func (c *Client) GetMoviePopular(o map[string]string) (*MoviePopular, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%spopular?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
+	m := MoviePopular{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err

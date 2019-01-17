@@ -300,3 +300,23 @@ func (suite *TMBDTestSuite) TestGetMovieNowPlayingWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(1), movies.Page)
 }
+
+func (suite *TMBDTestSuite) TestGetMoviePopular() {
+	movies, err := suite.GetMoviePopular(nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), movies.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMoviePopularFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetMoviePopular(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMoviePopularWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	movies, err := suite.GetMoviePopular(options)
+	suite.Nil(err)
+	suite.Equal(int64(1), movies.Page)
+}
