@@ -318,6 +318,16 @@ type MoviePopular struct {
 	TotalResults int64 `json:"total_results"`
 }
 
+// MovieTopRated type is a struct for top rated JSON response.
+type MovieTopRated struct {
+	*MoviePopular
+}
+
+// MovieUpcoming type is a struct for upcoming JSON response.
+type MovieUpcoming struct {
+	*MovieNowPlaying
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
@@ -594,6 +604,40 @@ func (c *Client) GetMoviePopular(o map[string]string) (*MoviePopular, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%spopular?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
 	m := MoviePopular{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieTopRated get the top rated movies on TMDb.
+//
+// https://developers.themoviedb.org/3/movies/get-top-rated-movies
+func (c *Client) GetMovieTopRated(o map[string]string) (*MovieTopRated, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%stop_rated?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
+	m := MovieTopRated{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieUpcoming get a list of upcoming movies in theatres.
+// This is a release type query that looks for all movies that
+// have a release type of 2 or 3 within the specified date range.
+//
+// You can optionally specify a region prameter which will narrow
+// the search to only look for theatrical release dates within
+// the specified country.
+//
+// https://developers.themoviedb.org/3/movies/get-upcoming
+func (c *Client) GetMovieUpcoming(o map[string]string) (*MovieUpcoming, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%supcoming?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
+	m := MovieUpcoming{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err

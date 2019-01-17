@@ -320,3 +320,43 @@ func (suite *TMBDTestSuite) TestGetMoviePopularWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(1), movies.Page)
 }
+
+func (suite *TMBDTestSuite) TestGetMovieTopRated() {
+	movies, err := suite.GetMovieTopRated(nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), movies.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieTopRatedFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetMovieTopRated(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieTopRatedWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	movies, err := suite.GetMovieTopRated(options)
+	suite.Nil(err)
+	suite.Equal(int64(1), movies.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieUpcoming() {
+	movies, err := suite.GetMovieUpcoming(nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), movies.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieUpcomingFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetMovieUpcoming(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieUpcomingWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	movies, err := suite.GetMovieUpcoming(options)
+	suite.Nil(err)
+	suite.Equal(int64(1), movies.Page)
+}
