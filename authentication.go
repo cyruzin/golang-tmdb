@@ -50,8 +50,6 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 // You can use this method to create a fully valid session ID
 // once a user has validated the request token.
 //
-// Query String: api_key.
-//
 // https://developers.themoviedb.org/3/authentication/create-session
 func (c *Client) CreateSession(rt string) (*Session, error) {
 	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
@@ -71,7 +69,6 @@ func (c *Client) CreateSession(rt string) (*Session, error) {
 // access to a web view so this can be used as a substitute.
 // If you decide to use this method please use HTTPS.
 //
-// Query String: api_key.
 //
 // https://developers.themoviedb.org/3/authentication/validate-request-token
 // func (c *Client) CreateSessionWithLogin(u, p, rt string) (*RequestToken, error) {
@@ -94,8 +91,6 @@ func (c *Client) CreateSession(rt string) (*Session, error) {
 // Use this method to create a v3 session ID if you already have
 // a valid v4 access token. The v4 token needs to be authenticated by the user.
 // Your standard "read token" will not validate to create a session ID.
-//
-// Query String: api_key.
 //
 // https://developers.themoviedb.org/3/authentication/create-session-from-v4-access-token
 // func (c *Client) CreateSessionFromV4(at string) (*Session, error) {

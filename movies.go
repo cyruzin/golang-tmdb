@@ -262,6 +262,36 @@ type MovieLatest struct {
 	*MovieDetails
 }
 
+// MovieNowPlaying type is a struct for now playing movies JSON response.
+type MovieNowPlaying struct {
+	Page    int64 `json:"page"`
+	Results []struct {
+		PosterPath  string `json:"poster_path"`
+		Adult       bool   `json:"adult"`
+		Overview    string `json:"overview"`
+		ReleaseDate string `json:"release_date"`
+		Genres      []struct {
+			ID   int64  `json:"id"`
+			Name string `json:"name"`
+		} `json:"genres"`
+		ID               int64   `json:"id"`
+		OriginalTitle    string  `json:"original_title"`
+		OriginalLanguage string  `json:"original_language"`
+		Title            string  `json:""`
+		BackdropPath     string  `json:""`
+		Popularity       float32 `json:""`
+		VoteCount        int64   `json:""`
+		Video            bool    `json:""`
+		VoteAverage      float32 `json:""`
+	} `json:"results"`
+	Dates struct {
+		Maximum string `json:"maximum"`
+		Minimum string `json:"minimum"`
+	} `json:"dates"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
@@ -495,7 +525,7 @@ func (c *Client) GetMovieLists(id int, o map[string]string) (*MovieLists, error)
 	return &m, nil
 }
 
-// GetMovieLatest getthe most newly created movie.
+// GetMovieLatest get the most newly created movie.
 // This is a live response and will continuously change.
 //
 // https://developers.themoviedb.org/3/movies/get-latest-movie
@@ -503,6 +533,26 @@ func (c *Client) GetMovieLatest(o map[string]string) (*MovieLatest, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%slatest?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
 	m := MovieLatest{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieNowPlaying get a list of movies in theatres.
+// This is a release type query that looks for all movies that
+// have a release type of 2 or 3 within the specified date range.
+//
+// You can optionally specify a region prameter which will narrow
+// the search to only look for theatrical release dates within the
+// specified country.
+//
+// https://developers.themoviedb.org/3/movies/get-now-playing
+func (c *Client) GetMovieNowPlaying(o map[string]string) (*MovieNowPlaying, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%snow_playing?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
+	m := MovieNowPlaying{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
