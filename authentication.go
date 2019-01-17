@@ -6,9 +6,10 @@ import (
 
 // RequestToken type is a struct for request token JSON response.
 type RequestToken struct {
-	Success      bool   `json:"success"`
-	ExpiresAt    string `json:"expires_at"`
-	RequestToken string `json:"request_token"`
+	Success        bool   `json:"success"`
+	ExpiresAt      string `json:"expires_at"`
+	GuestSessionID string `json:"guest_session_id,omitempty"`
+	RequestToken   string `json:"request_token,omitempty"`
 }
 
 // AccessToken type is a struct for access token JSON request.
@@ -29,10 +30,22 @@ type SessionWithLogin struct {
 	RequestToken string `json:"request_token"`
 }
 
-// CreateRequestToken creates a temporary request token
+// CreateGuestSession creates a temporary request token
 // that can be used to validate a TMDb user login.
 //
-// Query String: api_key.
+// https://developers.themoviedb.org/3/authentication/create-guest-session
+func (c *Client) CreateGuestSession() (*RequestToken, error) {
+	tmdbURL := fmt.Sprintf("%s%sguest_session/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
+	a := RequestToken{}
+	err := c.get(tmdbURL, &a)
+	if err != nil {
+		return nil, err
+	}
+	return &a, nil
+}
+
+// CreateRequestToken creates a temporary request token
+// that can be used to validate a TMDb user login.
 //
 // https://developers.themoviedb.org/3/authentication/create-request-token
 func (c *Client) CreateRequestToken() (*RequestToken, error) {
@@ -69,7 +82,6 @@ func (c *Client) CreateSession(rt string) (*Session, error) {
 // access to a web view so this can be used as a substitute.
 // If you decide to use this method please use HTTPS.
 //
-//
 // https://developers.themoviedb.org/3/authentication/validate-request-token
 // func (c *Client) CreateSessionWithLogin(u, p, rt string) (*RequestToken, error) {
 // 	tmdbURL := fmt.Sprintf("%s%stoken/validate_with_login?api_key=%s", baseURL, authenticationURL, c.APIKey)
@@ -103,3 +115,5 @@ func (c *Client) CreateSession(rt string) (*Session, error) {
 // 	}
 // 	return &a, nil
 // }
+
+// TODO: Delete Session (DELETE Request)

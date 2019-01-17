@@ -644,3 +644,5 @@ func (c *Client) GetMovieUpcoming(o map[string]string) (*MovieUpcoming, error) {
 	}
 	return &m, nil
 }
+
+// TODO: Rate Movie (POST Request) and Delete Rating (DELETE Request)
