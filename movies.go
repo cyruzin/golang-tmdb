@@ -264,10 +264,6 @@ type MovieLatest struct {
 
 // GetMovieDetails get the primary information about a movie.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key, language, append_to_response.
-//
 // https://developers.themoviedb.org/3/movies
 //
 func (c *Client) GetMovieDetails(id int, o map[string]string) (*MovieDetails, error) {
@@ -289,10 +285,6 @@ func (c *Client) GetMovieDetails(id int, o map[string]string) (*MovieDetails, er
 //
 // If it belongs to your favourite list.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key, session_id, guest_session_id.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-account-states
 //
 func (c *Client) GetMovieAccountStates(id int, o map[string]string) (*MovieAccountStates, error) {
@@ -307,10 +299,6 @@ func (c *Client) GetMovieAccountStates(id int, o map[string]string) (*MovieAccou
 }
 
 // GetMovieAlternativeTitles get all of the alternative titles for a movie.
-//
-// Path Parameters: movie_id.
-//
-// Query String: api_key and country.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
 func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*MovieAlternativeTitles, error) {
@@ -330,10 +318,6 @@ func (c *Client) GetMovieAlternativeTitles(id int, o map[string]string) (*MovieA
 // You can query up to 14 days in a single query by using
 // the start_date and end_date query parameters.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key, start_date, end_date and page.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-changes
 func (c *Client) GetMovieChanges(id int, o map[string]string) (*MovieChanges, error) {
 	options := c.fmtOptions(o)
@@ -347,10 +331,6 @@ func (c *Client) GetMovieChanges(id int, o map[string]string) (*MovieChanges, er
 }
 
 // GetMovieCredits get the cast and crew for a movie.
-//
-// Path Parameters: movie_id.
-//
-// Query String: api_key.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-credits
 func (c *Client) GetMovieCredits(id int, o map[string]string) (*MovieCredits, error) {
@@ -372,10 +352,6 @@ func (c *Client) GetMovieCredits(id int, o map[string]string) (*MovieCredits, er
 //
 // Social IDs: Facebook, Instagram and Twitter.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-external-ids
 func (c *Client) GetMovieExternalIDs(id int, o map[string]string) (*MovieExternalIDs, error) {
 	options := c.fmtOptions(o)
@@ -395,10 +371,6 @@ func (c *Client) GetMovieExternalIDs(id int, o map[string]string) (*MovieExterna
 // you can use the include_image_language parameter. This should be a comma
 // separated value like so: include_image_language=en,null.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key, language and include_image_language.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-images
 func (c *Client) GetMovieImages(id int, o map[string]string) (*MovieImages, error) {
 	options := c.fmtOptions(o)
@@ -413,10 +385,6 @@ func (c *Client) GetMovieImages(id int, o map[string]string) (*MovieImages, erro
 
 // GetMovieKeywords the keywords that have been added to a movie.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-keywords
 func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/keywords?api_key=%s", baseURL, movieURL, id, c.APIKey)
@@ -430,10 +398,6 @@ func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 
 // GetMovieReleaseDates get the release date along with the certification for a movie.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-release-dates
 func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/release_dates?api_key=%s", baseURL, movieURL, id, c.APIKey)
@@ -446,10 +410,6 @@ func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
 }
 
 // GetMovieVideos get the videos that have been added to a movie.
-//
-// Path Parameters: movie_id.
-//
-// Query String: api_key and language.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-videos
 func (c *Client) GetMovieVideos(id int, o map[string]string) (*MovieVideos, error) {
@@ -465,10 +425,6 @@ func (c *Client) GetMovieVideos(id int, o map[string]string) (*MovieVideos, erro
 
 // GetMovieTranslations get a list of translations that have been created for a movie.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-translations
 func (c *Client) GetMovieTranslations(id int) (*MovieTranslations, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/translations?api_key=%s", baseURL, movieURL, id, c.APIKey)
@@ -481,10 +437,6 @@ func (c *Client) GetMovieTranslations(id int) (*MovieTranslations, error) {
 }
 
 // GetMovieRecommendations get a list of recommended movies for a movie.
-//
-// Path Parameters: movie_id.
-//
-// Query String: api_key, language and page.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-recommendations
 func (c *Client) GetMovieRecommendations(id int, o map[string]string) (*MovieRecommendations, error) {
@@ -503,10 +455,6 @@ func (c *Client) GetMovieRecommendations(id int, o map[string]string) (*MovieRec
 // This is not the same as the "Recommendation" system you see on the website.
 // These items are assembled by looking at keywords and genres.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key, language and page.
-//
 // https://developers.themoviedb.org/3/movies/get-similar-movies
 func (c *Client) GetMovieSimilar(id int, o map[string]string) (*MovieSimilar, error) {
 	options := c.fmtOptions(o)
@@ -520,10 +468,6 @@ func (c *Client) GetMovieSimilar(id int, o map[string]string) (*MovieSimilar, er
 }
 
 // GetMovieReviews get the user reviews for a movie.
-//
-// Path Parameters: movie_id.
-//
-// Query String: api_key, language and page.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-reviews
 func (c *Client) GetMovieReviews(id int, o map[string]string) (*MovieReviews, error) {
@@ -539,10 +483,6 @@ func (c *Client) GetMovieReviews(id int, o map[string]string) (*MovieReviews, er
 
 // GetMovieLists get a list of lists that this movie belongs to.
 //
-// Path Parameters: movie_id.
-//
-// Query String: api_key, language and page.
-//
 // https://developers.themoviedb.org/3/movies/get-movie-lists
 func (c *Client) GetMovieLists(id int, o map[string]string) (*MovieLists, error) {
 	options := c.fmtOptions(o)
@@ -557,9 +497,6 @@ func (c *Client) GetMovieLists(id int, o map[string]string) (*MovieLists, error)
 
 // GetMovieLatest getthe most newly created movie.
 // This is a live response and will continuously change.
-//
-//
-// Query String: api_key, language and page.
 //
 // https://developers.themoviedb.org/3/movies/get-latest-movie
 func (c *Client) GetMovieLatest(o map[string]string) (*MovieLatest, error) {
