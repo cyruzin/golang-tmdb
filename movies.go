@@ -257,6 +257,11 @@ type MovieLists struct {
 	TotalResults int64 `json:"total_results"`
 }
 
+// MovieLatest type is a struct for latest movie JSON response.
+type MovieLatest struct {
+	*MovieDetails
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // Path Parameters: movie_id.
@@ -543,6 +548,24 @@ func (c *Client) GetMovieLists(id int, o map[string]string) (*MovieLists, error)
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/lists?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	m := MovieLists{}
+	err := c.get(tmdbURL, &m)
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
+}
+
+// GetMovieLatest getthe most newly created movie.
+// This is a live response and will continuously change.
+//
+//
+// Query String: api_key, language and page.
+//
+// https://developers.themoviedb.org/3/movies/get-latest-movie
+func (c *Client) GetMovieLatest(o map[string]string) (*MovieLatest, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%slatest?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
+	m := MovieLatest{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
