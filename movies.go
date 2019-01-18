@@ -51,6 +51,11 @@ type MovieDetails struct {
 	Video       bool    `json:"video"`
 	VoteAverage float32 `json:"vote_average"`
 	VoteCount   int64   `json:"vote_count"`
+	*MovieCreditsShort
+	*MovieVideosShort
+	*MovieKeywordsShort
+	*MovieReviewsShort
+	*MovieTranslationsShort
 }
 
 // MovieAccountStates type is a struct for account states JSON response.
@@ -86,27 +91,38 @@ type MovieChanges struct {
 	} `json:"changes"`
 }
 
+// MovieCreditsCast type is a struct for cast JSON response.
+type MovieCreditsCast struct {
+	CastID      int64  `json:"cast_id"`
+	Character   string `json:"character"`
+	CreditID    string `json:"credit_id"`
+	Gender      int    `json:"gender"`
+	ID          int64  `json:"id"`
+	Name        string `json:"name"`
+	Order       int    `json:"order"`
+	ProfilePath string `json:"profile_path"`
+}
+
+// MovieCreditsCrew type is a struct for crew JSON response.
+type MovieCreditsCrew struct {
+	CastID      int64  `json:"cast_id"`
+	Character   string `json:"character"`
+	CreditID    string `json:"credit_id"`
+	Gender      int    `json:"gender"`
+	ID          int64  `json:"id"`
+	Name        string `json:"name"`
+	Order       int    `json:"order"`
+	ProfilePath string `json:"profile_path"`
+}
+
 // MovieCredits type is a struct for credits JSON response.
 type MovieCredits struct {
 	ID   int64 `json:"id"`
 	Cast []struct {
-		CastID      int64  `json:"cast_id"`
-		Character   string `json:"character"`
-		CreditID    string `json:"credit_id"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		Order       int    `json:"order"`
-		ProfilePath string `json:"profile_path"`
+		*MovieCreditsCast
 	} `json:"cast"`
 	Crew []struct {
-		CreditID    string `json:"credit_id"`
-		Department  string `json:"department"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Job         string `json:"job"`
-		Name        string `json:"name"`
-		ProfilePath string `json:"profile_path"`
+		*MovieCreditsCrew
 	} `json:"crew"`
 }
 
@@ -142,12 +158,17 @@ type MovieImages struct {
 	} `json:"posters"`
 }
 
+// MovieKeyword type is a strcut for keyword JSON response.
+type MovieKeyword struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+}
+
 // MovieKeywords type is a struct for keywords JSON response.
 type MovieKeywords struct {
 	ID       int64 `json:"id"`
 	Keywords []struct {
-		ID   int64  `json:"id"`
-		Name string `json:"name"`
+		*MovieKeyword
 	} `json:"keywords"`
 }
 
@@ -166,24 +187,28 @@ type MovieReleaseDates struct {
 	} `json:"results"`
 }
 
+// MovieVideo type is a struct for a single video JSON response.
+type MovieVideo struct {
+	ID        string `json:"id"`
+	Iso639_1  string `json:"iso_639_1"`
+	Iso3166_1 string `json:"iso_3166_1"`
+	Key       string `json:"key"`
+	Name      string `json:"name"`
+	Site      string `json:"site"`
+	Size      int    `json:"size"`
+	Type      string `json:"type"`
+}
+
 // MovieVideos type is a struct for videos JSON response.
 type MovieVideos struct {
 	ID      int64 `json:"id"`
 	Results []struct {
-		ID        string `json:"id"`
-		Iso639_1  string `json:"iso_639_1"`
-		Iso3166_1 string `json:"iso_3166_1"`
-		Key       string `json:"key"`
-		Name      string `json:"name"`
-		Site      string `json:"site"`
-		Size      int    `json:"size"`
-		Type      string `json:"type"`
+		*MovieVideo
 	} `json:"results"`
 }
 
-// MovieTranslations type is a struct for translations JSON response.
-type MovieTranslations struct {
-	ID          int64 `json:"id"`
+// MovieTranslation type is a struct for translation JSON response.
+type MovieTranslation struct {
 	Translation []struct {
 		Iso639_1    string `json:"iso_639_1"`
 		Iso3166_1   string `json:"iso_3166_1"`
@@ -195,6 +220,12 @@ type MovieTranslations struct {
 			Homepage string `json:"homepage"`
 		} `json:"data"`
 	} `json:"translations"`
+}
+
+// MovieTranslations type is a struct for translations JSON response.
+type MovieTranslations struct {
+	ID int64 `json:"id"`
+	*MovieTranslation
 }
 
 // MovieRecommendations type is a struct for recommendations JSON response.
@@ -225,9 +256,8 @@ type MovieSimilar struct {
 	*MovieRecommendations
 }
 
-// MovieReviews type is a struct for reviews JSON response.
-type MovieReviews struct {
-	ID      int64 `json:"id"`
+// MovieReview type is a struct for review JSON response.
+type MovieReview struct {
 	Page    int64 `json:"page"`
 	Results []struct {
 		ID      string `json:"id"`
@@ -237,6 +267,12 @@ type MovieReviews struct {
 	} `json:"results"`
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`
+}
+
+// MovieReviews type is a struct for reviews JSON response.
+type MovieReviews struct {
+	ID int64 `json:"id"`
+	*MovieReview
 }
 
 // MovieLists type is a struct for lists JSON response.
@@ -326,6 +362,40 @@ type MovieTopRated struct {
 // MovieUpcoming type is a struct for upcoming JSON response.
 type MovieUpcoming struct {
 	*MovieNowPlaying
+}
+
+// MovieCreditsShort type is a short struct for credits JSON response.
+type MovieCreditsShort struct {
+	Credits struct {
+		Cast []*MovieCreditsCast `json:"cast,omitempty"`
+		Crew []*MovieCreditsCrew `json:"crew,omitempty"`
+	} `json:"credits,omitempty"`
+}
+
+// MovieVideosShort type is a short struct for videos JSON response.
+type MovieVideosShort struct {
+	Videos struct {
+		Results []*MovieVideo `json:"results,omitempty"`
+	} `json:"videos,omitempty"`
+}
+
+// MovieKeywordsShort type is a short struct for keywords JSON response.
+type MovieKeywordsShort struct {
+	Keywords struct {
+		Keywords []*MovieKeyword `json:"keywords,omitempty"`
+	} `json:"keywords,omitempty"`
+}
+
+// MovieReviewsShort type is a short struct for reviews JSON response.
+type MovieReviewsShort struct {
+	Reviews struct {
+		*MovieReview
+	} `json:"reviews,omitempty"`
+}
+
+// MovieTranslationsShort type is a short struct for translations JSON response.
+type MovieTranslationsShort struct {
+	Translations *MovieTranslation `json:"translations,omitempty"`
 }
 
 // GetMovieDetails get the primary information about a movie.
