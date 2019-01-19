@@ -57,9 +57,13 @@ type MovieDetails struct {
 	*MovieExternalIDsShort
 	*MovieImagesShort
 	*MovieKeywordsShort
+	*MovieReleaseDatesShort
 	*MovieVideosShort
 	*MovieTranslationsShort
+	*MovieRecommendationsShort
+	*MovieSimilarShort
 	*MovieReviewsShort
+	*MovieListsShort
 }
 
 // MovieAccountStates type is a struct for account states JSON response.
@@ -226,9 +230,8 @@ type MovieKeywordsShort struct {
 	} `json:"keywords,omitempty"`
 }
 
-// MovieReleaseDates type is a struct for release dates JSON response.
-type MovieReleaseDates struct {
-	ID      int64 `json:"id"`
+// MovieReleaseDate type is a struct for release date JSON response.
+type MovieReleaseDate struct {
 	Results []struct {
 		Iso3166_1    string `json:"iso_3166_1"`
 		ReleaseDates []struct {
@@ -239,6 +242,17 @@ type MovieReleaseDates struct {
 			Note          string `json:"note"`
 		} `json:"release_dates"`
 	} `json:"results"`
+}
+
+// MovieReleaseDates type is a struct for release dates JSON response.
+type MovieReleaseDates struct {
+	ID int64 `json:"id"`
+	*MovieReleaseDate
+}
+
+// MovieReleaseDatesShort type is a short struct for release dates JSON response.
+type MovieReleaseDatesShort struct {
+	ReleaseDates *MovieReleaseDate `json:"release_dates,omitempty"`
 }
 
 // MovieVideo type is a struct for a single video JSON response.
@@ -317,9 +331,19 @@ type MovieRecommendations struct {
 	TotalResults int64 `json:"total_results"`
 }
 
+// MovieRecommendationsShort type is a short struct for recommendations JSON response.
+type MovieRecommendationsShort struct {
+	Recommendations *MovieRecommendations `json:"recommendations,omitempty"`
+}
+
 // MovieSimilar type is a struct for similar movies JSON response.
 type MovieSimilar struct {
 	*MovieRecommendations
+}
+
+// MovieSimilarShort type is a short struct for similar movies JSON response.
+type MovieSimilarShort struct {
+	SimilarMovies *MovieSimilar `json:"similar_movies,omitempty"`
 }
 
 // MovieReview type is a struct for review JSON response.
@@ -364,6 +388,11 @@ type MovieLists struct {
 	} `json:"results"`
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`
+}
+
+// MovieListsShort type is a short struct for lists JSON response.
+type MovieListsShort struct {
+	Lists *MovieLists `json:"lists,omitempty"`
 }
 
 // MovieLatest type is a struct for latest movie JSON response.
