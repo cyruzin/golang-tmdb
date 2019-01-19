@@ -51,11 +51,15 @@ type MovieDetails struct {
 	Video       bool    `json:"video"`
 	VoteAverage float32 `json:"vote_average"`
 	VoteCount   int64   `json:"vote_count"`
+	*MovieAlternativeTitlesShort
+	*MovieChangesShort
 	*MovieCreditsShort
-	*MovieVideosShort
+	*MovieExternalIDsShort
+	*MovieImagesShort
 	*MovieKeywordsShort
-	*MovieReviewsShort
+	*MovieVideosShort
 	*MovieTranslationsShort
+	*MovieReviewsShort
 }
 
 // MovieAccountStates type is a struct for account states JSON response.
@@ -66,14 +70,24 @@ type MovieAccountStates struct {
 	Watchlist bool            `json:"watchlist"`
 }
 
-// MovieAlternativeTitles type is a struct for alternative titles JSON response.
-type MovieAlternativeTitles struct {
-	ID     int `json:"id"`
+// MovieAlternativeTitle type is a struct for alternative title JSON response.
+type MovieAlternativeTitle struct {
 	Titles []struct {
 		Iso3166_1 string `json:"iso_3166_1"`
 		Title     string `json:"title"`
 		Type      string `json:"type"`
 	} `json:"titles"`
+}
+
+// MovieAlternativeTitles type is a struct for alternative titles JSON response.
+type MovieAlternativeTitles struct {
+	ID int `json:"id"`
+	*MovieAlternativeTitle
+}
+
+// MovieAlternativeTitlesShort type is a short struct for alternative titles JSON response.
+type MovieAlternativeTitlesShort struct {
+	AlternativeTitles *MovieAlternativeTitle `json:"alternative_titles,omitempty"`
 }
 
 // MovieChanges type is a struct for changes JSON response.
@@ -89,6 +103,11 @@ type MovieChanges struct {
 			OriginalValue json.RawMessage `json:"original_value"`
 		} `json:"items"`
 	} `json:"changes"`
+}
+
+// MovieChangesShort type is a short struct for changes JSON response.
+type MovieChangesShort struct {
+	Changes *MovieChanges `json:"changes,omitempty"`
 }
 
 // MovieCreditsCast type is a struct for cast JSON response.
@@ -126,18 +145,35 @@ type MovieCredits struct {
 	} `json:"crew"`
 }
 
-// MovieExternalIDs type is a struct for external ids JSON response.
-type MovieExternalIDs struct {
+// MovieCreditsShort type is a short struct for credits JSON response.
+type MovieCreditsShort struct {
+	Credits struct {
+		Cast []*MovieCreditsCast `json:"cast,omitempty"`
+		Crew []*MovieCreditsCrew `json:"crew,omitempty"`
+	} `json:"credits,omitempty"`
+}
+
+// MovieExternalID type is a struct for external id JSON response.
+type MovieExternalID struct {
 	IMDbID      string `json:"imdb_id"`
 	FacebookID  string `json:"facebook_id"`
 	InstagramID string `json:"instagram_id"`
 	TwitterID   string `json:"twitter_id"`
-	ID          int64  `json:"id"`
 }
 
-// MovieImages type is a struct for images JSON response.
-type MovieImages struct {
-	ID        int64 `json:"id"`
+// MovieExternalIDs type is a struct for external ids JSON response.
+type MovieExternalIDs struct {
+	*MovieExternalID
+	ID int64 `json:"id"`
+}
+
+// MovieExternalIDsShort type is a short struct for external ids JSON response.
+type MovieExternalIDsShort struct {
+	*MovieExternalID `json:"external_ids,omitempty"`
+}
+
+// MovieImage type is a struct for image JSON response.
+type MovieImage struct {
 	Backdrops []struct {
 		AspectRatio float32 `json:"aspect_ratio"`
 		FilePath    string  `json:"file_path"`
@@ -158,6 +194,17 @@ type MovieImages struct {
 	} `json:"posters"`
 }
 
+// MovieImages type is a struct for images JSON response.
+type MovieImages struct {
+	ID int64 `json:"id"`
+	*MovieImage
+}
+
+// MovieImagesShort type is a short struct for images JSON response.
+type MovieImagesShort struct {
+	Images *MovieImage `json:"images,omitempty"`
+}
+
 // MovieKeyword type is a strcut for keyword JSON response.
 type MovieKeyword struct {
 	ID   int64  `json:"id"`
@@ -170,6 +217,13 @@ type MovieKeywords struct {
 	Keywords []struct {
 		*MovieKeyword
 	} `json:"keywords"`
+}
+
+// MovieKeywordsShort type is a short struct for keywords JSON response.
+type MovieKeywordsShort struct {
+	Keywords struct {
+		Keywords []*MovieKeyword `json:"keywords,omitempty"`
+	} `json:"keywords,omitempty"`
 }
 
 // MovieReleaseDates type is a struct for release dates JSON response.
@@ -207,6 +261,13 @@ type MovieVideos struct {
 	} `json:"results"`
 }
 
+// MovieVideosShort type is a short struct for videos JSON response.
+type MovieVideosShort struct {
+	Videos struct {
+		Results []*MovieVideo `json:"results,omitempty"`
+	} `json:"videos,omitempty"`
+}
+
 // MovieTranslation type is a struct for translation JSON response.
 type MovieTranslation struct {
 	Translation []struct {
@@ -226,6 +287,11 @@ type MovieTranslation struct {
 type MovieTranslations struct {
 	ID int64 `json:"id"`
 	*MovieTranslation
+}
+
+// MovieTranslationsShort type is a short struct for translations JSON response.
+type MovieTranslationsShort struct {
+	Translations *MovieTranslation `json:"translations,omitempty"`
 }
 
 // MovieRecommendations type is a struct for recommendations JSON response.
@@ -273,6 +339,13 @@ type MovieReview struct {
 type MovieReviews struct {
 	ID int64 `json:"id"`
 	*MovieReview
+}
+
+// MovieReviewsShort type is a short struct for reviews JSON response.
+type MovieReviewsShort struct {
+	Reviews struct {
+		*MovieReview
+	} `json:"reviews,omitempty"`
 }
 
 // MovieLists type is a struct for lists JSON response.
@@ -362,40 +435,6 @@ type MovieTopRated struct {
 // MovieUpcoming type is a struct for upcoming JSON response.
 type MovieUpcoming struct {
 	*MovieNowPlaying
-}
-
-// MovieCreditsShort type is a short struct for credits JSON response.
-type MovieCreditsShort struct {
-	Credits struct {
-		Cast []*MovieCreditsCast `json:"cast,omitempty"`
-		Crew []*MovieCreditsCrew `json:"crew,omitempty"`
-	} `json:"credits,omitempty"`
-}
-
-// MovieVideosShort type is a short struct for videos JSON response.
-type MovieVideosShort struct {
-	Videos struct {
-		Results []*MovieVideo `json:"results,omitempty"`
-	} `json:"videos,omitempty"`
-}
-
-// MovieKeywordsShort type is a short struct for keywords JSON response.
-type MovieKeywordsShort struct {
-	Keywords struct {
-		Keywords []*MovieKeyword `json:"keywords,omitempty"`
-	} `json:"keywords,omitempty"`
-}
-
-// MovieReviewsShort type is a short struct for reviews JSON response.
-type MovieReviewsShort struct {
-	Reviews struct {
-		*MovieReview
-	} `json:"reviews,omitempty"`
-}
-
-// MovieTranslationsShort type is a short struct for translations JSON response.
-type MovieTranslationsShort struct {
-	Translations *MovieTranslation `json:"translations,omitempty"`
 }
 
 // GetMovieDetails get the primary information about a movie.
