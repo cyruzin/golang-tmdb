@@ -88,6 +88,7 @@ type TVDetails struct {
 	VoteCount   int64   `json:"vote_count"`
 	*TVAlternativeTitlesShort
 	*TVChangesShort
+	*TVContentRatingsShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -137,6 +138,25 @@ type TVChanges struct {
 // TVChangesShort type is a short struct for changes JSON response.
 type TVChangesShort struct {
 	Changes *TVChanges `json:"changes,omitempty"`
+}
+
+// TVContentRating type a struct for content rating JSON response.
+type TVContentRating struct {
+	Results []struct {
+		Iso3166_1 string `json:"iso_3166_1"`
+		Rating    string `json:"rating"`
+	} `json:"results"`
+}
+
+// TVContentRatings type is a struct for content ratings JSON response.
+type TVContentRatings struct {
+	*TVContentRating
+	ID int64 `json:"id"`
+}
+
+// TVContentRatingsShort type is a short struct for content ratings JSON response.
+type TVContentRatingsShort struct {
+	ContentRatings *TVContentRating `json:"content_ratings,omitempty"`
 }
 
 // GetTVDetails get the primary TV show details by id.
@@ -207,6 +227,20 @@ func (c *Client) GetTVChanges(id int, o map[string]string) (*TVChanges, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/changes?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVChanges{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVContentRatings get the list of content ratings (certifications) that have been added to a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-content-ratings
+func (c *Client) GetTVContentRatings(id int, o map[string]string) (*TVContentRatings, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/content_ratings?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVContentRatings{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

@@ -90,3 +90,22 @@ func (suite *TMBDTestSuite) TestGetTVChangesWithOptions() {
 		}
 	}
 }
+
+func (suite *TMBDTestSuite) TestGetTVContentRatings() {
+	vikings, err := suite.GetTVContentRatings(vikingsID, nil)
+	suite.Nil(err)
+	suite.NotNil(vikings.Results[0].Iso3166_1)
+}
+
+func (suite *TMBDTestSuite) TestGetTVContentRatingsFail() {
+	_, err := suite.GetTVContentRatings(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVContentRatingsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	vikings, err := suite.GetTVContentRatings(vikingsID, options)
+	suite.Nil(err)
+	suite.NotNil(vikings.Results[0].Iso3166_1)
+}
