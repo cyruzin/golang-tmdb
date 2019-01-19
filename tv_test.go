@@ -109,3 +109,14 @@ func (suite *TMBDTestSuite) TestGetTVContentRatingsWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(vikings.Results[0].Iso3166_1)
 }
+
+func (suite *TMBDTestSuite) TestGetTVCredits() {
+	vikings, err := suite.GetTVCredits(vikingsID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(vikingsID), vikings.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVCreditsFail() {
+	_, err := suite.GetTVCredits(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}

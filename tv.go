@@ -89,6 +89,7 @@ type TVDetails struct {
 	*TVAlternativeTitlesShort
 	*TVChangesShort
 	*TVContentRatingsShort
+	*TVCreditsShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -157,6 +158,47 @@ type TVContentRatings struct {
 // TVContentRatingsShort type is a short struct for content ratings JSON response.
 type TVContentRatingsShort struct {
 	ContentRatings *TVContentRating `json:"content_ratings,omitempty"`
+}
+
+// TVCreditsCast type is a struct for cast JSON response.
+type TVCreditsCast struct {
+	Character   string `json:"character"`
+	CreditID    string `json:"credit_id"`
+	Gender      int    `json:"gender"`
+	ID          int64  `json:"id"`
+	Name        string `json:"name"`
+	Order       int    `json:"order"`
+	ProfilePath string `json:"profile_path"`
+}
+
+// TVCreditsCrew type is a struct for crew JSON response.
+type TVCreditsCrew struct {
+	CreditID    string `json:"credit_id"`
+	Department  string `json:"department"`
+	Gender      int    `json:"gender"`
+	ID          int64  `json:"id"`
+	Job         string `json:"job"`
+	Name        string `json:"name"`
+	ProfilePath string `json:"profile_path"`
+}
+
+// TVCredits type is a struct for credits JSON response.
+type TVCredits struct {
+	ID   int64 `json:"id"`
+	Cast []struct {
+		*TVCreditsCast
+	} `json:"cast"`
+	Crew []struct {
+		*TVCreditsCrew
+	} `json:"crew"`
+}
+
+// TVCreditsShort type is a short struct for credits JSON response.
+type TVCreditsShort struct {
+	Credits struct {
+		Cast []*TVCreditsCast `json:"cast,omitempty"`
+		Crew []*TVCreditsCrew `json:"crew,omitempty"`
+	} `json:"credits,omitempty"`
 }
 
 // GetTVDetails get the primary TV show details by id.
@@ -241,6 +283,20 @@ func (c *Client) GetTVContentRatings(id int, o map[string]string) (*TVContentRat
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/content_ratings?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVContentRatings{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVCredits get the credits (cast and crew) that have been added to a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-credits
+func (c *Client) GetTVCredits(id int, o map[string]string) (*TVCredits, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/credits?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVCredits{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
