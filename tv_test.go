@@ -59,3 +59,34 @@ func (suite *TMBDTestSuite) TestGetTVAlternativeTitlesWithOptions() {
 	suite.Nil(err)
 	suite.Equal("GR", flash.Results[0].Iso3166_1)
 }
+
+func (suite *TMBDTestSuite) TestGetTVChanges() {
+	flash, err := suite.GetTVChanges(flashID, nil)
+	suite.Nil(err)
+	for _, v := range flash.Changes {
+		for _, v := range v.Items {
+			suite.NotNil(v.ID)
+		}
+	}
+}
+
+// The API isn't handling zero values for this end-point.
+// TODO: Fix this test later.
+func (suite *TMBDTestSuite) TestGetTVChangesFail() {
+	_, err := suite.GetTVChanges(0, nil)
+	suite.Nil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetTVChangesWithOptions() {
+	options := make(map[string]string)
+	options["start_date"] = "2019-01-01"
+	options["end_date"] = "2019-01-12"
+	options["page"] = "1"
+	flash, err := suite.GetTVChanges(flashID, options)
+	suite.Nil(err)
+	for _, v := range flash.Changes {
+		for _, v := range v.Items {
+			suite.NotNil(v.ID)
+		}
+	}
+}

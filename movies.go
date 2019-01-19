@@ -700,6 +700,7 @@ func (c *Client) GetMovieLists(id int, o map[string]string) (*MovieLists, error)
 }
 
 // GetMovieLatest get the most newly created movie.
+//
 // This is a live response and will continuously change.
 //
 // https://developers.themoviedb.org/3/movies/get-latest-movie
@@ -715,6 +716,7 @@ func (c *Client) GetMovieLatest(o map[string]string) (*MovieLatest, error) {
 }
 
 // GetMovieNowPlaying get a list of movies in theatres.
+//
 // This is a release type query that looks for all movies that
 // have a release type of 2 or 3 within the specified date range.
 //
@@ -735,6 +737,7 @@ func (c *Client) GetMovieNowPlaying(o map[string]string) (*MovieNowPlaying, erro
 }
 
 // GetMoviePopular get a list of the current popular movies on TMDb.
+//
 // This list updates daily.
 //
 // https://developers.themoviedb.org/3/movies/get-popular-movies
@@ -764,6 +767,7 @@ func (c *Client) GetMovieTopRated(o map[string]string) (*MovieTopRated, error) {
 }
 
 // GetMovieUpcoming get a list of upcoming movies in theatres.
+//
 // This is a release type query that looks for all movies that
 // have a release type of 2 or 3 within the specified date range.
 //

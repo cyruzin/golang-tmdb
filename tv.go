@@ -86,6 +86,8 @@ type TVDetails struct {
 	Type        string  `json:"type"`
 	VoteAverage float32 `json:"vote_average"`
 	VoteCount   int64   `json:"vote_count"`
+	*TVAlternativeTitlesShort
+	*TVChangesShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -114,6 +116,27 @@ type TVAlternativeTitles struct {
 // TVAlternativeTitlesShort type is a short struct for alternative titles JSON response.
 type TVAlternativeTitlesShort struct {
 	AlternativeTitles *TVAlternativeTitle `json:"alternative_titles,omitempty"`
+}
+
+// TVChanges type is a struct for changes JSON response.
+type TVChanges struct {
+	Changes []struct {
+		Key   string `json:"key"`
+		Items []struct {
+			ID     string `json:"id"`
+			Action string `json:"action"`
+			Time   string `json:"time"`
+			Value  struct {
+				SeasonID     int64 `json:"season_id"`
+				SeasonNumber int   `json:"season_number"`
+			} `json:"value"`
+		} `json:"items"`
+	} `json:"changes"`
+}
+
+// TVChangesShort type is a short struct for changes JSON response.
+type TVChangesShort struct {
+	Changes *TVChanges `json:"changes,omitempty"`
 }
 
 // GetTVDetails get the primary TV show details by id.
@@ -160,6 +183,30 @@ func (c *Client) GetTVAlternativeTitles(id int, o map[string]string) (*TVAlterna
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/alternative_titles?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVAlternativeTitles{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVChanges get the changes for a TV show.
+//
+// By default only the last 24 hours are returned.
+// You can query up to 14 days in a single query by using
+// the start_date and end_date query parameters.
+//
+// TV show changes are different than movie changes in that there
+// are some edits on seasons and episodes that will create a change
+// entry at the show level. These can be found under the season
+// and episode keys. These keys will contain a series_id and episode_id.
+// You can use the and methods to look these up individually.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-changes
+func (c *Client) GetTVChanges(id int, o map[string]string) (*TVChanges, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/changes?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVChanges{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
