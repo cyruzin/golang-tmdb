@@ -1,6 +1,9 @@
 package tmdb
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // TVDetails type is a struct for details JSON response.
 type TVDetails struct {
@@ -85,6 +88,34 @@ type TVDetails struct {
 	VoteCount   int64   `json:"vote_count"`
 }
 
+// TVAccountStates type is a struct for account states JSON response.
+type TVAccountStates struct {
+	ID        int64           `json:"id"`
+	Favorite  bool            `json:"favorite"`
+	Rated     json.RawMessage `json:"rated"`
+	Watchlist bool            `json:"watchlist"`
+}
+
+// TVAlternativeTitle type is a struct for alternative title JSON response.
+type TVAlternativeTitle struct {
+	Results []struct {
+		Iso3166_1 string `json:"iso_3166_1"`
+		Title     string `json:"title"`
+		Type      string `json:"type"`
+	} `json:"results"`
+}
+
+// TVAlternativeTitles type is a struct for alternative titles JSON response.
+type TVAlternativeTitles struct {
+	ID int `json:"id"`
+	*TVAlternativeTitle
+}
+
+// TVAlternativeTitlesShort type is a short struct for alternative titles JSON response.
+type TVAlternativeTitlesShort struct {
+	AlternativeTitles *TVAlternativeTitle `json:"alternative_titles,omitempty"`
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -94,6 +125,41 @@ func (c *Client) GetTVDetails(id int, o map[string]string) (*TVDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVDetails{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVAccountStates grab the following account states for a session:
+//
+// TV show rating.
+//
+// If it belongs to your watchlist.
+//
+// If it belongs to your favourite list.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-account-states
+//
+func (c *Client) GetTVAccountStates(id int, o map[string]string) (*TVAccountStates, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/account_states?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVAccountStates{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVAlternativeTitles get all of the alternative titles for a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-alternative-titles
+func (c *Client) GetTVAlternativeTitles(id int, o map[string]string) (*TVAlternativeTitles, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/alternative_titles?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVAlternativeTitles{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

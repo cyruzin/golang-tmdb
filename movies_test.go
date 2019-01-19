@@ -262,9 +262,9 @@ func (suite *TMBDTestSuite) TestGetMovieListsWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLatest() {
-	aquaman, err := suite.GetMovieLatest(nil)
+	movie, err := suite.GetMovieLatest(nil)
 	suite.Nil(err)
-	suite.Equal(int64(0), aquaman.VoteCount)
+	suite.NotNil(movie.VoteCount)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLatestFail() {
@@ -276,9 +276,9 @@ func (suite *TMBDTestSuite) TestGetMovieLatestFail() {
 func (suite *TMBDTestSuite) TestGetMovieLatestWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
-	aquaman, err := suite.GetMovieLatest(options)
+	movie, err := suite.GetMovieLatest(options)
 	suite.Nil(err)
-	suite.Equal(int64(0), aquaman.VoteCount)
+	suite.NotNil(movie.VoteCount)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieNowPlaying() {
