@@ -120,3 +120,22 @@ func (suite *TMBDTestSuite) TestGetTVCreditsFail() {
 	_, err := suite.GetTVCredits(0, nil)
 	suite.Equal("The resource you requested could not be found.", err.Error())
 }
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeGroups() {
+	vikings, err := suite.GetTVEpisodeGroups(vikingsID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(vikingsID), vikings.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsFail() {
+	_, err := suite.GetTVEpisodeGroups(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	vikings, err := suite.GetTVEpisodeGroups(vikingsID, options)
+	suite.Nil(err)
+	suite.Equal(int64(vikingsID), vikings.ID)
+}

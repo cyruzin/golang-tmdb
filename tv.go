@@ -90,6 +90,7 @@ type TVDetails struct {
 	*TVChangesShort
 	*TVContentRatingsShort
 	*TVCreditsShort
+	*TVEpisodeGroupsShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -201,6 +202,35 @@ type TVCreditsShort struct {
 	} `json:"credits,omitempty"`
 }
 
+// TVEpisodeGroup type is a struct for episode group JSON response.
+type TVEpisodeGroup struct {
+	Results []struct {
+		Description  string `json:"description"`
+		EpisodeCount int    `json:"episode_count"`
+		GroupCount   int    `json:"group_count"`
+		ID           string `json:"id"`
+		Name         string `json:"name"`
+		Network      []struct {
+			ID            int64  `json:"id"`
+			LogoPath      string `json:"logo_path"`
+			Name          string `json:"name"`
+			OriginCountry string `json:"origin_country"`
+		} `json:"network"`
+		Type int `json:"type"`
+	} `json:"results"`
+}
+
+// TVEpisodeGroups type is a struct for episode groups JSON response.
+type TVEpisodeGroups struct {
+	*TVEpisodeGroup
+	ID int64 `json:"id"`
+}
+
+// TVEpisodeGroupsShort type is a short struct for episode groups JSON response.
+type TVEpisodeGroupsShort struct {
+	EpisodeGroups *TVEpisodeGroup `json:"episode_groups,omitempty"`
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -297,6 +327,22 @@ func (c *Client) GetTVCredits(id int, o map[string]string) (*TVCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/credits?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVCredits{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVEpisodeGroups get all of the episode groups that have been created for a TV show.
+//
+// With a group ID you can call the get TV episode group details method.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-episode-groups
+func (c *Client) GetTVEpisodeGroups(id int, o map[string]string) (*TVEpisodeGroups, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/episode_groups?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVEpisodeGroups{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
