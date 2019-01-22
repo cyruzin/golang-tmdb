@@ -180,3 +180,22 @@ func (suite *TMBDTestSuite) TestGetTVKeywordsFail() {
 	_, err := suite.GetTVKeywords(0)
 	suite.Equal("The resource you requested could not be found.", err.Error())
 }
+
+func (suite *TMBDTestSuite) TestGetTVRecommendations() {
+	flash, err := suite.GetTVRecommendations(flashID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), flash.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetTVRecommendationsFail() {
+	_, err := suite.GetTVRecommendations(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVRecommendationsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	flash, err := suite.GetTVRecommendations(flashID, options)
+	suite.Nil(err)
+	suite.Equal(int64(1), flash.Page)
+}

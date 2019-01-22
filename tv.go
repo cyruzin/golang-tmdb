@@ -93,6 +93,7 @@ type TVDetails struct {
 	*TVEpisodeGroupsShort
 	*TVExternalIDsShort
 	*TVKeywordsShort
+	*TVRecommendationsShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -310,6 +311,33 @@ type TVKeywordsShort struct {
 	} `json:"keywords,omitempty"`
 }
 
+// TVRecommendations type is a struct for recommendations JSON response.
+type TVRecommendations struct {
+	Page    int64 `json:"page"`
+	Results []struct {
+		PosterPath       string   `json:"poster_path"`
+		Popularity       float32  `json:"popularity"`
+		ID               int64    `json:"id"`
+		BackdropPath     string   `json:"backdrop_path"`
+		VoteAverage      float32  `json:"vote_average"`
+		Overview         string   `json:"overview"`
+		FirstAirDate     string   `json:"first_air_date"`
+		OriginCountry    []string `json:"origin_country"`
+		GenreIDs         []int64  `json:"genre_ids"`
+		OriginalLanguage string   `json:"original_language"`
+		VoteCount        int64    `json:"vote_count"`
+		Name             string   `json:"name"`
+		OriginalName     string   `json:"original_name"`
+	} `json:"results"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
+// TVRecommendationsShort type is a short struct for recommendations JSON response.
+type TVRecommendationsShort struct {
+	Recommendations *TVRecommendations `json:"recommendations,omitempty"`
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -476,6 +504,20 @@ func (c *Client) GetTVImages(id int, o map[string]string) (*TVImages, error) {
 func (c *Client) GetTVKeywords(id int) (*TVKeywords, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/keywords?api_key=%s", baseURL, tvURL, id, c.APIKey)
 	t := TVKeywords{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVRecommendations get the list of TV show recommendations for this item.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-recommendations
+func (c *Client) GetTVRecommendations(id int, o map[string]string) (*TVRecommendations, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/recommendations?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVRecommendations{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
