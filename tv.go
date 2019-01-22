@@ -95,6 +95,7 @@ type TVDetails struct {
 	*TVKeywordsShort
 	*TVRecommendationsShort
 	*TVScredenedTheatricallyShort
+	*TVReviewsShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -355,6 +356,27 @@ type TVScredenedTheatricallyShort struct {
 	ScreenedTheatrically *TVScredenedTheatrically `json:"screened_theatrically,omitempty"`
 }
 
+// TVReviews type is a struct for reviews JSON response.
+type TVReviews struct {
+	ID      int64 `json:"id,omitempty"`
+	Page    int64 `json:"page"`
+	Results []struct {
+		ID      string `json:"id"`
+		Author  string `json:"author"`
+		Content string `json:"content"`
+		URL     string `json:"url"`
+	} `json:"results"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
+// TVReviewsShort type is a short struct for reviews JSON response.
+type TVReviewsShort struct {
+	Reviews struct {
+		*TVReviews
+	} `json:"reviews,omitempty"`
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -549,6 +571,20 @@ func (c *Client) GetTVRecommendations(id int, o map[string]string) (*TVRecommend
 func (c *Client) GetTVScredenedTheatrically(id int) (*TVScredenedTheatrically, error) {
 	tmdbURL := fmt.Sprintf("%s%s%d/screened_theatrically?api_key=%s", baseURL, tvURL, id, c.APIKey)
 	t := TVScredenedTheatrically{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVReviews get the reviews for a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-reviews
+func (c *Client) GetTVReviews(id int, o map[string]string) (*TVReviews, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/reviews?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVReviews{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
