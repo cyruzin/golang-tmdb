@@ -91,6 +91,8 @@ type TVDetails struct {
 	*TVContentRatingsShort
 	*TVCreditsShort
 	*TVEpisodeGroupsShort
+	*TVExternalIDsShort
+	*TVKeywordsShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -231,6 +233,83 @@ type TVEpisodeGroupsShort struct {
 	EpisodeGroups *TVEpisodeGroup `json:"episode_groups,omitempty"`
 }
 
+// TVExternalID type is a struct for external id JSON response.
+type TVExternalID struct {
+	IMDbID      string `json:"imdb_id"`
+	FreebaseMID string `json:"freebase_mid"`
+	FreebaseID  string `json:"freebase_id"`
+	TVDBID      int64  `json:"tvdb_id"`
+	TVRageID    int64  `json:"tvrage_id"`
+	FacebookID  string `json:"facebook_id"`
+	InstagramID string `json:"instagram_id"`
+	TwitterID   string `json:"twitter_id"`
+}
+
+// TVExternalIDs type is a struct for external ids JSON response.
+type TVExternalIDs struct {
+	*TVExternalID
+	ID int64 `json:"id"`
+}
+
+// TVExternalIDsShort type is a short struct for external ids JSON response.
+type TVExternalIDsShort struct {
+	*TVExternalID `json:"external_ids,omitempty"`
+}
+
+// TVImage type is a struct for image JSON response.
+type TVImage struct {
+	Backdrops []struct {
+		AspectRatio float32 `json:"aspect_ratio"`
+		FilePath    string  `json:"file_path"`
+		Height      int     `json:"height"`
+		Iso639_1    string  `json:"iso_639_1"`
+		VoteAverage float32 `json:"vote_average"`
+		VoteCount   int64   `json:"vote_count"`
+		Width       int     `json:"width"`
+	} `json:"backdrops"`
+	Posters []struct {
+		AspectRatio float32 `json:"aspect_ratio"`
+		FilePath    string  `json:"file_path"`
+		Height      int     `json:"height"`
+		Iso639_1    string  `json:"iso_639_1"`
+		VoteAverage float32 `json:"vote_average"`
+		VoteCount   int64   `json:"vote_count"`
+		Width       int     `json:"width"`
+	} `json:"posters"`
+}
+
+// TVImages type is a struct for images JSON response.
+type TVImages struct {
+	ID int64 `json:"id"`
+	*TVImage
+}
+
+// TVImagesShort type is a short struct for images JSON response.
+type TVImagesShort struct {
+	Images *TVImage `json:"images,omitempty"`
+}
+
+// TVKeyword type is a strcut for keyword JSON response.
+type TVKeyword struct {
+	ID   int64  `json:"id"`
+	Name string `json:"name"`
+}
+
+// TVKeywords type is a struct for keywords JSON response.
+type TVKeywords struct {
+	ID      int64 `json:"id"`
+	Results []struct {
+		*TVKeyword
+	} `json:"results"`
+}
+
+// TVKeywordsShort type is a short struct for keywords JSON response.
+type TVKeywordsShort struct {
+	Keywords struct {
+		Results []*TVKeyword `json:"results,omitempty"`
+	} `json:"keywords,omitempty"`
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -343,6 +422,60 @@ func (c *Client) GetTVEpisodeGroups(id int, o map[string]string) (*TVEpisodeGrou
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/episode_groups?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVEpisodeGroups{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVExternalIDs get the external ids for a TV show.
+//
+// We currently support the following external sources.
+//
+// Media Databases: IMDb ID, TVDB ID, Freebase MID*, Freebase ID* TVRage ID*.
+//
+// Social IDs: Facebook, Instagram and Twitter.
+//
+// *Defunct or no longer available as a service.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-external-ids
+func (c *Client) GetTVExternalIDs(id int, o map[string]string) (*TVExternalIDs, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/external_ids?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVExternalIDs{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVImages get the images that belong to a TV show.
+//
+// Querying images with a language parameter will filter the results.
+// If you want to include a fallback language (especially useful for backdrops)
+// you can use the include_image_language parameter. This should be a comma
+// separated value like so: include_image_language=en,null.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-images
+func (c *Client) GetTVImages(id int, o map[string]string) (*TVImages, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/images?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVImages{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVKeywords get the keywords that have been added to a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-keywords
+func (c *Client) GetTVKeywords(id int) (*TVKeywords, error) {
+	tmdbURL := fmt.Sprintf("%s%s%d/keywords?api_key=%s", baseURL, tvURL, id, c.APIKey)
+	t := TVKeywords{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

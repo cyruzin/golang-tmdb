@@ -10,6 +10,16 @@ import (
 	"net/url"
 )
 
+const (
+	baseURL           = "https://api.themoviedb.org/3"
+	imageURL          = "https://image.tmdb.org/t/p"
+	permissionURL     = "https://www.themoviedb.org/authenticate/"
+	authenticationURL = "/authentication/"
+	movieURL          = "/movie/"
+	tvURL             = "/tv/"
+	peopleURL         = "/people/"
+)
+
 // Client type is a struct to instantiate this pkg.
 type Client struct {
 	APIKey string
@@ -21,16 +31,6 @@ type Error struct {
 	Success       bool   `json:"success,omitempty"`
 	StatusCode    int    `json:"status_code,omitempty"`
 }
-
-const (
-	baseURL           = "https://api.themoviedb.org/3"
-	imageURL          = "https://image.tmdb.org/t/p"
-	permissionURL     = "https://www.themoviedb.org/authenticate/"
-	authenticationURL = "/authentication/"
-	movieURL          = "/movie/"
-	tvURL             = "/tv/"
-	peopleURL         = "/people/"
-)
 
 func (c *Client) get(url string, data interface{}) error {
 	if url == "" {

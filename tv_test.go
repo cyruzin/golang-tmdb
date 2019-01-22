@@ -139,3 +139,44 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(vikingsID), vikings.ID)
 }
+
+func (suite *TMBDTestSuite) TestGetTVExternalIDs() {
+	flash, err := suite.GetTVExternalIDs(flashID, nil)
+	suite.Nil(err)
+	suite.Equal("CWTheFlash", flash.FacebookID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVExternalIDsFail() {
+	_, err := suite.GetTVExternalIDs(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVImages() {
+	flash, err := suite.GetTVImages(flashID, nil)
+	suite.Nil(err)
+	suite.NotNil(flash.Backdrops[0].FilePath)
+}
+
+func (suite *TMBDTestSuite) TestGetTVImagesFail() {
+	_, err := suite.GetTVImages(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVImagesWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	flash, err := suite.GetTVImages(flashID, options)
+	suite.Nil(err)
+	suite.Equal(int64(flashID), flash.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVKeywords() {
+	flash, err := suite.GetTVKeywords(flashID)
+	suite.Nil(err)
+	suite.Equal("dc comics", flash.Results[0].Name)
+}
+
+func (suite *TMBDTestSuite) TestGetTVKeywordsFail() {
+	_, err := suite.GetTVKeywords(0)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}

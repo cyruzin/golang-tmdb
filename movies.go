@@ -587,7 +587,7 @@ func (c *Client) GetMovieImages(id int, o map[string]string) (*MovieImages, erro
 	return &m, nil
 }
 
-// GetMovieKeywords the keywords that have been added to a movie.
+// GetMovieKeywords get the keywords that have been added to a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-keywords
 func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
