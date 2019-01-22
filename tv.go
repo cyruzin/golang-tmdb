@@ -94,6 +94,7 @@ type TVDetails struct {
 	*TVExternalIDsShort
 	*TVKeywordsShort
 	*TVRecommendationsShort
+	*TVScredenedTheatricallyShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -338,6 +339,22 @@ type TVRecommendationsShort struct {
 	Recommendations *TVRecommendations `json:"recommendations,omitempty"`
 }
 
+// TVScredenedTheatrically type is a struct for screened theatrically JSON response.
+type TVScredenedTheatrically struct {
+	ID      int64 `json:"id,omitempty"`
+	Results []struct {
+		ID            int64 `json:"id"`
+		EpisodeNumber int   `json:"episode_number"`
+		SeasonNumber  int   `json:"season_number"`
+	} `json:"results"`
+}
+
+// TVScredenedTheatricallyShort type is a short struct
+// for screened theatrically JSON response.
+type TVScredenedTheatricallyShort struct {
+	ScreenedTheatrically *TVScredenedTheatrically `json:"screened_theatrically,omitempty"`
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -518,6 +535,20 @@ func (c *Client) GetTVRecommendations(id int, o map[string]string) (*TVRecommend
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/recommendations?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVRecommendations{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVScredenedTheatrically get a list of seasons or episodes that
+// have been screened in a film festival or theatre.
+//
+// https://developers.themoviedb.org/3/tv/get-screened-theatrically
+func (c *Client) GetTVScredenedTheatrically(id int) (*TVScredenedTheatrically, error) {
+	tmdbURL := fmt.Sprintf("%s%s%d/screened_theatrically?api_key=%s", baseURL, tvURL, id, c.APIKey)
+	t := TVScredenedTheatrically{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

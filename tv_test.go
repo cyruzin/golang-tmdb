@@ -199,3 +199,14 @@ func (suite *TMBDTestSuite) TestGetTVRecommendationsWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(1), flash.Page)
 }
+
+func (suite *TMBDTestSuite) TestGetTVScredenedTheatrically() {
+	flash, err := suite.GetTVScredenedTheatrically(flashID)
+	suite.Nil(err)
+	suite.Equal(int64(flashID), flash.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVScredenedTheatricallyFail() {
+	_, err := suite.GetTVScredenedTheatrically(0)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
