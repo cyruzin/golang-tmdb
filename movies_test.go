@@ -175,14 +175,22 @@ func (suite *TMBDTestSuite) TestGetMovieVideosWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTranslations() {
-	bumblebee, err := suite.GetMovieTranslations(bumblebeeID)
+	bumblebee, err := suite.GetMovieTranslations(bumblebeeID, nil)
 	suite.Nil(err)
-	suite.Equal("DK", bumblebee.Translation[0].Iso3166_1)
+	suite.Equal("DK", bumblebee.Translations[0].Iso3166_1)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTranslationsFail() {
-	_, err := suite.GetMovieTranslations(0)
+	_, err := suite.GetMovieTranslations(0, nil)
 	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetMovieTranslationsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	bumblebee, err := suite.GetMovieTranslations(bumblebeeID, options)
+	suite.Nil(err)
+	suite.Equal(int64(bumblebeeID), bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendations() {

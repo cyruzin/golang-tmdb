@@ -242,8 +242,8 @@ type MovieVideosShort struct {
 
 // MovieTranslations type is a struct for translations JSON response.
 type MovieTranslations struct {
-	ID          int64 `json:"id,omitempty"`
-	Translation []struct {
+	ID           int64 `json:"id,omitempty"`
+	Translations []struct {
 		Iso639_1    string `json:"iso_639_1"`
 		Iso3166_1   string `json:"iso_3166_1"`
 		Name        string `json:"name"`
@@ -578,8 +578,9 @@ func (c *Client) GetMovieVideos(id int, o map[string]string) (*MovieVideos, erro
 // GetMovieTranslations get a list of translations that have been created for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-translations
-func (c *Client) GetMovieTranslations(id int) (*MovieTranslations, error) {
-	tmdbURL := fmt.Sprintf("%s%s%d/translations?api_key=%s", baseURL, movieURL, id, c.APIKey)
+func (c *Client) GetMovieTranslations(id int, o map[string]string) (*MovieTranslations, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/translations?api_key=%s%s", baseURL, movieURL, id, c.APIKey, options)
 	m := MovieTranslations{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {

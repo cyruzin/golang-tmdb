@@ -229,3 +229,41 @@ func (suite *TMBDTestSuite) TestGetTVReviewsWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(1), flash.Page)
 }
+
+func (suite *TMBDTestSuite) TestGetTVSimilar() {
+	flashID, err := suite.GetTVSimilar(flashID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(1), flashID.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSimilarFail() {
+	_, err := suite.GetTVSimilar(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVSimilarWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	flash, err := suite.GetTVSimilar(flashID, options)
+	suite.Nil(err)
+	suite.Equal(int64(1), flash.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetTVTranslations() {
+	flash, err := suite.GetTVTranslations(flashID, nil)
+	suite.Nil(err)
+	suite.Equal("US", flash.Translations[0].Iso3166_1)
+}
+
+func (suite *TMBDTestSuite) TestGetTVTranslationsFail() {
+	_, err := suite.GetTVTranslations(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVTranslationsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	flash, err := suite.GetTVTranslations(flashID, options)
+	suite.Nil(err)
+	suite.Equal(int64(flashID), flash.ID)
+}

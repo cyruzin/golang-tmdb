@@ -95,8 +95,10 @@ type TVDetails struct {
 	*TVImagesShort
 	*TVKeywordsShort
 	*TVRecommendationsShort
-	*TVScreenedTheatricallyShort
 	*TVReviewsShort
+	*TVScreenedTheatricallyShort
+	*TVSimilarShort
+	*TVTranslations
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -300,22 +302,6 @@ type TVRecommendationsShort struct {
 	Recommendations *TVRecommendations `json:"recommendations,omitempty"`
 }
 
-// TVScreenedTheatrically type is a struct for screened theatrically JSON response.
-type TVScreenedTheatrically struct {
-	ID      int64 `json:"id,omitempty"`
-	Results []struct {
-		ID            int64 `json:"id"`
-		EpisodeNumber int   `json:"episode_number"`
-		SeasonNumber  int   `json:"season_number"`
-	} `json:"results"`
-}
-
-// TVScreenedTheatricallyShort type is a short struct
-// for screened theatrically JSON response.
-type TVScreenedTheatricallyShort struct {
-	ScreenedTheatrically *TVScreenedTheatrically `json:"screened_theatrically,omitempty"`
-}
-
 // TVReviews type is a struct for reviews JSON response.
 type TVReviews struct {
 	ID      int64 `json:"id,omitempty"`
@@ -335,6 +321,55 @@ type TVReviewsShort struct {
 	Reviews struct {
 		*TVReviews
 	} `json:"reviews,omitempty"`
+}
+
+// TVScreenedTheatrically type is a struct for screened theatrically JSON response.
+type TVScreenedTheatrically struct {
+	ID      int64 `json:"id,omitempty"`
+	Results []struct {
+		ID            int64 `json:"id"`
+		EpisodeNumber int   `json:"episode_number"`
+		SeasonNumber  int   `json:"season_number"`
+	} `json:"results"`
+}
+
+// TVScreenedTheatricallyShort type is a short struct
+// for screened theatrically JSON response.
+type TVScreenedTheatricallyShort struct {
+	ScreenedTheatrically *TVScreenedTheatrically `json:"screened_theatrically,omitempty"`
+}
+
+// TVSimilar type is a struct for similar tv shows JSON response.
+type TVSimilar struct {
+	*TVRecommendations
+}
+
+// TVSimilarShort type is a short struct for similar tv shows JSON response.
+type TVSimilarShort struct {
+	Similar *TVSimilar `json:"similar,omitempty"`
+}
+
+// TVTranslations type is a struct for translations JSON response.
+type TVTranslations struct {
+	ID           int64 `json:"id,omitempty"`
+	Translations []struct {
+		Iso3166_1   string `json:"iso_3166_1"`
+		Iso639_1    string `json:"iso_639_1"`
+		Name        string `json:"name"`
+		EnglishName string `json:"english_name"`
+		Data        struct {
+			Name     string `json:"name"`
+			Overview string `json:"overview"`
+			Homepage string `json:"homepage"`
+		} `json:"data"`
+	} `json:"translations"`
+}
+
+// TVTranslationsShort type is a short struct for translations JSON response.
+type TVTranslationsShort struct {
+	Translations struct {
+		*TVTranslations
+	} `json:"translations,omitempty"`
 }
 
 // GetTVDetails get the primary TV show details by id.
@@ -524,6 +559,20 @@ func (c *Client) GetTVRecommendations(id int, o map[string]string) (*TVRecommend
 	return &t, nil
 }
 
+// GetTVReviews get the reviews for a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-reviews
+func (c *Client) GetTVReviews(id int, o map[string]string) (*TVReviews, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/reviews?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVReviews{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
 // GetTVScreenedTheatrically get a list of seasons or episodes that
 // have been screened in a film festival or theatre.
 //
@@ -538,13 +587,28 @@ func (c *Client) GetTVScreenedTheatrically(id int) (*TVScreenedTheatrically, err
 	return &t, nil
 }
 
-// GetTVReviews get the reviews for a TV show.
+// GetTVSimilar a list of similar TV shows.
+// These items are assembled by looking at keywords and genres.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-reviews
-func (c *Client) GetTVReviews(id int, o map[string]string) (*TVReviews, error) {
+// https://developers.themoviedb.org/3/tv/get-similar-tv-shows
+func (c *Client) GetTVSimilar(id int, o map[string]string) (*TVSimilar, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/reviews?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
-	t := TVReviews{}
+	tmdbURL := fmt.Sprintf("%s%s%d/similar?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVSimilar{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVTranslations get a list of translations that have been created for a TV Show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-translations
+func (c *Client) GetTVTranslations(id int, o map[string]string) (*TVTranslations, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/translations?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVTranslations{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
