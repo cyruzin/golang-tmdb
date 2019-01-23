@@ -252,7 +252,7 @@ func (suite *TMBDTestSuite) TestGetTVSimilarWithOptions() {
 func (suite *TMBDTestSuite) TestGetTVTranslations() {
 	flash, err := suite.GetTVTranslations(flashID, nil)
 	suite.Nil(err)
-	suite.Equal("US", flash.Translations[0].Iso3166_1)
+	suite.Equal("IR", flash.Translations[0].Iso3166_1)
 }
 
 func (suite *TMBDTestSuite) TestGetTVTranslationsFail() {

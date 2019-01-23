@@ -98,7 +98,7 @@ type TVDetails struct {
 	*TVReviewsShort
 	*TVScreenedTheatricallyShort
 	*TVSimilarShort
-	*TVTranslations
+	*TVTranslationsShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -367,9 +367,7 @@ type TVTranslations struct {
 
 // TVTranslationsShort type is a short struct for translations JSON response.
 type TVTranslationsShort struct {
-	Translations struct {
-		*TVTranslations
-	} `json:"translations,omitempty"`
+	Translations *TVTranslations `json:"translations,omitempty"`
 }
 
 // GetTVDetails get the primary TV show details by id.
