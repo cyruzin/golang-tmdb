@@ -23,7 +23,7 @@ To get started, import the `tmdb` package and create a `tmdb.Client`:
 import tmdb "github.com/cyruzin/golang-tmdb"
 
 tmdb := tmdb.Client{APIKey: "YOUR_API_KEY"}
-movie, err := tmdb.GetMovieDetails(1399, nil)
+movie, err := tmdb.GetMovieDetails(297802, nil)
 ```
 
 With optional params:
@@ -32,5 +32,5 @@ With optional params:
 options := make(map[string]string)
 options["language"] = "pt-BR"
 options["append_to_response"] = "credits,images"
-movie, err := tmdb.GetMovieDetails(1399, options)
+movie, err := tmdb.GetMovieDetails(297802, options)
 ```
