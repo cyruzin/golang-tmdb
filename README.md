@@ -2,3 +2,35 @@
 A brand new Golang Wrapper for the TMDB API.
 
 [![Build Status](https://travis-ci.org/cyruzin/golang-tmdb.svg?branch=master)](https://travis-ci.org/cyruzin/golang-tmdb) [![Build status](https://ci.appveyor.com/api/projects/status/vv76pwj3n4jssuhh?svg=true)](https://ci.appveyor.com/project/cyruzin/golang-tmdb) [![Coverage Status](https://coveralls.io/repos/github/cyruzin/golang-tmdb/badge.svg?branch=master&service=github)](https://coveralls.io/github/cyruzin/golang-tmdb?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/cyruzin/golang-tmdb)](https://goreportcard.com/report/github.com/cyruzin/golang-tmdb) [![GoDoc](https://godoc.org/github.com/cyruzin/golang-tmdb?status.svg)](https://godoc.org/github.com/cyruzin/golang-tmdb) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+
+## Status
+In development, it's not ready yet.
+
+## Requirements
+
+- Go 1.11.x or higher. We aim to support the latest supported versions of go.
+
+## Installation
+
+```sh
+go get -u github.com/cyruzin/golang-tmdb
+```
+## Usage
+
+To get started, import the `tmdb` package and create a `tmdb.Client`:
+
+```go
+import tmdb "github.com/cyruzin/golang-tmdb"
+
+tmdb := tmdb.Client{APIKey: "YOUR_API_KEY"}
+movie, err := tmdb.GetMovieDetails(1399, nil)
+```
+
+With optional params:
+
+```go
+options := make(map[string]string)
+options["language"] = "pt-BR"
+options["append_to_response"] = "credits,images"
+movie, err := tmdb.GetMovieDetails(1399, options)
+```
