@@ -267,3 +267,22 @@ func (suite *TMBDTestSuite) TestGetTVTranslationsWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(flashID), flash.ID)
 }
+
+func (suite *TMBDTestSuite) TestGetTVVideos() {
+	flash, err := suite.GetTVVideos(flashID, nil)
+	suite.Nil(err)
+	suite.Equal("552d7e27c3a368750100138b", flash.Results[0].ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVVideosFail() {
+	_, err := suite.GetTVVideos(0, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVVideosWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	flash, err := suite.GetTVVideos(flashID, options)
+	suite.Nil(err)
+	suite.Equal("552d7e27c3a368750100138b", flash.Results[0].ID)
+}

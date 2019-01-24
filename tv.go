@@ -99,6 +99,7 @@ type TVDetails struct {
 	*TVScreenedTheatricallyShort
 	*TVSimilarShort
 	*TVTranslationsShort
+	*TVVideosShort
 }
 
 // TVAccountStates type is a struct for account states JSON response.
@@ -370,6 +371,28 @@ type TVTranslationsShort struct {
 	Translations *TVTranslations `json:"translations,omitempty"`
 }
 
+// TVVideos type is a struct for videos JSON response.
+type TVVideos struct {
+	ID      int64 `json:"id,omitempty"`
+	Results []struct {
+		ID        string `json:"id"`
+		Iso639_1  string `json:"iso_639_1"`
+		Iso3166_1 string `json:"iso_3166_1"`
+		Key       string `json:"key"`
+		Name      string `json:"name"`
+		Site      string `json:"site"`
+		Size      int    `json:"size"`
+		Type      string `json:"type"`
+	} `json:"results"`
+}
+
+// TVVideosShort type is a short struct for videos JSON response.
+type TVVideosShort struct {
+	Videos struct {
+		*TVVideos
+	} `json:"videos,omitempty"`
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -613,3 +636,19 @@ func (c *Client) GetTVTranslations(id int, o map[string]string) (*TVTranslations
 	}
 	return &t, nil
 }
+
+// GetTVVideos get the videos that have been added to a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-videos
+func (c *Client) GetTVVideos(id int, o map[string]string) (*TVVideos, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d/videos?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	t := TVVideos{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// TODO: Rate TV Show (POST Request) and Delete Rating (DELETE Request)
