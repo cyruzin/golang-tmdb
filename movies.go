@@ -343,7 +343,7 @@ type MovieListsShort struct {
 	Lists *MovieLists `json:"lists,omitempty"`
 }
 
-// MovieLatest type is a struct for latest movie JSON response.
+// MovieLatest type is a struct for latest JSON response.
 type MovieLatest struct {
 	*MovieDetails
 }

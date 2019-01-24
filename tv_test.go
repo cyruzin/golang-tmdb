@@ -286,3 +286,103 @@ func (suite *TMBDTestSuite) TestGetTVVideosWithOptions() {
 	suite.Nil(err)
 	suite.Equal("552d7e27c3a368750100138b", flash.Results[0].ID)
 }
+
+func (suite *TMBDTestSuite) TestGetTVLatest() {
+	tv, err := suite.GetTVLatest(nil)
+	suite.Nil(err)
+	suite.NotNil(tv.VoteCount)
+}
+
+func (suite *TMBDTestSuite) TestGetTVLatestFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVLatest(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVLatestWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVLatest(options)
+	suite.Nil(err)
+	suite.NotNil(tv.VoteCount)
+}
+
+func (suite *TMBDTestSuite) TestGetTVAiringToday() {
+	tv, err := suite.GetTVAiringToday(nil)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}
+
+func (suite *TMBDTestSuite) TestGetTVAiringTodayFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVAiringToday(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVAiringTodayWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVAiringToday(options)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}
+
+func (suite *TMBDTestSuite) TestGetTVOnTheAir() {
+	tv, err := suite.GetTVOnTheAir(nil)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}
+
+func (suite *TMBDTestSuite) TestGetTVOnTheAirFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVOnTheAir(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVOnTheAirWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVOnTheAir(options)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}
+
+func (suite *TMBDTestSuite) TestGetTVPopular() {
+	tv, err := suite.GetTVPopular(nil)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}
+
+func (suite *TMBDTestSuite) TestGetTVPopularFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVPopular(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVPopularWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVPopular(options)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}
+
+func (suite *TMBDTestSuite) TestGetTVTopRated() {
+	tv, err := suite.GetTVTopRated(nil)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}
+
+func (suite *TMBDTestSuite) TestGetTVTopRatedFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVTopRated(nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVTopRatedWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVTopRated(options)
+	suite.Nil(err)
+	suite.NotNil(tv.TotalPages)
+}

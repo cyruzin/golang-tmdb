@@ -393,6 +393,48 @@ type TVVideosShort struct {
 	} `json:"videos,omitempty"`
 }
 
+// TVLatest type is a struct for latest JSON response.
+type TVLatest struct {
+	*TVDetails
+}
+
+// TVAiringToday type is a struct for airing today JSON response.
+type TVAiringToday struct {
+	Page         int64 `json:"page"`
+	TotalResults int64 `json:"total_results"`
+	TotalPages   int64 `json:"total_pages"`
+	Results      []struct {
+		OriginalName     string   `json:"original_name"`
+		GenreIDs         []int64  `json:"genre_ids"`
+		Name             string   `json:"name"`
+		Popularity       float32  `json:"popularity"`
+		OriginCountry    []string `json:"origin_country"`
+		VoteCount        int64    `json:"vote_count"`
+		FirstAirDate     string   `json:"first_air_date"`
+		BackdropPath     string   `json:"backdrop_path"`
+		OriginalLanguage string   `json:"original_language"`
+		ID               int64    `json:"id"`
+		VoteAverage      float32  `json:"vote_average"`
+		Overview         string   `json:"overview"`
+		PosterPath       string   `json:"poster_path"`
+	} `json:"results"`
+}
+
+// TVOnTheAir type is a struct for on the air JSON response.
+type TVOnTheAir struct {
+	*TVAiringToday
+}
+
+// TVPopular type is a struct for popular JSON response.
+type TVPopular struct {
+	*TVAiringToday
+}
+
+// TVTopRated type is a struct for top rated JSON response.
+type TVTopRated struct {
+	*TVAiringToday
+}
+
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
@@ -644,6 +686,88 @@ func (c *Client) GetTVVideos(id int, o map[string]string) (*TVVideos, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/videos?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
 	t := TVVideos{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVLatest get the most newly created TV show.
+//
+// This is a live response and will continuously change.
+//
+// https://developers.themoviedb.org/3/tv/get-latest-tv
+func (c *Client) GetTVLatest(o map[string]string) (*TVLatest, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%slatest?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	t := TVLatest{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVAiringToday get a list of TV shows that are airing today.
+// This query is purely day based as we do not currently support
+// airing times.
+//
+// You can specify a  to offset the day calculation.
+// Without a specified timezone, this query defaults
+// to EST (Eastern Time UTC-05:00).
+//
+// https://developers.themoviedb.org/3/tv/get-tv-airing-today
+func (c *Client) GetTVAiringToday(o map[string]string) (*TVAiringToday, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%sairing_today?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	t := TVAiringToday{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVOnTheAir get a list of shows that are currently on the air.
+//
+// This query looks for any TV show that has an episode with an
+// air date in the next 7 days.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-on-the-air
+func (c *Client) GetTVOnTheAir(o map[string]string) (*TVOnTheAir, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%son_the_air?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	t := TVOnTheAir{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVPopular get a list of the current popular TV shows on TMDb.
+// This list updates daily.
+//
+// https://developers.themoviedb.org/3/tv/get-popular-tv-shows
+func (c *Client) GetTVPopular(o map[string]string) (*TVPopular, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%spopular?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	t := TVPopular{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVTopRated get a list of the top rated TV shows on TMDb.
+//
+// https://developers.themoviedb.org/3/tv/get-top-rated-tv
+func (c *Client) GetTVTopRated(o map[string]string) (*TVTopRated, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%stop_rated?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	t := TVTopRated{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
