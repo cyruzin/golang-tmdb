@@ -17,6 +17,7 @@ const (
 	authenticationURL = "/authentication/"
 	movieURL          = "/movie/"
 	tvURL             = "/tv/"
+	tvSeasonURL       = "/season/"
 	peopleURL         = "/people/"
 )
 

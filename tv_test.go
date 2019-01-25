@@ -3,6 +3,11 @@ package tmdb
 const (
 	vikingsID = 44217
 	flashID   = 60735
+	gotID     = 1399
+)
+
+const (
+	gotSeasonID = 3624
 )
 
 func (suite *TMBDTestSuite) TestGetTVDetails() {
