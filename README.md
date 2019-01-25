@@ -20,10 +20,12 @@ go get -u github.com/cyruzin/golang-tmdb
 To get started, import the `tmdb` package and create a `tmdb.Client`:
 
 ```go
-import tmdb "github.com/cyruzin/golang-tmdb"
+import "github.com/cyruzin/golang-tmdb"
 
-tmdb := tmdb.Client{APIKey: "YOUR_API_KEY"}
-movie, err := tmdb.GetMovieDetails(297802, nil)
+var tmdbClient tmdb.Client
+
+tmdbClient.APIKey = "YOUR_API_KEY"
+movie, err := tmdbClient.GetMovieDetails(297802, nil)
 ```
 
 With optional params:
@@ -32,5 +34,5 @@ With optional params:
 options := make(map[string]string)
 options["language"] = "pt-BR"
 options["append_to_response"] = "credits,images"
-movie, err := tmdb.GetMovieDetails(297802, options)
+movie, err := tmdbClient.GetMovieDetails(297802, options)
 ```
