@@ -19,13 +19,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonsDetailsWithOptions() {
 	suite.Equal("1ª Temporada", got.Name)
 }
 
-func (suite *TMBDTestSuite) TestGetTVSeasonsChanges() {
-	got, err := suite.GetTVSeasonsChanges(gotSeasonID, nil)
-	suite.Nil(err)
-	suite.Nil(got.Changes[0].Key)
-}
-
-func (suite *TMBDTestSuite) TestGetTVSeasonsChangesWithOptions() {
+func (suite *TMBDTestSuite) TestGetTVSeasonsChange() {
 	options := make(map[string]string)
 	options["start_date"] = "2019-01-14"
 	options["end_date"] = "2019-01-25"
