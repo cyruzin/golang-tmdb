@@ -18,6 +18,7 @@ const (
 	movieURL          = "/movie/"
 	tvURL             = "/tv/"
 	tvSeasonURL       = "/season/"
+	tvEpisodeURL      = "/episode/"
 	peopleURL         = "/people/"
 )
 

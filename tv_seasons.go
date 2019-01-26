@@ -156,7 +156,10 @@ type TVSeasonsVideosShort struct {
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-details
 func (c *Client) GetTVSeasonsDetails(id, s int, o map[string]string) (*TVSeasonsDetails, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d%s%d?api_key=%s%s", baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d?api_key=%s%s",
+		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+	)
 	t := TVSeasonsDetails{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -188,7 +191,10 @@ func (c *Client) GetTVSeasonsChanges(id int, o map[string]string) (*TVSeasonsCha
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-credits
 func (c *Client) GetTVSeasonsCredits(id, s int, o map[string]string) (*TVSeasonsCredits, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d%s%d/credits?api_key=%s%s", baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d/credits?api_key=%s%s",
+		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+	)
 	t := TVSeasonsCredits{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -207,7 +213,10 @@ func (c *Client) GetTVSeasonsCredits(id, s int, o map[string]string) (*TVSeasons
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-external-ids
 func (c *Client) GetTVSeasonsExternalIDs(id, s int, o map[string]string) (*TVSeasonsExternalIDs, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d%s%d/external_ids?api_key=%s%s", baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d/external_ids?api_key=%s%s",
+		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+	)
 	t := TVSeasonsExternalIDs{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -226,7 +235,10 @@ func (c *Client) GetTVSeasonsExternalIDs(id, s int, o map[string]string) (*TVSea
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-images
 func (c *Client) GetTVSeasonsImages(id, s int, o map[string]string) (*TVSeasonsImages, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d%s%d/images?api_key=%s%s", baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d/images?api_key=%s%s",
+		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+	)
 	t := TVSeasonsImages{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -240,7 +252,10 @@ func (c *Client) GetTVSeasonsImages(id, s int, o map[string]string) (*TVSeasonsI
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-videos
 func (c *Client) GetTVSeasonsVideos(id, s int, o map[string]string) (*TVSeasonsVideos, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d%s%d/videos?api_key=%s%s", baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d/videos?api_key=%s%s",
+		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+	)
 	t := TVSeasonsVideos{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
