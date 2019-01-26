@@ -42,6 +42,7 @@ type TVSeasonsDetails struct {
 	ID           int64  `json:"id"`
 	PosterPath   string `json:"poster_path"`
 	SeasonNumber int    `json:"season_number"`
+	*TVSeasonsCreditsShort
 }
 
 // TVSeasonsChanges is a struct for changes JSON response.
@@ -60,6 +61,34 @@ type TVSeasonsChanges struct {
 		} `json:"items"`
 		Key string `json:"key"`
 	} `json:"changes"`
+}
+
+// TVSeasonsCredits type is a struct for credits JSON response.
+type TVSeasonsCredits struct {
+	Cast []struct {
+		Character   string `json:"character"`
+		CreditID    string `json:"credit_id"`
+		Gender      int    `json:"gender"`
+		ID          int64  `json:"id"`
+		Name        string `json:"name"`
+		Order       int    `json:"order"`
+		ProfilePath string `json:"profile_path"`
+	} `json:"cast"`
+	Crew []struct {
+		CreditID    string `json:"credit_id"`
+		Department  string `json:"department"`
+		Gender      int    `json:"gender"`
+		ID          int64  `json:"id"`
+		Job         string `json:"job"`
+		Name        string `json:"name"`
+		ProfilePath string `json:"profile_path"`
+	} `json:"crew"`
+	ID int `json:"id"`
+}
+
+// TVSeasonsCreditsShort type is a short struct for credits JSON response.
+type TVSeasonsCreditsShort struct {
+	Credits *TVSeasonsCredits `json:"credits"`
 }
 
 // GetTVSeasonsDetails get the TV season details by id.
@@ -95,3 +124,19 @@ func (c *Client) GetTVSeasonsChanges(id int, o map[string]string) (*TVSeasonsCha
 	}
 	return &t, nil
 }
+
+// GetTVSeasonsCredits get the credits for TV season.
+//
+// https://developers.themoviedb.org/3/tv-seasons/get-tv-season-credits
+func (c *Client) GetTVSeasonsCredits(id, s int, o map[string]string) (*TVSeasonsCredits, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf("%s%s%d%s%d/credits?api_key=%s%s", baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options)
+	t := TVSeasonsCredits{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// TODO: Account States
