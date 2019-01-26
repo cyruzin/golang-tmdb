@@ -48,3 +48,63 @@ func (suite *TMBDTestSuite) TestGetTVSeasonsCreditsWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(tv.ID)
 }
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsExternalIDs() {
+	tv, err := suite.GetTVSeasonsExternalIDs(gotID, 7, nil)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsExternalIDsFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVSeasonsExternalIDs(0, 7, nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsExternalIDsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVSeasonsExternalIDs(gotID, 7, options)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsImages() {
+	tv, err := suite.GetTVSeasonsImages(gotID, 7, nil)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsImagesFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVSeasonsImages(0, 7, nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsImagesWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVSeasonsImages(gotID, 7, options)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsVideos() {
+	tv, err := suite.GetTVSeasonsVideos(gotID, 7, nil)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsVideosFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVSeasonsVideos(0, 7, nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsVideosWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVSeasonsVideos(gotID, 7, options)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
