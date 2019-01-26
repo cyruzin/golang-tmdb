@@ -28,3 +28,23 @@ func (suite *TMBDTestSuite) TestGetTVSeasonsChange() {
 	suite.Nil(err)
 	suite.Equal("5c423aaf925141344cb32a9d", got.Changes[0].Items[0].ID)
 }
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsCredits() {
+	tv, err := suite.GetTVSeasonsCredits(gotID, 7, nil)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsCreditsFail() {
+	suite.Client.APIKey = ""
+	_, err := suite.GetTVSeasonsCredits(0, 7, nil)
+	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonsCreditsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tv, err := suite.GetTVSeasonsCredits(gotID, 7, options)
+	suite.Nil(err)
+	suite.NotNil(tv.ID)
+}
