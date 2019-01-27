@@ -34,6 +34,8 @@ type TVEpisodeDetails struct {
 	VoteCount      int64   `json:"vote_count"`
 	*TVEpisodeCreditsShort
 	*TVEpisodeExternalIDsShort
+	*TVEpisodeImagesShort
+	*TVEpisodeTranslationsShort
 }
 
 // TVEpisodeChanges type is a struct for changes JSON response.
@@ -99,6 +101,45 @@ type TVEpisodeExternalIDs struct {
 // TVEpisodeExternalIDsShort type is a short struct for external ids JSON response.
 type TVEpisodeExternalIDsShort struct {
 	ExternalIDs *TVEpisodeExternalIDs `json:"external_ids,omitempty"`
+}
+
+// TVEpisodeImages type is a struct for images JSON response.
+type TVEpisodeImages struct {
+	ID     int64 `json:"id,omitempty"`
+	Stills []struct {
+		AspectRatio float32     `json:"aspect_ratio"`
+		FilePath    string      `json:"file_path"`
+		Height      int         `json:"height"`
+		Iso6391     interface{} `json:"iso_639_1"`
+		VoteAverage float32     `json:"vote_average"`
+		VoteCount   int64       `json:"vote_count"`
+		Width       int         `json:"width"`
+	} `json:"stills"`
+}
+
+// TVEpisodeImagesShort type is a short struct for images JSON response.
+type TVEpisodeImagesShort struct {
+	Images *TVEpisodeImages `json:"images,omitempty"`
+}
+
+// TVEpisodeTranslations type is a struct for translations JSON response.
+type TVEpisodeTranslations struct {
+	ID           int64 `json:"id,omitempty"`
+	Translations []struct {
+		Iso3166_1   string `json:"iso_3166_1"`
+		Iso639_1    string `json:"iso_639_1"`
+		Name        string `json:"name"`
+		EnglishName string `json:"english_name"`
+		Data        struct {
+			Name     string `json:"name"`
+			Overview string `json:"overview"`
+		} `json:"data"`
+	} `json:"translations"`
+}
+
+// TVEpisodeTranslationsShort type is a short struct for translations JSON response.
+type TVEpisodeTranslationsShort struct {
+	Translations *TVEpisodeTranslations `json:"translations,omitempty"`
 }
 
 // GetTVEpisodeDetails get the TV episode details by id.
@@ -178,4 +219,41 @@ func (c *Client) GetTVEpisodeExternalIDs(id, s, e int) (*TVEpisodeExternalIDs, e
 	return &t, nil
 }
 
-// TODO: Account States
+// GetTVEpisodeImages get the images that belong to a TV episode.
+//
+// Querying images with a language parameter will filter the results.
+// If you want to include a fallback language (especially useful for backdrops)
+// you can use the include_image_language parameter.
+// This should be a comma seperated value like so: include_image_language=en,null.
+//
+// https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-images
+func (c *Client) GetTVEpisodeImages(id, s, e int) (*TVEpisodeImages, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d%s%d/images?api_key=%s",
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey,
+	)
+	t := TVEpisodeImages{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVEpisodeTranslations get the translation data for an episode.
+//
+// https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-translations
+func (c *Client) GetTVEpisodeTranslations(id, s, e int) (*TVEpisodeTranslations, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d%s%d/translations?api_key=%s",
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey,
+	)
+	t := TVEpisodeTranslations{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// TODO: Account States, Rate TV Episode, Delete Rating.

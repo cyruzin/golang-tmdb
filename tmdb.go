@@ -61,7 +61,7 @@ func (c *Client) post(url string, params, data interface{}) error {
 	if err != nil {
 		return errors.New("couldn't marshall the data")
 	}
-	res, err := http.Post(url, "application/json", bytes.NewBuffer(paramsJSON))
+	res, err := http.Post(url, "application/json;charset=utf-8", bytes.NewBuffer(paramsJSON))
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
