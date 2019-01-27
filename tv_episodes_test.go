@@ -43,3 +43,25 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeChangesWithOptions() {
 	suite.Nil(err)
 	suite.Equal("overview", got.Changes[0].Key)
 }
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeCredits() {
+	got, err := suite.GetTVEpisodeCredits(gotID, 1, 1)
+	suite.Nil(err)
+	suite.Equal(int64(gotEpisodeID), got.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeCreditsFail() {
+	_, err := suite.GetTVEpisodeCredits(0, 1, 1)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDs() {
+	got, err := suite.GetTVEpisodeExternalIDs(gotID, 1, 1)
+	suite.Nil(err)
+	suite.Equal(int64(gotEpisodeID), got.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDsFail() {
+	_, err := suite.GetTVEpisodeExternalIDs(0, 1, 1)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}

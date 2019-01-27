@@ -91,7 +91,7 @@ type TVSeasonsCredits struct {
 
 // TVSeasonsCreditsShort type is a short struct for credits JSON response.
 type TVSeasonsCreditsShort struct {
-	Credits *TVSeasonsCredits `json:"credits"`
+	Credits *TVSeasonsCredits `json:"credits,omitempty"`
 }
 
 // TVSeasonsExternalIDs type is a struct for external ids JSON response.
@@ -105,7 +105,7 @@ type TVSeasonsExternalIDs struct {
 
 // TVSeasonsExternalIDsShort type is a short struct for external ids JSON response.
 type TVSeasonsExternalIDsShort struct {
-	ExternalIDs *TVSeasonsExternalIDs `json:"external_ids"`
+	ExternalIDs *TVSeasonsExternalIDs `json:"external_ids,omitempty"`
 }
 
 // TVSeasonsImages type is a struct for images JSON response.
@@ -124,7 +124,7 @@ type TVSeasonsImages struct {
 
 // TVSeasonsImagesShort type is a short struct for images JSON response.
 type TVSeasonsImagesShort struct {
-	Images *TVSeasonsImages `json:"images"`
+	Images *TVSeasonsImages `json:"images,omitempty"`
 }
 
 // TVSeasonsVideos type is a struct for videos JSON response.
