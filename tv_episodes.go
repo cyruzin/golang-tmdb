@@ -34,7 +34,24 @@ type TVEpisodeDetails struct {
 	VoteCount      int64   `json:"vote_count"`
 }
 
-// GetTVEpisodeDetails get
+// TVEpisodeChanges type is a struct for changes JSON response.
+type TVEpisodeChanges struct {
+	Changes []struct {
+		Key   string `json:"key"`
+		Items []struct {
+			ID     string `json:"id"`
+			Action string `json:"action"`
+			Time   string `json:"time"`
+			Value  string `json:"value"`
+		} `json:"items"`
+	} `json:"changes"`
+}
+
+// GetTVEpisodeDetails get the TV episode details by id.
+//
+// Supports append_to_response.
+//
+// https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-details
 func (c *Client) GetTVEpisodeDetails(id, s, e int, o map[string]string) (*TVEpisodeDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
@@ -42,6 +59,27 @@ func (c *Client) GetTVEpisodeDetails(id, s, e int, o map[string]string) (*TVEpis
 		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, options,
 	)
 	t := TVEpisodeDetails{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// GetTVEpisodeChanges get the changes for a TV episode.
+// By default only the last 24 hours are returned.
+//
+// You can query up to 14 days in a single query by using
+// the start_date and end_date query parameters.
+//
+// https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-changes
+func (c *Client) GetTVEpisodeChanges(id int, o map[string]string) (*TVEpisodeChanges, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%sepisode/%d/changes?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
+	t := TVEpisodeChanges{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

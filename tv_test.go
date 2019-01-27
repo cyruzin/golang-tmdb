@@ -7,7 +7,8 @@ const (
 )
 
 const (
-	gotSeasonID = 3624
+	gotSeasonID  = 3624
+	gotEpisodeID = 63056
 )
 
 func (suite *TMBDTestSuite) TestGetTVDetails() {
