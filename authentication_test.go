@@ -28,14 +28,14 @@ func (suite *TMBDTestSuite) TestCreateRequestTokenFail() {
 // func (suite *TMBDTestSuite) TestCreateSession() {
 // }
 
-func (suite *TMBDTestSuite) TestCreateSessionDenied() {
-	session, err := suite.CreateSession("kpaishQpkpfVmbi")
-	suite.Nil(session)
-	suite.Equal("Session denied.", err.Error())
-}
+// func (suite *TMBDTestSuite) TestCreateSessionDenied() {
+// 	session, err := suite.CreateSession("kpaishQpkpfVmbi")
+// 	suite.Nil(session)
+// 	suite.Equal("Session denied.", err.Error())
+// }
 
-func (suite *TMBDTestSuite) TestCreateSessionFail() {
-	suite.Client.APIKey = ""
-	_, err := suite.CreateRequestToken()
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
-}
+// func (suite *TMBDTestSuite) TestCreateSessionFail() {
+// 	suite.Client.APIKey = ""
+// 	_, err := suite.CreateRequestToken()
+// 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+// }

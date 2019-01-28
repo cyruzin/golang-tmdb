@@ -302,37 +302,4 @@ func (c *Client) GetTVEpisodeVideos(id, s, e int, o map[string]string) (*TVEpiso
 	return &t, nil
 }
 
-// PostTVEpisodeRate rate a TV episode.
-//
-// A valid session or guest session ID is required.
-//
-// https://developers.themoviedb.org/3/tv-episodes/rate-tv-episode
-// func (c *Client) PostTVEpisodeRate(id, s, e int, sid, gsi string, v float32) (*TVEpisodeRate, error) {
-// 	tmdbURL := ""
-// 	if sid != "" {
-// 		tmdbURL = fmt.Sprintf(
-// 			"%s%s%d%s%d%s%d/rating?api_key=%s&session_id=%s",
-// 			baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, sid,
-// 		)
-// 	} else if gsi != "" {
-// 		tmdbURL = fmt.Sprintf(
-// 			"%s%s%d%s%d%s%d/rating?api_key=%s&guest_session_id=%s",
-// 			baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, gsi,
-// 		)
-// 	} else if sid != "" && gsi != "" {
-// 		tmdbURL = fmt.Sprintf(
-// 			"%s%s%d%s%d%s%d/rating?api_key=%s&session_id=%s&guest_session_id=%s",
-// 			baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, sid, gsi,
-// 		)
-// 	}
-// 	t := TVEpisodeRate{}
-// 	b := []byte(`{"value": "9.5"}`)
-
-// 	err := c.post(tmdbURL, b, &t)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return &t, nil
-// }
-
 // TODO: Account States, Rate TV Episode, Delete Rating.

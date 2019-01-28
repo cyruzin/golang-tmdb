@@ -1,7 +1,6 @@
 package tmdb
 
 import (
-	"encoding/json"
 	"fmt"
 )
 
@@ -65,20 +64,22 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 // once a user has validated the request token.
 //
 // https://developers.themoviedb.org/3/authentication/create-session
-func (c *Client) CreateSession(rt string) (*Session, error) {
-	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
-	requestToken := RequestToken{RequestToken: rt}
-	j, err := json.Marshal(&requestToken)
-	if err != nil {
-		return nil, err
-	}
-	a := Session{}
-	err = c.post(tmdbURL, j, &a)
-	if err != nil {
-		return nil, err
-	}
-	return &a, nil
-}
+// func (c *Client) CreateSession(rt string) (*Session, error) {
+// 	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
+// 	requestToken := struct {
+// 		RequestToken string `json:"request_token"`
+// 	}{rt}
+// 	j, err := json.Marshal(requestToken)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	a := Session{}
+// 	err = c.post(tmdbURL, j, a)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &a, nil
+// }
 
 // CreateSessionWithLogin creates a new session id using login.
 //
