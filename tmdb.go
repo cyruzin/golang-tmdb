@@ -53,17 +53,18 @@ func (c *Client) get(url string, data interface{}) error {
 	return nil
 }
 
-func (c *Client) post(url string, params, data interface{}) error {
+func (c *Client) post(url string, params []byte, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-	paramsJSON, err := json.Marshal(&params)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(params))
 	if err != nil {
-		return errors.New("couldn't marshall the data")
+		return errors.New(err.Error())
 	}
-	res, err := http.Post(url, "application/json;charset=utf-8", bytes.NewBuffer(paramsJSON))
+	req.Header.Add("content-type", "application/json;charset=utf-8")
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return fmt.Errorf("could not fetch the url: %s", err)
+		return errors.New(err.Error())
 	}
 	defer res.Body.Close()
 	if res.StatusCode != http.StatusCreated {

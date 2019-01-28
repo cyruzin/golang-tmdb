@@ -1,6 +1,8 @@
 package tmdb
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // TVEpisodeDetails type is a struct for details JSON response.
 type TVEpisodeDetails struct {
@@ -36,6 +38,7 @@ type TVEpisodeDetails struct {
 	*TVEpisodeExternalIDsShort
 	*TVEpisodeImagesShort
 	*TVEpisodeTranslationsShort
+	*TVEpisodeVideosShort
 }
 
 // TVEpisodeChanges type is a struct for changes JSON response.
@@ -140,6 +143,32 @@ type TVEpisodeTranslations struct {
 // TVEpisodeTranslationsShort type is a short struct for translations JSON response.
 type TVEpisodeTranslationsShort struct {
 	Translations *TVEpisodeTranslations `json:"translations,omitempty"`
+}
+
+// TVEpisodeRate type is a struct for rate JSON response.
+type TVEpisodeRate struct {
+	StatusCode    int    `json:"status_code"`
+	StatusMessage string `json:"status_message"`
+}
+
+// TVEpisodeVideos type is a struct for videos JSON response.
+type TVEpisodeVideos struct {
+	ID      int64 `json:"id,omitempty"`
+	Results []struct {
+		ID        string `json:"id"`
+		Iso639_1  string `json:"iso_639_1"`
+		Iso3166_1 string `json:"iso_3166_1"`
+		Key       string `json:"key"`
+		Name      string `json:"name"`
+		Site      string `json:"site"`
+		Size      int    `json:"size"`
+		Type      string `json:"type"`
+	} `json:"results"`
+}
+
+// TVEpisodeVideosShort type is a short struct for videos JSON response.
+type TVEpisodeVideosShort struct {
+	Videos *TVEpisodeVideos `json:"videos,omitempty"`
 }
 
 // GetTVEpisodeDetails get the TV episode details by id.
@@ -255,5 +284,55 @@ func (c *Client) GetTVEpisodeTranslations(id, s, e int) (*TVEpisodeTranslations,
 	}
 	return &t, nil
 }
+
+// GetTVEpisodeVideos get the videos that have been added to a TV episode.
+//
+// https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-videos
+func (c *Client) GetTVEpisodeVideos(id, s, e int, o map[string]string) (*TVEpisodeVideos, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d%s%d/videos?api_key=%s%s",
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, options,
+	)
+	t := TVEpisodeVideos{}
+	err := c.get(tmdbURL, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+// PostTVEpisodeRate rate a TV episode.
+//
+// A valid session or guest session ID is required.
+//
+// https://developers.themoviedb.org/3/tv-episodes/rate-tv-episode
+// func (c *Client) PostTVEpisodeRate(id, s, e int, sid, gsi string, v float32) (*TVEpisodeRate, error) {
+// 	tmdbURL := ""
+// 	if sid != "" {
+// 		tmdbURL = fmt.Sprintf(
+// 			"%s%s%d%s%d%s%d/rating?api_key=%s&session_id=%s",
+// 			baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, sid,
+// 		)
+// 	} else if gsi != "" {
+// 		tmdbURL = fmt.Sprintf(
+// 			"%s%s%d%s%d%s%d/rating?api_key=%s&guest_session_id=%s",
+// 			baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, gsi,
+// 		)
+// 	} else if sid != "" && gsi != "" {
+// 		tmdbURL = fmt.Sprintf(
+// 			"%s%s%d%s%d%s%d/rating?api_key=%s&session_id=%s&guest_session_id=%s",
+// 			baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, sid, gsi,
+// 		)
+// 	}
+// 	t := TVEpisodeRate{}
+// 	b := []byte(`{"value": "9.5"}`)
+
+// 	err := c.post(tmdbURL, b, &t)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &t, nil
+// }
 
 // TODO: Account States, Rate TV Episode, Delete Rating.

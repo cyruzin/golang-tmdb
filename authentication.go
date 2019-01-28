@@ -1,6 +1,7 @@
 package tmdb
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
@@ -67,8 +68,12 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 func (c *Client) CreateSession(rt string) (*Session, error) {
 	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
 	requestToken := RequestToken{RequestToken: rt}
+	j, err := json.Marshal(&requestToken)
+	if err != nil {
+		return nil, err
+	}
 	a := Session{}
-	err := c.post(tmdbURL, &requestToken, &a)
+	err = c.post(tmdbURL, j, &a)
 	if err != nil {
 		return nil, err
 	}

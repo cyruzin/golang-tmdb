@@ -41,15 +41,13 @@ func (suite *TMBDTestSuite) TestPostFail() {
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 	err = suite.post("", nil, nil)
 	suite.Equal("url field is empty", err.Error())
-	err = suite.post("https://jsonplaceholder.typicode.com/todos", make(chan int), nil)
-	suite.Equal("couldn't marshall the data", err.Error())
 	b := []byte(`{"title": "test"}`)
-	err = suite.post("https://jsonplaceholder.typicode.com/todos", bytes.NewBuffer(b), 0)
+	err = suite.post("https://jsonplaceholder.typicode.com/todos", b, 0)
 	suite.Contains(err.Error(), "could not decode the data")
 	var a struct {
 		ID int `json:"id"`
 	}
-	err = suite.post("https://jsonplaceholder.typicode.com/todos", bytes.NewBuffer(b), &a)
+	err = suite.post("https://jsonplaceholder.typicode.com/todos", b, &a)
 	suite.Nil(err)
 }
 

@@ -87,3 +87,22 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeTranslationsFail() {
 	_, err := suite.GetTVEpisodeTranslations(0, 1, 1)
 	suite.Equal("The resource you requested could not be found.", err.Error())
 }
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeVideos() {
+	got, err := suite.GetTVEpisodeVideos(gotID, 1, 1, nil)
+	suite.Nil(err)
+	suite.Equal(int64(gotEpisodeID), got.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeVideosFail() {
+	_, err := suite.GetTVEpisodeVideos(0, 1, 2, nil)
+	suite.Equal("The resource you requested could not be found.", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestGetTVEpisodeVideosWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	got, err := suite.GetTVEpisodeVideos(gotID, 1, 2, options)
+	suite.Nil(err)
+	suite.Equal(int64(63057), got.ID)
+}
