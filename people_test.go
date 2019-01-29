@@ -40,3 +40,63 @@ func (suite *TMBDTestSuite) TestGetPeopleChangesWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.Changes)
 }
+
+func (suite *TMBDTestSuite) TestGetPeopleMovieCredits() {
+	jasonMomoa, err := suite.GetPeopleMovieCredits(jasonMomoaID, nil)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleMovieCreditsFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleMovieCredits(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleMovieCreditsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	jasonMomoa, err := suite.GetPeopleMovieCredits(jasonMomoaID, options)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTVCredits() {
+	jasonMomoa, err := suite.GetPeopleTVCredits(jasonMomoaID, nil)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTVCreditsFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleTVCredits(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTVCreditsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	jasonMomoa, err := suite.GetPeopleTVCredits(jasonMomoaID, options)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleCombinedCredits() {
+	jasonMomoa, err := suite.GetPeopleCombinedCredits(jasonMomoaID, nil)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleCombinedCreditsFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleCombinedCredits(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleCombinedCreditsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	jasonMomoa, err := suite.GetPeopleCombinedCredits(jasonMomoaID, options)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
