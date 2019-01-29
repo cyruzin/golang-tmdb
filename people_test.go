@@ -100,3 +100,23 @@ func (suite *TMBDTestSuite) TestGetPeopleCombinedCreditsWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
+
+func (suite *TMBDTestSuite) TestGetPeopleExternalIDs() {
+	jasonMomoa, err := suite.GetPeopleExternalIDs(jasonMomoaID, nil)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleExternalIDsFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleExternalIDs(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleExternalIDsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	jasonMomoa, err := suite.GetPeopleExternalIDs(jasonMomoaID, options)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}

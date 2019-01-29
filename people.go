@@ -22,6 +22,7 @@ type PeopleDetails struct {
 	*PeopleMovieCreditsShort
 	*PeopleTVCreditsShort
 	*PeopleCombinedCreditsShort
+	*PeopleExternalIDsShort
 }
 
 // PeopleChanges type is a struct for changes JSON response.
@@ -194,6 +195,23 @@ type PeopleCombinedCreditsShort struct {
 	CombinedCredits *PeopleCombinedCredits `json:"combined_credits,omitempty"`
 }
 
+// PeopleExternalIDs type is a struct for external ids JSON response.
+type PeopleExternalIDs struct {
+	ID          int64  `json:"id,omitempty"`
+	TwitterID   string `json:"twitter_id"`
+	FacebookID  string `json:"facebook_id"`
+	TvrageID    int64  `json:"tvrage_id"`
+	InstagramID string `json:"instagram_id"`
+	FreebaseMid string `json:"freebase_mid"`
+	ImdbID      string `json:"imdb_id"`
+	FreebaseID  string `json:"freebase_id"`
+}
+
+// PeopleExternalIDsShort type is a short struct for external ids JSON response.
+type PeopleExternalIDsShort struct {
+	ExternalIDs *PeopleExternalIDs `json:"external_ids,omitempty"`
+}
+
 // GetPeopleDetails get the primary person details by id.
 //
 // Supports append_to_response.
@@ -273,6 +291,26 @@ func (c *Client) GetPeopleCombinedCredits(id int, o map[string]string) (*PeopleC
 		"%s%s%d/combined_credits?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PeopleCombinedCredits{}
+	err := c.get(tmdbURL, &p)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
+}
+
+// GetPeopleExternalIDs get the external ids for a person.
+// We currently support the following external sources.
+//
+// External Sources: IMDb ID, Facebook, Freebase MID, Freebase ID,
+// Instagram, TVRage ID, Twitter.
+//
+// https://developers.themoviedb.org/3/people/get-person-external-ids
+func (c *Client) GetPeopleExternalIDs(id int, o map[string]string) (*PeopleExternalIDs, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/external_ids?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+	)
+	p := PeopleExternalIDs{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
