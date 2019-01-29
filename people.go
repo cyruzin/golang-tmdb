@@ -23,6 +23,7 @@ type PeopleDetails struct {
 	*PeopleTVCreditsShort
 	*PeopleCombinedCreditsShort
 	*PeopleExternalIDsShort
+	*PeopleImagesShort
 }
 
 // PeopleChanges type is a struct for changes JSON response.
@@ -44,7 +45,7 @@ type PeopleChanges struct {
 
 // PeopleChangesShort type is a short struct for changes JSON response.
 type PeopleChangesShort struct {
-	Change *PeopleChanges `json:"changes,omitempty"`
+	Changes *PeopleChanges `json:"changes,omitempty"`
 }
 
 // PeopleMovieCredits type is a struct for movie credits JSON response.
@@ -212,6 +213,25 @@ type PeopleExternalIDsShort struct {
 	ExternalIDs *PeopleExternalIDs `json:"external_ids,omitempty"`
 }
 
+// PeopleImages type is a struct for images JSON response.
+type PeopleImages struct {
+	Profiles []struct {
+		Iso639_1    string  `json:"iso_639_1"`
+		Width       int     `json:"width"`
+		Height      int     `json:"height"`
+		VoteCount   int64   `json:"vote_count"`
+		VoteAverage float32 `json:"vote_average"`
+		FilePath    string  `json:"file_path"`
+		AspectRatio float32 `json:"aspect_ratio"`
+	} `json:"profiles"`
+	ID int `json:"id,omitempty"`
+}
+
+// PeopleImagesShort type is a short struct for images JSON response.
+type PeopleImagesShort struct {
+	Images *PeopleImages `json:"images,omitempty"`
+}
+
 // GetPeopleDetails get the primary person details by id.
 //
 // Supports append_to_response.
@@ -311,6 +331,21 @@ func (c *Client) GetPeopleExternalIDs(id int, o map[string]string) (*PeopleExter
 		"%s%s%d/external_ids?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PeopleExternalIDs{}
+	err := c.get(tmdbURL, &p)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
+}
+
+// GetPeopleImages get the images for a person.
+//
+// https://developers.themoviedb.org/3/people/get-person-images
+func (c *Client) GetPeopleImages(id int) (*PeopleImages, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/images?api_key=%s", baseURL, personURL, id, c.APIKey,
+	)
+	p := PeopleImages{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err

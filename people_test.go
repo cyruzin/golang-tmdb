@@ -120,3 +120,15 @@ func (suite *TMBDTestSuite) TestGetPeopleExternalIDsWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
+
+func (suite *TMBDTestSuite) TestGetPeopleImages() {
+	jasonMomoa, err := suite.GetPeopleImages(jasonMomoaID)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleImagesFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleImages(0)
+	suite.NotNil(err)
+}
