@@ -68,10 +68,10 @@ type MovieDetails struct {
 
 // MovieAccountStates type is a struct for account states JSON response.
 type MovieAccountStates struct {
-	ID        int64           `json:"id"`
-	Favorite  bool            `json:"favorite"`
-	Rated     json.RawMessage `json:"rated"`
-	Watchlist bool            `json:"watchlist"`
+	ID        int64            `json:"id"`
+	Favorite  bool             `json:"favorite"`
+	Rated     *json.RawMessage `json:"rated"`
+	Watchlist bool             `json:"watchlist"`
 }
 
 // MovieAlternativeTitles type is a struct for alternative titles JSON response.
@@ -94,12 +94,12 @@ type MovieChanges struct {
 	Changes []struct {
 		Key   string `json:"key"`
 		Items []struct {
-			ID            json.RawMessage `json:"id"`
-			Action        json.RawMessage `json:"action"`
-			Time          json.RawMessage `json:"time"`
-			Iso639_1      json.RawMessage `json:"iso_639_1"`
-			Value         json.RawMessage `json:"value"`
-			OriginalValue json.RawMessage `json:"original_value"`
+			ID            *json.RawMessage `json:"id"`
+			Action        *json.RawMessage `json:"action"`
+			Time          *json.RawMessage `json:"time"`
+			Iso639_1      *json.RawMessage `json:"iso_639_1"`
+			Value         *json.RawMessage `json:"value"`
+			OriginalValue *json.RawMessage `json:"original_value"`
 		} `json:"items"`
 	} `json:"changes"`
 }

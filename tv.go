@@ -104,10 +104,10 @@ type TVDetails struct {
 
 // TVAccountStates type is a struct for account states JSON response.
 type TVAccountStates struct {
-	ID        int64           `json:"id"`
-	Favorite  bool            `json:"favorite"`
-	Rated     json.RawMessage `json:"rated"`
-	Watchlist bool            `json:"watchlist"`
+	ID        int64            `json:"id"`
+	Favorite  bool             `json:"favorite"`
+	Rated     *json.RawMessage `json:"rated"`
+	Watchlist bool             `json:"watchlist"`
 }
 
 // TVAlternativeTitles type is a struct for alternative titles JSON response.
