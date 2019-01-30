@@ -18,7 +18,7 @@ type TMBDTestSuite struct {
 func (suite *TMBDTestSuite) SetupTest() {
 	suite.APIKey = os.Getenv("APIKey")
 	// Workaround to avoid API rate limiting error message while testing.
-	time.Sleep(1 * time.Second)
+	time.Sleep(200 * time.Millisecond)
 }
 
 func TestSuite(t *testing.T) {
