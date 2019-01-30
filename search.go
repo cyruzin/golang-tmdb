@@ -1,6 +1,7 @@
 package tmdb
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/url"
 )
@@ -60,11 +61,72 @@ type SearchMovies struct {
 		PosterPath       string  `json:"poster_path"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
-		GenreIds         []int   `json:"genre_ids"`
+		GenreIDs         []int64 `json:"genre_ids"`
 		BackdropPath     string  `json:"backdrop_path"`
 		Adult            bool    `json:"adult"`
 		Overview         string  `json:"overview"`
 		ReleaseDate      string  `json:"release_date"`
+	} `json:"results"`
+}
+
+// SearchMulti type is a struct for multi JSON response.
+type SearchMulti struct {
+	Page         int64           `json:"page"`
+	Results      json.RawMessage `json:"results"`
+	TotalResults int64           `json:"total_results"`
+	TotalPages   int64           `json:"total_pages"`
+}
+
+// SearchPeople type is a struct for people JSON response.
+type SearchPeople struct {
+	Page         int64 `json:"page"`
+	TotalResults int64 `json:"total_results"`
+	TotalPages   int64 `json:"total_pages"`
+	Results      []struct {
+		Popularity  float32 `json:"popularity"`
+		ID          int64   `json:"id"`
+		ProfilePath string  `json:"profile_path"`
+		Name        string  `json:"name"`
+		KnownFor    []struct {
+			VoteAverage      float32 `json:"vote_average"`
+			VoteCount        int64   `json:"vote_count"`
+			ID               int64   `json:"id"`
+			Video            bool    `json:"video"`
+			MediaType        string  `json:"media_type"`
+			Title            string  `json:"title"`
+			Popularity       float32 `json:"popularity"`
+			PosterPath       string  `json:"poster_path"`
+			OriginalLanguage string  `json:"original_language"`
+			OriginalTitle    string  `json:"original_title"`
+			GenreIDs         []int64 `json:"genre_ids"`
+			BackdropPath     string  `json:"backdrop_path"`
+			Adult            bool    `json:"adult"`
+			Overview         string  `json:"overview"`
+			ReleaseDate      string  `json:"release_date"`
+		} `json:"known_for"`
+		Adult bool `json:"adult"`
+	} `json:"results"`
+}
+
+// SearchTVShows type is a struct for tv show JSON response.
+type SearchTVShows struct {
+	Page         int64 `json:"page"`
+	TotalResults int64 `json:"total_results"`
+	TotalPages   int64 `json:"total_pages"`
+	Results      []struct {
+		OriginalName     string   `json:"original_name"`
+		ID               int64    `json:"id"`
+		Name             string   `json:"name"`
+		VoteCount        int64    `json:"vote_count"`
+		VoteAverage      float32  `json:"vote_average"`
+		PosterPath       string   `json:"poster_path"`
+		FirstAirDate     string   `json:"first_air_date"`
+		Popularity       float32  `json:"popularity"`
+		GenreIDs         []int64  `json:"genre_ids"`
+		OriginalLanguage string   `json:"original_language"`
+		BackdropPath     string   `json:"backdrop_path"`
+		Overview         string   `json:"overview"`
+		OriginCountry    []string `json:"origin_country"`
 	} `json:"results"`
 }
 
@@ -125,6 +187,56 @@ func (c *Client) GetSearchMovies(q string, o map[string]string) (*SearchMovies, 
 		"%s%smovie?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchMovies{}
+	err := c.get(tmdbURL, &s)
+	if err != nil {
+		return nil, err
+	}
+	return &s, nil
+}
+
+// GetSearchMulti search multiple models in a single request.
+// Multi search currently supports searching for movies,
+// tv shows and people in a single request.
+//
+// https://developers.themoviedb.org/3/search/multi-search
+func (c *Client) GetSearchMulti(q string, o map[string]string) (*SearchMulti, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%smulti?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+	)
+	s := SearchMulti{}
+	err := c.get(tmdbURL, &s)
+	if err != nil {
+		return nil, err
+	}
+	return &s, nil
+}
+
+// GetSearchPeople search for people.
+//
+// https://developers.themoviedb.org/3/search/search-people
+func (c *Client) GetSearchPeople(q string, o map[string]string) (*SearchPeople, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%sperson?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+	)
+	s := SearchPeople{}
+	err := c.get(tmdbURL, &s)
+	if err != nil {
+		return nil, err
+	}
+	return &s, nil
+}
+
+// GetSearchTVShow search for a TV Show.
+//
+// https://developers.themoviedb.org/3/search/search-tv-shows
+func (c *Client) GetSearchTVShow(q string, o map[string]string) (*SearchTVShows, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%stv?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+	)
+	s := SearchTVShows{}
 	err := c.get(tmdbURL, &s)
 	if err != nil {
 		return nil, err

@@ -84,3 +84,63 @@ func (suite *TMBDTestSuite) TestGetSearchMoviesWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(search.Page)
 }
+
+func (suite *TMBDTestSuite) TestGetSearchMulti() {
+	search, err := suite.GetSearchMulti(defaultQuery, nil)
+	suite.Nil(err)
+	suite.NotNil(search.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchMultiFail() {
+	suite.APIKey = ""
+	_, err := suite.GetSearchMulti(defaultQuery, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchMultiWithOptions() {
+	options := make(map[string]string)
+	options["page"] = "1"
+	search, err := suite.GetSearchMulti(defaultQuery, options)
+	suite.Nil(err)
+	suite.NotNil(search.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchPeople() {
+	search, err := suite.GetSearchPeople(defaultQuery, nil)
+	suite.Nil(err)
+	suite.NotNil(search.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchPeopleFail() {
+	suite.APIKey = ""
+	_, err := suite.GetSearchPeople(defaultQuery, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchPeopleWithOptions() {
+	options := make(map[string]string)
+	options["page"] = "1"
+	search, err := suite.GetSearchPeople(defaultQuery, options)
+	suite.Nil(err)
+	suite.NotNil(search.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchTVShow() {
+	search, err := suite.GetSearchTVShow(defaultQuery, nil)
+	suite.Nil(err)
+	suite.NotNil(search.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchTVShowFail() {
+	suite.APIKey = ""
+	_, err := suite.GetSearchTVShow(defaultQuery, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetSearchTVShowWithOptions() {
+	options := make(map[string]string)
+	options["page"] = "1"
+	search, err := suite.GetSearchTVShow(defaultQuery, options)
+	suite.Nil(err)
+	suite.NotNil(search.Page)
+}
