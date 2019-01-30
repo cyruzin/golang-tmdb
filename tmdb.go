@@ -20,6 +20,7 @@ const (
 	tvSeasonURL       = "/season/"
 	tvEpisodeURL      = "/episode/"
 	personURL         = "/person/"
+	searchURL         = "/search/"
 )
 
 // Client type is a struct to instantiate this pkg.

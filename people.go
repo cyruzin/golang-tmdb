@@ -528,3 +528,5 @@ func (c *Client) GetPeoplePopular(o map[string]string) (*PeoplePopular, error) {
 	}
 	return &p, nil
 }
+
+// TODO: Check Popular func.
