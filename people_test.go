@@ -1,6 +1,9 @@
 package tmdb
 
-const jasonMomoaID = 117642
+const (
+	tomCruiseID  = 500
+	jasonMomoaID = 117642
+)
 
 func (suite *TMBDTestSuite) TestGetPeopleDetails() {
 	jasonMomoa, err := suite.GetPeopleDetails(jasonMomoaID, nil)
@@ -131,4 +134,84 @@ func (suite *TMBDTestSuite) TestGetPeopleImagesFail() {
 	suite.APIKey = ""
 	_, err := suite.GetPeopleImages(0)
 	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTaggedImages() {
+	tomCruise, err := suite.GetPeopleTaggedImages(tomCruiseID, nil)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTaggedImagesFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleTaggedImages(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTaggedImagesWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tomCruise, err := suite.GetPeopleTaggedImages(tomCruiseID, options)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTranslations() {
+	tomCruise, err := suite.GetPeopleTranslations(tomCruiseID, nil)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTranslationsFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleTranslations(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleTranslationsWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tomCruise, err := suite.GetPeopleTranslations(tomCruiseID, options)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleLatest() {
+	tomCruise, err := suite.GetPeopleLatest(nil)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleLatestFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeopleLatest(nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeopleLatestWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tomCruise, err := suite.GetPeopleLatest(options)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetPeoplePopular() {
+	tomCruise, err := suite.GetPeoplePopular(nil)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.Page)
+}
+
+func (suite *TMBDTestSuite) TestGetPeoplePopularFail() {
+	suite.APIKey = ""
+	_, err := suite.GetPeoplePopular(nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestGetPeoplePopularWithOptions() {
+	options := make(map[string]string)
+	options["language"] = "en-US"
+	tomCruise, err := suite.GetPeoplePopular(options)
+	suite.Nil(err)
+	suite.NotNil(tomCruise.Page)
 }

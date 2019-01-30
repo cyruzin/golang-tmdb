@@ -24,6 +24,8 @@ type PeopleDetails struct {
 	*PeopleCombinedCreditsShort
 	*PeopleExternalIDsShort
 	*PeopleImagesShort
+	*PeopleTaggedImagesShort
+	*PeopleTranslationsShort
 }
 
 // PeopleChanges type is a struct for changes JSON response.
@@ -204,7 +206,7 @@ type PeopleExternalIDs struct {
 	TvrageID    int64  `json:"tvrage_id"`
 	InstagramID string `json:"instagram_id"`
 	FreebaseMid string `json:"freebase_mid"`
-	ImdbID      string `json:"imdb_id"`
+	IMDbID      string `json:"imdb_id"`
 	FreebaseID  string `json:"freebase_id"`
 }
 
@@ -230,6 +232,114 @@ type PeopleImages struct {
 // PeopleImagesShort type is a short struct for images JSON response.
 type PeopleImagesShort struct {
 	Images *PeopleImages `json:"images,omitempty"`
+}
+
+// PeopleTaggedImages type is a struct for tagged images JSON response.
+type PeopleTaggedImages struct {
+	ID           int64 `json:"id"`
+	Page         int64 `json:"page"`
+	TotalResults int64 `json:"total_results"`
+	TotalPages   int64 `json:"total_pages"`
+	Results      []struct {
+		Iso639_1    string  `json:"iso_639_1"`
+		VoteCount   int64   `json:"vote_count"`
+		MediaType   string  `json:"media_type"`
+		FilePath    string  `json:"file_path"`
+		AspectRatio float32 `json:"aspect_ratio"`
+		Media       struct {
+			Popularity       float32 `json:"popularity"`
+			VoteCount        int64   `json:"vote_count"`
+			Video            bool    `json:"video"`
+			PosterPath       string  `json:"poster_path"`
+			ID               int64   `json:"id"`
+			Adult            bool    `json:"adult"`
+			BackdropPath     string  `json:"backdrop_path"`
+			OriginalLanguage string  `json:"original_language"`
+			OriginalTitle    string  `json:"original_title"`
+			GenreIDs         []int   `json:"genre_ids"`
+			Title            string  `json:"title"`
+			VoteAverage      float32 `json:"vote_average"`
+			Overview         string  `json:"overview"`
+			ReleaseDate      string  `json:"release_date"`
+		} `json:"media"`
+		Height      int     `json:"height"`
+		VoteAverage float32 `json:"vote_average"`
+		Width       int     `json:"width"`
+	} `json:"results"`
+}
+
+// PeopleTaggedImagesShort type is a short struct for tagged images JSON response.
+type PeopleTaggedImagesShort struct {
+	TaggedImages *PeopleTaggedImages `json:"tagged_images,omitempty"`
+}
+
+// PeopleTranslations type is a struct for translations JSON response.
+type PeopleTranslations struct {
+	Translations []struct {
+		Iso639_1  string `json:"iso_639_1"`
+		Iso3166_1 string `json:"iso_3166_1"`
+		Name      string `json:"name"`
+		Data      struct {
+			Biography string `json:"biography"`
+		} `json:"data"`
+		EnglishName string `json:"english_name"`
+	} `json:"translations"`
+	ID int64 `json:"id,omitempty"`
+}
+
+// PeopleTranslationsShort type is a short struct for translations JSON response.
+type PeopleTranslationsShort struct {
+	Translations *PeopleTranslations `json:"translations,omitempty"`
+}
+
+// PeopleLatest type is a struct for latest JSON response.
+type PeopleLatest struct {
+	Birthday     string   `json:"birthday"`
+	Deathday     string   `json:"deathday"`
+	ID           int64    `json:"id"`
+	Name         string   `json:"name"`
+	AlsoKnownAs  []string `json:"also_known_as"`
+	Gender       int      `json:"gender"`
+	Biography    string   `json:"biography"`
+	Popularity   float32  `json:"popularity"`
+	PlaceOfBirth string   `json:"place_of_birth"`
+	ProfilePath  string   `json:"profile_path"`
+	Adult        bool     `json:"adult"`
+	IMDbID       string   `json:"imdb_id"`
+	Homepage     string   `json:"homepage"`
+}
+
+// PeoplePopular type is a struct for popular JSON response.
+type PeoplePopular struct {
+	Page         int64 `json:"page"`
+	TotalResults int64 `json:"total_results"`
+	TotalPages   int64 `json:"total_pages"`
+	Results      []struct {
+		Popularity  float32 `json:"popularity"`
+		ID          int64   `json:"id"`
+		ProfilePath string  `json:"profile_path"`
+		Name        string  `json:"name"`
+		KnownFor    []struct {
+			OriginalTitle    string   `json:"original_title,omitempty"`
+			OriginalName     string   `json:"original_name,omitempty"`
+			ID               int64    `json:"id"`
+			MediaType        string   `json:"media_type"`
+			Name             string   `json:"name,omitempty"`
+			Title            string   `json:"title,omitempty"`
+			VoteCount        int64    `json:"vote_count"`
+			VoteAverage      float32  `json:"vote_average"`
+			PosterPath       string   `json:"poster_path"`
+			FirstAirDate     string   `json:"first_air_date,omitempty"`
+			ReleaseDate      string   `json:"release_date,omitempty"`
+			Popularity       float32  `json:"popularity"`
+			GenreIDs         []int    `json:"genre_ids"`
+			OriginalLanguage string   `json:"original_language"`
+			BackdropPath     string   `json:"backdrop_path"`
+			Overview         string   `json:"overview"`
+			OriginCountry    []string `json:"origin_country,omitempty"`
+		} `json:"known_for"`
+		Adult bool `json:"adult"`
+	} `json:"results"`
 }
 
 // GetPeopleDetails get the primary person details by id.
@@ -346,6 +456,72 @@ func (c *Client) GetPeopleImages(id int) (*PeopleImages, error) {
 		"%s%s%d/images?api_key=%s", baseURL, personURL, id, c.APIKey,
 	)
 	p := PeopleImages{}
+	err := c.get(tmdbURL, &p)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
+}
+
+// GetPeopleTaggedImages get the images that this person has been tagged in.
+//
+// https://developers.themoviedb.org/3/people/get-tagged-images
+func (c *Client) GetPeopleTaggedImages(id int, o map[string]string) (*PeopleTaggedImages, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/tagged_images?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+	)
+	p := PeopleTaggedImages{}
+	err := c.get(tmdbURL, &p)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
+}
+
+// GetPeopleTranslations get the images that this person has been tagged in.
+//
+// https://developers.themoviedb.org/3/people/get-tagged-images
+func (c *Client) GetPeopleTranslations(id int, o map[string]string) (*PeopleTranslations, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/translations?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+	)
+	p := PeopleTranslations{}
+	err := c.get(tmdbURL, &p)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
+}
+
+// GetPeopleLatest get the most newly created person.
+// This is a live response and will continuously change.
+//
+// https://developers.themoviedb.org/3/people/get-latest-person
+func (c *Client) GetPeopleLatest(o map[string]string) (*PeopleLatest, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%slatest?api_key=%s%s", baseURL, personURL, c.APIKey, options,
+	)
+	p := PeopleLatest{}
+	err := c.get(tmdbURL, &p)
+	if err != nil {
+		return nil, err
+	}
+	return &p, nil
+}
+
+// GetPeoplePopular get the list of popular people on TMDb.
+// This list updates daily.
+//
+// https://developers.themoviedb.org/3/people/get-popular-people
+func (c *Client) GetPeoplePopular(o map[string]string) (*PeoplePopular, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%spopular?api_key=%s%s", baseURL, personURL, c.APIKey, options,
+	)
+	p := PeoplePopular{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
