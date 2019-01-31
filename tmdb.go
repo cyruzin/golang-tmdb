@@ -23,6 +23,7 @@ const (
 	searchURL         = "/search/"
 	collectionURL     = "/collection/"
 	companyURL        = "/company/"
+	configurationURL  = "/configuration/"
 )
 
 // Client type is a struct to instantiate this pkg.
