@@ -24,6 +24,7 @@ const (
 	collectionURL     = "/collection/"
 	companyURL        = "/company/"
 	configurationURL  = "/configuration/"
+	creditURL         = "/credit/"
 )
 
 // Client type is a struct to instantiate this pkg.
