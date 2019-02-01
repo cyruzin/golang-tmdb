@@ -15,18 +15,18 @@ type TVEpisodeGroupsDetails struct {
 		Name     string `json:"name"`
 		Order    int    `json:"order"`
 		Episodes []struct {
-			AirDate        string           `json:"air_date"`
-			EpisodeNumber  int              `json:"episode_number"`
-			ID             int64            `json:"id"`
-			Name           string           `json:"name"`
-			Overview       string           `json:"overview"`
-			ProductionCode *json.RawMessage `json:"production_code"`
-			SeasonNumber   int              `json:"season_number"`
-			ShowID         int64            `json:"show_id"`
-			StillPath      string           `json:"still_path"`
-			VoteAverage    float32          `json:"vote_average"`
-			VoteCount      int64            `json:"vote_count"`
-			Order          int              `json:"order"`
+			AirDate        string          `json:"air_date"`
+			EpisodeNumber  int             `json:"episode_number"`
+			ID             int64           `json:"id"`
+			Name           string          `json:"name"`
+			Overview       string          `json:"overview"`
+			ProductionCode json.RawMessage `json:"production_code"`
+			SeasonNumber   int             `json:"season_number"`
+			ShowID         int64           `json:"show_id"`
+			StillPath      string          `json:"still_path"`
+			VoteAverage    float32         `json:"vote_average"`
+			VoteCount      int64           `json:"vote_count"`
+			Order          int             `json:"order"`
 		} `json:"episodes"`
 		Locked bool `json:"locked"`
 	} `json:"groups"`

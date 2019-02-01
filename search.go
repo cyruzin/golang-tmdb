@@ -71,10 +71,10 @@ type SearchMovies struct {
 
 // SearchMulti type is a struct for multi JSON response.
 type SearchMulti struct {
-	Page         int64            `json:"page"`
-	Results      *json.RawMessage `json:"results"`
-	TotalResults int64            `json:"total_results"`
-	TotalPages   int64            `json:"total_pages"`
+	Page         int64           `json:"page"`
+	Results      json.RawMessage `json:"results"`
+	TotalResults int64           `json:"total_results"`
+	TotalPages   int64           `json:"total_pages"`
 }
 
 // SearchPeople type is a struct for people JSON response.

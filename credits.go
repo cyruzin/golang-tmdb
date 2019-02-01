@@ -11,21 +11,21 @@ type CreditsDetails struct {
 	Department string `json:"department"`
 	Job        string `json:"job"`
 	Media      struct {
-		OriginalName     string           `json:"original_name"`
-		ID               int64            `json:"id"`
-		Name             string           `json:"name"`
-		VoteCount        int64            `json:"vote_count"`
-		VoteAverage      float32          `json:"vote_average"`
-		FirstAirDate     string           `json:"first_air_date"`
-		PosterPath       string           `json:"poster_path"`
-		GenreIDs         []int64          `json:"genre_ids"`
-		OriginalLanguage string           `json:"original_language"`
-		BackdropPath     string           `json:"backdrop_path"`
-		Overview         string           `json:"overview"`
-		OriginCountry    []string         `json:"origin_country"`
-		Popularity       float32          `json:"popularity"`
-		Character        string           `json:"character"`
-		Episodes         *json.RawMessage `json:"episodes"`
+		OriginalName     string          `json:"original_name"`
+		ID               int64           `json:"id"`
+		Name             string          `json:"name"`
+		VoteCount        int64           `json:"vote_count"`
+		VoteAverage      float32         `json:"vote_average"`
+		FirstAirDate     string          `json:"first_air_date"`
+		PosterPath       string          `json:"poster_path"`
+		GenreIDs         []int64         `json:"genre_ids"`
+		OriginalLanguage string          `json:"original_language"`
+		BackdropPath     string          `json:"backdrop_path"`
+		Overview         string          `json:"overview"`
+		OriginCountry    []string        `json:"origin_country"`
+		Popularity       float32         `json:"popularity"`
+		Character        string          `json:"character"`
+		Episodes         json.RawMessage `json:"episodes"`
 		Seasons          []struct {
 			AirDate      string `json:"air_date"`
 			EpisodeCount int    `json:"episode_count"`
