@@ -27,6 +27,7 @@ const (
 	creditURL         = "/credit/"
 	discoverURL       = "/discover/"
 	networkURL        = "/network/"
+	keywordURL        = "/keyword/"
 )
 
 // Client type is a struct to instantiate this pkg.
