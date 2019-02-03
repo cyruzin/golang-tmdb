@@ -42,10 +42,10 @@ type TVSeasonsDetails struct {
 	ID           int64  `json:"id"`
 	PosterPath   string `json:"poster_path"`
 	SeasonNumber int    `json:"season_number"`
-	*TVSeasonsCreditsShort
-	*TVSeasonsExternalIDsShort
-	*TVSeasonsImagesShort
-	*TVSeasonsVideosShort
+	*TVSeasonsCreditsAppend
+	*TVSeasonsExternalIDsAppend
+	*TVSeasonsImagesAppend
+	*TVSeasonsVideosAppend
 }
 
 // TVSeasonsChanges is a struct for changes JSON response.
@@ -89,8 +89,9 @@ type TVSeasonsCredits struct {
 	ID int `json:"id"`
 }
 
-// TVSeasonsCreditsShort type is a short struct for credits JSON response.
-type TVSeasonsCreditsShort struct {
+// TVSeasonsCreditsAppend type is a struct
+// for credits in append to response.
+type TVSeasonsCreditsAppend struct {
 	Credits *TVSeasonsCredits `json:"credits,omitempty"`
 }
 
@@ -103,8 +104,9 @@ type TVSeasonsExternalIDs struct {
 	ID          int64  `json:"id,omitempty"`
 }
 
-// TVSeasonsExternalIDsShort type is a short struct for external ids JSON response.
-type TVSeasonsExternalIDsShort struct {
+// TVSeasonsExternalIDsAppend type is a struct
+// for external ids in append to response.
+type TVSeasonsExternalIDsAppend struct {
 	ExternalIDs *TVSeasonsExternalIDs `json:"external_ids,omitempty"`
 }
 
@@ -122,8 +124,9 @@ type TVSeasonsImages struct {
 	} `json:"posters"`
 }
 
-// TVSeasonsImagesShort type is a short struct for images JSON response.
-type TVSeasonsImagesShort struct {
+// TVSeasonsImagesAppend type is a struct
+// for images in append to response.
+type TVSeasonsImagesAppend struct {
 	Images *TVSeasonsImages `json:"images,omitempty"`
 }
 
@@ -142,8 +145,9 @@ type TVSeasonsVideos struct {
 	} `json:"results"`
 }
 
-// TVSeasonsVideosShort type is a short struct for videos JSON response.
-type TVSeasonsVideosShort struct {
+// TVSeasonsVideosAppend type is a struct
+// for videos in append to response.
+type TVSeasonsVideosAppend struct {
 	Videos struct {
 		*TVSeasonsVideos
 	} `json:"videos,omitempty"`

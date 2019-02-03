@@ -11,13 +11,13 @@ func main() {
 	var tmdbClient tmdb.Client
 	tmdbClient.APIKey = os.Getenv("APIKey")
 
-	tvShow, err := tmdbClient.GetTVDetails(1399, nil)
+	movie, err := tmdbClient.GetMovieDetails(299536, nil)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Println(tvShow.Name)
+	fmt.Println(movie.Title)
 
 	fmt.Println("------")
 
@@ -26,14 +26,14 @@ func main() {
 	options["append_to_response"] = "credits"
 	options["language"] = "pt-BR"
 
-	tvShow, err = tmdbClient.GetTVDetails(1399, options)
+	movie, err = tmdbClient.GetMovieDetails(299536, options)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	// Credits - Iterate cast from append to response.
-	for _, v := range tvShow.TVCreditsShort.Credits.Cast {
+	for _, v := range movie.MovieCreditsAppend.Credits.Cast {
 		fmt.Println(v.Name)
 	}
 }

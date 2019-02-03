@@ -18,14 +18,14 @@ type PeopleDetails struct {
 	Adult              bool     `json:"adult"`
 	IMDbID             string   `json:"imdb_id"`
 	Homepage           string   `json:"homepage"`
-	*PeopleChangesShort
-	*PeopleMovieCreditsShort
-	*PeopleTVCreditsShort
-	*PeopleCombinedCreditsShort
-	*PeopleExternalIDsShort
-	*PeopleImagesShort
-	*PeopleTaggedImagesShort
-	*PeopleTranslationsShort
+	*PeopleChangesAppend
+	*PeopleMovieCreditsAppend
+	*PeopleTVCreditsAppend
+	*PeopleCombinedCreditsAppend
+	*PeopleExternalIDsAppend
+	*PeopleImagesAppend
+	*PeopleTaggedImagesAppend
+	*PeopleTranslationsAppend
 }
 
 // PeopleChanges type is a struct for changes JSON response.
@@ -45,8 +45,9 @@ type PeopleChanges struct {
 	} `json:"changes"`
 }
 
-// PeopleChangesShort type is a short struct for changes JSON response.
-type PeopleChangesShort struct {
+// PeopleChangesAppend type is a struct
+// for changes JSON in append to response.
+type PeopleChangesAppend struct {
 	Changes *PeopleChanges `json:"changes,omitempty"`
 }
 
@@ -92,8 +93,9 @@ type PeopleMovieCredits struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleMovieCreditsShort type is a short struct for movie credits JSON response.
-type PeopleMovieCreditsShort struct {
+// PeopleMovieCreditsAppend type is a struct
+// for movie credits in append to response.
+type PeopleMovieCreditsAppend struct {
 	MovieCredits *PeopleMovieCredits `json:"movie_credits,omitempty"`
 }
 
@@ -139,8 +141,9 @@ type PeopleTVCredits struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleTVCreditsShort type is a short struct for tv credits JSON response.
-type PeopleTVCreditsShort struct {
+// PeopleTVCreditsAppend type is a struct
+// for tv credits in append to response.
+type PeopleTVCreditsAppend struct {
 	TVCredits *PeopleTVCredits `json:"tv_credits,omitempty"`
 }
 
@@ -193,8 +196,9 @@ type PeopleCombinedCredits struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleCombinedCreditsShort type is a short struct for combined credits JSON response.
-type PeopleCombinedCreditsShort struct {
+// PeopleCombinedCreditsAppend type is a struct
+// for combined credits in append to response.
+type PeopleCombinedCreditsAppend struct {
 	CombinedCredits *PeopleCombinedCredits `json:"combined_credits,omitempty"`
 }
 
@@ -210,8 +214,9 @@ type PeopleExternalIDs struct {
 	FreebaseID  string `json:"freebase_id"`
 }
 
-// PeopleExternalIDsShort type is a short struct for external ids JSON response.
-type PeopleExternalIDsShort struct {
+// PeopleExternalIDsAppend type is a struct
+// for external ids in append to response.
+type PeopleExternalIDsAppend struct {
 	ExternalIDs *PeopleExternalIDs `json:"external_ids,omitempty"`
 }
 
@@ -229,8 +234,9 @@ type PeopleImages struct {
 	ID int `json:"id,omitempty"`
 }
 
-// PeopleImagesShort type is a short struct for images JSON response.
-type PeopleImagesShort struct {
+// PeopleImagesAppend type is a struct
+// for images in append to response.
+type PeopleImagesAppend struct {
 	Images *PeopleImages `json:"images,omitempty"`
 }
 
@@ -268,8 +274,9 @@ type PeopleTaggedImages struct {
 	} `json:"results"`
 }
 
-// PeopleTaggedImagesShort type is a short struct for tagged images JSON response.
-type PeopleTaggedImagesShort struct {
+// PeopleTaggedImagesAppend type is a struct
+// for tagged images in append to response.
+type PeopleTaggedImagesAppend struct {
 	TaggedImages *PeopleTaggedImages `json:"tagged_images,omitempty"`
 }
 
@@ -287,8 +294,9 @@ type PeopleTranslations struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleTranslationsShort type is a short struct for translations JSON response.
-type PeopleTranslationsShort struct {
+// PeopleTranslationsAppend type is a struct
+// for translations in append to response.
+type PeopleTranslationsAppend struct {
 	Translations *PeopleTranslations `json:"translations,omitempty"`
 }
 

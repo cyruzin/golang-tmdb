@@ -51,19 +51,19 @@ type MovieDetails struct {
 	Video       bool    `json:"video"`
 	VoteAverage float32 `json:"vote_average"`
 	VoteCount   int64   `json:"vote_count"`
-	*MovieAlternativeTitlesShort
-	*MovieChangesShort
-	*MovieCreditsShort
-	*MovieExternalIDsShort
-	*MovieImagesShort
-	*MovieKeywordsShort
-	*MovieReleaseDatesShort
-	*MovieVideosShort
-	*MovieTranslationsShort
-	*MovieRecommendationsShort
-	*MovieSimilarShort
-	*MovieReviewsShort
-	*MovieListsShort
+	*MovieAlternativeTitlesAppend
+	*MovieChangesAppend
+	*MovieCreditsAppend
+	*MovieExternalIDsAppend
+	*MovieImagesAppend
+	*MovieKeywordsAppend
+	*MovieReleaseDatesAppend
+	*MovieVideosAppend
+	*MovieTranslationsAppend
+	*MovieRecommendationsAppend
+	*MovieSimilarAppend
+	*MovieReviewsAppend
+	*MovieListsAppend
 }
 
 // MovieAccountStates type is a struct for account states JSON response.
@@ -84,8 +84,9 @@ type MovieAlternativeTitles struct {
 	} `json:"titles"`
 }
 
-// MovieAlternativeTitlesShort type is a short struct for alternative titles JSON response.
-type MovieAlternativeTitlesShort struct {
+// MovieAlternativeTitlesAppend type is a struct for alternative
+// titles in append to response.
+type MovieAlternativeTitlesAppend struct {
 	AlternativeTitles *MovieAlternativeTitles `json:"alternative_titles,omitempty"`
 }
 
@@ -104,8 +105,8 @@ type MovieChanges struct {
 	} `json:"changes"`
 }
 
-// MovieChangesShort type is a short struct for changes JSON response.
-type MovieChangesShort struct {
+// MovieChangesAppend type is a struct for changes in append to response.
+type MovieChangesAppend struct {
 	Changes *MovieChanges `json:"changes,omitempty"`
 }
 
@@ -133,8 +134,8 @@ type MovieCredits struct {
 	} `json:"crew"`
 }
 
-// MovieCreditsShort type is a short struct for credits JSON response.
-type MovieCreditsShort struct {
+// MovieCreditsAppend type is a struct for credits in append to response.
+type MovieCreditsAppend struct {
 	Credits struct {
 		*MovieCredits
 	} `json:"credits,omitempty"`
@@ -149,8 +150,8 @@ type MovieExternalIDs struct {
 	ID          int64  `json:"id,omitempty"`
 }
 
-// MovieExternalIDsShort type is a short struct for external ids JSON response.
-type MovieExternalIDsShort struct {
+// MovieExternalIDsAppend type is a struct for external ids in append to response.
+type MovieExternalIDsAppend struct {
 	*MovieExternalIDs `json:"external_ids,omitempty"`
 }
 
@@ -177,8 +178,8 @@ type MovieImages struct {
 	} `json:"posters"`
 }
 
-// MovieImagesShort type is a short struct for images JSON response.
-type MovieImagesShort struct {
+// MovieImagesAppend type is a struct for images in append to response.
+type MovieImagesAppend struct {
 	Images *MovieImages `json:"images,omitempty"`
 }
 
@@ -191,8 +192,8 @@ type MovieKeywords struct {
 	} `json:"keywords"`
 }
 
-// MovieKeywordsShort type is a short struct for keywords JSON response.
-type MovieKeywordsShort struct {
+// MovieKeywordsAppend type is a struct for keywords in append to response.
+type MovieKeywordsAppend struct {
 	Keywords struct {
 		*MovieKeywords
 	} `json:"keywords,omitempty"`
@@ -213,8 +214,8 @@ type MovieReleaseDates struct {
 	} `json:"results"`
 }
 
-// MovieReleaseDatesShort type is a short struct for release dates JSON response.
-type MovieReleaseDatesShort struct {
+// MovieReleaseDatesAppend type is a struct for release dates in append to response.
+type MovieReleaseDatesAppend struct {
 	ReleaseDates *MovieReleaseDates `json:"release_dates,omitempty"`
 }
 
@@ -233,8 +234,8 @@ type MovieVideos struct {
 	} `json:"results"`
 }
 
-// MovieVideosShort type is a short struct for videos JSON response.
-type MovieVideosShort struct {
+// MovieVideosAppend type is a struct for videos in append to response.
+type MovieVideosAppend struct {
 	Videos struct {
 		*MovieVideos
 	} `json:"videos,omitempty"`
@@ -256,8 +257,8 @@ type MovieTranslations struct {
 	} `json:"translations"`
 }
 
-// MovieTranslationsShort type is a short struct for translations JSON response.
-type MovieTranslationsShort struct {
+// MovieTranslationsAppend type is a struct for translations in append to response.
+type MovieTranslationsAppend struct {
 	Translations *MovieTranslations `json:"translations,omitempty"`
 }
 
@@ -284,8 +285,9 @@ type MovieRecommendations struct {
 	TotalResults int64 `json:"total_results"`
 }
 
-// MovieRecommendationsShort type is a short struct for recommendations JSON response.
-type MovieRecommendationsShort struct {
+// MovieRecommendationsAppend type is a struct for
+// recommendations in append to response.
+type MovieRecommendationsAppend struct {
 	Recommendations *MovieRecommendations `json:"recommendations,omitempty"`
 }
 
@@ -294,8 +296,8 @@ type MovieSimilar struct {
 	*MovieRecommendations
 }
 
-// MovieSimilarShort type is a short struct for similar movies JSON response.
-type MovieSimilarShort struct {
+// MovieSimilarAppend type is a struct for similar movies in append to response.
+type MovieSimilarAppend struct {
 	Similar *MovieSimilar `json:"similar,omitempty"`
 }
 
@@ -313,8 +315,8 @@ type MovieReviews struct {
 	TotalResults int64 `json:"total_results"`
 }
 
-// MovieReviewsShort type is a short struct for reviews JSON response.
-type MovieReviewsShort struct {
+// MovieReviewsAppend type is a struct for reviews in append to response.
+type MovieReviewsAppend struct {
 	Reviews struct {
 		*MovieReviews
 	} `json:"reviews,omitempty"`
@@ -338,8 +340,8 @@ type MovieLists struct {
 	TotalResults int64 `json:"total_results"`
 }
 
-// MovieListsShort type is a short struct for lists JSON response.
-type MovieListsShort struct {
+// MovieListsAppend type is a struct for lists in append to response.
+type MovieListsAppend struct {
 	Lists *MovieLists `json:"lists,omitempty"`
 }
 

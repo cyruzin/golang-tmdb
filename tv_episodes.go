@@ -34,11 +34,11 @@ type TVEpisodeDetails struct {
 	StillPath      string  `json:"still_path"`
 	VoteAverage    float32 `json:"vote_average"`
 	VoteCount      int64   `json:"vote_count"`
-	*TVEpisodeCreditsShort
-	*TVEpisodeExternalIDsShort
-	*TVEpisodeImagesShort
-	*TVEpisodeTranslationsShort
-	*TVEpisodeVideosShort
+	*TVEpisodeCreditsAppend
+	*TVEpisodeExternalIDsAppend
+	*TVEpisodeImagesAppend
+	*TVEpisodeTranslationsAppend
+	*TVEpisodeVideosAppend
 }
 
 // TVEpisodeChanges type is a struct for changes JSON response.
@@ -86,8 +86,9 @@ type TVEpisodeCredits struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// TVEpisodeCreditsShort type is a short struct for credits JSON response.
-type TVEpisodeCreditsShort struct {
+// TVEpisodeCreditsAppend type is a struct
+// for credits in append to response.
+type TVEpisodeCreditsAppend struct {
 	Credits *TVEpisodeCredits `json:"credits,omitempty"`
 }
 
@@ -101,8 +102,9 @@ type TVEpisodeExternalIDs struct {
 	TVRageID    int64  `json:"tvrage_id"`
 }
 
-// TVEpisodeExternalIDsShort type is a short struct for external ids JSON response.
-type TVEpisodeExternalIDsShort struct {
+// TVEpisodeExternalIDsAppend type is a struct
+// for external ids in append to response.
+type TVEpisodeExternalIDsAppend struct {
 	ExternalIDs *TVEpisodeExternalIDs `json:"external_ids,omitempty"`
 }
 
@@ -120,8 +122,9 @@ type TVEpisodeImages struct {
 	} `json:"stills"`
 }
 
-// TVEpisodeImagesShort type is a short struct for images JSON response.
-type TVEpisodeImagesShort struct {
+// TVEpisodeImagesAppend type is a struct
+// for images in append to response.
+type TVEpisodeImagesAppend struct {
 	Images *TVEpisodeImages `json:"images,omitempty"`
 }
 
@@ -140,8 +143,9 @@ type TVEpisodeTranslations struct {
 	} `json:"translations"`
 }
 
-// TVEpisodeTranslationsShort type is a short struct for translations JSON response.
-type TVEpisodeTranslationsShort struct {
+// TVEpisodeTranslationsAppend type is a struct
+// for translations in append to response.
+type TVEpisodeTranslationsAppend struct {
 	Translations *TVEpisodeTranslations `json:"translations,omitempty"`
 }
 
@@ -166,8 +170,9 @@ type TVEpisodeVideos struct {
 	} `json:"results"`
 }
 
-// TVEpisodeVideosShort type is a short struct for videos JSON response.
-type TVEpisodeVideosShort struct {
+// TVEpisodeVideosAppend type is a struct
+// for videos in append to response.
+type TVEpisodeVideosAppend struct {
 	Videos *TVEpisodeVideos `json:"videos,omitempty"`
 }
 

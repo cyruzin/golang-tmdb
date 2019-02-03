@@ -33,7 +33,7 @@ func main() {
 	}
 
 	// Images - Iterate profiles from append to response.
-	for _, v := range people.PeopleImagesShort.Images.Profiles {
+	for _, v := range people.PeopleImagesAppend.Images.Profiles {
 		fmt.Println(v.FilePath)
 	}
 }
