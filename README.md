@@ -8,9 +8,6 @@ An API Key is required. To register for one, head over to [themoviedb.org](https
 
 This product uses the TMDb API but is not endorsed or certified by TMDb.
 
-## Status
-In development, it's not ready yet.
-
 ## Requirements
 
 - Go 1.11.x or higher. We aim to support the latest supported versions of go.
