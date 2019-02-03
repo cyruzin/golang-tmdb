@@ -30,6 +30,7 @@ const (
 	keywordURL        = "/keyword/"
 	genreURL          = "/genre/"
 	guestSessionURL   = "/guest_session/"
+	listURL           = "/list/"
 )
 
 // Client type is a struct to instantiate this pkg.
