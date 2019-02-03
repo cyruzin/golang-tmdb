@@ -11,13 +11,13 @@ func main() {
 	var tmdbClient tmdb.Client
 	tmdbClient.APIKey = os.Getenv("APIKey")
 
-	people, err := tmdbClient.GetPeopleDetails(117642, nil)
+	person, err := tmdbClient.GetPersonDetails(117642, nil)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	fmt.Println(people.Name)
+	fmt.Println(person.Name)
 
 	fmt.Println("------")
 
@@ -26,14 +26,14 @@ func main() {
 	options["append_to_response"] = "images"
 	options["language"] = "pt-BR"
 
-	people, err = tmdbClient.GetPeopleDetails(117642, options)
+	person, err = tmdbClient.GetPersonDetails(117642, options)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	// Images - Iterate profiles from append to response.
-	for _, v := range people.PeopleImagesAppend.Images.Profiles {
+	for _, v := range person.PersonImagesAppend.Images.Profiles {
 		fmt.Println(v.FilePath)
 	}
 }

@@ -2,8 +2,8 @@ package tmdb
 
 import "fmt"
 
-// CollectionsDetails type is a struct for details JSON response.
-type CollectionsDetails struct {
+// CollectionDetails type is a struct for details JSON response.
+type CollectionDetails struct {
 	ID           int64  `json:"id"`
 	Name         string `json:"name"`
 	Overview     string `json:"overview"`
@@ -27,8 +27,8 @@ type CollectionsDetails struct {
 	} `json:"parts"`
 }
 
-// CollectionsImages type is a struct for images JSON response.
-type CollectionsImages struct {
+// CollectionImages type is a struct for images JSON response.
+type CollectionImages struct {
 	ID        int64 `json:"id"`
 	Backdrops []struct {
 		AspectRatio float32 `json:"aspect_ratio"`
@@ -50,8 +50,8 @@ type CollectionsImages struct {
 	} `json:"posters"`
 }
 
-// CollectionsTranslations type is a struct for translations JSON response.
-type CollectionsTranslations struct {
+// CollectionTranslations type is a struct for translations JSON response.
+type CollectionTranslations struct {
 	ID           int64 `json:"id"`
 	Translations []struct {
 		Iso3166_1   string `json:"iso_3166_1"`
@@ -66,15 +66,15 @@ type CollectionsTranslations struct {
 	} `json:"translations"`
 }
 
-// GetCollectionsDetails get collection details by id.
+// GetCollectionDetails get collection details by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-details
-func (c *Client) GetCollectionsDetails(id int, o map[string]string) (*CollectionsDetails, error) {
+func (c *Client) GetCollectionDetails(id int, o map[string]string) (*CollectionDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s", baseURL, collectionURL, id, c.APIKey, options,
 	)
-	t := CollectionsDetails{}
+	t := CollectionDetails{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
@@ -82,15 +82,15 @@ func (c *Client) GetCollectionsDetails(id int, o map[string]string) (*Collection
 	return &t, nil
 }
 
-// GetCollectionsImages get the images for a collection by id.
+// GetCollectionImages get the images for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-images
-func (c *Client) GetCollectionsImages(id int, o map[string]string) (*CollectionsImages, error) {
+func (c *Client) GetCollectionImages(id int, o map[string]string) (*CollectionImages, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s", baseURL, collectionURL, id, c.APIKey, options,
 	)
-	t := CollectionsImages{}
+	t := CollectionImages{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
@@ -98,15 +98,15 @@ func (c *Client) GetCollectionsImages(id int, o map[string]string) (*Collections
 	return &t, nil
 }
 
-// GetCollectionsTranslations get the list translations for a collection by id.
+// GetCollectionTranslations get the list translations for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-translations
-func (c *Client) GetCollectionsTranslations(id int, o map[string]string) (*CollectionsTranslations, error) {
+func (c *Client) GetCollectionTranslations(id int, o map[string]string) (*CollectionTranslations, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s", baseURL, collectionURL, id, c.APIKey, options,
 	)
-	t := CollectionsTranslations{}
+	t := CollectionTranslations{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

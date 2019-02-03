@@ -1,25 +1,25 @@
 package tmdb
 
-func (suite *TMBDTestSuite) TestGetCertificationsMovie() {
-	certifications, err := suite.GetCertificationsMovie()
+func (suite *TMBDTestSuite) TestGetCertificationMovie() {
+	certification, err := suite.GetCertificationMovie()
 	suite.Nil(err)
-	suite.NotNil(certifications.Certifications)
+	suite.NotNil(certification.Certifications)
 }
 
-func (suite *TMBDTestSuite) TestGetCertificationsMovieFail() {
+func (suite *TMBDTestSuite) TestGetCertificationMovieFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCertificationsMovie()
+	_, err := suite.GetCertificationMovie()
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetCertificationsTV() {
-	certifications, err := suite.GetCertificationsTV()
+func (suite *TMBDTestSuite) TestGetCertificationTV() {
+	certification, err := suite.GetCertificationTV()
 	suite.Nil(err)
-	suite.NotNil(certifications.Certifications)
+	suite.NotNil(certification.Certifications)
 }
 
-func (suite *TMBDTestSuite) TestGetCertificationsTVFail() {
+func (suite *TMBDTestSuite) TestGetCertificationTVFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCertificationsTV()
+	_, err := suite.GetCertificationTV()
 	suite.NotNil(err)
 }

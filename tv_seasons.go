@@ -2,8 +2,8 @@ package tmdb
 
 import "fmt"
 
-// TVSeasonsDetails is a struct for details JSON response.
-type TVSeasonsDetails struct {
+// TVSeasonDetails is a struct for details JSON response.
+type TVSeasonDetails struct {
 	IDString string `json:"_id"`
 	AirDate  string `json:"air_date"`
 	Episodes []struct {
@@ -42,14 +42,14 @@ type TVSeasonsDetails struct {
 	ID           int64  `json:"id"`
 	PosterPath   string `json:"poster_path"`
 	SeasonNumber int    `json:"season_number"`
-	*TVSeasonsCreditsAppend
-	*TVSeasonsExternalIDsAppend
-	*TVSeasonsImagesAppend
-	*TVSeasonsVideosAppend
+	*TVSeasonCreditsAppend
+	*TVSeasonExternalIDsAppend
+	*TVSeasonImagesAppend
+	*TVSeasonVideosAppend
 }
 
-// TVSeasonsChanges is a struct for changes JSON response.
-type TVSeasonsChanges struct {
+// TVSeasonChanges is a struct for changes JSON response.
+type TVSeasonChanges struct {
 	Changes []struct {
 		Items []struct {
 			ID        string `json:"id"`
@@ -66,8 +66,8 @@ type TVSeasonsChanges struct {
 	} `json:"changes"`
 }
 
-// TVSeasonsCredits type is a struct for credits JSON response.
-type TVSeasonsCredits struct {
+// TVSeasonCredits type is a struct for credits JSON response.
+type TVSeasonCredits struct {
 	Cast []struct {
 		Character   string `json:"character"`
 		CreditID    string `json:"credit_id"`
@@ -89,14 +89,14 @@ type TVSeasonsCredits struct {
 	ID int `json:"id"`
 }
 
-// TVSeasonsCreditsAppend type is a struct
+// TVSeasonCreditsAppend type is a struct
 // for credits in append to response.
-type TVSeasonsCreditsAppend struct {
-	Credits *TVSeasonsCredits `json:"credits,omitempty"`
+type TVSeasonCreditsAppend struct {
+	Credits *TVSeasonCredits `json:"credits,omitempty"`
 }
 
-// TVSeasonsExternalIDs type is a struct for external ids JSON response.
-type TVSeasonsExternalIDs struct {
+// TVSeasonExternalIDs type is a struct for external ids JSON response.
+type TVSeasonExternalIDs struct {
 	FreebaseMID string `json:"freebase_mid"`
 	FreebaseID  string `json:"freebase_id"`
 	TVDBID      int64  `json:"tvdb_id"`
@@ -104,14 +104,14 @@ type TVSeasonsExternalIDs struct {
 	ID          int64  `json:"id,omitempty"`
 }
 
-// TVSeasonsExternalIDsAppend type is a struct
+// TVSeasonExternalIDsAppend type is a struct
 // for external ids in append to response.
-type TVSeasonsExternalIDsAppend struct {
-	ExternalIDs *TVSeasonsExternalIDs `json:"external_ids,omitempty"`
+type TVSeasonExternalIDsAppend struct {
+	ExternalIDs *TVSeasonExternalIDs `json:"external_ids,omitempty"`
 }
 
-// TVSeasonsImages type is a struct for images JSON response.
-type TVSeasonsImages struct {
+// TVSeasonImages type is a struct for images JSON response.
+type TVSeasonImages struct {
 	ID      int64 `json:"id,omitempty"`
 	Posters []struct {
 		AspectRatio float32 `json:"aspect_ratio"`
@@ -124,14 +124,14 @@ type TVSeasonsImages struct {
 	} `json:"posters"`
 }
 
-// TVSeasonsImagesAppend type is a struct
+// TVSeasonImagesAppend type is a struct
 // for images in append to response.
-type TVSeasonsImagesAppend struct {
-	Images *TVSeasonsImages `json:"images,omitempty"`
+type TVSeasonImagesAppend struct {
+	Images *TVSeasonImages `json:"images,omitempty"`
 }
 
-// TVSeasonsVideos type is a struct for videos JSON response.
-type TVSeasonsVideos struct {
+// TVSeasonVideos type is a struct for videos JSON response.
+type TVSeasonVideos struct {
 	ID      int64 `json:"id,omitempty"`
 	Results []struct {
 		ID        string `json:"id"`
@@ -145,26 +145,26 @@ type TVSeasonsVideos struct {
 	} `json:"results"`
 }
 
-// TVSeasonsVideosAppend type is a struct
+// TVSeasonVideosAppend type is a struct
 // for videos in append to response.
-type TVSeasonsVideosAppend struct {
+type TVSeasonVideosAppend struct {
 	Videos struct {
-		*TVSeasonsVideos
+		*TVSeasonVideos
 	} `json:"videos,omitempty"`
 }
 
-// GetTVSeasonsDetails get the TV season details by id.
+// GetTVSeasonDetails get the TV season details by id.
 //
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-details
-func (c *Client) GetTVSeasonsDetails(id, s int, o map[string]string) (*TVSeasonsDetails, error) {
+func (c *Client) GetTVSeasonDetails(id, s int, o map[string]string) (*TVSeasonDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d?api_key=%s%s",
 		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
 	)
-	t := TVSeasonsDetails{}
+	t := TVSeasonDetails{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
@@ -172,17 +172,17 @@ func (c *Client) GetTVSeasonsDetails(id, s int, o map[string]string) (*TVSeasons
 	return &t, nil
 }
 
-// GetTVSeasonsChanges get the changes for a TV season.
+// GetTVSeasonChanges get the changes for a TV season.
 // By default only the last 24 hours are returned.
 //
 // You can query up to 14 days in a single query by using
 // the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-changes
-func (c *Client) GetTVSeasonsChanges(id int, o map[string]string) (*TVSeasonsChanges, error) {
+func (c *Client) GetTVSeasonChanges(id int, o map[string]string) (*TVSeasonChanges, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%sseason/%d/changes?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
-	t := TVSeasonsChanges{}
+	t := TVSeasonChanges{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
@@ -190,16 +190,16 @@ func (c *Client) GetTVSeasonsChanges(id int, o map[string]string) (*TVSeasonsCha
 	return &t, nil
 }
 
-// GetTVSeasonsCredits get the credits for TV season.
+// GetTVSeasonCredits get the credits for TV season.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-credits
-func (c *Client) GetTVSeasonsCredits(id, s int, o map[string]string) (*TVSeasonsCredits, error) {
+func (c *Client) GetTVSeasonCredits(id, s int, o map[string]string) (*TVSeasonCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/credits?api_key=%s%s",
 		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
 	)
-	t := TVSeasonsCredits{}
+	t := TVSeasonCredits{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
@@ -207,7 +207,7 @@ func (c *Client) GetTVSeasonsCredits(id, s int, o map[string]string) (*TVSeasons
 	return &t, nil
 }
 
-// GetTVSeasonsExternalIDs get the external ids for a TV season.
+// GetTVSeasonExternalIDs get the external ids for a TV season.
 // We currently support the following external sources.
 //
 // Media Databases: TVDB ID, Freebase MID*, Freebase ID* TVRage ID*.
@@ -215,13 +215,13 @@ func (c *Client) GetTVSeasonsCredits(id, s int, o map[string]string) (*TVSeasons
 // *Defunct or no longer available as a service.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-external-ids
-func (c *Client) GetTVSeasonsExternalIDs(id, s int, o map[string]string) (*TVSeasonsExternalIDs, error) {
+func (c *Client) GetTVSeasonExternalIDs(id, s int, o map[string]string) (*TVSeasonExternalIDs, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/external_ids?api_key=%s%s",
 		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
 	)
-	t := TVSeasonsExternalIDs{}
+	t := TVSeasonExternalIDs{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
@@ -229,7 +229,7 @@ func (c *Client) GetTVSeasonsExternalIDs(id, s int, o map[string]string) (*TVSea
 	return &t, nil
 }
 
-// GetTVSeasonsImages get the images that belong to a TV season.
+// GetTVSeasonImages get the images that belong to a TV season.
 //
 // Querying images with a language parameter will filter the results.
 // If you want to include a fallback language (especially useful for backdrops)
@@ -237,13 +237,13 @@ func (c *Client) GetTVSeasonsExternalIDs(id, s int, o map[string]string) (*TVSea
 // This should be a comma seperated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-images
-func (c *Client) GetTVSeasonsImages(id, s int, o map[string]string) (*TVSeasonsImages, error) {
+func (c *Client) GetTVSeasonImages(id, s int, o map[string]string) (*TVSeasonImages, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/images?api_key=%s%s",
 		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
 	)
-	t := TVSeasonsImages{}
+	t := TVSeasonImages{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err
@@ -251,16 +251,16 @@ func (c *Client) GetTVSeasonsImages(id, s int, o map[string]string) (*TVSeasonsI
 	return &t, nil
 }
 
-// GetTVSeasonsVideos get the videos that have been added to a TV season.
+// GetTVSeasonVideos get the videos that have been added to a TV season.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-videos
-func (c *Client) GetTVSeasonsVideos(id, s int, o map[string]string) (*TVSeasonsVideos, error) {
+func (c *Client) GetTVSeasonVideos(id, s int, o map[string]string) (*TVSeasonVideos, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/videos?api_key=%s%s",
 		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
 	)
-	t := TVSeasonsVideos{}
+	t := TVSeasonVideos{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

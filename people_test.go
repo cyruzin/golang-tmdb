@@ -5,213 +5,213 @@ const (
 	jasonMomoaID = 117642
 )
 
-func (suite *TMBDTestSuite) TestGetPeopleDetails() {
-	jasonMomoa, err := suite.GetPeopleDetails(jasonMomoaID, nil)
+func (suite *TMBDTestSuite) TestGetPersonDetails() {
+	jasonMomoa, err := suite.GetPersonDetails(jasonMomoaID, nil)
 	suite.Nil(err)
 	suite.Equal("Jason Momoa", jasonMomoa.Name)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleDetailsFail() {
-	_, err := suite.GetPeopleDetails(0, nil)
+func (suite *TMBDTestSuite) TestGetPersonDetailsFail() {
+	_, err := suite.GetPersonDetails(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleDetailsWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonDetailsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	jasonMomoa, err := suite.GetPeopleDetails(jasonMomoaID, options)
+	jasonMomoa, err := suite.GetPersonDetails(jasonMomoaID, options)
 	suite.Nil(err)
 	suite.Equal("Jason Momoa", jasonMomoa.Name)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleChanges() {
-	jasonMomoa, err := suite.GetPeopleChanges(jasonMomoaID, nil)
+func (suite *TMBDTestSuite) TestGetPersonChanges() {
+	jasonMomoa, err := suite.GetPersonChanges(jasonMomoaID, nil)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.Changes)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleChangesFail() {
+func (suite *TMBDTestSuite) TestGetPersonChangesFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleChanges(0, nil)
+	_, err := suite.GetPersonChanges(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleChangesWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonChangesWithOptions() {
 	options := make(map[string]string)
 	options["page"] = "1"
-	jasonMomoa, err := suite.GetPeopleChanges(jasonMomoaID, options)
+	jasonMomoa, err := suite.GetPersonChanges(jasonMomoaID, options)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.Changes)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleMovieCredits() {
-	jasonMomoa, err := suite.GetPeopleMovieCredits(jasonMomoaID, nil)
+func (suite *TMBDTestSuite) TestGetPersonMovieCredits() {
+	jasonMomoa, err := suite.GetPersonMovieCredits(jasonMomoaID, nil)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleMovieCreditsFail() {
+func (suite *TMBDTestSuite) TestGetPersonMovieCreditsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleMovieCredits(0, nil)
+	_, err := suite.GetPersonMovieCredits(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleMovieCreditsWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonMovieCreditsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	jasonMomoa, err := suite.GetPeopleMovieCredits(jasonMomoaID, options)
+	jasonMomoa, err := suite.GetPersonMovieCredits(jasonMomoaID, options)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTVCredits() {
-	jasonMomoa, err := suite.GetPeopleTVCredits(jasonMomoaID, nil)
+func (suite *TMBDTestSuite) TestGetPersonTVCredits() {
+	jasonMomoa, err := suite.GetPersonTVCredits(jasonMomoaID, nil)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTVCreditsFail() {
+func (suite *TMBDTestSuite) TestGetPersonTVCreditsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleTVCredits(0, nil)
+	_, err := suite.GetPersonTVCredits(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTVCreditsWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonTVCreditsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	jasonMomoa, err := suite.GetPeopleTVCredits(jasonMomoaID, options)
+	jasonMomoa, err := suite.GetPersonTVCredits(jasonMomoaID, options)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleCombinedCredits() {
-	jasonMomoa, err := suite.GetPeopleCombinedCredits(jasonMomoaID, nil)
+func (suite *TMBDTestSuite) TestGetPersonCombinedCredits() {
+	jasonMomoa, err := suite.GetPersonCombinedCredits(jasonMomoaID, nil)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleCombinedCreditsFail() {
+func (suite *TMBDTestSuite) TestGetPersonCombinedCreditsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleCombinedCredits(0, nil)
+	_, err := suite.GetPersonCombinedCredits(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleCombinedCreditsWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonCombinedCreditsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	jasonMomoa, err := suite.GetPeopleCombinedCredits(jasonMomoaID, options)
+	jasonMomoa, err := suite.GetPersonCombinedCredits(jasonMomoaID, options)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleExternalIDs() {
-	jasonMomoa, err := suite.GetPeopleExternalIDs(jasonMomoaID, nil)
+func (suite *TMBDTestSuite) TestGetPersonExternalIDs() {
+	jasonMomoa, err := suite.GetPersonExternalIDs(jasonMomoaID, nil)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleExternalIDsFail() {
+func (suite *TMBDTestSuite) TestGetPersonExternalIDsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleExternalIDs(0, nil)
+	_, err := suite.GetPersonExternalIDs(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleExternalIDsWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonExternalIDsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	jasonMomoa, err := suite.GetPeopleExternalIDs(jasonMomoaID, options)
+	jasonMomoa, err := suite.GetPersonExternalIDs(jasonMomoaID, options)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleImages() {
-	jasonMomoa, err := suite.GetPeopleImages(jasonMomoaID)
+func (suite *TMBDTestSuite) TestGetPersonImages() {
+	jasonMomoa, err := suite.GetPersonImages(jasonMomoaID)
 	suite.Nil(err)
 	suite.NotNil(jasonMomoa.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleImagesFail() {
+func (suite *TMBDTestSuite) TestGetPersonImagesFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleImages(0)
+	_, err := suite.GetPersonImages(0)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTaggedImages() {
-	tomCruise, err := suite.GetPeopleTaggedImages(tomCruiseID, nil)
+func (suite *TMBDTestSuite) TestGetPersonTaggedImages() {
+	tomCruise, err := suite.GetPersonTaggedImages(tomCruiseID, nil)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTaggedImagesFail() {
+func (suite *TMBDTestSuite) TestGetPersonTaggedImagesFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleTaggedImages(0, nil)
+	_, err := suite.GetPersonTaggedImages(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTaggedImagesWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonTaggedImagesWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
-	tomCruise, err := suite.GetPeopleTaggedImages(tomCruiseID, options)
+	tomCruise, err := suite.GetPersonTaggedImages(tomCruiseID, options)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTranslations() {
-	tomCruise, err := suite.GetPeopleTranslations(tomCruiseID, nil)
+func (suite *TMBDTestSuite) TestGetPersonTranslations() {
+	tomCruise, err := suite.GetPersonTranslations(tomCruiseID, nil)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTranslationsFail() {
+func (suite *TMBDTestSuite) TestGetPersonTranslationsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleTranslations(0, nil)
+	_, err := suite.GetPersonTranslations(0, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleTranslationsWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonTranslationsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
-	tomCruise, err := suite.GetPeopleTranslations(tomCruiseID, options)
+	tomCruise, err := suite.GetPersonTranslations(tomCruiseID, options)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleLatest() {
-	tomCruise, err := suite.GetPeopleLatest(nil)
+func (suite *TMBDTestSuite) TestGetPersonLatest() {
+	tomCruise, err := suite.GetPersonLatest(nil)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleLatestFail() {
+func (suite *TMBDTestSuite) TestGetPersonLatestFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeopleLatest(nil)
+	_, err := suite.GetPersonLatest(nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeopleLatestWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonLatestWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
-	tomCruise, err := suite.GetPeopleLatest(options)
+	tomCruise, err := suite.GetPersonLatest(options)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetPeoplePopular() {
-	tomCruise, err := suite.GetPeoplePopular(nil)
+func (suite *TMBDTestSuite) TestGetPersonPopular() {
+	tomCruise, err := suite.GetPersonPopular(nil)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.Page)
 }
 
-func (suite *TMBDTestSuite) TestGetPeoplePopularFail() {
+func (suite *TMBDTestSuite) TestGetPersonPopularFail() {
 	suite.APIKey = ""
-	_, err := suite.GetPeoplePopular(nil)
+	_, err := suite.GetPersonPopular(nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPeoplePopularWithOptions() {
+func (suite *TMBDTestSuite) TestGetPersonPopularWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
-	tomCruise, err := suite.GetPeoplePopular(options)
+	tomCruise, err := suite.GetPersonPopular(options)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.Page)
 }

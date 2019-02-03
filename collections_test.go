@@ -2,62 +2,62 @@ package tmdb
 
 const starWarsID = 10
 
-func (suite *TMBDTestSuite) TestGetCollectionsDetails() {
-	collection, err := suite.GetCollectionsDetails(starWarsID, nil)
+func (suite *TMBDTestSuite) TestGetCollectionDetails() {
+	collection, err := suite.GetCollectionDetails(starWarsID, nil)
 	suite.Nil(err)
 	suite.NotNil(collection.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsDetailsFail() {
+func (suite *TMBDTestSuite) TestGetCollectionDetailsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCollectionsDetails(starWarsID, nil)
+	_, err := suite.GetCollectionDetails(starWarsID, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsDetailsWithOptions() {
+func (suite *TMBDTestSuite) TestGetCollectionDetailsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	collection, err := suite.GetCollectionsDetails(starWarsID, options)
+	collection, err := suite.GetCollectionDetails(starWarsID, options)
 	suite.Nil(err)
 	suite.NotNil(collection.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsImages() {
-	collection, err := suite.GetCollectionsImages(starWarsID, nil)
+func (suite *TMBDTestSuite) TestGetCollectionImages() {
+	collection, err := suite.GetCollectionImages(starWarsID, nil)
 	suite.Nil(err)
 	suite.NotNil(collection.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsImagesFail() {
+func (suite *TMBDTestSuite) TestGetCollectionImagesFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCollectionsImages(starWarsID, nil)
+	_, err := suite.GetCollectionImages(starWarsID, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsImagesWithOptions() {
+func (suite *TMBDTestSuite) TestGetCollectionImagesWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	collection, err := suite.GetCollectionsImages(starWarsID, options)
+	collection, err := suite.GetCollectionImages(starWarsID, options)
 	suite.Nil(err)
 	suite.NotNil(collection.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsTranslations() {
-	collection, err := suite.GetCollectionsTranslations(starWarsID, nil)
+func (suite *TMBDTestSuite) TestGetCollectionTranslations() {
+	collection, err := suite.GetCollectionTranslations(starWarsID, nil)
 	suite.Nil(err)
 	suite.NotNil(collection.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsTranslationsFail() {
+func (suite *TMBDTestSuite) TestGetCollectionTranslationsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCollectionsTranslations(starWarsID, nil)
+	_, err := suite.GetCollectionTranslations(starWarsID, nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetCollectionsTranslationsWithOptions() {
+func (suite *TMBDTestSuite) TestGetCollectionTranslationsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	collection, err := suite.GetCollectionsTranslations(starWarsID, options)
+	collection, err := suite.GetCollectionTranslations(starWarsID, options)
 	suite.Nil(err)
 	suite.NotNil(collection.ID)
 }

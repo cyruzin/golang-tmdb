@@ -1,41 +1,41 @@
 package tmdb
 
-func (suite *TMBDTestSuite) TestGetGenresMovieList() {
-	genres, err := suite.GetGenresMovieList(nil)
+func (suite *TMBDTestSuite) TestGetGenreMovieList() {
+	genres, err := suite.GetGenreMovieList(nil)
 	suite.Nil(err)
 	suite.NotNil(genres)
 }
 
-func (suite *TMBDTestSuite) TestGetGenresMovieListFail() {
+func (suite *TMBDTestSuite) TestGetGenreMovieListFail() {
 	suite.APIKey = ""
-	_, err := suite.GetGenresMovieList(nil)
+	_, err := suite.GetGenreMovieList(nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetGenresMovieListWithOptions() {
+func (suite *TMBDTestSuite) TestGetGenreMovieListWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	genres, err := suite.GetGenresMovieList(options)
+	genres, err := suite.GetGenreMovieList(options)
 	suite.Nil(err)
 	suite.NotNil(genres)
 }
 
-func (suite *TMBDTestSuite) TestGetGenresTVList() {
-	genres, err := suite.GetGenresTVList(nil)
+func (suite *TMBDTestSuite) TestGetGenreTVList() {
+	genres, err := suite.GetGenreTVList(nil)
 	suite.Nil(err)
 	suite.NotNil(genres)
 }
 
-func (suite *TMBDTestSuite) TestGetGenresTVListFail() {
+func (suite *TMBDTestSuite) TestGetGenreTVListFail() {
 	suite.APIKey = ""
-	_, err := suite.GetGenresTVList(nil)
+	_, err := suite.GetGenreTVList(nil)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetGenresTVListWithOptions() {
+func (suite *TMBDTestSuite) TestGetGenreTVListWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
-	genres, err := suite.GetGenresTVList(options)
+	genres, err := suite.GetGenreTVList(options)
 	suite.Nil(err)
 	suite.NotNil(genres)
 }

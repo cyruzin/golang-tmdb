@@ -2,8 +2,8 @@ package tmdb
 
 import "fmt"
 
-// PeopleDetails type is a struct for details JSON response.
-type PeopleDetails struct {
+// PersonDetails type is a struct for details JSON response.
+type PersonDetails struct {
 	Birthday           string   `json:"birthday"`
 	KnownForDepartment string   `json:"known_for_department"`
 	Deathday           string   `json:"deathday"`
@@ -18,18 +18,18 @@ type PeopleDetails struct {
 	Adult              bool     `json:"adult"`
 	IMDbID             string   `json:"imdb_id"`
 	Homepage           string   `json:"homepage"`
-	*PeopleChangesAppend
-	*PeopleMovieCreditsAppend
-	*PeopleTVCreditsAppend
-	*PeopleCombinedCreditsAppend
-	*PeopleExternalIDsAppend
-	*PeopleImagesAppend
-	*PeopleTaggedImagesAppend
-	*PeopleTranslationsAppend
+	*PersonChangesAppend
+	*PersonMovieCreditsAppend
+	*PersonTVCreditsAppend
+	*PersonCombinedCreditsAppend
+	*PersonExternalIDsAppend
+	*PersonImagesAppend
+	*PersonTaggedImagesAppend
+	*PersonTranslationsAppend
 }
 
-// PeopleChanges type is a struct for changes JSON response.
-type PeopleChanges struct {
+// PersonChanges type is a struct for changes JSON response.
+type PersonChanges struct {
 	Changes []struct {
 		Key   string `json:"key"`
 		Items []struct {
@@ -45,14 +45,14 @@ type PeopleChanges struct {
 	} `json:"changes"`
 }
 
-// PeopleChangesAppend type is a struct
+// PersonChangesAppend type is a struct
 // for changes JSON in append to response.
-type PeopleChangesAppend struct {
-	Changes *PeopleChanges `json:"changes,omitempty"`
+type PersonChangesAppend struct {
+	Changes *PersonChanges `json:"changes,omitempty"`
 }
 
-// PeopleMovieCredits type is a struct for movie credits JSON response.
-type PeopleMovieCredits struct {
+// PersonMovieCredits type is a struct for movie credits JSON response.
+type PersonMovieCredits struct {
 	Cast []struct {
 		Character        string  `json:"character"`
 		CreditID         string  `json:"credit_id"`
@@ -93,14 +93,14 @@ type PeopleMovieCredits struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleMovieCreditsAppend type is a struct
+// PersonMovieCreditsAppend type is a struct
 // for movie credits in append to response.
-type PeopleMovieCreditsAppend struct {
-	MovieCredits *PeopleMovieCredits `json:"movie_credits,omitempty"`
+type PersonMovieCreditsAppend struct {
+	MovieCredits *PersonMovieCredits `json:"movie_credits,omitempty"`
 }
 
-// PeopleTVCredits type is a struct for tv credits JSON response.
-type PeopleTVCredits struct {
+// PersonTVCredits type is a struct for tv credits JSON response.
+type PersonTVCredits struct {
 	Cast []struct {
 		CreditID         string   `json:"credit_id"`
 		OriginalName     string   `json:"original_name"`
@@ -141,14 +141,14 @@ type PeopleTVCredits struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleTVCreditsAppend type is a struct
+// PersonTVCreditsAppend type is a struct
 // for tv credits in append to response.
-type PeopleTVCreditsAppend struct {
-	TVCredits *PeopleTVCredits `json:"tv_credits,omitempty"`
+type PersonTVCreditsAppend struct {
+	TVCredits *PersonTVCredits `json:"tv_credits,omitempty"`
 }
 
-// PeopleCombinedCredits type is a struct for combined credits JSON response.
-type PeopleCombinedCredits struct {
+// PersonCombinedCredits type is a struct for combined credits JSON response.
+type PersonCombinedCredits struct {
 	Cast []struct {
 		ID               int64    `json:"id"`
 		Character        string   `json:"character"`
@@ -196,14 +196,14 @@ type PeopleCombinedCredits struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleCombinedCreditsAppend type is a struct
+// PersonCombinedCreditsAppend type is a struct
 // for combined credits in append to response.
-type PeopleCombinedCreditsAppend struct {
-	CombinedCredits *PeopleCombinedCredits `json:"combined_credits,omitempty"`
+type PersonCombinedCreditsAppend struct {
+	CombinedCredits *PersonCombinedCredits `json:"combined_credits,omitempty"`
 }
 
-// PeopleExternalIDs type is a struct for external ids JSON response.
-type PeopleExternalIDs struct {
+// PersonExternalIDs type is a struct for external ids JSON response.
+type PersonExternalIDs struct {
 	ID          int64  `json:"id,omitempty"`
 	TwitterID   string `json:"twitter_id"`
 	FacebookID  string `json:"facebook_id"`
@@ -214,14 +214,14 @@ type PeopleExternalIDs struct {
 	FreebaseID  string `json:"freebase_id"`
 }
 
-// PeopleExternalIDsAppend type is a struct
+// PersonExternalIDsAppend type is a struct
 // for external ids in append to response.
-type PeopleExternalIDsAppend struct {
-	ExternalIDs *PeopleExternalIDs `json:"external_ids,omitempty"`
+type PersonExternalIDsAppend struct {
+	ExternalIDs *PersonExternalIDs `json:"external_ids,omitempty"`
 }
 
-// PeopleImages type is a struct for images JSON response.
-type PeopleImages struct {
+// PersonImages type is a struct for images JSON response.
+type PersonImages struct {
 	Profiles []struct {
 		Iso639_1    string  `json:"iso_639_1"`
 		Width       int     `json:"width"`
@@ -234,14 +234,14 @@ type PeopleImages struct {
 	ID int `json:"id,omitempty"`
 }
 
-// PeopleImagesAppend type is a struct
+// PersonImagesAppend type is a struct
 // for images in append to response.
-type PeopleImagesAppend struct {
-	Images *PeopleImages `json:"images,omitempty"`
+type PersonImagesAppend struct {
+	Images *PersonImages `json:"images,omitempty"`
 }
 
-// PeopleTaggedImages type is a struct for tagged images JSON response.
-type PeopleTaggedImages struct {
+// PersonTaggedImages type is a struct for tagged images JSON response.
+type PersonTaggedImages struct {
 	ID           int64 `json:"id"`
 	Page         int64 `json:"page"`
 	TotalResults int64 `json:"total_results"`
@@ -274,14 +274,14 @@ type PeopleTaggedImages struct {
 	} `json:"results"`
 }
 
-// PeopleTaggedImagesAppend type is a struct
+// PersonTaggedImagesAppend type is a struct
 // for tagged images in append to response.
-type PeopleTaggedImagesAppend struct {
-	TaggedImages *PeopleTaggedImages `json:"tagged_images,omitempty"`
+type PersonTaggedImagesAppend struct {
+	TaggedImages *PersonTaggedImages `json:"tagged_images,omitempty"`
 }
 
-// PeopleTranslations type is a struct for translations JSON response.
-type PeopleTranslations struct {
+// PersonTranslations type is a struct for translations JSON response.
+type PersonTranslations struct {
 	Translations []struct {
 		Iso639_1  string `json:"iso_639_1"`
 		Iso3166_1 string `json:"iso_3166_1"`
@@ -294,14 +294,14 @@ type PeopleTranslations struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// PeopleTranslationsAppend type is a struct
+// PersonTranslationsAppend type is a struct
 // for translations in append to response.
-type PeopleTranslationsAppend struct {
-	Translations *PeopleTranslations `json:"translations,omitempty"`
+type PersonTranslationsAppend struct {
+	Translations *PersonTranslations `json:"translations,omitempty"`
 }
 
-// PeopleLatest type is a struct for latest JSON response.
-type PeopleLatest struct {
+// PersonLatest type is a struct for latest JSON response.
+type PersonLatest struct {
 	Birthday     string   `json:"birthday"`
 	Deathday     string   `json:"deathday"`
 	ID           int64    `json:"id"`
@@ -317,8 +317,8 @@ type PeopleLatest struct {
 	Homepage     string   `json:"homepage"`
 }
 
-// PeoplePopular type is a struct for popular JSON response.
-type PeoplePopular struct {
+// PersonPopular type is a struct for popular JSON response.
+type PersonPopular struct {
 	Page         int64 `json:"page"`
 	TotalResults int64 `json:"total_results"`
 	TotalPages   int64 `json:"total_pages"`
@@ -350,17 +350,17 @@ type PeoplePopular struct {
 	} `json:"results"`
 }
 
-// GetPeopleDetails get the primary person details by id.
+// GetPersonDetails get the primary person details by id.
 //
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/people/get-person-details
-func (c *Client) GetPeopleDetails(id int, o map[string]string) (*PeopleDetails, error) {
+func (c *Client) GetPersonDetails(id int, o map[string]string) (*PersonDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleDetails{}
+	p := PersonDetails{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -368,19 +368,19 @@ func (c *Client) GetPeopleDetails(id int, o map[string]string) (*PeopleDetails, 
 	return &p, nil
 }
 
-// GetPeopleChanges get the changes for a person.
+// GetPersonChanges get the changes for a person.
 // By default only the last 24 hours are returned.
 //
 // You can query up to 14 days in a single query by
 // using the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/people/get-person-changes
-func (c *Client) GetPeopleChanges(id int, o map[string]string) (*PeopleChanges, error) {
+func (c *Client) GetPersonChanges(id int, o map[string]string) (*PersonChanges, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleChanges{}
+	p := PersonChanges{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -388,15 +388,15 @@ func (c *Client) GetPeopleChanges(id int, o map[string]string) (*PeopleChanges, 
 	return &p, nil
 }
 
-// GetPeopleMovieCredits get the movie credits for a person.
+// GetPersonMovieCredits get the movie credits for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-movie-credits
-func (c *Client) GetPeopleMovieCredits(id int, o map[string]string) (*PeopleMovieCredits, error) {
+func (c *Client) GetPersonMovieCredits(id int, o map[string]string) (*PersonMovieCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movie_credits?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleMovieCredits{}
+	p := PersonMovieCredits{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -404,15 +404,15 @@ func (c *Client) GetPeopleMovieCredits(id int, o map[string]string) (*PeopleMovi
 	return &p, nil
 }
 
-// GetPeopleTVCredits get the TV show credits for a person.
+// GetPersonTVCredits get the TV show credits for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-tv-credits
-func (c *Client) GetPeopleTVCredits(id int, o map[string]string) (*PeopleTVCredits, error) {
+func (c *Client) GetPersonTVCredits(id int, o map[string]string) (*PersonTVCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tv_credits?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleTVCredits{}
+	p := PersonTVCredits{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -420,15 +420,15 @@ func (c *Client) GetPeopleTVCredits(id int, o map[string]string) (*PeopleTVCredi
 	return &p, nil
 }
 
-// GetPeopleCombinedCredits get the movie and TV credits together in a single response.
+// GetPersonCombinedCredits get the movie and TV credits together in a single response.
 //
 // https://developers.themoviedb.org/3/people/get-person-combined-credits
-func (c *Client) GetPeopleCombinedCredits(id int, o map[string]string) (*PeopleCombinedCredits, error) {
+func (c *Client) GetPersonCombinedCredits(id int, o map[string]string) (*PersonCombinedCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/combined_credits?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleCombinedCredits{}
+	p := PersonCombinedCredits{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -436,19 +436,19 @@ func (c *Client) GetPeopleCombinedCredits(id int, o map[string]string) (*PeopleC
 	return &p, nil
 }
 
-// GetPeopleExternalIDs get the external ids for a person.
+// GetPersonExternalIDs get the external ids for a person.
 // We currently support the following external sources.
 //
 // External Sources: IMDb ID, Facebook, Freebase MID, Freebase ID,
 // Instagram, TVRage ID, Twitter.
 //
 // https://developers.themoviedb.org/3/people/get-person-external-ids
-func (c *Client) GetPeopleExternalIDs(id int, o map[string]string) (*PeopleExternalIDs, error) {
+func (c *Client) GetPersonExternalIDs(id int, o map[string]string) (*PersonExternalIDs, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleExternalIDs{}
+	p := PersonExternalIDs{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -456,14 +456,14 @@ func (c *Client) GetPeopleExternalIDs(id int, o map[string]string) (*PeopleExter
 	return &p, nil
 }
 
-// GetPeopleImages get the images for a person.
+// GetPersonImages get the images for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-images
-func (c *Client) GetPeopleImages(id int) (*PeopleImages, error) {
+func (c *Client) GetPersonImages(id int) (*PersonImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s", baseURL, personURL, id, c.APIKey,
 	)
-	p := PeopleImages{}
+	p := PersonImages{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -471,15 +471,15 @@ func (c *Client) GetPeopleImages(id int) (*PeopleImages, error) {
 	return &p, nil
 }
 
-// GetPeopleTaggedImages get the images that this person has been tagged in.
+// GetPersonTaggedImages get the images that this person has been tagged in.
 //
 // https://developers.themoviedb.org/3/people/get-tagged-images
-func (c *Client) GetPeopleTaggedImages(id int, o map[string]string) (*PeopleTaggedImages, error) {
+func (c *Client) GetPersonTaggedImages(id int, o map[string]string) (*PersonTaggedImages, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tagged_images?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleTaggedImages{}
+	p := PersonTaggedImages{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -487,15 +487,15 @@ func (c *Client) GetPeopleTaggedImages(id int, o map[string]string) (*PeopleTagg
 	return &p, nil
 }
 
-// GetPeopleTranslations get the images that this person has been tagged in.
+// GetPersonTranslations get the images that this person has been tagged in.
 //
 // https://developers.themoviedb.org/3/people/get-tagged-images
-func (c *Client) GetPeopleTranslations(id int, o map[string]string) (*PeopleTranslations, error) {
+func (c *Client) GetPersonTranslations(id int, o map[string]string) (*PersonTranslations, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
 	)
-	p := PeopleTranslations{}
+	p := PersonTranslations{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -503,16 +503,16 @@ func (c *Client) GetPeopleTranslations(id int, o map[string]string) (*PeopleTran
 	return &p, nil
 }
 
-// GetPeopleLatest get the most newly created person.
+// GetPersonLatest get the most newly created person.
 // This is a live response and will continuously change.
 //
 // https://developers.themoviedb.org/3/people/get-latest-person
-func (c *Client) GetPeopleLatest(o map[string]string) (*PeopleLatest, error) {
+func (c *Client) GetPersonLatest(o map[string]string) (*PersonLatest, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s", baseURL, personURL, c.APIKey, options,
 	)
-	p := PeopleLatest{}
+	p := PersonLatest{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err
@@ -520,16 +520,16 @@ func (c *Client) GetPeopleLatest(o map[string]string) (*PeopleLatest, error) {
 	return &p, nil
 }
 
-// GetPeoplePopular get the list of popular people on TMDb.
+// GetPersonPopular get the list of popular people on TMDb.
 // This list updates daily.
 //
 // https://developers.themoviedb.org/3/people/get-popular-people
-func (c *Client) GetPeoplePopular(o map[string]string) (*PeoplePopular, error) {
+func (c *Client) GetPersonPopular(o map[string]string) (*PersonPopular, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s", baseURL, personURL, c.APIKey, options,
 	)
-	p := PeoplePopular{}
+	p := PersonPopular{}
 	err := c.get(tmdbURL, &p)
 	if err != nil {
 		return nil, err

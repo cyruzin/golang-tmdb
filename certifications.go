@@ -9,8 +9,8 @@ type Certification struct {
 	Order         int    `json:"order"`
 }
 
-// CertificationsMovie type is a struct for movie certifications JSON response.
-type CertificationsMovie struct {
+// CertificationMovie type is a struct for movie certifications JSON response.
+type CertificationMovie struct {
 	Certifications struct {
 		US []struct {
 			*Certification
@@ -60,8 +60,8 @@ type CertificationsMovie struct {
 	} `json:"certifications"`
 }
 
-// CertificationsTV type is a struct for tv certifications JSON response.
-type CertificationsTV struct {
+// CertificationTV type is a struct for tv certifications JSON response.
+type CertificationTV struct {
 	Certifications struct {
 		RU []struct {
 			*Certification
@@ -96,13 +96,13 @@ type CertificationsTV struct {
 	} `json:"certifications"`
 }
 
-// GetCertificationsMovie get an up to date list of the
+// GetCertificationMovie get an up to date list of the
 // officially supported movie certifications on TMDb.
 //
 // https://developers.themoviedb.org/3/certifications/get-movie-certifications
-func (c *Client) GetCertificationsMovie() (*CertificationsMovie, error) {
+func (c *Client) GetCertificationMovie() (*CertificationMovie, error) {
 	tmdbURL := fmt.Sprintf("%s/certification%slist?api_key=%s", baseURL, movieURL, c.APIKey)
-	m := CertificationsMovie{}
+	m := CertificationMovie{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
 		return nil, err
@@ -110,13 +110,13 @@ func (c *Client) GetCertificationsMovie() (*CertificationsMovie, error) {
 	return &m, nil
 }
 
-// GetCertificationsTV get an up to date list of the
+// GetCertificationTV get an up to date list of the
 // officially supported TV show certifications on TMDb.
 //
 // https://developers.themoviedb.org/3/certifications/get-tv-certifications
-func (c *Client) GetCertificationsTV() (*CertificationsTV, error) {
+func (c *Client) GetCertificationTV() (*CertificationTV, error) {
 	tmdbURL := fmt.Sprintf("%s/certification%slist?api_key=%s", baseURL, tvURL, c.APIKey)
-	t := CertificationsTV{}
+	t := CertificationTV{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
 		return nil, err

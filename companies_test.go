@@ -5,38 +5,38 @@ const (
 	disneyID    = 2
 )
 
-func (suite *TMBDTestSuite) TestGetCompaniesDetails() {
-	company, err := suite.GetCompaniesDetails(lucasFilmID)
+func (suite *TMBDTestSuite) TestGetCompanyDetails() {
+	company, err := suite.GetCompanyDetails(lucasFilmID)
 	suite.Nil(err)
 	suite.NotNil(company.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCompaniesDetailsFail() {
+func (suite *TMBDTestSuite) TestGetCompanyDetailsFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCompaniesDetails(lucasFilmID)
+	_, err := suite.GetCompanyDetails(lucasFilmID)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetCompaniesAlternativeNames() {
-	company, err := suite.GetCompaniesAlternativeNames(lucasFilmID)
+func (suite *TMBDTestSuite) TestGetCompanyAlternativeNames() {
+	company, err := suite.GetCompanyAlternativeNames(lucasFilmID)
 	suite.Nil(err)
 	suite.NotNil(company.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCompaniesAlternativeNamesFail() {
+func (suite *TMBDTestSuite) TestGetCompanyAlternativeNamesFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCompaniesAlternativeNames(lucasFilmID)
+	_, err := suite.GetCompanyAlternativeNames(lucasFilmID)
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetCompaniesImages() {
-	company, err := suite.GetCompaniesImages(disneyID)
+func (suite *TMBDTestSuite) TestGetCompanyImages() {
+	company, err := suite.GetCompanyImages(disneyID)
 	suite.Nil(err)
 	suite.NotNil(company.ID)
 }
 
-func (suite *TMBDTestSuite) TestGetCompaniesImagesFail() {
+func (suite *TMBDTestSuite) TestGetCompanyImagesFail() {
 	suite.APIKey = ""
-	_, err := suite.GetCompaniesImages(disneyID)
+	_, err := suite.GetCompanyImages(disneyID)
 	suite.NotNil(err)
 }
