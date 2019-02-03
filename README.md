@@ -38,3 +38,5 @@ options["language"] = "pt-BR"
 options["append_to_response"] = "credits,images"
 movie, err := tmdbClient.GetMovieDetails(297802, options)
 ```
+
+For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/master/examples).
