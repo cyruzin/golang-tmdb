@@ -170,10 +170,13 @@ type SearchTVShows struct {
 // GetSearchCompanies search for companies.
 //
 // https://developers.themoviedb.org/3/search/search-companies
-func (c *Client) GetSearchCompanies(q string, o map[string]string) (*SearchCompanies, error) {
+func (c *Client) GetSearchCompanies(
+	q string, o map[string]string,
+) (*SearchCompanies, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%scompany?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		"%s%scompany?api_key=%s&query=%s%s",
+		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchCompanies{}
 	err := c.get(tmdbURL, &s)
@@ -186,10 +189,13 @@ func (c *Client) GetSearchCompanies(q string, o map[string]string) (*SearchCompa
 // GetSearchCollections search for collections.
 //
 // https://developers.themoviedb.org/3/search/search-collections
-func (c *Client) GetSearchCollections(q string, o map[string]string) (*SearchCollections, error) {
+func (c *Client) GetSearchCollections(
+	q string, o map[string]string,
+) (*SearchCollections, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%scollection?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		"%s%scollection?api_key=%s&query=%s%s",
+		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchCollections{}
 	err := c.get(tmdbURL, &s)
@@ -202,10 +208,13 @@ func (c *Client) GetSearchCollections(q string, o map[string]string) (*SearchCol
 // GetSearchKeywords search for keywords.
 //
 // https://developers.themoviedb.org/3/search/search-keywords
-func (c *Client) GetSearchKeywords(q string, o map[string]string) (*SearchKeywords, error) {
+func (c *Client) GetSearchKeywords(
+	q string, o map[string]string,
+) (*SearchKeywords, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%skeyword?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		"%s%skeyword?api_key=%s&query=%s%s",
+		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchKeywords{}
 	err := c.get(tmdbURL, &s)
@@ -218,10 +227,13 @@ func (c *Client) GetSearchKeywords(q string, o map[string]string) (*SearchKeywor
 // GetSearchMovies search for keywords.
 //
 // https://developers.themoviedb.org/3/search/search-movies
-func (c *Client) GetSearchMovies(q string, o map[string]string) (*SearchMovies, error) {
+func (c *Client) GetSearchMovies(
+	q string, o map[string]string,
+) (*SearchMovies, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%smovie?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		"%s%smovie?api_key=%s&query=%s%s",
+		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchMovies{}
 	err := c.get(tmdbURL, &s)
@@ -236,10 +248,13 @@ func (c *Client) GetSearchMovies(q string, o map[string]string) (*SearchMovies, 
 // tv shows and people in a single request.
 //
 // https://developers.themoviedb.org/3/search/multi-search
-func (c *Client) GetSearchMulti(q string, o map[string]string) (*SearchMulti, error) {
+func (c *Client) GetSearchMulti(
+	q string, o map[string]string,
+) (*SearchMulti, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%smulti?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		"%s%smulti?api_key=%s&query=%s%s",
+		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchMulti{}
 	err := c.get(tmdbURL, &s)
@@ -252,10 +267,13 @@ func (c *Client) GetSearchMulti(q string, o map[string]string) (*SearchMulti, er
 // GetSearchPeople search for people.
 //
 // https://developers.themoviedb.org/3/search/search-people
-func (c *Client) GetSearchPeople(q string, o map[string]string) (*SearchPeople, error) {
+func (c *Client) GetSearchPeople(
+	q string, o map[string]string,
+) (*SearchPeople, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%sperson?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		"%s%sperson?api_key=%s&query=%s%s",
+		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchPeople{}
 	err := c.get(tmdbURL, &s)
@@ -268,10 +286,13 @@ func (c *Client) GetSearchPeople(q string, o map[string]string) (*SearchPeople, 
 // GetSearchTVShow search for a TV Show.
 //
 // https://developers.themoviedb.org/3/search/search-tv-shows
-func (c *Client) GetSearchTVShow(q string, o map[string]string) (*SearchTVShows, error) {
+func (c *Client) GetSearchTVShow(
+	q string, o map[string]string,
+) (*SearchTVShows, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%stv?api_key=%s&query=%s%s", baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		"%s%stv?api_key=%s&query=%s%s",
+		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
 	)
 	s := SearchTVShows{}
 	err := c.get(tmdbURL, &s)

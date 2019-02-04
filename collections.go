@@ -69,10 +69,13 @@ type CollectionTranslations struct {
 // GetCollectionDetails get collection details by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-details
-func (c *Client) GetCollectionDetails(id int, o map[string]string) (*CollectionDetails, error) {
+func (c *Client) GetCollectionDetails(
+	id int, o map[string]string,
+) (*CollectionDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s%s", baseURL, collectionURL, id, c.APIKey, options,
+		"%s%s%d?api_key=%s%s",
+		baseURL, collectionURL, id, c.APIKey, options,
 	)
 	t := CollectionDetails{}
 	err := c.get(tmdbURL, &t)
@@ -85,10 +88,13 @@ func (c *Client) GetCollectionDetails(id int, o map[string]string) (*CollectionD
 // GetCollectionImages get the images for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-images
-func (c *Client) GetCollectionImages(id int, o map[string]string) (*CollectionImages, error) {
+func (c *Client) GetCollectionImages(
+	id int, o map[string]string,
+) (*CollectionImages, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s%s", baseURL, collectionURL, id, c.APIKey, options,
+		"%s%s%d/images?api_key=%s%s",
+		baseURL, collectionURL, id, c.APIKey, options,
 	)
 	t := CollectionImages{}
 	err := c.get(tmdbURL, &t)
@@ -101,10 +107,13 @@ func (c *Client) GetCollectionImages(id int, o map[string]string) (*CollectionIm
 // GetCollectionTranslations get the list translations for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-translations
-func (c *Client) GetCollectionTranslations(id int, o map[string]string) (*CollectionTranslations, error) {
+func (c *Client) GetCollectionTranslations(
+	id int, o map[string]string,
+) (*CollectionTranslations, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/translations?api_key=%s%s", baseURL, collectionURL, id, c.APIKey, options,
+		"%s%s%d/translations?api_key=%s%s",
+		baseURL, collectionURL, id, c.APIKey, options,
 	)
 	t := CollectionTranslations{}
 	err := c.get(tmdbURL, &t)

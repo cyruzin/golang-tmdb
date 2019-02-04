@@ -447,9 +447,14 @@ type TVTopRated struct {
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-details
-func (c *Client) GetTVDetails(id int, o map[string]string) (*TVDetails, error) {
+func (c *Client) GetTVDetails(
+	id int, o map[string]string,
+) (*TVDetails, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVDetails{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -468,9 +473,14 @@ func (c *Client) GetTVDetails(id int, o map[string]string) (*TVDetails, error) {
 //
 // https://developers.themoviedb.org/3/tv/get-tv-account-states
 //
-func (c *Client) GetTVAccountStates(id int, o map[string]string) (*TVAccountStates, error) {
+func (c *Client) GetTVAccountStates(
+	id int, o map[string]string,
+) (*TVAccountStates, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/account_states?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/account_states?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVAccountStates{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -482,9 +492,14 @@ func (c *Client) GetTVAccountStates(id int, o map[string]string) (*TVAccountStat
 // GetTVAlternativeTitles get all of the alternative titles for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-alternative-titles
-func (c *Client) GetTVAlternativeTitles(id int, o map[string]string) (*TVAlternativeTitles, error) {
+func (c *Client) GetTVAlternativeTitles(
+	id int, o map[string]string,
+) (*TVAlternativeTitles, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/alternative_titles?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/alternative_titles?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVAlternativeTitles{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -506,9 +521,14 @@ func (c *Client) GetTVAlternativeTitles(id int, o map[string]string) (*TVAlterna
 // You can use the and methods to look these up individually.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-changes
-func (c *Client) GetTVChanges(id int, o map[string]string) (*TVChanges, error) {
+func (c *Client) GetTVChanges(
+	id int, o map[string]string,
+) (*TVChanges, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/changes?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/changes?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVChanges{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -520,9 +540,14 @@ func (c *Client) GetTVChanges(id int, o map[string]string) (*TVChanges, error) {
 // GetTVContentRatings get the list of content ratings (certifications) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-content-ratings
-func (c *Client) GetTVContentRatings(id int, o map[string]string) (*TVContentRatings, error) {
+func (c *Client) GetTVContentRatings(
+	id int, o map[string]string,
+) (*TVContentRatings, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/content_ratings?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/content_ratings?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVContentRatings{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -534,9 +559,14 @@ func (c *Client) GetTVContentRatings(id int, o map[string]string) (*TVContentRat
 // GetTVCredits get the credits (cast and crew) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-credits
-func (c *Client) GetTVCredits(id int, o map[string]string) (*TVCredits, error) {
+func (c *Client) GetTVCredits(
+	id int, o map[string]string,
+) (*TVCredits, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/credits?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/credits?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVCredits{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -550,9 +580,14 @@ func (c *Client) GetTVCredits(id int, o map[string]string) (*TVCredits, error) {
 // With a group ID you can call the get TV episode group details method.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-episode-groups
-func (c *Client) GetTVEpisodeGroups(id int, o map[string]string) (*TVEpisodeGroups, error) {
+func (c *Client) GetTVEpisodeGroups(
+	id int, o map[string]string,
+) (*TVEpisodeGroups, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/episode_groups?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/episode_groups?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVEpisodeGroups{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -572,9 +607,14 @@ func (c *Client) GetTVEpisodeGroups(id int, o map[string]string) (*TVEpisodeGrou
 // *Defunct or no longer available as a service.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-external-ids
-func (c *Client) GetTVExternalIDs(id int, o map[string]string) (*TVExternalIDs, error) {
+func (c *Client) GetTVExternalIDs(
+	id int, o map[string]string,
+) (*TVExternalIDs, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/external_ids?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/external_ids?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVExternalIDs{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -591,9 +631,14 @@ func (c *Client) GetTVExternalIDs(id int, o map[string]string) (*TVExternalIDs, 
 // separated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-images
-func (c *Client) GetTVImages(id int, o map[string]string) (*TVImages, error) {
+func (c *Client) GetTVImages(
+	id int, o map[string]string,
+) (*TVImages, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/images?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/images?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVImages{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -606,7 +651,10 @@ func (c *Client) GetTVImages(id int, o map[string]string) (*TVImages, error) {
 //
 // https://developers.themoviedb.org/3/tv/get-tv-keywords
 func (c *Client) GetTVKeywords(id int) (*TVKeywords, error) {
-	tmdbURL := fmt.Sprintf("%s%s%d/keywords?api_key=%s", baseURL, tvURL, id, c.APIKey)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/keywords?api_key=%s",
+		baseURL, tvURL, id, c.APIKey,
+	)
 	t := TVKeywords{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -618,9 +666,14 @@ func (c *Client) GetTVKeywords(id int) (*TVKeywords, error) {
 // GetTVRecommendations get the list of TV show recommendations for this item.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-recommendations
-func (c *Client) GetTVRecommendations(id int, o map[string]string) (*TVRecommendations, error) {
+func (c *Client) GetTVRecommendations(
+	id int, o map[string]string,
+) (*TVRecommendations, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/recommendations?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/recommendations?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVRecommendations{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -632,9 +685,14 @@ func (c *Client) GetTVRecommendations(id int, o map[string]string) (*TVRecommend
 // GetTVReviews get the reviews for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-reviews
-func (c *Client) GetTVReviews(id int, o map[string]string) (*TVReviews, error) {
+func (c *Client) GetTVReviews(
+	id int, o map[string]string,
+) (*TVReviews, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/reviews?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/reviews?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVReviews{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -647,8 +705,13 @@ func (c *Client) GetTVReviews(id int, o map[string]string) (*TVReviews, error) {
 // have been screened in a film festival or theatre.
 //
 // https://developers.themoviedb.org/3/tv/get-screened-theatrically
-func (c *Client) GetTVScreenedTheatrically(id int) (*TVScreenedTheatrically, error) {
-	tmdbURL := fmt.Sprintf("%s%s%d/screened_theatrically?api_key=%s", baseURL, tvURL, id, c.APIKey)
+func (c *Client) GetTVScreenedTheatrically(
+	id int,
+) (*TVScreenedTheatrically, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/screened_theatrically?api_key=%s",
+		baseURL, tvURL, id, c.APIKey,
+	)
 	t := TVScreenedTheatrically{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -661,9 +724,14 @@ func (c *Client) GetTVScreenedTheatrically(id int) (*TVScreenedTheatrically, err
 // These items are assembled by looking at keywords and genres.
 //
 // https://developers.themoviedb.org/3/tv/get-similar-tv-shows
-func (c *Client) GetTVSimilar(id int, o map[string]string) (*TVSimilar, error) {
+func (c *Client) GetTVSimilar(
+	id int, o map[string]string,
+) (*TVSimilar, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/similar?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/similar?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVSimilar{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -672,12 +740,17 @@ func (c *Client) GetTVSimilar(id int, o map[string]string) (*TVSimilar, error) {
 	return &t, nil
 }
 
-// GetTVTranslations get a list of translations that have been created for a TV Show.
+// GetTVTranslations get a list fo translations that have been created for a TV Show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-translations
-func (c *Client) GetTVTranslations(id int, o map[string]string) (*TVTranslations, error) {
+func (c *Client) GetTVTranslations(
+	id int, o map[string]string,
+) (*TVTranslations, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/translations?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/translations?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVTranslations{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -689,9 +762,14 @@ func (c *Client) GetTVTranslations(id int, o map[string]string) (*TVTranslations
 // GetTVVideos get the videos that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-videos
-func (c *Client) GetTVVideos(id int, o map[string]string) (*TVVideos, error) {
+func (c *Client) GetTVVideos(
+	id int, o map[string]string,
+) (*TVVideos, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%s%d/videos?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/videos?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVVideos{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -705,9 +783,14 @@ func (c *Client) GetTVVideos(id int, o map[string]string) (*TVVideos, error) {
 // This is a live response and will continuously change.
 //
 // https://developers.themoviedb.org/3/tv/get-latest-tv
-func (c *Client) GetTVLatest(o map[string]string) (*TVLatest, error) {
+func (c *Client) GetTVLatest(
+	o map[string]string,
+) (*TVLatest, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%slatest?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%slatest?api_key=%s%s",
+		baseURL, tvURL, c.APIKey, options,
+	)
 	t := TVLatest{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -725,9 +808,14 @@ func (c *Client) GetTVLatest(o map[string]string) (*TVLatest, error) {
 // to EST (Eastern Time UTC-05:00).
 //
 // https://developers.themoviedb.org/3/tv/get-tv-airing-today
-func (c *Client) GetTVAiringToday(o map[string]string) (*TVAiringToday, error) {
+func (c *Client) GetTVAiringToday(
+	o map[string]string,
+) (*TVAiringToday, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%sairing_today?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%sairing_today?api_key=%s%s",
+		baseURL, tvURL, c.APIKey, options,
+	)
 	t := TVAiringToday{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -742,9 +830,14 @@ func (c *Client) GetTVAiringToday(o map[string]string) (*TVAiringToday, error) {
 // air date in the next 7 days.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-on-the-air
-func (c *Client) GetTVOnTheAir(o map[string]string) (*TVOnTheAir, error) {
+func (c *Client) GetTVOnTheAir(
+	o map[string]string,
+) (*TVOnTheAir, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%son_the_air?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%son_the_air?api_key=%s%s",
+		baseURL, tvURL, c.APIKey, options,
+	)
 	t := TVOnTheAir{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -757,9 +850,14 @@ func (c *Client) GetTVOnTheAir(o map[string]string) (*TVOnTheAir, error) {
 // This list updates daily.
 //
 // https://developers.themoviedb.org/3/tv/get-popular-tv-shows
-func (c *Client) GetTVPopular(o map[string]string) (*TVPopular, error) {
+func (c *Client) GetTVPopular(
+	o map[string]string,
+) (*TVPopular, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%spopular?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%spopular?api_key=%s%s",
+		baseURL, tvURL, c.APIKey, options,
+	)
 	t := TVPopular{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -771,9 +869,14 @@ func (c *Client) GetTVPopular(o map[string]string) (*TVPopular, error) {
 // GetTVTopRated get a list of the top rated TV shows on TMDb.
 //
 // https://developers.themoviedb.org/3/tv/get-top-rated-tv
-func (c *Client) GetTVTopRated(o map[string]string) (*TVTopRated, error) {
+func (c *Client) GetTVTopRated(
+	o map[string]string,
+) (*TVTopRated, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%stop_rated?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%stop_rated?api_key=%s%s",
+		baseURL, tvURL, c.APIKey, options,
+	)
 	t := TVTopRated{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {

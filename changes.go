@@ -31,9 +31,13 @@ type ChangesPerson struct {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-movie-change-list
-func (c *Client) GetChangesMovie(o map[string]string) (*ChangesMovie, error) {
+func (c *Client) GetChangesMovie(
+	o map[string]string,
+) (*ChangesMovie, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%schanges?api_key=%s%s", baseURL, movieURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%schanges?api_key=%s%s", baseURL, movieURL, c.APIKey, options,
+	)
 	m := ChangesMovie{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
@@ -50,9 +54,14 @@ func (c *Client) GetChangesMovie(o map[string]string) (*ChangesMovie, error) {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-tv-change-list
-func (c *Client) GetChangesTV(o map[string]string) (*ChangesTV, error) {
+func (c *Client) GetChangesTV(
+	o map[string]string,
+) (*ChangesTV, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%schanges?api_key=%s%s", baseURL, tvURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%schanges?api_key=%s%s",
+		baseURL, tvURL, c.APIKey, options,
+	)
 	m := ChangesTV{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
@@ -69,9 +78,14 @@ func (c *Client) GetChangesTV(o map[string]string) (*ChangesTV, error) {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-person-change-list
-func (c *Client) GetChangesPerson(o map[string]string) (*ChangesPerson, error) {
+func (c *Client) GetChangesPerson(
+	o map[string]string,
+) (*ChangesPerson, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%schanges?api_key=%s%s", baseURL, personURL, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%schanges?api_key=%s%s",
+		baseURL, personURL, c.APIKey, options,
+	)
 	m := ChangesPerson{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {

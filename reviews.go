@@ -17,9 +17,12 @@ type ReviewDetails struct {
 // GetReviewDetails get review details by id.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-details
-func (c *Client) GetReviewDetails(id string) (*ReviewDetails, error) {
+func (c *Client) GetReviewDetails(
+	id string,
+) (*ReviewDetails, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s/review/%s?api_key=%s", baseURL, id, c.APIKey,
+		"%s/review/%s?api_key=%s",
+		baseURL, id, c.APIKey,
 	)
 	t := ReviewDetails{}
 	err := c.get(tmdbURL, &t)

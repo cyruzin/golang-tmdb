@@ -40,7 +40,8 @@ type NetworkImages struct {
 // https://developers.themoviedb.org/3/networks/get-network-details
 func (c *Client) GetNetworkDetails(id int) (*NetworkDetails, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s", baseURL, networkURL, id, c.APIKey,
+		"%s%s%d?api_key=%s",
+		baseURL, networkURL, id, c.APIKey,
 	)
 	n := NetworkDetails{}
 	err := c.get(tmdbURL, &n)
@@ -53,9 +54,12 @@ func (c *Client) GetNetworkDetails(id int) (*NetworkDetails, error) {
 // GetNetworkAlternativeNames get the alternative names of a network.
 //
 // https://developers.themoviedb.org/3/networks/get-network-alternative-names
-func (c *Client) GetNetworkAlternativeNames(id int) (*NetworkAlternativeNames, error) {
+func (c *Client) GetNetworkAlternativeNames(
+	id int,
+) (*NetworkAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_names?api_key=%s", baseURL, networkURL, id, c.APIKey,
+		"%s%s%d/alternative_names?api_key=%s",
+		baseURL, networkURL, id, c.APIKey,
 	)
 	n := NetworkAlternativeNames{}
 	err := c.get(tmdbURL, &n)
@@ -80,7 +84,8 @@ func (c *Client) GetNetworkAlternativeNames(id int) (*NetworkAlternativeNames, e
 // https://developers.themoviedb.org/3/networks/get-network-images
 func (c *Client) GetNetworkImages(id int) (*NetworkImages, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s", baseURL, networkURL, id, c.APIKey,
+		"%s%s%d/images?api_key=%s",
+		baseURL, networkURL, id, c.APIKey,
 	)
 	n := NetworkImages{}
 	err := c.get(tmdbURL, &n)

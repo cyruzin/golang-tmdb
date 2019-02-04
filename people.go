@@ -355,10 +355,13 @@ type PersonPopular struct {
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/people/get-person-details
-func (c *Client) GetPersonDetails(id int, o map[string]string) (*PersonDetails, error) {
+func (c *Client) GetPersonDetails(
+	id int, o map[string]string,
+) (*PersonDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonDetails{}
 	err := c.get(tmdbURL, &p)
@@ -375,10 +378,13 @@ func (c *Client) GetPersonDetails(id int, o map[string]string) (*PersonDetails, 
 // using the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/people/get-person-changes
-func (c *Client) GetPersonChanges(id int, o map[string]string) (*PersonChanges, error) {
+func (c *Client) GetPersonChanges(
+	id int, o map[string]string,
+) (*PersonChanges, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/changes?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d/changes?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonChanges{}
 	err := c.get(tmdbURL, &p)
@@ -391,10 +397,13 @@ func (c *Client) GetPersonChanges(id int, o map[string]string) (*PersonChanges, 
 // GetPersonMovieCredits get the movie credits for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-movie-credits
-func (c *Client) GetPersonMovieCredits(id int, o map[string]string) (*PersonMovieCredits, error) {
+func (c *Client) GetPersonMovieCredits(
+	id int, o map[string]string,
+) (*PersonMovieCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/movie_credits?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d/movie_credits?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonMovieCredits{}
 	err := c.get(tmdbURL, &p)
@@ -407,10 +416,13 @@ func (c *Client) GetPersonMovieCredits(id int, o map[string]string) (*PersonMovi
 // GetPersonTVCredits get the TV show credits for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-tv-credits
-func (c *Client) GetPersonTVCredits(id int, o map[string]string) (*PersonTVCredits, error) {
+func (c *Client) GetPersonTVCredits(
+	id int, o map[string]string,
+) (*PersonTVCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/tv_credits?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d/tv_credits?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonTVCredits{}
 	err := c.get(tmdbURL, &p)
@@ -423,10 +435,13 @@ func (c *Client) GetPersonTVCredits(id int, o map[string]string) (*PersonTVCredi
 // GetPersonCombinedCredits get the movie and TV credits together in a single response.
 //
 // https://developers.themoviedb.org/3/people/get-person-combined-credits
-func (c *Client) GetPersonCombinedCredits(id int, o map[string]string) (*PersonCombinedCredits, error) {
+func (c *Client) GetPersonCombinedCredits(
+	id int, o map[string]string,
+) (*PersonCombinedCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/combined_credits?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d/combined_credits?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonCombinedCredits{}
 	err := c.get(tmdbURL, &p)
@@ -443,10 +458,13 @@ func (c *Client) GetPersonCombinedCredits(id int, o map[string]string) (*PersonC
 // Instagram, TVRage ID, Twitter.
 //
 // https://developers.themoviedb.org/3/people/get-person-external-ids
-func (c *Client) GetPersonExternalIDs(id int, o map[string]string) (*PersonExternalIDs, error) {
+func (c *Client) GetPersonExternalIDs(
+	id int, o map[string]string,
+) (*PersonExternalIDs, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/external_ids?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d/external_ids?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonExternalIDs{}
 	err := c.get(tmdbURL, &p)
@@ -461,7 +479,8 @@ func (c *Client) GetPersonExternalIDs(id int, o map[string]string) (*PersonExter
 // https://developers.themoviedb.org/3/people/get-person-images
 func (c *Client) GetPersonImages(id int) (*PersonImages, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s", baseURL, personURL, id, c.APIKey,
+		"%s%s%d/images?api_key=%s",
+		baseURL, personURL, id, c.APIKey,
 	)
 	p := PersonImages{}
 	err := c.get(tmdbURL, &p)
@@ -474,10 +493,13 @@ func (c *Client) GetPersonImages(id int) (*PersonImages, error) {
 // GetPersonTaggedImages get the images that this person has been tagged in.
 //
 // https://developers.themoviedb.org/3/people/get-tagged-images
-func (c *Client) GetPersonTaggedImages(id int, o map[string]string) (*PersonTaggedImages, error) {
+func (c *Client) GetPersonTaggedImages(
+	id int, o map[string]string,
+) (*PersonTaggedImages, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/tagged_images?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d/tagged_images?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonTaggedImages{}
 	err := c.get(tmdbURL, &p)
@@ -490,10 +512,13 @@ func (c *Client) GetPersonTaggedImages(id int, o map[string]string) (*PersonTagg
 // GetPersonTranslations get the images that this person has been tagged in.
 //
 // https://developers.themoviedb.org/3/people/get-tagged-images
-func (c *Client) GetPersonTranslations(id int, o map[string]string) (*PersonTranslations, error) {
+func (c *Client) GetPersonTranslations(
+	id int, o map[string]string,
+) (*PersonTranslations, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/translations?api_key=%s%s", baseURL, personURL, id, c.APIKey, options,
+		"%s%s%d/translations?api_key=%s%s",
+		baseURL, personURL, id, c.APIKey, options,
 	)
 	p := PersonTranslations{}
 	err := c.get(tmdbURL, &p)
@@ -507,10 +532,13 @@ func (c *Client) GetPersonTranslations(id int, o map[string]string) (*PersonTran
 // This is a live response and will continuously change.
 //
 // https://developers.themoviedb.org/3/people/get-latest-person
-func (c *Client) GetPersonLatest(o map[string]string) (*PersonLatest, error) {
+func (c *Client) GetPersonLatest(
+	o map[string]string,
+) (*PersonLatest, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%slatest?api_key=%s%s", baseURL, personURL, c.APIKey, options,
+		"%s%slatest?api_key=%s%s",
+		baseURL, personURL, c.APIKey, options,
 	)
 	p := PersonLatest{}
 	err := c.get(tmdbURL, &p)
@@ -524,10 +552,13 @@ func (c *Client) GetPersonLatest(o map[string]string) (*PersonLatest, error) {
 // This list updates daily.
 //
 // https://developers.themoviedb.org/3/people/get-popular-people
-func (c *Client) GetPersonPopular(o map[string]string) (*PersonPopular, error) {
+func (c *Client) GetPersonPopular(
+	o map[string]string,
+) (*PersonPopular, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%spopular?api_key=%s%s", baseURL, personURL, c.APIKey, options,
+		"%s%spopular?api_key=%s%s",
+		baseURL, personURL, c.APIKey, options,
 	)
 	p := PersonPopular{}
 	err := c.get(tmdbURL, &p)

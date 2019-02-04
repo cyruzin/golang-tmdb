@@ -13,10 +13,13 @@ type GenreMovieList struct {
 // GetGenreMovieList get the list of official genres for movies.
 //
 // https://developers.themoviedb.org/3/keywords/get-keyword-details
-func (c *Client) GetGenreMovieList(o map[string]string) (*GenreMovieList, error) {
+func (c *Client) GetGenreMovieList(
+	o map[string]string,
+) (*GenreMovieList, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%smovie/list?api_key=%s%s", baseURL, genreURL, c.APIKey, options,
+		"%s%smovie/list?api_key=%s%s",
+		baseURL, genreURL, c.APIKey, options,
 	)
 	k := GenreMovieList{}
 	err := c.get(tmdbURL, &k)
@@ -29,10 +32,13 @@ func (c *Client) GetGenreMovieList(o map[string]string) (*GenreMovieList, error)
 // GetGenreTVList get the list of official genres for TV shows.
 //
 // https://developers.themoviedb.org/3/genres/get-tv-list
-func (c *Client) GetGenreTVList(o map[string]string) (*GenreMovieList, error) {
+func (c *Client) GetGenreTVList(
+	o map[string]string,
+) (*GenreMovieList, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%stv/list?api_key=%s%s", baseURL, genreURL, c.APIKey, options,
+		"%s%stv/list?api_key=%s%s",
+		baseURL, genreURL, c.APIKey, options,
 	)
 	k := GenreMovieList{}
 	err := c.get(tmdbURL, &k)

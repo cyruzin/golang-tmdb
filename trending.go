@@ -78,7 +78,8 @@ type Trending struct {
 // https://developers.themoviedb.org/3/trending/get-trending
 func (c *Client) GetTrending(m, t string) (*Trending, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s/trending/%s/%s?api_key=%s", baseURL, m, t, c.APIKey,
+		"%s/trending/%s/%s?api_key=%s",
+		baseURL, m, t, c.APIKey,
 	)
 	mt := Trending{}
 	err := c.get(tmdbURL, &mt)

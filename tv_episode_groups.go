@@ -53,9 +53,14 @@ type TVEpisodeGroupsDetails struct {
 // 7. TV
 //
 // https://developers.themoviedb.org/3/tv-episode-groups/get-tv-episode-group-details
-func (c *Client) GetTVEpisodeGroupsDetails(id string, o map[string]string) (*TVEpisodeGroupsDetails, error) {
+func (c *Client) GetTVEpisodeGroupsDetails(
+	id string, o map[string]string,
+) (*TVEpisodeGroupsDetails, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%sepisode_group/%s?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%sepisode_group/%s?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVEpisodeGroupsDetails{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {

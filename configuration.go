@@ -83,9 +83,12 @@ func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 // (ISO 3166-1 tags) used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-countries
-func (c *Client) GetConfigurationCountries() (*ConfigurationCountries, error) {
+func (c *Client) GetConfigurationCountries() (
+	*ConfigurationCountries, error,
+) {
 	tmdbURL := fmt.Sprintf(
-		"%s%scountries?api_key=%s", baseURL, configurationURL, c.APIKey,
+		"%s%scountries?api_key=%s",
+		baseURL, configurationURL, c.APIKey,
 	)
 	t := ConfigurationCountries{}
 	err := c.get(tmdbURL, &t)
@@ -100,7 +103,8 @@ func (c *Client) GetConfigurationCountries() (*ConfigurationCountries, error) {
 // https://developers.themoviedb.org/3/configuration/get-jobs
 func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%sjobs?api_key=%s", baseURL, configurationURL, c.APIKey,
+		"%s%sjobs?api_key=%s",
+		baseURL, configurationURL, c.APIKey,
 	)
 	t := ConfigurationJobs{}
 	err := c.get(tmdbURL, &t)
@@ -114,9 +118,12 @@ func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
 // (ISO 639-1 tags) used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-languages
-func (c *Client) GetConfigurationLanguages() (*ConfigurationLanguages, error) {
+func (c *Client) GetConfigurationLanguages() (
+	*ConfigurationLanguages, error,
+) {
 	tmdbURL := fmt.Sprintf(
-		"%s%slanguages?api_key=%s", baseURL, configurationURL, c.APIKey,
+		"%s%slanguages?api_key=%s",
+		baseURL, configurationURL, c.APIKey,
 	)
 	t := ConfigurationLanguages{}
 	err := c.get(tmdbURL, &t)
@@ -148,9 +155,12 @@ func (c *Client) GetConfigurationLanguages() (*ConfigurationLanguages, error) {
 // our website translation project.
 //
 // https://developers.themoviedb.org/3/configuration/get-primary-translations
-func (c *Client) GetConfigurationPrimaryTranslations() (*ConfigurationPrimaryTranslations, error) {
+func (c *Client) GetConfigurationPrimaryTranslations() (
+	*ConfigurationPrimaryTranslations, error,
+) {
 	tmdbURL := fmt.Sprintf(
-		"%s%sprimary_translations?api_key=%s", baseURL, configurationURL, c.APIKey,
+		"%s%sprimary_translations?api_key=%s",
+		baseURL, configurationURL, c.APIKey,
 	)
 	t := ConfigurationPrimaryTranslations{}
 	err := c.get(tmdbURL, &t)
@@ -163,9 +173,12 @@ func (c *Client) GetConfigurationPrimaryTranslations() (*ConfigurationPrimaryTra
 // GetConfigurationTimezones get the list of timezones used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-timezones
-func (c *Client) GetConfigurationTimezones() (*ConfigurationTimezones, error) {
+func (c *Client) GetConfigurationTimezones() (
+	*ConfigurationTimezones, error,
+) {
 	tmdbURL := fmt.Sprintf(
-		"%s%stimezones?api_key=%s", baseURL, configurationURL, c.APIKey,
+		"%s%stimezones?api_key=%s",
+		baseURL, configurationURL, c.APIKey,
 	)
 	t := ConfigurationTimezones{}
 	err := c.get(tmdbURL, &t)

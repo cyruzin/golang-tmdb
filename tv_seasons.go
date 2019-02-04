@@ -158,7 +158,9 @@ type TVSeasonVideosAppend struct {
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-details
-func (c *Client) GetTVSeasonDetails(id, s int, o map[string]string) (*TVSeasonDetails, error) {
+func (c *Client) GetTVSeasonDetails(
+	id, s int, o map[string]string,
+) (*TVSeasonDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d?api_key=%s%s",
@@ -179,9 +181,14 @@ func (c *Client) GetTVSeasonDetails(id, s int, o map[string]string) (*TVSeasonDe
 // the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-changes
-func (c *Client) GetTVSeasonChanges(id int, o map[string]string) (*TVSeasonChanges, error) {
+func (c *Client) GetTVSeasonChanges(
+	id int, o map[string]string,
+) (*TVSeasonChanges, error) {
 	options := c.fmtOptions(o)
-	tmdbURL := fmt.Sprintf("%s%sseason/%d/changes?api_key=%s%s", baseURL, tvURL, id, c.APIKey, options)
+	tmdbURL := fmt.Sprintf(
+		"%s%sseason/%d/changes?api_key=%s%s",
+		baseURL, tvURL, id, c.APIKey, options,
+	)
 	t := TVSeasonChanges{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {
@@ -193,7 +200,9 @@ func (c *Client) GetTVSeasonChanges(id int, o map[string]string) (*TVSeasonChang
 // GetTVSeasonCredits get the credits for TV season.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-credits
-func (c *Client) GetTVSeasonCredits(id, s int, o map[string]string) (*TVSeasonCredits, error) {
+func (c *Client) GetTVSeasonCredits(
+	id, s int, o map[string]string,
+) (*TVSeasonCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/credits?api_key=%s%s",
@@ -215,7 +224,9 @@ func (c *Client) GetTVSeasonCredits(id, s int, o map[string]string) (*TVSeasonCr
 // *Defunct or no longer available as a service.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-external-ids
-func (c *Client) GetTVSeasonExternalIDs(id, s int, o map[string]string) (*TVSeasonExternalIDs, error) {
+func (c *Client) GetTVSeasonExternalIDs(
+	id, s int, o map[string]string,
+) (*TVSeasonExternalIDs, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/external_ids?api_key=%s%s",
@@ -237,7 +248,9 @@ func (c *Client) GetTVSeasonExternalIDs(id, s int, o map[string]string) (*TVSeas
 // This should be a comma separated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-images
-func (c *Client) GetTVSeasonImages(id, s int, o map[string]string) (*TVSeasonImages, error) {
+func (c *Client) GetTVSeasonImages(
+	id, s int, o map[string]string,
+) (*TVSeasonImages, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/images?api_key=%s%s",
@@ -254,7 +267,9 @@ func (c *Client) GetTVSeasonImages(id, s int, o map[string]string) (*TVSeasonIma
 // GetTVSeasonVideos get the videos that have been added to a TV season.
 //
 // https://developers.themoviedb.org/3/tv-seasons/get-tv-season-videos
-func (c *Client) GetTVSeasonVideos(id, s int, o map[string]string) (*TVSeasonVideos, error) {
+func (c *Client) GetTVSeasonVideos(
+	id, s int, o map[string]string,
+) (*TVSeasonVideos, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/videos?api_key=%s%s",

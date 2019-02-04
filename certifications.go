@@ -100,8 +100,13 @@ type CertificationTV struct {
 // officially supported movie certifications on TMDb.
 //
 // https://developers.themoviedb.org/3/certifications/get-movie-certifications
-func (c *Client) GetCertificationMovie() (*CertificationMovie, error) {
-	tmdbURL := fmt.Sprintf("%s/certification%slist?api_key=%s", baseURL, movieURL, c.APIKey)
+func (c *Client) GetCertificationMovie() (
+	*CertificationMovie, error,
+) {
+	tmdbURL := fmt.Sprintf(
+		"%s/certification%slist?api_key=%s",
+		baseURL, movieURL, c.APIKey,
+	)
 	m := CertificationMovie{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
@@ -114,8 +119,13 @@ func (c *Client) GetCertificationMovie() (*CertificationMovie, error) {
 // officially supported TV show certifications on TMDb.
 //
 // https://developers.themoviedb.org/3/certifications/get-tv-certifications
-func (c *Client) GetCertificationTV() (*CertificationTV, error) {
-	tmdbURL := fmt.Sprintf("%s/certification%slist?api_key=%s", baseURL, tvURL, c.APIKey)
+func (c *Client) GetCertificationTV() (
+	*CertificationTV, error,
+) {
+	tmdbURL := fmt.Sprintf(
+		"%s/certification%slist?api_key=%s",
+		baseURL, tvURL, c.APIKey,
+	)
 	t := CertificationTV{}
 	err := c.get(tmdbURL, &t)
 	if err != nil {

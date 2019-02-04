@@ -40,10 +40,13 @@ type ListItemStatus struct {
 // GetListDetails get the details of a list.
 //
 // https://developers.themoviedb.org/3/lists/get-list-details
-func (c *Client) GetListDetails(id string, o map[string]string) (*ListDetails, error) {
+func (c *Client) GetListDetails(
+	id string, o map[string]string,
+) (*ListDetails, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%s?api_key=%s%s", baseURL, listURL, id, c.APIKey, options,
+		"%s%s%s?api_key=%s%s",
+		baseURL, listURL, id, c.APIKey, options,
 	)
 	t := ListDetails{}
 	err := c.get(tmdbURL, &t)
@@ -56,10 +59,13 @@ func (c *Client) GetListDetails(id string, o map[string]string) (*ListDetails, e
 // GetListItemStatus check if a movie has already been added to the list.
 //
 // https://developers.themoviedb.org/3/lists/check-item-status
-func (c *Client) GetListItemStatus(id string, o map[string]string) (*ListItemStatus, error) {
+func (c *Client) GetListItemStatus(
+	id string, o map[string]string,
+) (*ListItemStatus, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%s/item_status?api_key=%s%s", baseURL, listURL, id, c.APIKey, options,
+		"%s%s%s/item_status?api_key=%s%s",
+		baseURL, listURL, id, c.APIKey, options,
 	)
 	t := ListItemStatus{}
 	err := c.get(tmdbURL, &t)

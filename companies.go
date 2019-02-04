@@ -49,7 +49,8 @@ type CompanyImages struct {
 // https://developers.themoviedb.org/3/companies/get-company-details
 func (c *Client) GetCompanyDetails(id int) (*CompanyDetails, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s", baseURL, companyURL, id, c.APIKey,
+		"%s%s%d?api_key=%s",
+		baseURL, companyURL, id, c.APIKey,
 	)
 	t := CompanyDetails{}
 	err := c.get(tmdbURL, &t)
@@ -62,9 +63,12 @@ func (c *Client) GetCompanyDetails(id int) (*CompanyDetails, error) {
 // GetCompanyAlternativeNames get the alternative names of a company.
 //
 // https://developers.themoviedb.org/3/companies/get-company-alternative-names
-func (c *Client) GetCompanyAlternativeNames(id int) (*CompanyAlternativeNames, error) {
+func (c *Client) GetCompanyAlternativeNames(
+	id int,
+) (*CompanyAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_names?api_key=%s", baseURL, companyURL, id, c.APIKey,
+		"%s%s%d/alternative_names?api_key=%s",
+		baseURL, companyURL, id, c.APIKey,
 	)
 	t := CompanyAlternativeNames{}
 	err := c.get(tmdbURL, &t)
@@ -87,7 +91,8 @@ func (c *Client) GetCompanyAlternativeNames(id int) (*CompanyAlternativeNames, e
 // https://developers.themoviedb.org/3/companies/get-company-images
 func (c *Client) GetCompanyImages(id int) (*CompanyImages, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s", baseURL, companyURL, id, c.APIKey,
+		"%s%s%d/images?api_key=%s",
+		baseURL, companyURL, id, c.APIKey,
 	)
 	t := CompanyImages{}
 	err := c.get(tmdbURL, &t)

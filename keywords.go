@@ -37,7 +37,8 @@ type KeywordMovies struct {
 // https://developers.themoviedb.org/3/keywords/get-keyword-details
 func (c *Client) GetKeywordDetails(id int) (*KeywordDetails, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s", baseURL, keywordURL, id, c.APIKey,
+		"%s%s%d?api_key=%s",
+		baseURL, keywordURL, id, c.APIKey,
 	)
 	k := KeywordDetails{}
 	err := c.get(tmdbURL, &k)
@@ -53,7 +54,9 @@ func (c *Client) GetKeywordDetails(id int) (*KeywordDetails, error) {
 // method as it is much more flexible.
 //
 // https://developers.themoviedb.org/3/keywords/get-movies-by-keyword
-func (c *Client) GetKeywordMovies(id int, o map[string]string) (*KeywordMovies, error) {
+func (c *Client) GetKeywordMovies(
+	id int, o map[string]string,
+) (*KeywordMovies, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movies?api_key=%s%s",

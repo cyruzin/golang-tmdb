@@ -71,10 +71,13 @@ type DiscoverTV struct {
 // are an OR.
 //
 // https://developers.themoviedb.org/3/discover/movie-discover
-func (c *Client) GetDiscoverMovie(o map[string]string) (*DiscoverMovie, error) {
+func (c *Client) GetDiscoverMovie(
+	o map[string]string,
+) (*DiscoverMovie, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%smovie?api_key=%s%s", baseURL, discoverURL, c.APIKey, options,
+		"%s%smovie?api_key=%s%s",
+		baseURL, discoverURL, c.APIKey, options,
 	)
 	t := DiscoverMovie{}
 	err := c.get(tmdbURL, &t)
@@ -94,10 +97,13 @@ func (c *Client) GetDiscoverMovie(o map[string]string) (*DiscoverMovie, error) {
 // separated. Comma's are treated like an AND and query while pipe's are an OR.
 //
 // https://developers.themoviedb.org/3/discover/tv-discover
-func (c *Client) GetDiscoverTV(o map[string]string) (*DiscoverTV, error) {
+func (c *Client) GetDiscoverTV(
+	o map[string]string,
+) (*DiscoverTV, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%stv?api_key=%s%s", baseURL, discoverURL, c.APIKey, options,
+		"%s%stv?api_key=%s%s",
+		baseURL, discoverURL, c.APIKey, options,
 	)
 	t := DiscoverTV{}
 	err := c.get(tmdbURL, &t)

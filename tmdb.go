@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Cyro Dubeux. License MIT.
+
+// Package tmdb is a wrapper for working with TMDb API.
 package tmdb
 
 import (
@@ -12,7 +15,6 @@ import (
 
 const (
 	baseURL           = "https://api.themoviedb.org/3"
-	imageURL          = "https://image.tmdb.org/t/p"
 	permissionURL     = "https://www.themoviedb.org/authenticate/"
 	authenticationURL = "/authentication/"
 	movieURL          = "/movie/"
