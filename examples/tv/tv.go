@@ -8,8 +8,11 @@ import (
 )
 
 func main() {
-	var tmdbClient tmdb.Client
-	tmdbClient.APIKey = os.Getenv("APIKey")
+	tmdbClient, err := tmdb.Init(os.Getenv("YOUR_APIKEY"))
+
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	tvShow, err := tmdbClient.GetTVDetails(1399, nil)
 

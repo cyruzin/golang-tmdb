@@ -40,6 +40,16 @@ type Client struct {
 	APIKey string
 }
 
+// Init setups the Client with an APIKey.
+func Init(APIKey string) (*Client, error) {
+	if APIKey == "" {
+		return nil, errors.New("APIKey is empty")
+	}
+	init := new(Client)
+	init.APIKey = APIKey
+	return init, nil
+}
+
 // Error type represents an error returned by the TMDB API.
 type Error struct {
 	StatusMessage string `json:"status_message,omitempty"`

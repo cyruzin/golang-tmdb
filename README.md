@@ -24,9 +24,12 @@ To get started, import the `tmdb` package and create a `tmdb.Client`:
 ```go
 import "github.com/cyruzin/golang-tmdb"
 
-var tmdbClient tmdb.Client
+tmdbClient, err := tmdb.Init("YOUR_APIKEY")
 
-tmdbClient.APIKey = "YOUR_API_KEY"
+if err != nil {
+    fmt.Println(err)
+}
+    
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
 ```
 
