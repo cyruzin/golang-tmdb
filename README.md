@@ -19,7 +19,7 @@ go get -u github.com/cyruzin/golang-tmdb
 ```
 ## Usage
 
-To get started, import the `tmdb` package and create a `tmdb.Client`:
+To get started, import the `tmdb` package and initiate the client:
 
 ```go
 import "github.com/cyruzin/golang-tmdb"
