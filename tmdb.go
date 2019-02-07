@@ -11,8 +11,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
+// TMDb constants
 const (
 	baseURL           = "https://api.themoviedb.org/3"
 	permissionURL     = "https://www.themoviedb.org/authenticate/"
@@ -38,16 +40,15 @@ const (
 // Client type is a struct to instantiate this pkg.
 type Client struct {
 	APIKey string
+	http   http.Client
 }
 
 // Init setups the Client with an APIKey.
-func Init(APIKey string) (*Client, error) {
-	if APIKey == "" {
+func Init(ak string) (*Client, error) {
+	if ak == "" {
 		return nil, errors.New("APIKey is empty")
 	}
-	init := new(Client)
-	init.APIKey = APIKey
-	return init, nil
+	return &Client{APIKey: ak}, nil
 }
 
 // Error type represents an error returned by the TMDB API.
@@ -61,7 +62,8 @@ func (c *Client) get(url string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-	res, err := http.Get(url)
+	c.http.Timeout = time.Second * 5
+	res, err := c.http.Get(url)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
@@ -85,7 +87,8 @@ func (c *Client) post(url string, params []byte, data interface{}) error {
 		return errors.New(err.Error())
 	}
 	req.Header.Add("content-type", "application/json;charset=utf-8")
-	res, err := http.DefaultClient.Do(req)
+	c.http.Timeout = time.Second * 5
+	res, err := c.http.Do(req)
 	if err != nil {
 		return errors.New(err.Error())
 	}
