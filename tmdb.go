@@ -11,7 +11,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 // TMDb constants
@@ -62,19 +61,27 @@ func (c *Client) get(url string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-	c.http.Timeout = time.Second * 5
+
 	res, err := c.http.Get(url)
+
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
+
 	defer res.Body.Close()
+
+	res.Header.Add("content-type", "application/json;charset=utf-8")
+
 	if res.StatusCode != http.StatusOK {
 		return c.decodeError(res)
 	}
+
 	err = json.NewDecoder(res.Body).Decode(data)
+
 	if err != nil {
 		return fmt.Errorf("could not decode the data: %s", err)
 	}
+
 	return nil
 }
 
@@ -82,26 +89,34 @@ func (c *Client) post(url string, params []byte, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
+
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(params))
+
 	if err != nil {
 		return errors.New(err.Error())
 	}
+
 	req.Header.Add("content-type", "application/json;charset=utf-8")
-	c.http.Timeout = time.Second * 5
+
 	res, err := c.http.Do(req)
+
 	if err != nil {
 		return errors.New(err.Error())
 	}
+
 	defer res.Body.Close()
+
 	if res.StatusCode != http.StatusCreated {
 		return c.decodeError(res)
 	}
+
 	err = json.NewDecoder(res.Body).Decode(data)
+
 	if err != nil {
 		return fmt.Errorf("could not decode the data: %s", err)
 	}
-	return nil
 
+	return nil
 }
 
 func (c *Client) fmtOptions(o map[string]string) string {

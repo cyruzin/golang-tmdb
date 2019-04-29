@@ -19,7 +19,7 @@ func (suite *TMBDTestSuite) SetupTest() {
 	suite.APIKey = os.Getenv("APIKey")
 	// Workaround to avoid API rate limiting error message while testing.
 	if os.Getenv("TestTime") != "" {
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(150 * time.Millisecond)
 	} else {
 		time.Sleep(500 * time.Millisecond)
 	}

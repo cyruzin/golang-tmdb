@@ -1,7 +1,5 @@
 package tmdb
 
-//247519010452f4568bdf16171e3c62c3a1c66bc8
-
 // AccountDetails type is a struct for details JSON response.
 type AccountDetails struct {
 	Avatar struct {
