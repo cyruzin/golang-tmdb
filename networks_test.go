@@ -6,37 +6,37 @@ const (
 )
 
 func (suite *TMBDTestSuite) TestGetNetworkDetails() {
-	network, err := suite.GetNetworkDetails(netflixID)
+	network, err := suite.client.GetNetworkDetails(netflixID)
 	suite.Nil(err)
 	suite.NotNil(network)
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkDetailsFail() {
-	suite.APIKey = ""
-	_, err := suite.GetNetworkDetails(netflixID)
+	suite.client.APIKey = ""
+	_, err := suite.client.GetNetworkDetails(netflixID)
 	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkAlternativeNames() {
-	network, err := suite.GetNetworkAlternativeNames(americanMovieClassics)
+	network, err := suite.client.GetNetworkAlternativeNames(americanMovieClassics)
 	suite.Nil(err)
 	suite.NotNil(network)
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkAlternativeNamesFail() {
-	suite.APIKey = ""
-	_, err := suite.GetNetworkAlternativeNames(americanMovieClassics)
+	suite.client.APIKey = ""
+	_, err := suite.client.GetNetworkAlternativeNames(americanMovieClassics)
 	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkImages() {
-	network, err := suite.GetNetworkImages(netflixID)
+	network, err := suite.client.GetNetworkImages(netflixID)
 	suite.Nil(err)
 	suite.NotNil(network)
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkImagesFail() {
-	suite.APIKey = ""
-	_, err := suite.GetNetworkImages(netflixID)
+	suite.client.APIKey = ""
+	_, err := suite.client.GetNetworkImages(netflixID)
 	suite.NotNil(err)
 }

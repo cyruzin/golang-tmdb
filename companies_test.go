@@ -6,37 +6,37 @@ const (
 )
 
 func (suite *TMBDTestSuite) TestGetCompanyDetails() {
-	company, err := suite.GetCompanyDetails(lucasFilmID)
+	company, err := suite.client.GetCompanyDetails(lucasFilmID)
 	suite.Nil(err)
 	suite.NotNil(company.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyDetailsFail() {
-	suite.APIKey = ""
-	_, err := suite.GetCompanyDetails(lucasFilmID)
+	suite.client.APIKey = ""
+	_, err := suite.client.GetCompanyDetails(lucasFilmID)
 	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyAlternativeNames() {
-	company, err := suite.GetCompanyAlternativeNames(lucasFilmID)
+	company, err := suite.client.GetCompanyAlternativeNames(lucasFilmID)
 	suite.Nil(err)
 	suite.NotNil(company.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyAlternativeNamesFail() {
-	suite.APIKey = ""
-	_, err := suite.GetCompanyAlternativeNames(lucasFilmID)
+	suite.client.APIKey = ""
+	_, err := suite.client.GetCompanyAlternativeNames(lucasFilmID)
 	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyImages() {
-	company, err := suite.GetCompanyImages(disneyID)
+	company, err := suite.client.GetCompanyImages(disneyID)
 	suite.Nil(err)
 	suite.NotNil(company.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyImagesFail() {
-	suite.APIKey = ""
-	_, err := suite.GetCompanyImages(disneyID)
+	suite.client.APIKey = ""
+	_, err := suite.client.GetCompanyImages(disneyID)
 	suite.NotNil(err)
 }

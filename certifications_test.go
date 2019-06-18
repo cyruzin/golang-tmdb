@@ -1,25 +1,25 @@
 package tmdb
 
 func (suite *TMBDTestSuite) TestGetCertificationMovie() {
-	certification, err := suite.GetCertificationMovie()
+	certification, err := suite.client.GetCertificationMovie()
 	suite.Nil(err)
 	suite.NotNil(certification.Certifications)
 }
 
 func (suite *TMBDTestSuite) TestGetCertificationMovieFail() {
-	suite.APIKey = ""
-	_, err := suite.GetCertificationMovie()
+	suite.client.APIKey = ""
+	_, err := suite.client.GetCertificationMovie()
 	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetCertificationTV() {
-	certification, err := suite.GetCertificationTV()
+	certification, err := suite.client.GetCertificationTV()
 	suite.Nil(err)
 	suite.NotNil(certification.Certifications)
 }
 
 func (suite *TMBDTestSuite) TestGetCertificationTVFail() {
-	suite.APIKey = ""
-	_, err := suite.GetCertificationTV()
+	suite.client.APIKey = ""
+	_, err := suite.client.GetCertificationTV()
 	suite.NotNil(err)
 }
