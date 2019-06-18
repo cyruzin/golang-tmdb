@@ -42,12 +42,17 @@ type Client struct {
 	http   http.Client
 }
 
+// SetClientConfig sets a custom configuration for the http.Client.
+func (c *Client) SetClientConfig(httpClient http.Client) {
+	c.http = httpClient
+}
+
 // Init setups the Client with an APIKey.
-func Init(ak string) (*Client, error) {
-	if ak == "" {
+func Init(apiKey string) (*Client, error) {
+	if apiKey == "" {
 		return nil, errors.New("APIKey is empty")
 	}
-	return &Client{APIKey: ak}, nil
+	return &Client{APIKey: apiKey}, nil
 }
 
 // Error type represents an error returned by the TMDB API.
