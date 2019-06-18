@@ -82,3 +82,18 @@ func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
 	err = suite.decodeError(r)
 	suite.Contains(err.Error(), "could not read body response")
 }
+
+func (suite *TMBDTestSuite) TestInit() {
+	_, err := Init(os.Getenv("APIKey"))
+	suite.Nil(err)
+}
+
+func (suite *TMBDTestSuite) TestInitFail() {
+	_, err := Init(os.Getenv(""))
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestSetClientConfig() {
+	suite.SetClientConfig(http.Client{Timeout: time.Second * 10})
+	suite.Equal(time.Second*10, suite.Client.http.Timeout)
+}
