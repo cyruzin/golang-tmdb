@@ -46,3 +46,11 @@ movie, err := tmdbClient.GetMovieDetails(297802, options)
 ```
 
 For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/master/examples).
+
+## Contributing
+
+To start contributing, please check [CONTRIBUTING](https://github.com/cyruzin/feelthemovies/blob/master/CONTRIBUTING.md).
+
+## License
+
+MIT
