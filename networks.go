@@ -41,7 +41,7 @@ type NetworkImages struct {
 func (c *Client) GetNetworkDetails(id int) (*NetworkDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
-		baseURL, networkURL, id, c.APIKey,
+		baseURL, networkURL, id, c.apiKey,
 	)
 	n := NetworkDetails{}
 	err := c.get(tmdbURL, &n)
@@ -59,7 +59,7 @@ func (c *Client) GetNetworkAlternativeNames(
 ) (*NetworkAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_names?api_key=%s",
-		baseURL, networkURL, id, c.APIKey,
+		baseURL, networkURL, id, c.apiKey,
 	)
 	n := NetworkAlternativeNames{}
 	err := c.get(tmdbURL, &n)
@@ -85,7 +85,7 @@ func (c *Client) GetNetworkAlternativeNames(
 func (c *Client) GetNetworkImages(id int) (*NetworkImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
-		baseURL, networkURL, id, c.APIKey,
+		baseURL, networkURL, id, c.apiKey,
 	)
 	n := NetworkImages{}
 	err := c.get(tmdbURL, &n)

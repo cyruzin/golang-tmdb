@@ -7,7 +7,7 @@ func (suite *TMBDTestSuite) TestGetConfigurationAPI() {
 }
 
 func (suite *TMBDTestSuite) TestGetConfigurationAPIFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetConfigurationAPI()
 	suite.NotNil(err)
 }
@@ -19,7 +19,7 @@ func (suite *TMBDTestSuite) TestGetConfigurationCountries() {
 }
 
 func (suite *TMBDTestSuite) TestGetConfigurationCountriesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetConfigurationCountries()
 	suite.NotNil(err)
 }
@@ -31,7 +31,7 @@ func (suite *TMBDTestSuite) TestGetConfigurationJobs() {
 }
 
 func (suite *TMBDTestSuite) TestGetConfigurationJobsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetConfigurationJobs()
 	suite.NotNil(err)
 }
@@ -43,7 +43,7 @@ func (suite *TMBDTestSuite) TestGetConfigurationLanguages() {
 }
 
 func (suite *TMBDTestSuite) TestGetConfigurationLanguagesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetConfigurationLanguages()
 	suite.NotNil(err)
 }
@@ -55,7 +55,7 @@ func (suite *TMBDTestSuite) TestGetConfigurationPrimaryTranslations() {
 }
 
 func (suite *TMBDTestSuite) TestGetConfigurationPrimaryTranslationsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetConfigurationPrimaryTranslations()
 	suite.NotNil(err)
 }
@@ -67,7 +67,7 @@ func (suite *TMBDTestSuite) TestGetConfigurationTimezones() {
 }
 
 func (suite *TMBDTestSuite) TestGetConfigurationTimezonesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetConfigurationTimezones()
 	suite.NotNil(err)
 }

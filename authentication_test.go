@@ -7,7 +7,7 @@ func (suite *TMBDTestSuite) TestCreateGuestSession() {
 }
 
 func (suite *TMBDTestSuite) TestCreateGuestSessionFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.CreateGuestSession()
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -19,7 +19,7 @@ func (suite *TMBDTestSuite) TestCreateRequestToken() {
 }
 
 func (suite *TMBDTestSuite) TestCreateRequestTokenFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.CreateRequestToken()
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -35,7 +35,7 @@ func (suite *TMBDTestSuite) TestCreateRequestTokenFail() {
 // }
 
 // func (suite *TMBDTestSuite) TestCreateSessionFail() {
-// 	suite.client.APIKey = ""
+// 	suite.client.apiKey = ""
 // 	_, err := suite.CreateRequestToken()
 // 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 // }

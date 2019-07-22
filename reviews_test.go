@@ -9,7 +9,7 @@ func (suite *TMBDTestSuite) TestGetReviewDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetReviewDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetReviewDetails(reviewID)
 	suite.NotNil(err)
 }

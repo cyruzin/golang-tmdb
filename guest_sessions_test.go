@@ -17,7 +17,7 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedMoviesFail() {
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
 	suite.Nil(err)
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err = suite.client.GetGuestSessionRatedMovies(gs.GuestSessionID, o)
 	suite.NotNil(err)
 }
@@ -39,7 +39,7 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVShowsFail() {
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
 	suite.Nil(err)
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err = suite.client.GetGuestSessionRatedTVShows(gs.GuestSessionID, o)
 	suite.NotNil(err)
 }
@@ -61,7 +61,7 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVEpisodesFail() {
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
 	suite.Nil(err)
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err = suite.client.GetGuestSessionRatedTVEpisodes(gs.GuestSessionID, o)
 	suite.NotNil(err)
 }

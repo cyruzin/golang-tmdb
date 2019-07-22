@@ -9,7 +9,7 @@ func (suite *TMBDTestSuite) TestGetKeywordDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetKeywordDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetKeywordDetails(wormWholeID)
 	suite.NotNil(err)
 }
@@ -21,7 +21,7 @@ func (suite *TMBDTestSuite) TestGetKeywordMovies() {
 }
 
 func (suite *TMBDTestSuite) TestGetKeywordMoviesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetKeywordMovies(wormWholeID, nil)
 	suite.NotNil(err)
 }

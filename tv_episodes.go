@@ -187,7 +187,7 @@ func (c *Client) GetTVEpisodeDetails(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d?api_key=%s%s",
-		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, options,
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.apiKey, options,
 	)
 	t := TVEpisodeDetails{}
 	err := c.get(tmdbURL, &t)
@@ -210,7 +210,7 @@ func (c *Client) GetTVEpisodeChanges(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%sepisode/%d/changes?api_key=%s%s",
-		baseURL, tvURL, id, c.APIKey, options,
+		baseURL, tvURL, id, c.apiKey, options,
 	)
 	t := TVEpisodeChanges{}
 	err := c.get(tmdbURL, &t)
@@ -228,7 +228,7 @@ func (c *Client) GetTVEpisodeCredits(
 ) (*TVEpisodeCredits, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/credits?api_key=%s",
-		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey,
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.apiKey,
 	)
 	t := TVEpisodeCredits{}
 	err := c.get(tmdbURL, &t)
@@ -251,7 +251,7 @@ func (c *Client) GetTVEpisodeExternalIDs(
 ) (*TVEpisodeExternalIDs, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/external_ids?api_key=%s",
-		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey,
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.apiKey,
 	)
 	t := TVEpisodeExternalIDs{}
 	err := c.get(tmdbURL, &t)
@@ -274,7 +274,7 @@ func (c *Client) GetTVEpisodeImages(
 ) (*TVEpisodeImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/images?api_key=%s",
-		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey,
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.apiKey,
 	)
 	t := TVEpisodeImages{}
 	err := c.get(tmdbURL, &t)
@@ -292,7 +292,7 @@ func (c *Client) GetTVEpisodeTranslations(
 ) (*TVEpisodeTranslations, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/translations?api_key=%s",
-		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey,
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.apiKey,
 	)
 	t := TVEpisodeTranslations{}
 	err := c.get(tmdbURL, &t)
@@ -311,7 +311,7 @@ func (c *Client) GetTVEpisodeVideos(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/videos?api_key=%s%s",
-		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.APIKey, options,
+		baseURL, tvURL, id, tvSeasonURL, s, tvEpisodeURL, e, c.apiKey, options,
 	)
 	t := TVEpisodeVideos{}
 	err := c.get(tmdbURL, &t)

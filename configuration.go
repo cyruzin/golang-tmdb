@@ -69,7 +69,7 @@ type ConfigurationTimezones []struct {
 // https://developers.themoviedb.org/3/companies/get-company-images
 func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s/configuration?api_key=%s", baseURL, c.APIKey,
+		"%s/configuration?api_key=%s", baseURL, c.apiKey,
 	)
 	t := ConfigurationAPI{}
 	err := c.get(tmdbURL, &t)
@@ -88,7 +88,7 @@ func (c *Client) GetConfigurationCountries() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s%scountries?api_key=%s",
-		baseURL, configurationURL, c.APIKey,
+		baseURL, configurationURL, c.apiKey,
 	)
 	t := ConfigurationCountries{}
 	err := c.get(tmdbURL, &t)
@@ -104,7 +104,7 @@ func (c *Client) GetConfigurationCountries() (
 func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sjobs?api_key=%s",
-		baseURL, configurationURL, c.APIKey,
+		baseURL, configurationURL, c.apiKey,
 	)
 	t := ConfigurationJobs{}
 	err := c.get(tmdbURL, &t)
@@ -123,7 +123,7 @@ func (c *Client) GetConfigurationLanguages() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s%slanguages?api_key=%s",
-		baseURL, configurationURL, c.APIKey,
+		baseURL, configurationURL, c.apiKey,
 	)
 	t := ConfigurationLanguages{}
 	err := c.get(tmdbURL, &t)
@@ -160,7 +160,7 @@ func (c *Client) GetConfigurationPrimaryTranslations() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sprimary_translations?api_key=%s",
-		baseURL, configurationURL, c.APIKey,
+		baseURL, configurationURL, c.apiKey,
 	)
 	t := ConfigurationPrimaryTranslations{}
 	err := c.get(tmdbURL, &t)
@@ -178,7 +178,7 @@ func (c *Client) GetConfigurationTimezones() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s%stimezones?api_key=%s",
-		baseURL, configurationURL, c.APIKey,
+		baseURL, configurationURL, c.apiKey,
 	)
 	t := ConfigurationTimezones{}
 	err := c.get(tmdbURL, &t)

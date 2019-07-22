@@ -7,7 +7,7 @@ func (suite *TMBDTestSuite) TestGetChangesMovie() {
 }
 
 func (suite *TMBDTestSuite) TestGetChangesMovieFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetChangesMovie(nil)
 	suite.NotNil(err)
 }
@@ -27,7 +27,7 @@ func (suite *TMBDTestSuite) TestGetChangesTV() {
 }
 
 func (suite *TMBDTestSuite) TestGetChangesTVFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetChangesTV(nil)
 	suite.NotNil(err)
 }
@@ -47,7 +47,7 @@ func (suite *TMBDTestSuite) TestGetChangesPerson() {
 }
 
 func (suite *TMBDTestSuite) TestGetChangesPersonFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetChangesPerson(nil)
 	suite.NotNil(err)
 }

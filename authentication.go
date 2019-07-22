@@ -35,7 +35,7 @@ type SessionWithLogin struct {
 //
 // https://developers.themoviedb.org/3/authentication/create-guest-session
 func (c *Client) CreateGuestSession() (*RequestToken, error) {
-	tmdbURL := fmt.Sprintf("%s%sguest_session/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
+	tmdbURL := fmt.Sprintf("%s%sguest_session/new?api_key=%s", baseURL, authenticationURL, c.apiKey)
 	a := RequestToken{}
 	err := c.get(tmdbURL, &a)
 	if err != nil {
@@ -49,7 +49,7 @@ func (c *Client) CreateGuestSession() (*RequestToken, error) {
 //
 // https://developers.themoviedb.org/3/authentication/create-request-token
 func (c *Client) CreateRequestToken() (*RequestToken, error) {
-	tmdbURL := fmt.Sprintf("%s%stoken/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
+	tmdbURL := fmt.Sprintf("%s%stoken/new?api_key=%s", baseURL, authenticationURL, c.apiKey)
 	a := RequestToken{}
 	err := c.get(tmdbURL, &a)
 	if err != nil {
@@ -65,7 +65,7 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 //
 // https://developers.themoviedb.org/3/authentication/create-session
 // func (c *Client) CreateSession(rt string) (*Session, error) {
-// 	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", baseURL, authenticationURL, c.APIKey)
+// 	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", baseURL, authenticationURL, c.apiKey)
 // 	requestToken := struct {
 // 		RequestToken string `json:"request_token"`
 // 	}{rt}
@@ -90,7 +90,7 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 //
 // https://developers.themoviedb.org/3/authentication/validate-request-token
 // func (c *Client) CreateSessionWithLogin(u, p, rt string) (*RequestToken, error) {
-// 	tmdbURL := fmt.Sprintf("%s%stoken/validate_with_login?api_key=%s", baseURL, authenticationURL, c.APIKey)
+// 	tmdbURL := fmt.Sprintf("%s%stoken/validate_with_login?api_key=%s", baseURL, authenticationURL, c.apiKey)
 // 	loginSession := SessionWithLogin{
 // 		Username:     u,
 // 		Password:     p,
@@ -112,7 +112,7 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 //
 // https://developers.themoviedb.org/3/authentication/create-session-from-v4-access-token
 // func (c *Client) CreateSessionFromV4(at string) (*Session, error) {
-// 	tmdbURL := fmt.Sprintf("%s%ssession/convert/4?api_key=%s", baseURL, authenticationURL, c.APIKey)
+// 	tmdbURL := fmt.Sprintf("%s%ssession/convert/4?api_key=%s", baseURL, authenticationURL, c.apiKey)
 // 	accessToken := AccessToken{AccessToken: at}
 // 	a := Session{}
 // 	err := c.post(tmdbURL, &accessToken, &a)

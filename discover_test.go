@@ -12,7 +12,7 @@ func (suite *TMBDTestSuite) TestGetDiscoverMovie() {
 }
 
 func (suite *TMBDTestSuite) TestGetDiscoverMovieFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	o := make(map[string]string)
 	o["language"] = "en-US"
 	o["include_adult"] = "false"
@@ -35,7 +35,7 @@ func (suite *TMBDTestSuite) TestGetDiscoverTV() {
 }
 
 func (suite *TMBDTestSuite) TestGetDiscoverTVFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	o := make(map[string]string)
 	o["page"] = "1"
 	o["language"] = "en-US"

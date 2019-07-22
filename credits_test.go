@@ -9,7 +9,7 @@ func (suite *TMBDTestSuite) TestGetCreditDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetCreditDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCreditDetails(tyrionLannisterID)
 	suite.NotNil(err)
 }

@@ -148,7 +148,7 @@ func (suite *TMBDTestSuite) TestGetMovieAccountStatesFail() {
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAccountStatesWithOptions() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	options := make(map[string]string)
 	options["session_id"] = "koQubnkaZ"
 	_, err := suite.client.GetMovieAccountStates(jackReacherID, options)
@@ -276,7 +276,7 @@ func (suite *TMBDTestSuite) TestGetMovieLatest() {
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLatestFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieLatest(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -296,7 +296,7 @@ func (suite *TMBDTestSuite) TestGetMovieNowPlaying() {
 }
 
 func (suite *TMBDTestSuite) TestGetMovieNowPlayingFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieNowPlaying(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -316,7 +316,7 @@ func (suite *TMBDTestSuite) TestGetMoviePopular() {
 }
 
 func (suite *TMBDTestSuite) TestGetMoviePopularFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetMoviePopular(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -336,7 +336,7 @@ func (suite *TMBDTestSuite) TestGetMovieTopRated() {
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTopRatedFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieTopRated(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -356,7 +356,7 @@ func (suite *TMBDTestSuite) TestGetMovieUpcoming() {
 }
 
 func (suite *TMBDTestSuite) TestGetMovieUpcomingFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieUpcoming(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }

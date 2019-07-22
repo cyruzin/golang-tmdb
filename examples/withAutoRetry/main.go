@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"os"
-	"time"
 
 	tmdb "github.com/cyruzin/golang-tmdb"
 )
@@ -13,8 +11,8 @@ func main() {
 
 	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
 
-	// Setting a custom config for http.Client.
-	tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
+	// Enabling auto retry functionality.
+	tmdbClient.SetClientAutoRetry()
 
 	if err != nil {
 		fmt.Println(err)

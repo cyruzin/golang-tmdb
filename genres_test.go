@@ -7,7 +7,7 @@ func (suite *TMBDTestSuite) TestGetGenreMovieList() {
 }
 
 func (suite *TMBDTestSuite) TestGetGenreMovieListFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetGenreMovieList(nil)
 	suite.NotNil(err)
 }
@@ -27,7 +27,7 @@ func (suite *TMBDTestSuite) TestGetGenreTVList() {
 }
 
 func (suite *TMBDTestSuite) TestGetGenreTVListFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetGenreTVList(nil)
 	suite.NotNil(err)
 }

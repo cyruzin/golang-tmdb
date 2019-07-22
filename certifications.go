@@ -105,7 +105,7 @@ func (c *Client) GetCertificationMovie() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s/certification%slist?api_key=%s",
-		baseURL, movieURL, c.APIKey,
+		baseURL, movieURL, c.apiKey,
 	)
 	m := CertificationMovie{}
 	err := c.get(tmdbURL, &m)
@@ -124,7 +124,7 @@ func (c *Client) GetCertificationTV() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s/certification%slist?api_key=%s",
-		baseURL, tvURL, c.APIKey,
+		baseURL, tvURL, c.apiKey,
 	)
 	t := CertificationTV{}
 	err := c.get(tmdbURL, &t)

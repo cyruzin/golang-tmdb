@@ -36,7 +36,7 @@ func (suite *TMBDTestSuite) TestGetTVAccountStatesFail() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVAccountStatesWithOptions() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	options := make(map[string]string)
 	options["session_id"] = "koQubnkaZ"
 	_, err := suite.client.GetTVAccountStates(vikingsID, options)
@@ -300,7 +300,7 @@ func (suite *TMBDTestSuite) TestGetTVLatest() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVLatestFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetTVLatest(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -320,7 +320,7 @@ func (suite *TMBDTestSuite) TestGetTVAiringToday() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVAiringTodayFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetTVAiringToday(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -340,7 +340,7 @@ func (suite *TMBDTestSuite) TestGetTVOnTheAir() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVOnTheAirFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetTVOnTheAir(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -360,7 +360,7 @@ func (suite *TMBDTestSuite) TestGetTVPopular() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVPopularFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetTVPopular(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }
@@ -380,7 +380,7 @@ func (suite *TMBDTestSuite) TestGetTVTopRated() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVTopRatedFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetTVTopRated(nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }

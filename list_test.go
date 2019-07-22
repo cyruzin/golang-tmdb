@@ -9,7 +9,7 @@ func (suite *TMBDTestSuite) TestGetListDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetListDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetListDetails(listID, nil)
 	suite.NotNil(err)
 }
@@ -31,7 +31,7 @@ func (suite *TMBDTestSuite) TestGetListItemStatus() {
 }
 
 func (suite *TMBDTestSuite) TestGetListItemStatusFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	options := make(map[string]string)
 	options["movie_id"] = "10658"
 	_, err := suite.client.GetListItemStatus(listID, options)
