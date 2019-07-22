@@ -31,6 +31,10 @@ tmdbClient, err := tmdb.Init("YOUR_APIKEY")
 // options like Timeout and Transport.
 tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
 
+// OPTIONAL (Recommended): Enabling auto retry functionality.
+// This option will retry if the previous request fail.
+tmdbClient.SetAutoRetry()
+
 if err != nil {
     fmt.Println(err)
 }

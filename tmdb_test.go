@@ -17,6 +17,7 @@ type TMBDTestSuite struct {
 
 func (suite *TMBDTestSuite) SetupTest() {
 	suite.client.apiKey = os.Getenv("APIKey")
+	suite.client.SetClientAutoRetry()
 }
 
 func TestSuite(t *testing.T) {
@@ -92,7 +93,7 @@ func (suite *TMBDTestSuite) TestSetClientConfig() {
 	suite.Equal(time.Second*10, suite.client.http.Timeout)
 }
 
-func (suite *TMBDTestSuite) TestSetClientAutoRetry() {
+func (suite *TMBDTestSuite) TestSetAutoRetry() {
 	suite.client.SetClientAutoRetry()
 	suite.Equal(true, suite.client.autoRetry)
 }

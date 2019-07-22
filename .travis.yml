@@ -14,7 +14,6 @@ before_install:
 
 script:
   - $GOPATH/bin/goveralls -service=travis-ci
-  - go test -v -race
 
 notifications:
   email: false
