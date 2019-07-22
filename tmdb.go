@@ -5,12 +5,14 @@ package tmdb
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 // TMDb constants
@@ -67,23 +69,35 @@ func (c *Client) get(url string, data interface{}) error {
 		return errors.New("url field is empty")
 	}
 
-	res, err := c.http.Get(url)
+	// Setting default timeout to 10 seconds, if none is provided.
+	if c.http.Timeout == 0 {
+		c.http.Timeout = time.Second * 10
+	}
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
 
-	defer res.Body.Close()
+	// Setting context.
+	req = req.WithContext(context.Background())
 
-	res.Header.Add("content-type", "application/json;charset=utf-8")
+	req.Header.Add("content-type", "application/json;charset=utf-8")
+
+	res, err := c.http.Do(req)
+
+	if err != nil {
+		return err
+	}
 
 	if res.StatusCode != http.StatusOK {
 		return c.decodeError(res)
 	}
 
-	err = json.NewDecoder(res.Body).Decode(data)
+	defer res.Body.Close()
 
-	if err != nil {
+	if err = json.NewDecoder(res.Body).Decode(data); err != nil {
 		return fmt.Errorf("could not decode the data: %s", err)
 	}
 
@@ -115,9 +129,7 @@ func (c *Client) post(url string, params []byte, data interface{}) error {
 		return c.decodeError(res)
 	}
 
-	err = json.NewDecoder(res.Body).Decode(data)
-
-	if err != nil {
+	if err = json.NewDecoder(res.Body).Decode(data); err != nil {
 		return fmt.Errorf("could not decode the data: %s", err)
 	}
 
