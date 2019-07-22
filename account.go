@@ -21,7 +21,7 @@ type AccountDetails struct {
 // func (c *Client) GetAccountDetails(o map[string]string) (*AccountDetails, error) {
 // 	options := c.fmtOptions(o)
 // 	tmdbURL := fmt.Sprintf(
-// 		"%s/account?api_key=%s%s", baseURL, c.APIKey, options,
+// 		"%s/account?api_key=%s%s", baseURL, c.apiKey, options,
 // 	)
 // 	fmt.Println(tmdbURL)
 // 	a := AccountDetails{}

@@ -12,7 +12,7 @@ func (suite *TMBDTestSuite) TestGetFindByID() {
 }
 
 func (suite *TMBDTestSuite) TestGetFindByIDFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	options := make(map[string]string)
 	options["external_source"] = "imdb_id"
 	options["language"] = "en-US"

@@ -176,7 +176,7 @@ func (c *Client) GetSearchCompanies(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%scompany?api_key=%s&query=%s%s",
-		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		baseURL, searchURL, c.apiKey, url.QueryEscape(q), options,
 	)
 	s := SearchCompanies{}
 	err := c.get(tmdbURL, &s)
@@ -195,7 +195,7 @@ func (c *Client) GetSearchCollections(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%scollection?api_key=%s&query=%s%s",
-		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		baseURL, searchURL, c.apiKey, url.QueryEscape(q), options,
 	)
 	s := SearchCollections{}
 	err := c.get(tmdbURL, &s)
@@ -214,7 +214,7 @@ func (c *Client) GetSearchKeywords(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%skeyword?api_key=%s&query=%s%s",
-		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		baseURL, searchURL, c.apiKey, url.QueryEscape(q), options,
 	)
 	s := SearchKeywords{}
 	err := c.get(tmdbURL, &s)
@@ -233,7 +233,7 @@ func (c *Client) GetSearchMovies(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s&query=%s%s",
-		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		baseURL, searchURL, c.apiKey, url.QueryEscape(q), options,
 	)
 	s := SearchMovies{}
 	err := c.get(tmdbURL, &s)
@@ -254,7 +254,7 @@ func (c *Client) GetSearchMulti(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%smulti?api_key=%s&query=%s%s",
-		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		baseURL, searchURL, c.apiKey, url.QueryEscape(q), options,
 	)
 	s := SearchMulti{}
 	err := c.get(tmdbURL, &s)
@@ -273,7 +273,7 @@ func (c *Client) GetSearchPeople(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%sperson?api_key=%s&query=%s%s",
-		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		baseURL, searchURL, c.apiKey, url.QueryEscape(q), options,
 	)
 	s := SearchPeople{}
 	err := c.get(tmdbURL, &s)
@@ -292,7 +292,7 @@ func (c *Client) GetSearchTVShow(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s&query=%s%s",
-		baseURL, searchURL, c.APIKey, url.QueryEscape(q), options,
+		baseURL, searchURL, c.apiKey, url.QueryEscape(q), options,
 	)
 	s := SearchTVShows{}
 	err := c.get(tmdbURL, &s)

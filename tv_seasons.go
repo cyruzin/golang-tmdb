@@ -164,7 +164,7 @@ func (c *Client) GetTVSeasonDetails(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d?api_key=%s%s",
-		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+		baseURL, tvURL, id, tvSeasonURL, s, c.apiKey, options,
 	)
 	t := TVSeasonDetails{}
 	err := c.get(tmdbURL, &t)
@@ -187,7 +187,7 @@ func (c *Client) GetTVSeasonChanges(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%sseason/%d/changes?api_key=%s%s",
-		baseURL, tvURL, id, c.APIKey, options,
+		baseURL, tvURL, id, c.apiKey, options,
 	)
 	t := TVSeasonChanges{}
 	err := c.get(tmdbURL, &t)
@@ -206,7 +206,7 @@ func (c *Client) GetTVSeasonCredits(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/credits?api_key=%s%s",
-		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+		baseURL, tvURL, id, tvSeasonURL, s, c.apiKey, options,
 	)
 	t := TVSeasonCredits{}
 	err := c.get(tmdbURL, &t)
@@ -230,7 +230,7 @@ func (c *Client) GetTVSeasonExternalIDs(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/external_ids?api_key=%s%s",
-		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+		baseURL, tvURL, id, tvSeasonURL, s, c.apiKey, options,
 	)
 	t := TVSeasonExternalIDs{}
 	err := c.get(tmdbURL, &t)
@@ -254,7 +254,7 @@ func (c *Client) GetTVSeasonImages(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/images?api_key=%s%s",
-		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+		baseURL, tvURL, id, tvSeasonURL, s, c.apiKey, options,
 	)
 	t := TVSeasonImages{}
 	err := c.get(tmdbURL, &t)
@@ -273,7 +273,7 @@ func (c *Client) GetTVSeasonVideos(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/videos?api_key=%s%s",
-		baseURL, tvURL, id, tvSeasonURL, s, c.APIKey, options,
+		baseURL, tvURL, id, tvSeasonURL, s, c.apiKey, options,
 	)
 	t := TVSeasonVideos{}
 	err := c.get(tmdbURL, &t)

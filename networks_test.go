@@ -12,7 +12,7 @@ func (suite *TMBDTestSuite) TestGetNetworkDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetNetworkDetails(netflixID)
 	suite.NotNil(err)
 }
@@ -24,7 +24,7 @@ func (suite *TMBDTestSuite) TestGetNetworkAlternativeNames() {
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkAlternativeNamesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetNetworkAlternativeNames(americanMovieClassics)
 	suite.NotNil(err)
 }
@@ -36,7 +36,7 @@ func (suite *TMBDTestSuite) TestGetNetworkImages() {
 }
 
 func (suite *TMBDTestSuite) TestGetNetworkImagesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetNetworkImages(netflixID)
 	suite.NotNil(err)
 }

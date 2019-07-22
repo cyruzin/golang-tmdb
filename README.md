@@ -27,7 +27,9 @@ import "github.com/cyruzin/golang-tmdb"
 tmdbClient, err := tmdb.Init("YOUR_APIKEY")
 
 // OPTIONAL: Setting a custom config for the http.Client.
-tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 10})
+// The default timeout is 10 seconds. Here you can set other
+// options like Timeout and Transport.
+tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
 
 if err != nil {
     fmt.Println(err)

@@ -12,7 +12,7 @@ func (suite *TMBDTestSuite) TestGetSearchCompanies() {
 }
 
 func (suite *TMBDTestSuite) TestGetSearchCompaniesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetSearchCompanies(warner, nil)
 	suite.NotNil(err)
 }
@@ -32,7 +32,7 @@ func (suite *TMBDTestSuite) TestGetSearchCollections() {
 }
 
 func (suite *TMBDTestSuite) TestGetSearchCollectionsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetSearchCollections(defaultQuery, nil)
 	suite.NotNil(err)
 }
@@ -52,7 +52,7 @@ func (suite *TMBDTestSuite) TestGetSearchKeywords() {
 }
 
 func (suite *TMBDTestSuite) TestGetSearchKeywordsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetSearchKeywords(defaultQuery, nil)
 	suite.NotNil(err)
 }
@@ -72,7 +72,7 @@ func (suite *TMBDTestSuite) TestGetSearchMovies() {
 }
 
 func (suite *TMBDTestSuite) TestGetSearchMoviesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetSearchMovies(defaultQuery, nil)
 	suite.NotNil(err)
 }
@@ -92,7 +92,7 @@ func (suite *TMBDTestSuite) TestGetSearchMulti() {
 }
 
 func (suite *TMBDTestSuite) TestGetSearchMultiFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetSearchMulti(defaultQuery, nil)
 	suite.NotNil(err)
 }
@@ -112,7 +112,7 @@ func (suite *TMBDTestSuite) TestGetSearchPeople() {
 }
 
 func (suite *TMBDTestSuite) TestGetSearchPeopleFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetSearchPeople(defaultQuery, nil)
 	suite.NotNil(err)
 }
@@ -132,7 +132,7 @@ func (suite *TMBDTestSuite) TestGetSearchTVShow() {
 }
 
 func (suite *TMBDTestSuite) TestGetSearchTVShowFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetSearchTVShow(defaultQuery, nil)
 	suite.NotNil(err)
 }

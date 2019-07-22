@@ -79,7 +79,7 @@ type Trending struct {
 func (c *Client) GetTrending(m, t string) (*Trending, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/trending/%s/%s?api_key=%s",
-		baseURL, m, t, c.APIKey,
+		baseURL, m, t, c.apiKey,
 	)
 	mt := Trending{}
 	err := c.get(tmdbURL, &mt)

@@ -16,13 +16,7 @@ type TMBDTestSuite struct {
 }
 
 func (suite *TMBDTestSuite) SetupTest() {
-	suite.client.APIKey = os.Getenv("APIKey")
-	// Workaround to avoid API rate limiting error message while testing.
-	if os.Getenv("TestTime") != "" {
-		time.Sleep(150 * time.Millisecond)
-	} else {
-		time.Sleep(500 * time.Millisecond)
-	}
+	suite.client.apiKey = os.Getenv("APIKey")
 }
 
 func TestSuite(t *testing.T) {
@@ -96,4 +90,9 @@ func (suite *TMBDTestSuite) TestInitFail() {
 func (suite *TMBDTestSuite) TestSetClientConfig() {
 	suite.client.SetClientConfig(http.Client{Timeout: time.Second * 10})
 	suite.Equal(time.Second*10, suite.client.http.Timeout)
+}
+
+func (suite *TMBDTestSuite) TestSetClientAutoRetry() {
+	suite.client.SetClientAutoRetry()
+	suite.Equal(true, suite.client.autoRetry)
 }

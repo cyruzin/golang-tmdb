@@ -38,7 +38,7 @@ type KeywordMovies struct {
 func (c *Client) GetKeywordDetails(id int) (*KeywordDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
-		baseURL, keywordURL, id, c.APIKey,
+		baseURL, keywordURL, id, c.apiKey,
 	)
 	k := KeywordDetails{}
 	err := c.get(tmdbURL, &k)
@@ -60,7 +60,7 @@ func (c *Client) GetKeywordMovies(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movies?api_key=%s%s",
-		baseURL, keywordURL, id, c.APIKey, options,
+		baseURL, keywordURL, id, c.apiKey, options,
 	)
 	t := KeywordMovies{}
 	err := c.get(tmdbURL, &t)

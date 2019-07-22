@@ -22,7 +22,7 @@ func (c *Client) GetReviewDetails(
 ) (*ReviewDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/review/%s?api_key=%s",
-		baseURL, id, c.APIKey,
+		baseURL, id, c.apiKey,
 	)
 	t := ReviewDetails{}
 	err := c.get(tmdbURL, &t)

@@ -96,7 +96,7 @@ func (c *Client) GetFindByID(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s/find/%s?api_key=%s%s",
-		baseURL, id, c.APIKey, options,
+		baseURL, id, c.apiKey, options,
 	)
 	k := FindByID{}
 	err := c.get(tmdbURL, &k)

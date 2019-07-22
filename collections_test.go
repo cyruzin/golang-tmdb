@@ -9,7 +9,7 @@ func (suite *TMBDTestSuite) TestGetCollectionDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetCollectionDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCollectionDetails(starWarsID, nil)
 	suite.NotNil(err)
 }
@@ -29,7 +29,7 @@ func (suite *TMBDTestSuite) TestGetCollectionImages() {
 }
 
 func (suite *TMBDTestSuite) TestGetCollectionImagesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCollectionImages(starWarsID, nil)
 	suite.NotNil(err)
 }
@@ -49,7 +49,7 @@ func (suite *TMBDTestSuite) TestGetCollectionTranslations() {
 }
 
 func (suite *TMBDTestSuite) TestGetCollectionTranslationsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCollectionTranslations(starWarsID, nil)
 	suite.NotNil(err)
 }

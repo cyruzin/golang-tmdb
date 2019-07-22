@@ -12,7 +12,7 @@ func (suite *TMBDTestSuite) TestGetCompanyDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCompanyDetails(lucasFilmID)
 	suite.NotNil(err)
 }
@@ -24,7 +24,7 @@ func (suite *TMBDTestSuite) TestGetCompanyAlternativeNames() {
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyAlternativeNamesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCompanyAlternativeNames(lucasFilmID)
 	suite.NotNil(err)
 }
@@ -36,7 +36,7 @@ func (suite *TMBDTestSuite) TestGetCompanyImages() {
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyImagesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCompanyImages(disneyID)
 	suite.NotNil(err)
 }

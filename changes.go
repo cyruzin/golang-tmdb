@@ -36,7 +36,7 @@ func (c *Client) GetChangesMovie(
 ) (*ChangesMovie, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
-		"%s%schanges?api_key=%s%s", baseURL, movieURL, c.APIKey, options,
+		"%s%schanges?api_key=%s%s", baseURL, movieURL, c.apiKey, options,
 	)
 	m := ChangesMovie{}
 	err := c.get(tmdbURL, &m)
@@ -60,7 +60,7 @@ func (c *Client) GetChangesTV(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
-		baseURL, tvURL, c.APIKey, options,
+		baseURL, tvURL, c.apiKey, options,
 	)
 	m := ChangesTV{}
 	err := c.get(tmdbURL, &m)
@@ -84,7 +84,7 @@ func (c *Client) GetChangesPerson(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
-		baseURL, personURL, c.APIKey, options,
+		baseURL, personURL, c.apiKey, options,
 	)
 	m := ChangesPerson{}
 	err := c.get(tmdbURL, &m)

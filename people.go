@@ -361,7 +361,7 @@ func (c *Client) GetPersonDetails(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonDetails{}
 	err := c.get(tmdbURL, &p)
@@ -384,7 +384,7 @@ func (c *Client) GetPersonChanges(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonChanges{}
 	err := c.get(tmdbURL, &p)
@@ -403,7 +403,7 @@ func (c *Client) GetPersonMovieCredits(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movie_credits?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonMovieCredits{}
 	err := c.get(tmdbURL, &p)
@@ -422,7 +422,7 @@ func (c *Client) GetPersonTVCredits(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tv_credits?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonTVCredits{}
 	err := c.get(tmdbURL, &p)
@@ -441,7 +441,7 @@ func (c *Client) GetPersonCombinedCredits(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/combined_credits?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonCombinedCredits{}
 	err := c.get(tmdbURL, &p)
@@ -464,7 +464,7 @@ func (c *Client) GetPersonExternalIDs(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonExternalIDs{}
 	err := c.get(tmdbURL, &p)
@@ -480,7 +480,7 @@ func (c *Client) GetPersonExternalIDs(
 func (c *Client) GetPersonImages(id int) (*PersonImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
-		baseURL, personURL, id, c.APIKey,
+		baseURL, personURL, id, c.apiKey,
 	)
 	p := PersonImages{}
 	err := c.get(tmdbURL, &p)
@@ -499,7 +499,7 @@ func (c *Client) GetPersonTaggedImages(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tagged_images?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonTaggedImages{}
 	err := c.get(tmdbURL, &p)
@@ -518,7 +518,7 @@ func (c *Client) GetPersonTranslations(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
-		baseURL, personURL, id, c.APIKey, options,
+		baseURL, personURL, id, c.apiKey, options,
 	)
 	p := PersonTranslations{}
 	err := c.get(tmdbURL, &p)
@@ -538,7 +538,7 @@ func (c *Client) GetPersonLatest(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s",
-		baseURL, personURL, c.APIKey, options,
+		baseURL, personURL, c.apiKey, options,
 	)
 	p := PersonLatest{}
 	err := c.get(tmdbURL, &p)
@@ -558,7 +558,7 @@ func (c *Client) GetPersonPopular(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
-		baseURL, personURL, c.APIKey, options,
+		baseURL, personURL, c.apiKey, options,
 	)
 	p := PersonPopular{}
 	err := c.get(tmdbURL, &p)

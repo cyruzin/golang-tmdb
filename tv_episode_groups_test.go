@@ -9,7 +9,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsDetails() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsDetailsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetTVEpisodeGroupsDetails("", nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
 }

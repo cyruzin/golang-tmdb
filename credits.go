@@ -82,7 +82,7 @@ type CreditsDetails struct {
 // https://developers.themoviedb.org/3/credits/get-credit-details
 func (c *Client) GetCreditDetails(id string) (*CreditsDetails, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%s?api_key=%s", baseURL, creditURL, id, c.APIKey,
+		"%s%s%s?api_key=%s", baseURL, creditURL, id, c.apiKey,
 	)
 	t := CreditsDetails{}
 	err := c.get(tmdbURL, &t)

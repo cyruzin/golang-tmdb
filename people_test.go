@@ -31,7 +31,7 @@ func (suite *TMBDTestSuite) TestGetPersonChanges() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonChangesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonChanges(0, nil)
 	suite.NotNil(err)
 }
@@ -51,7 +51,7 @@ func (suite *TMBDTestSuite) TestGetPersonMovieCredits() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonMovieCreditsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonMovieCredits(0, nil)
 	suite.NotNil(err)
 }
@@ -71,7 +71,7 @@ func (suite *TMBDTestSuite) TestGetPersonTVCredits() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonTVCreditsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonTVCredits(0, nil)
 	suite.NotNil(err)
 }
@@ -91,7 +91,7 @@ func (suite *TMBDTestSuite) TestGetPersonCombinedCredits() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonCombinedCreditsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonCombinedCredits(0, nil)
 	suite.NotNil(err)
 }
@@ -111,7 +111,7 @@ func (suite *TMBDTestSuite) TestGetPersonExternalIDs() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonExternalIDsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonExternalIDs(0, nil)
 	suite.NotNil(err)
 }
@@ -131,7 +131,7 @@ func (suite *TMBDTestSuite) TestGetPersonImages() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonImagesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonImages(0)
 	suite.NotNil(err)
 }
@@ -143,7 +143,7 @@ func (suite *TMBDTestSuite) TestGetPersonTaggedImages() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonTaggedImagesFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonTaggedImages(0, nil)
 	suite.NotNil(err)
 }
@@ -163,7 +163,7 @@ func (suite *TMBDTestSuite) TestGetPersonTranslations() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonTranslationsFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonTranslations(0, nil)
 	suite.NotNil(err)
 }
@@ -183,7 +183,7 @@ func (suite *TMBDTestSuite) TestGetPersonLatest() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonLatestFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonLatest(nil)
 	suite.NotNil(err)
 }
@@ -203,7 +203,7 @@ func (suite *TMBDTestSuite) TestGetPersonPopular() {
 }
 
 func (suite *TMBDTestSuite) TestGetPersonPopularFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetPersonPopular(nil)
 	suite.NotNil(err)
 }

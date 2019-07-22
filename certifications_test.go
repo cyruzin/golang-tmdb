@@ -7,7 +7,7 @@ func (suite *TMBDTestSuite) TestGetCertificationMovie() {
 }
 
 func (suite *TMBDTestSuite) TestGetCertificationMovieFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCertificationMovie()
 	suite.NotNil(err)
 }
@@ -19,7 +19,7 @@ func (suite *TMBDTestSuite) TestGetCertificationTV() {
 }
 
 func (suite *TMBDTestSuite) TestGetCertificationTVFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetCertificationTV()
 	suite.NotNil(err)
 }

@@ -46,7 +46,7 @@ func (c *Client) GetListDetails(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%s?api_key=%s%s",
-		baseURL, listURL, id, c.APIKey, options,
+		baseURL, listURL, id, c.apiKey, options,
 	)
 	t := ListDetails{}
 	err := c.get(tmdbURL, &t)
@@ -65,7 +65,7 @@ func (c *Client) GetListItemStatus(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%s/item_status?api_key=%s%s",
-		baseURL, listURL, id, c.APIKey, options,
+		baseURL, listURL, id, c.apiKey, options,
 	)
 	t := ListItemStatus{}
 	err := c.get(tmdbURL, &t)

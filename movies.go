@@ -426,7 +426,7 @@ func (c *Client) GetMovieDetails(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieDetails{}
 	err := c.get(tmdbURL, &m)
@@ -452,7 +452,7 @@ func (c *Client) GetMovieAccountStates(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/account_states?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options)
+		baseURL, movieURL, id, c.apiKey, options)
 	m := MovieAccountStates{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
@@ -470,7 +470,7 @@ func (c *Client) GetMovieAlternativeTitles(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_titles?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieAlternativeTitles{}
 	err := c.get(tmdbURL, &m)
@@ -493,7 +493,7 @@ func (c *Client) GetMovieChanges(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieChanges{}
 	err := c.get(tmdbURL, &m)
@@ -511,7 +511,7 @@ func (c *Client) GetMovieCredits(
 ) (*MovieCredits, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf("%s%s%d/credits?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieCredits{}
 	err := c.get(tmdbURL, &m)
@@ -536,7 +536,7 @@ func (c *Client) GetMovieExternalIDs(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieExternalIDs{}
 	err := c.get(tmdbURL, &m)
@@ -560,7 +560,7 @@ func (c *Client) GetMovieImages(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieImages{}
 	err := c.get(tmdbURL, &m)
@@ -576,7 +576,7 @@ func (c *Client) GetMovieImages(
 func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/keywords?api_key=%s",
-		baseURL, movieURL, id, c.APIKey,
+		baseURL, movieURL, id, c.apiKey,
 	)
 	m := MovieKeywords{}
 	err := c.get(tmdbURL, &m)
@@ -594,7 +594,7 @@ func (c *Client) GetMovieReleaseDates(
 ) (*MovieReleaseDates, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/release_dates?api_key=%s",
-		baseURL, movieURL, id, c.APIKey,
+		baseURL, movieURL, id, c.apiKey,
 	)
 	m := MovieReleaseDates{}
 	err := c.get(tmdbURL, &m)
@@ -613,7 +613,7 @@ func (c *Client) GetMovieVideos(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieVideos{}
 	err := c.get(tmdbURL, &m)
@@ -632,7 +632,7 @@ func (c *Client) GetMovieTranslations(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieTranslations{}
 	err := c.get(tmdbURL, &m)
@@ -651,7 +651,7 @@ func (c *Client) GetMovieRecommendations(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/recommendations?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieRecommendations{}
 	err := c.get(tmdbURL, &m)
@@ -673,7 +673,7 @@ func (c *Client) GetMovieSimilar(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/similar?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieSimilar{}
 	err := c.get(tmdbURL, &m)
@@ -692,7 +692,7 @@ func (c *Client) GetMovieReviews(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/reviews?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieReviews{}
 	err := c.get(tmdbURL, &m)
@@ -711,7 +711,7 @@ func (c *Client) GetMovieLists(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s%s",
-		baseURL, movieURL, id, c.APIKey, options,
+		baseURL, movieURL, id, c.apiKey, options,
 	)
 	m := MovieLists{}
 	err := c.get(tmdbURL, &m)
@@ -732,7 +732,7 @@ func (c *Client) GetMovieLatest(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s",
-		baseURL, movieURL, c.APIKey, options,
+		baseURL, movieURL, c.apiKey, options,
 	)
 	m := MovieLatest{}
 	err := c.get(tmdbURL, &m)
@@ -758,7 +758,7 @@ func (c *Client) GetMovieNowPlaying(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%snow_playing?api_key=%s%s",
-		baseURL, movieURL, c.APIKey, options,
+		baseURL, movieURL, c.apiKey, options,
 	)
 	m := MovieNowPlaying{}
 	err := c.get(tmdbURL, &m)
@@ -779,7 +779,7 @@ func (c *Client) GetMoviePopular(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
-		baseURL, movieURL, c.APIKey, options,
+		baseURL, movieURL, c.apiKey, options,
 	)
 	m := MoviePopular{}
 	err := c.get(tmdbURL, &m)
@@ -798,7 +798,7 @@ func (c *Client) GetMovieTopRated(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%stop_rated?api_key=%s%s",
-		baseURL, movieURL, c.APIKey, options)
+		baseURL, movieURL, c.apiKey, options)
 	m := MovieTopRated{}
 	err := c.get(tmdbURL, &m)
 	if err != nil {
@@ -823,7 +823,7 @@ func (c *Client) GetMovieUpcoming(
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
 		"%s%supcoming?api_key=%s%s",
-		baseURL, movieURL, c.APIKey, options,
+		baseURL, movieURL, c.apiKey, options,
 	)
 	m := MovieUpcoming{}
 	err := c.get(tmdbURL, &m)

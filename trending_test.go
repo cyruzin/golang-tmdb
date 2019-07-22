@@ -7,7 +7,7 @@ func (suite *TMBDTestSuite) TestGetTrending() {
 }
 
 func (suite *TMBDTestSuite) TestGetTrendingFail() {
-	suite.client.APIKey = ""
+	suite.client.apiKey = ""
 	_, err := suite.client.GetTrending("movie", "day")
 	suite.NotNil(err)
 }
