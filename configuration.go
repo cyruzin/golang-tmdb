@@ -66,7 +66,7 @@ type ConfigurationTimezones []struct {
 // can be useful if you are building an app that consumes data from the
 // change feed.
 //
-// https://developers.themoviedb.org/3/companies/get-company-images
+// https://developers.themoviedb.org/3/configuration/get-api-configuration
 func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/configuration?api_key=%s", baseURL, c.apiKey,
