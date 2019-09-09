@@ -8,7 +8,7 @@ An API Key is required. To register for one, head over to [themoviedb.org](https
 
 This product uses the TMDb API but is not endorsed or certified by TMDb.
 
-# Notes
+## Notes
 
 The builds are failing, because the API is going through some problems, you can check in the discussion below:
 
