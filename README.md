@@ -12,7 +12,7 @@ This product uses the TMDb API but is not endorsed or certified by TMDb.
 
 The builds are failing, because the API is going through some problems, you can check in the discussion below:
 
-[https://www.themoviedb.org/talk/5d655376813cb60016fa15ae](Discussion)
+[https://www.themoviedb.org/talk/5d655376813cb60016fa15ae](https://www.themoviedb.org/talk/5d655376813cb60016fa15ae)
 
 ## Requirements
 
