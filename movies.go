@@ -416,6 +416,12 @@ type MovieUpcoming struct {
 	*MovieNowPlaying
 }
 
+// Response type is a struct for http responses ..
+type Response struct {
+	StatusCode    int    `json:"status_code"`
+	StatusMessage string `json:"status_message"`
+}
+
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
@@ -833,4 +839,29 @@ func (c *Client) GetMovieUpcoming(
 	return &m, nil
 }
 
-// TODO: Rate Movie (POST Request) and Delete Rating (DELETE Request)
+// PostMovieRating will post rating for a specific movie
+// https://developers.themoviedb.org/3/movies/rate-movie ..
+func (c *Client) PostMovieRating(id int, rating float32, o map[string]string) (*Response, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/rating?api_key=%s&session_id=%s%s",
+		baseURL, movieURL, id, c.apiKey, c.sessionID, options,
+	)
+	body := fmt.Sprintf("{\"value\":%f}", rating)
+	r := Response{}
+	err := c.post(tmdbURL, body, "POST", &r)
+	return &r, err
+}
+
+//DeleteMovieRating will delete rating for a specific movie
+//https://developers.themoviedb.org/3/movies/delete-movie-rating ..
+func (c *Client) DeleteMovieRating(id int, o map[string]string) (*Response, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/rating?api_key=%s&session_id=%s%s",
+		baseURL, movieURL, id, c.apiKey, c.sessionID, options,
+	)
+	r := Response{}
+	err := c.post(tmdbURL, "{}", "DELETE", &r)
+	return &r, err
+}

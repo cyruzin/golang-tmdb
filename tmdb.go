@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -46,6 +47,8 @@ const defaultRetryDuration = time.Second * 5
 type Client struct {
 	// TMDb apiKey to use the client.
 	apiKey string
+	// sessionId to use the client.
+	sessionID string
 	// Auto retry flag to indicates if the client
 	// should retry the previous operation.
 	autoRetry bool
@@ -61,11 +64,13 @@ type Error struct {
 }
 
 // Init setups the Client with an apiKey.
-func Init(apiKey string) (*Client, error) {
+func Init(apiKey string, sessionID string) (*Client, error) {
 	if apiKey == "" {
 		return nil, errors.New("APIKey is empty")
+	} else if sessionID == "" {
+		return nil, errors.New("SessionID is empty")
 	}
-	return &Client{apiKey: apiKey}, nil
+	return &Client{apiKey: apiKey, sessionID: sessionID}, nil
 }
 
 // SetClientConfig sets a custom configuration for the http.Client.
@@ -141,13 +146,13 @@ func (c *Client) get(url string, data interface{}) error {
 	return nil
 }
 
-// TODO: Improve post function.
-func (c *Client) post(url string, params []byte, data interface{}) error {
+// TODO : get, post need to be refactored into one
+func (c *Client) post(url string, body string, method string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(params))
+	req, err := http.NewRequest(method, url, strings.NewReader(body))
 
 	if err != nil {
 		return errors.New(err.Error())
@@ -163,7 +168,7 @@ func (c *Client) post(url string, params []byte, data interface{}) error {
 
 	defer res.Body.Close()
 
-	if res.StatusCode != http.StatusCreated {
+	if res.StatusCode != http.StatusCreated && res.StatusCode != http.StatusOK {
 		return c.decodeError(res)
 	}
 
