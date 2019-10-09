@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
+	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"), os.Getenv("SessionID"))
 
 	// Setting a custom config for http.Client.
 	tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cyruzin/golang-tmdb"
+	tmdb "github.com/cyruzin/golang-tmdb"
 )
 
 func main() {
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
+	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"), os.Getenv("SessionID"))
 
 	if err != nil {
 		fmt.Println(err)

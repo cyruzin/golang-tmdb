@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
+	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"), os.Getenv("SessionID"))
 
 	// Enabling auto retry functionality.
 	tmdbClient.SetClientAutoRetry()
