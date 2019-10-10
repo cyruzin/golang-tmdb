@@ -177,7 +177,7 @@ func (suite *TMBDTestSuite) TestGetMovieVideosWithOptions() {
 func (suite *TMBDTestSuite) TestGetMovieTranslations() {
 	bumblebee, err := suite.client.GetMovieTranslations(bumblebeeID, nil)
 	suite.Nil(err)
-	suite.Equal("DK", bumblebee.Translations[0].Iso3166_1)
+	suite.NotEmpty(bumblebee.Translations[0].Iso3166_1)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTranslationsFail() {

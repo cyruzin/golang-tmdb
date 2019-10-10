@@ -258,7 +258,7 @@ func (suite *TMBDTestSuite) TestGetTVSimilarWithOptions() {
 func (suite *TMBDTestSuite) TestGetTVTranslations() {
 	flash, err := suite.client.GetTVTranslations(flashID, nil)
 	suite.Nil(err)
-	suite.Equal("IR", flash.Translations[0].Iso3166_1)
+	suite.NotEmpty(flash.Translations[0].Iso3166_1)
 }
 
 func (suite *TMBDTestSuite) TestGetTVTranslationsFail() {
