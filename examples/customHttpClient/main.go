@@ -6,12 +6,14 @@ import (
 	"os"
 	"time"
 
-	tmdb "github.com/cyruzin/golang-tmdb"
+	tmdb "golang-tmdb"
 )
 
 func main() {
 
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"), os.Getenv("SessionID"))
+	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
+
+	tmdbClient.SetSessionID(os.Getenv("SessionID")) // From a ENV or Database
 
 	// Setting a custom config for http.Client.
 	tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
@@ -46,17 +48,17 @@ func main() {
 		fmt.Println(v.Name)
 	}
 
-	// // PostMovieRating ..
-	// r, err := tmdbClient.PostMovieRating(299536, 3.5, nil)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Println(r.StatusMessage)
+	// PostMovieRating ..
+	r, err := tmdbClient.PostMovieRating(299536, 3.5, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(r.StatusMessage)
 
-	// // DeleteMovieRating ..
-	// r, err = tmdbClient.DeleteMovieRating(299536, nil)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Println(r.StatusMessage)
+	// DeleteMovieRating ..
+	r, err = tmdbClient.DeleteMovieRating(299536, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(r.StatusMessage)
 }

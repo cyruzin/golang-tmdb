@@ -64,13 +64,20 @@ type Error struct {
 }
 
 // Init setups the Client with an apiKey.
-func Init(apiKey string, sessionID string) (*Client, error) {
+func Init(apiKey string) (*Client, error) {
 	if apiKey == "" {
 		return nil, errors.New("APIKey is empty")
-	} else if sessionID == "" {
-		return nil, errors.New("SessionID is empty")
 	}
-	return &Client{apiKey: apiKey, sessionID: sessionID}, nil
+	return &Client{apiKey: apiKey}, nil
+}
+
+// SetSessionID will set the session id.
+func (c *Client) SetSessionID(sid string) error {
+	if sid == "" {
+		return errors.New("The SessionID is empty")
+	}
+	c.sessionID = sid
+	return nil
 }
 
 // SetClientConfig sets a custom configuration for the http.Client.

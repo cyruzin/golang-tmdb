@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"), os.Getenv("SessionID"))
+	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
 
 	if err != nil {
 		fmt.Println(err)

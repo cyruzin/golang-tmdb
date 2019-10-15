@@ -79,12 +79,12 @@ func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
 }
 
 func (suite *TMBDTestSuite) TestInit() {
-	_, err := Init(os.Getenv("APIKey"), os.Getenv("SessionID"))
+	_, err := Init(os.Getenv("APIKey"))
 	suite.Nil(err)
 }
 
 func (suite *TMBDTestSuite) TestInitFail() {
-	_, err := Init(os.Getenv(""), os.Getenv(""))
+	_, err := Init(os.Getenv(""))
 	suite.NotNil(err)
 }
 
