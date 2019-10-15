@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	tmdb "golang-tmdb"
+	tmdb "github.com/cyruzin/golang-tmdb"
 )
 
 func main() {
