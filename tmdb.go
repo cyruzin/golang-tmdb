@@ -5,7 +5,6 @@ package tmdb
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -103,6 +102,12 @@ func retryDuration(resp *http.Response) time.Duration {
 	return time.Duration(seconds) * time.Second
 }
 
+// shouldRetry determines whether the status code indicates that the
+// previous operation should be retried at a later time.
+func shouldRetry(status int) bool {
+	return status == http.StatusAccepted || status == http.StatusTooManyRequests
+}
+
 func (c *Client) get(url string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
@@ -118,8 +123,6 @@ func (c *Client) get(url string, data interface{}) error {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
 
-	// Setting context.
-	req = req.WithContext(context.Background())
 	req.Header.Add("content-type", "application/json;charset=utf-8")
 
 	for {
@@ -154,44 +157,60 @@ func (c *Client) get(url string, data interface{}) error {
 }
 
 func (c *Client) request(url string, body string, method string, data interface{}) error {
-	if url == "" {
-		return errors.New("url field is empty")
+	for {
+		if url == "" {
+			return errors.New("url field is empty")
+		}
+
+		// Setting default timeout to 10 seconds, if none is provided.
+		if c.http.Timeout == 0 {
+			c.http.Timeout = time.Second * 10
+		}
+
+		req, err := http.NewRequest(method, url, strings.NewReader(body))
+		if err != nil {
+			return errors.New(err.Error())
+		}
+
+		req.Header.Add("content-type", "application/json;charset=utf-8")
+
+		res, err := c.http.Do(req)
+		if err != nil {
+			return errors.New(err.Error())
+		}
+
+		defer res.Body.Close()
+
+		if c.autoRetry && shouldRetry(res.StatusCode) {
+			time.Sleep(retryDuration(res))
+			continue
+		}
+
+		// Checking if the response is greater or equal to 300 or less than 200.
+		if res.StatusCode >= http.StatusMultipleChoices ||
+			res.StatusCode < http.StatusOK ||
+			res.StatusCode == http.StatusNoContent {
+			return c.decodeError(res)
+		}
+
+		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
+			return fmt.Errorf("could not decode the data: %s", err)
+		}
+
+		break
 	}
-
-	req, err := http.NewRequest(method, url, strings.NewReader(body))
-
-	if err != nil {
-		return errors.New(err.Error())
-	}
-
-	req.Header.Add("content-type", "application/json;charset=utf-8")
-
-	res, err := c.http.Do(req)
-
-	if err != nil {
-		return errors.New(err.Error())
-	}
-
-	defer res.Body.Close()
-
-	if res.StatusCode != http.StatusCreated && res.StatusCode != http.StatusOK {
-		return c.decodeError(res)
-	}
-
-	if err = json.NewDecoder(res.Body).Decode(data); err != nil {
-		return fmt.Errorf("could not decode the data: %s", err)
-	}
-
 	return nil
 }
 
 func (c *Client) fmtOptions(o map[string]string) string {
 	options := ""
+
 	if len(o) > 0 {
 		for k, v := range o {
 			options += fmt.Sprintf("&%s=%s", k, url.QueryEscape(v))
 		}
 	}
+
 	return options
 }
 
@@ -204,11 +223,15 @@ func (c *Client) decodeError(r *http.Response) error {
 	if err != nil {
 		return fmt.Errorf("could not read body response: %s", err)
 	}
+
 	if len(resBody) == 0 {
 		return fmt.Errorf("[%d]: empty body %s", r.StatusCode, http.StatusText(r.StatusCode))
 	}
+
 	buf := bytes.NewBuffer(resBody)
+
 	var e Error
+
 	err = json.NewDecoder(buf).Decode(&e)
 	if err != nil {
 		return fmt.Errorf("couldn't decode error: (%d) [%s]", len(resBody), resBody)
