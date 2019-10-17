@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cyruzin/golang-tmdb"
+	tmdb "github.com/cyruzin/golang-tmdb"
 )
 
 func main() {
