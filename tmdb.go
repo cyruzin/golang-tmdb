@@ -153,8 +153,7 @@ func (c *Client) get(url string, data interface{}) error {
 	return nil
 }
 
-// TODO : get, post need to be refactored into one
-func (c *Client) post(url string, body string, method string, data interface{}) error {
+func (c *Client) request(url string, body string, method string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}

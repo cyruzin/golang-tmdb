@@ -10,6 +10,8 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
+const sessionID = "a5722b9dd3467bd630c28e9ca63baf880c9940ae"
+
 type TMBDTestSuite struct {
 	suite.Suite
 	client Client
@@ -34,19 +36,19 @@ func (suite *TMBDTestSuite) TestGetFail() {
 }
 
 func (suite *TMBDTestSuite) TestPostFail() {
-	err := suite.client.post("http://www.testfakewebsite.org", "", "POST", nil)
+	err := suite.client.request("http://www.testfakewebsite.org", "", "POST", nil)
 	suite.Contains(err.Error(), "no such host")
-	err = suite.client.post("https://api.themoviedb.org/3/authentication/session/new", "", "POST", nil)
+	err = suite.client.request("https://api.themoviedb.org/3/authentication/session/new", "", "POST", nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error(), nil)
-	err = suite.client.post("", "", "POST", nil)
+	err = suite.client.request("", "", "POST", nil)
 	suite.Equal("url field is empty", err.Error())
 	b := `{"title": "test"}`
-	err = suite.client.post("https://jsonplaceholder.typicode.com/todos", b, "POST", nil)
+	err = suite.client.request("https://jsonplaceholder.typicode.com/todos", b, "POST", nil)
 	suite.Contains(err.Error(), "could not decode the data")
 	var a struct {
 		ID int `json:"id"`
 	}
-	err = suite.client.post("https://jsonplaceholder.typicode.com/todos", b, "POST", &a)
+	err = suite.client.request("https://jsonplaceholder.typicode.com/todos", b, "POST", &a)
 	suite.Nil(err)
 }
 

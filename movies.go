@@ -416,7 +416,7 @@ type MovieUpcoming struct {
 	*MovieNowPlaying
 }
 
-// Response type is a struct for http responses ..
+// Response type is a struct for http responses.
 type Response struct {
 	StatusCode    int    `json:"status_code"`
 	StatusMessage string `json:"status_message"`
@@ -839,8 +839,14 @@ func (c *Client) GetMovieUpcoming(
 	return &m, nil
 }
 
-// PostMovieRating will post rating for a specific movie
-// https://developers.themoviedb.org/3/movies/rate-movie ..
+// PostMovieRating rate a movie.
+//
+// A valid session or guest session ID is required.
+//
+// You can read more about how this works:
+// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
+//
+// https://developers.themoviedb.org/3/movies/rate-movie
 func (c *Client) PostMovieRating(id int, rating float32, o map[string]string) (*Response, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
@@ -849,12 +855,18 @@ func (c *Client) PostMovieRating(id int, rating float32, o map[string]string) (*
 	)
 	body := fmt.Sprintf("{\"value\":%f}", rating)
 	r := Response{}
-	err := c.post(tmdbURL, body, "POST", &r)
+	err := c.request(tmdbURL, body, "POST", &r)
 	return &r, err
 }
 
-//DeleteMovieRating will delete rating for a specific movie
-//https://developers.themoviedb.org/3/movies/delete-movie-rating ..
+// DeleteMovieRating remove your rating for a movie.
+//
+// A valid session or guest session ID is required.
+//
+// You can read more about how this works:
+// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
+//
+// https://developers.themoviedb.org/3/movies/delete-movie-rating
 func (c *Client) DeleteMovieRating(id int, o map[string]string) (*Response, error) {
 	options := c.fmtOptions(o)
 	tmdbURL := fmt.Sprintf(
@@ -862,6 +874,6 @@ func (c *Client) DeleteMovieRating(id int, o map[string]string) (*Response, erro
 		baseURL, movieURL, id, c.apiKey, c.sessionID, options,
 	)
 	r := Response{}
-	err := c.post(tmdbURL, "{}", "DELETE", &r)
+	err := c.request(tmdbURL, "{}", "DELETE", &r)
 	return &r, err
 }

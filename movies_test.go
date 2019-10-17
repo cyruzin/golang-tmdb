@@ -368,3 +368,29 @@ func (suite *TMBDTestSuite) TestGetMovieUpcomingWithOptions() {
 	suite.Nil(err)
 	suite.Equal(int64(1), movies.Page)
 }
+
+func (suite *TMBDTestSuite) TestPostMovieRating() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.PostMovieRating(aquamanID, 10, nil)
+	suite.Nil(err)
+	suite.Equal(1, response.StatusCode)
+}
+
+func (suite *TMBDTestSuite) TestPostMovieRatingFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.PostMovieRating(aquamanID, 10, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestDeleteMovieRating() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.DeleteMovieRating(aquamanID, nil)
+	suite.Nil(err)
+	suite.Equal(13, response.StatusCode)
+}
+
+func (suite *TMBDTestSuite) TestDeleteMovieRatingFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.DeleteMovieRating(aquamanID, nil)
+	suite.NotNil(err)
+}

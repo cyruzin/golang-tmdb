@@ -77,7 +77,7 @@ type CreditsDetails struct {
 	} `json:"person"`
 }
 
-// GetCreditDetails get the list of timezones used throughout TMDb.
+// GetCreditDetails get a movie or TV credit details by id.
 //
 // https://developers.themoviedb.org/3/credits/get-credit-details
 func (c *Client) GetCreditDetails(id string) (*CreditsDetails, error) {
