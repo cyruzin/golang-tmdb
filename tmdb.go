@@ -157,23 +157,23 @@ func (c *Client) get(url string, data interface{}) error {
 }
 
 func (c *Client) request(url string, body string, method string, data interface{}) error {
+	if url == "" {
+		return errors.New("url field is empty")
+	}
+
+	// Setting default timeout to 10 seconds, if none is provided.
+	if c.http.Timeout == 0 {
+		c.http.Timeout = time.Second * 10
+	}
+
+	req, err := http.NewRequest(method, url, strings.NewReader(body))
+	if err != nil {
+		return errors.New(err.Error())
+	}
+
+	req.Header.Add("content-type", "application/json;charset=utf-8")
+
 	for {
-		if url == "" {
-			return errors.New("url field is empty")
-		}
-
-		// Setting default timeout to 10 seconds, if none is provided.
-		if c.http.Timeout == 0 {
-			c.http.Timeout = time.Second * 10
-		}
-
-		req, err := http.NewRequest(method, url, strings.NewReader(body))
-		if err != nil {
-			return errors.New(err.Error())
-		}
-
-		req.Header.Add("content-type", "application/json;charset=utf-8")
-
 		res, err := c.http.Do(req)
 		if err != nil {
 			return errors.New(err.Error())
