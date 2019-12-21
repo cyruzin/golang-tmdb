@@ -33,7 +33,7 @@ tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
 
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
-tmdbClient.SetAutoRetry()
+tmdbClient.SetClientAutoRetry()
 
 if err != nil {
     fmt.Println(err)
