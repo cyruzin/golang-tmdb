@@ -258,7 +258,7 @@ func (suite *TMBDTestSuite) TestGetMovieLists() {
 
 func (suite *TMBDTestSuite) TestGetMovieListsFail() {
 	_, err := suite.client.GetMovieLists(0, nil)
-	suite.Equal("Internal error: Something went wrong, contact TMDb.", err.Error())
+	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieListsWithOptions() {

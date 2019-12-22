@@ -57,6 +57,10 @@ For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/mast
 
 To start contributing, please check [CONTRIBUTING](https://github.com/cyruzin/golang-tmdb/blob/master/CONTRIBUTING.md).
 
+### Tests
+
+For local testing, create a environment variable called "APIKey" and enter your TMDb key. Check the "tmdb_test.go" file for more details.
+
 ## License
 
 MIT
