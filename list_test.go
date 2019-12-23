@@ -38,17 +38,17 @@ func (suite *TMBDTestSuite) TestGetListItemStatusFail() {
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestCreateList() {
-	suite.client.SetSessionID(sessionID)
-	createList := ListCreate{
-		Name:        "Test list!",
-		Description: "Description is not enough...",
-		Language:    "en",
-	}
-	response, err := suite.client.CreateList(&createList)
-	suite.Nil(err)
-	suite.NotNil(response.StatusMessage)
-}
+// func (suite *TMBDTestSuite) TestCreateList() {
+// 	suite.client.SetSessionID(sessionID)
+// 	createList := ListCreate{
+// 		Name:        "Test list!",
+// 		Description: "Description is not enough...",
+// 		Language:    "en",
+// 	}
+// 	response, err := suite.client.CreateList(&createList)
+// 	suite.Nil(err)
+// 	suite.NotNil(response.StatusMessage)
+// }
 
 func (suite *TMBDTestSuite) TestCreateListFail() {
 	suite.client.sessionID = ""
