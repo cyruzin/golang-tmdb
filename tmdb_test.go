@@ -124,7 +124,7 @@ func (suite *TMBDTestSuite) TestRetryDuration() {
 
 func (suite *TMBDTestSuite) TestRetryDurationParseError() {
 	header := http.Header{
-		"Retry-After": []string{""},
+		"Retry-After": []string{"-"},
 	}
 	response := http.Response{
 		Status: "200",
