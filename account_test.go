@@ -89,7 +89,7 @@ func (suite *TMBDTestSuite) TestMarkAsFavorite() {
 		MediaID:   500,
 		Favorite:  true,
 	}
-	response, err := suite.client.AccountMarkAsFavorite(0, &markAsFavorite)
+	response, err := suite.client.MarkAsFavorite(0, &markAsFavorite)
 	suite.Nil(err)
 	suite.NotNil(response.StatusMessage)
 }
@@ -101,7 +101,7 @@ func (suite *TMBDTestSuite) TestMarkAsFavoriteFail() {
 		MediaID:   500,
 		Favorite:  true,
 	}
-	_, err := suite.client.AccountMarkAsFavorite(0, &markAsFavorite)
+	_, err := suite.client.MarkAsFavorite(0, &markAsFavorite)
 	suite.NotNil(err)
 }
 
@@ -125,5 +125,120 @@ func (suite *TMBDTestSuite) TestAccountRatedMoviesWithOptions() {
 func (suite *TMBDTestSuite) TestAccountRatedMoviesFail() {
 	suite.client.sessionID = ""
 	_, err := suite.client.GetRatedMovies(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedTVShows() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.GetRatedTVShows(0, nil)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedTVShowsWithOptions() {
+	suite.client.SetSessionID(sessionID)
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	options["page"] = "1"
+	response, err := suite.client.GetRatedTVShows(0, options)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedTVShowsFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.GetRatedTVShows(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedTVEpisodes() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.GetRatedTVEpisodes(0, nil)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedTVEpisodesWithOptions() {
+	suite.client.SetSessionID(sessionID)
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	options["page"] = "1"
+	response, err := suite.client.GetRatedTVEpisodes(0, options)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedTVEpisodesFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.GetRatedTVEpisodes(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestAccountMovieWatchlist() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.GetMovieWatchlist(0, nil)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountMovieWatchlistWithOptions() {
+	suite.client.SetSessionID(sessionID)
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	options["page"] = "1"
+	response, err := suite.client.GetMovieWatchlist(0, options)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountMovieWatchlistFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.GetMovieWatchlist(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestAccountTVShowsWatchlist() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.GetTVShowsWatchlist(0, nil)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountTVShowsWatchlistWithOptions() {
+	suite.client.SetSessionID(sessionID)
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	options["page"] = "1"
+	response, err := suite.client.GetTVShowsWatchlist(0, options)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountTVShowsWatchlistFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.GetTVShowsWatchlist(0, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestAddToWatchlist() {
+	suite.client.SetSessionID(sessionID)
+	addToWatchlist := AccountWatchlist{
+		MediaType: "tv",
+		MediaID:   82856,
+		Watchlist: true,
+	}
+	response, err := suite.client.AddToWatchlist(0, &addToWatchlist)
+	suite.Nil(err)
+	suite.NotNil(response.StatusMessage)
+}
+
+func (suite *TMBDTestSuite) TestAddToWatchlistFail() {
+	suite.client.sessionID = ""
+	addToWatchlist := AccountWatchlist{
+		MediaType: "tv",
+		MediaID:   82856,
+		Watchlist: true,
+	}
+	_, err := suite.client.AddToWatchlist(0, &addToWatchlist)
 	suite.NotNil(err)
 }

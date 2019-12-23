@@ -81,7 +81,8 @@ type AccountFavoriteTVShows struct {
 	TotalResults int64 `json:"total_results"`
 }
 
-// AccountFavorite type is a struct for a favorite movie or TV shows JSON request.
+// AccountFavorite type is a struct for movies or TV shows
+// favorite JSON request.
 type AccountFavorite struct {
 	MediaType string `json:"media_type"`
 	MediaID   int64  `json:"media_id"`
@@ -91,6 +92,50 @@ type AccountFavorite struct {
 // AccountRatedMovies type is a struct for rated movies JSON response.
 type AccountRatedMovies struct {
 	*AccountFavoriteMovies
+}
+
+// AccountRatedTVShows type is a struct for rated TV shows JSON response.
+type AccountRatedTVShows struct {
+	*AccountFavoriteTVShows
+}
+
+// AccountRatedTVEpisodes type is a struct for rated TV episodes JSON response.
+type AccountRatedTVEpisodes struct {
+	Page    int64 `json:"page"`
+	Results []struct {
+		AirDate        string  `json:"air_date"`
+		EpisodeNumber  int     `json:"episode_number"`
+		ID             int64   `json:"id"`
+		Name           string  `json:"name"`
+		Overview       string  `json:"overview"`
+		ProductionCode string  `json:"production_code"`
+		SeasonNumber   int     `json:"season_number"`
+		ShowID         int64   `json:"show_id"`
+		StillPath      string  `json:"still_path"`
+		VoteAverage    float64 `json:"vote_average"`
+		VoteCount      int64   `json:"vote_count"`
+		Rating         float32 `json:"rating"`
+	} `json:"results"`
+	TotalPages   int64 `json:"total_pages"`
+	TotalResults int64 `json:"total_results"`
+}
+
+// AccountMovieWatchlist type is a struct for movie watchlist JSON response.
+type AccountMovieWatchlist struct {
+	*AccountFavoriteMovies
+}
+
+// AccountTVShowsWatchlist type is a struct for tv shows watchlist JSON response.
+type AccountTVShowsWatchlist struct {
+	*AccountFavoriteTVShows
+}
+
+// AccountWatchlist type is a struct for movies or TV shows
+// watchlist JSON request.
+type AccountWatchlist struct {
+	MediaType string `json:"media_type"`
+	MediaID   int64  `json:"media_id"`
+	Watchlist bool   `json:"watchlist"`
 }
 
 // GetAccountDetails get your account details.
@@ -161,11 +206,11 @@ func (c *Client) GetFavoriteTVShows(id int, o map[string]string) (*AccountFavori
 	return &favoriteTVShows, nil
 }
 
-// AccountMarkAsFavorite this method allows you to mark a movie
+// MarkAsFavorite this method allows you to mark a movie
 // or TV show as a favorite item.
 //
 // https://developers.themoviedb.org/3/account/mark-as-favorite
-func (c *Client) AccountMarkAsFavorite(id int, title *AccountFavorite) (*Response, error) {
+func (c *Client) MarkAsFavorite(id int, title *AccountFavorite) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite?api_key=%s&session_id=%s",
 		baseURL, accountURL, id, c.apiKey, c.sessionID,
@@ -193,4 +238,88 @@ func (c *Client) GetRatedMovies(id int, o map[string]string) (*AccountRatedMovie
 		return nil, err
 	}
 	return &ratedMovies, nil
+}
+
+// GetRatedTVShows get a list of all the TV shows you have rated.
+//
+// https://developers.themoviedb.org/3/account/get-rated-tv-shows
+func (c *Client) GetRatedTVShows(id int, o map[string]string) (*AccountRatedTVShows, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/rated/tv?api_key=%s&session_id=%s%s",
+		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+	)
+	ratedTVShows := AccountRatedTVShows{}
+	err := c.get(tmdbURL, &ratedTVShows)
+	if err != nil {
+		return nil, err
+	}
+	return &ratedTVShows, nil
+}
+
+// GetRatedTVEpisodes get a list of all the TV episodes you have rated.
+//
+// https://developers.themoviedb.org/3/account/get-rated-tv-episodes
+func (c *Client) GetRatedTVEpisodes(id int, o map[string]string) (*AccountRatedTVEpisodes, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/rated/tv/episodes?api_key=%s&session_id=%s%s",
+		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+	)
+	ratedTVEpisodes := AccountRatedTVEpisodes{}
+	err := c.get(tmdbURL, &ratedTVEpisodes)
+	if err != nil {
+		return nil, err
+	}
+	return &ratedTVEpisodes, nil
+}
+
+// GetMovieWatchlist get a list of all the movies you have added to your watchlist.
+//
+// https://developers.themoviedb.org/3/account/get-movie-watchlist
+func (c *Client) GetMovieWatchlist(id int, o map[string]string) (*AccountMovieWatchlist, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/watchlist/movies?api_key=%s&session_id=%s%s",
+		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+	)
+	movieWatchlist := AccountMovieWatchlist{}
+	err := c.get(tmdbURL, &movieWatchlist)
+	if err != nil {
+		return nil, err
+	}
+	return &movieWatchlist, nil
+}
+
+// GetTVShowsWatchlist get a list of all the TV shows you have added to your watchlist.
+//
+// https://developers.themoviedb.org/3/account/get-tv-show-watchlist
+func (c *Client) GetTVShowsWatchlist(id int, o map[string]string) (*AccountTVShowsWatchlist, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/watchlist/tv?api_key=%s&session_id=%s%s",
+		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+	)
+	tvShowsWatchlist := AccountTVShowsWatchlist{}
+	err := c.get(tmdbURL, &tvShowsWatchlist)
+	if err != nil {
+		return nil, err
+	}
+	return &tvShowsWatchlist, nil
+}
+
+// AddToWatchlist add a movie or TV show to your watchlist.
+//
+// https://developers.themoviedb.org/3/account/add-to-watchlist
+func (c *Client) AddToWatchlist(id int, title *AccountWatchlist) (*Response, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/watchlist?api_key=%s&session_id=%s",
+		baseURL, accountURL, id, c.apiKey, c.sessionID,
+	)
+	addToWatchlist := Response{}
+	err := c.request(tmdbURL, title, "POST", &addToWatchlist)
+	if err != nil {
+		return nil, err
+	}
+	return &addToWatchlist, nil
 }
