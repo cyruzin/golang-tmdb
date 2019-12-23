@@ -12,7 +12,6 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -37,6 +36,7 @@ const (
 	genreURL          = "/genre/"
 	guestSessionURL   = "/guest_session/"
 	listURL           = "/list/"
+	accountURL        = "/account/"
 )
 
 // Auto retry default duration.
@@ -60,6 +60,12 @@ type Error struct {
 	StatusMessage string `json:"status_message,omitempty"`
 	Success       bool   `json:"success,omitempty"`
 	StatusCode    int    `json:"status_code,omitempty"`
+}
+
+// Response type is a struct for http responses.
+type Response struct {
+	StatusCode    int    `json:"status_code"`
+	StatusMessage string `json:"status_message"`
 }
 
 // Init setups the Client with an apiKey.
@@ -156,7 +162,7 @@ func (c *Client) get(url string, data interface{}) error {
 	return nil
 }
 
-func (c *Client) request(url string, body string, method string, data interface{}) error {
+func (c *Client) request(url string, body interface{}, method string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
@@ -166,7 +172,10 @@ func (c *Client) request(url string, body string, method string, data interface{
 		c.http.Timeout = time.Second * 10
 	}
 
-	req, err := http.NewRequest(method, url, strings.NewReader(body))
+	bodyBytes := new(bytes.Buffer)
+	json.NewEncoder(bodyBytes).Encode(body)
+
+	req, err := http.NewRequest(method, url, bytes.NewBuffer(bodyBytes.Bytes()))
 	if err != nil {
 		return errors.New(err.Error())
 	}

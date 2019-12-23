@@ -416,12 +416,6 @@ type MovieUpcoming struct {
 	*MovieNowPlaying
 }
 
-// Response type is a struct for http responses.
-type Response struct {
-	StatusCode    int    `json:"status_code"`
-	StatusMessage string `json:"status_message"`
-}
-
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
@@ -853,7 +847,9 @@ func (c *Client) PostMovieRating(id int, rating float32, o map[string]string) (*
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
 		baseURL, movieURL, id, c.apiKey, c.sessionID, options,
 	)
-	body := fmt.Sprintf("{\"value\":%f}", rating)
+	body := struct {
+		Value float32 `json:"value"`
+	}{Value: rating}
 	r := Response{}
 	err := c.request(tmdbURL, body, "POST", &r)
 	return &r, err
@@ -874,6 +870,6 @@ func (c *Client) DeleteMovieRating(id int, o map[string]string) (*Response, erro
 		baseURL, movieURL, id, c.apiKey, c.sessionID, options,
 	)
 	r := Response{}
-	err := c.request(tmdbURL, "{}", "DELETE", &r)
+	err := c.request(tmdbURL, []byte{}, "DELETE", &r)
 	return &r, err
 }

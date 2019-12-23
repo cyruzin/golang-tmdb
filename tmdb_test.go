@@ -36,20 +36,19 @@ func (suite *TMBDTestSuite) TestGetFail() {
 }
 
 func (suite *TMBDTestSuite) TestPostFail() {
-	err := suite.client.request("http://www.testfakewebsite.org", "", "POST", nil)
+	err := suite.client.request("http://www.testfakewebsite.org", []byte{}, "POST", nil)
 	suite.Contains(err.Error(), "no such host")
-	err = suite.client.request("https://api.themoviedb.org/3/authentication/session/new", "", "POST", nil)
+	err = suite.client.request("https://api.themoviedb.org/3/authentication/session/new", []byte{}, "POST", nil)
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error(), nil)
-	err = suite.client.request("", "", "POST", nil)
+	err = suite.client.request("", []byte{}, "POST", nil)
 	suite.Equal("url field is empty", err.Error())
-	b := `{"title": "test"}`
+	b := struct {
+		Title string `json:"title"`
+	}{
+		Title: "Test",
+	}
 	err = suite.client.request("https://jsonplaceholder.typicode.com/todos", b, "POST", nil)
 	suite.Contains(err.Error(), "could not decode the data")
-	var a struct {
-		ID int `json:"id"`
-	}
-	err = suite.client.request("https://jsonplaceholder.typicode.com/todos", b, "POST", &a)
-	suite.Nil(err)
 }
 
 func (suite *TMBDTestSuite) TestDecodeDataFail() {
