@@ -41,8 +41,8 @@ func (suite *TMBDTestSuite) TestGetListItemStatusFail() {
 func (suite *TMBDTestSuite) TestCreateList() {
 	suite.client.SetSessionID(sessionID)
 	createList := ListCreate{
-		Name:        "Wrapper test list",
-		Description: "This is a description",
+		Name:        "Test list!",
+		Description: "Description is not enough...",
 		Language:    "en",
 	}
 	response, err := suite.client.CreateList(&createList)

@@ -18,7 +18,13 @@ func main() {
 		fmt.Println(err)
 	}
 
-	r, err := tmdbClient.DeleteList(128330)
+	list := tmdb.ListCreate{
+		Name:        "Test list!",
+		Description: "Description is not enough...",
+		Language:    "en",
+	}
+
+	r, err := tmdbClient.CreateList(&list)
 	if err != nil {
 		fmt.Println(err)
 	}
