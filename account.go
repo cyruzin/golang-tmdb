@@ -88,6 +88,11 @@ type AccountFavorite struct {
 	Favorite  bool   `json:"favorite"`
 }
 
+// AccountRatedMovies type is a struct for rated movies JSON response.
+type AccountRatedMovies struct {
+	*AccountFavoriteMovies
+}
+
 // GetAccountDetails get your account details.
 //
 // https://developers.themoviedb.org/3/account/get-account-details
@@ -171,4 +176,21 @@ func (c *Client) AccountMarkAsFavorite(id int, title *AccountFavorite) (*Respons
 		return nil, err
 	}
 	return &markAsFavorite, nil
+}
+
+// GetRatedMovies get a list of all the movies you have rated.
+//
+// https://developers.themoviedb.org/3/account/get-rated-movies
+func (c *Client) GetRatedMovies(id int, o map[string]string) (*AccountRatedMovies, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/rated/movies?api_key=%s&session_id=%s%s",
+		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+	)
+	ratedMovies := AccountRatedMovies{}
+	err := c.get(tmdbURL, &ratedMovies)
+	if err != nil {
+		return nil, err
+	}
+	return &ratedMovies, nil
 }

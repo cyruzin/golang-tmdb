@@ -104,3 +104,26 @@ func (suite *TMBDTestSuite) TestMarkAsFavoriteFail() {
 	_, err := suite.client.AccountMarkAsFavorite(0, &markAsFavorite)
 	suite.NotNil(err)
 }
+
+func (suite *TMBDTestSuite) TestAccountRatedMovies() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.GetRatedMovies(0, nil)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedMoviesWithOptions() {
+	suite.client.SetSessionID(sessionID)
+	options := make(map[string]string)
+	options["language"] = "pt-BR"
+	options["page"] = "1"
+	response, err := suite.client.GetRatedMovies(0, options)
+	suite.Nil(err)
+	suite.NotNil(response.Page)
+}
+
+func (suite *TMBDTestSuite) TestAccountRatedMoviesFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.GetRatedMovies(0, nil)
+	suite.NotNil(err)
+}
