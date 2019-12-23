@@ -35,7 +35,7 @@ func (suite *TMBDTestSuite) TestGetFail() {
 	suite.Equal("url field is empty", err.Error())
 }
 
-func (suite *TMBDTestSuite) TestPostFail() {
+func (suite *TMBDTestSuite) TestRequestFail() {
 	err := suite.client.request("http://www.testfakewebsite.org", []byte{}, "POST", nil)
 	suite.Contains(err.Error(), "no such host")
 	err = suite.client.request("https://api.themoviedb.org/3/authentication/session/new", []byte{}, "POST", nil)
@@ -94,7 +94,48 @@ func (suite *TMBDTestSuite) TestSetClientConfig() {
 	suite.Equal(time.Second*10, suite.client.http.Timeout)
 }
 
+func (suite *TMBDTestSuite) TestSetClientConfigNoTimeout() {
+	suite.client.SetClientConfig(http.Client{Timeout: 0})
+	suite.Equal(time.Second*0, suite.client.http.Timeout)
+}
+
 func (suite *TMBDTestSuite) TestSetAutoRetry() {
 	suite.client.SetClientAutoRetry()
 	suite.Equal(true, suite.client.autoRetry)
+}
+
+func (suite *TMBDTestSuite) TestSetSessionIDFail() {
+	err := suite.client.SetSessionID("")
+	suite.Equal("The SessionID is empty", err.Error())
+}
+
+func (suite *TMBDTestSuite) TestRetryDuration() {
+	header := http.Header{
+		"Retry-After": []string{"2"},
+	}
+
+	response := http.Response{
+		Status: "200",
+		Header: header,
+	}
+	duration := retryDuration(&response)
+	suite.Equal(time.Duration(2)*time.Second, duration)
+}
+
+func (suite *TMBDTestSuite) TestRetryDurationParseError() {
+	header := http.Header{
+		"Retry-After": []string{""},
+	}
+	response := http.Response{
+		Status: "200",
+		Header: header,
+	}
+	duration := retryDuration(&response)
+	suite.Equal(defaultRetryDuration, duration)
+}
+
+func (suite *TMBDTestSuite) TestRetryDurationEmpty() {
+	response := http.Response{}
+	duration := retryDuration(&response)
+	suite.Equal(defaultRetryDuration, duration)
 }
