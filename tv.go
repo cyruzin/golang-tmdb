@@ -885,4 +885,43 @@ func (c *Client) GetTVTopRated(
 	return &t, nil
 }
 
-// TODO: Rate TV Show (POST Request) and Delete Rating (DELETE Request)
+// PostTVShowRating rate a TV show.
+//
+// A valid session or guest session ID is required.
+//
+// You can read more about how this works:
+// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
+//
+// https://developers.themoviedb.org/3/tv/rate-tv-show
+func (c *Client) PostTVShowRating(id int, rating float32, o map[string]string) (*Response, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/rating?api_key=%s&session_id=%s%s",
+		baseURL, tvURL, id, c.apiKey, c.sessionID, options,
+	)
+	body := struct {
+		Value float32 `json:"value"`
+	}{Value: rating}
+	tvShowRating := Response{}
+	err := c.request(tmdbURL, body, "POST", &tvShowRating)
+	return &tvShowRating, err
+}
+
+// DeleteTVShowRating remove your rating for a TV show.
+//
+// A valid session or guest session ID is required.
+//
+// You can read more about how this works:
+// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
+//
+// https://developers.themoviedb.org/3/tv/delete-tv-show-rating
+func (c *Client) DeleteTVShowRating(id int, o map[string]string) (*Response, error) {
+	options := c.fmtOptions(o)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/rating?api_key=%s&session_id=%s%s",
+		baseURL, tvURL, id, c.apiKey, c.sessionID, options,
+	)
+	tvShowRating := Response{}
+	err := c.request(tmdbURL, []byte{}, "DELETE", &tvShowRating)
+	return &tvShowRating, err
+}

@@ -392,3 +392,29 @@ func (suite *TMBDTestSuite) TestGetTVTopRatedWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(tv.TotalPages)
 }
+
+func (suite *TMBDTestSuite) TestPostTVShowRating() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.PostTVShowRating(vikingsID, 10, nil)
+	suite.Nil(err)
+	suite.NotNil(response.StatusCode)
+}
+
+func (suite *TMBDTestSuite) TestPostTVShowRatingFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.PostMovieRating(vikingsID, 10, nil)
+	suite.NotNil(err)
+}
+
+func (suite *TMBDTestSuite) TestDeleteTVShowRating() {
+	suite.client.SetSessionID(sessionID)
+	response, err := suite.client.DeleteTVShowRating(vikingsID, nil)
+	suite.Nil(err)
+	suite.Equal(13, response.StatusCode)
+}
+
+func (suite *TMBDTestSuite) TestDeleteTVShowRatingFail() {
+	suite.client.sessionID = ""
+	_, err := suite.client.DeleteTVShowRating(vikingsID, nil)
+	suite.NotNil(err)
+}

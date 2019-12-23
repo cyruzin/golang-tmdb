@@ -31,6 +31,13 @@ tmdbClient, err := tmdb.Init("YOUR_APIKEY")
 // options like Timeout and Transport.
 tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
 
+// OPTIONAL: Enable this option if you're going to use endpoints
+// that needs session id.
+// 
+// You can read more about how this works:
+// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
+tmdbClient.SetSessionID("YOUR_SESSION_ID")
+
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
 tmdbClient.SetClientAutoRetry()

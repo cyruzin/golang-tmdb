@@ -37,6 +37,25 @@ type ListItemStatus struct {
 	ItemPresent bool   `json:"item_present"`
 }
 
+// ListResponse type is a struct for list creation JSON response.
+type ListResponse struct {
+	*Response
+	Success bool  `json:"success"`
+	ListID  int64 `json:"list_id"`
+}
+
+// ListCreate type is a struct for list creation JSON request.
+type ListCreate struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Language    string `json:"language"`
+}
+
+// ListMedia type is a struct for list media JSON request.
+type ListMedia struct {
+	MediaID int64 `json:"media_id"`
+}
+
 // GetListDetails get the details of a list.
 //
 // https://developers.themoviedb.org/3/lists/get-list-details
@@ -73,4 +92,85 @@ func (c *Client) GetListItemStatus(
 		return nil, err
 	}
 	return &t, nil
+}
+
+// CreateList creates a list.
+//
+// https://developers.themoviedb.org/3/lists/create-list
+func (c *Client) CreateList(list *ListCreate) (*ListResponse, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s/list?api_key=%s&session_id=%s",
+		baseURL, c.apiKey, c.sessionID,
+	)
+	createList := ListResponse{}
+	err := c.request(tmdbURL, list, "POST", &createList)
+	if err != nil {
+		return nil, err
+	}
+	return &createList, nil
+}
+
+// ClearList clear all of the items from a list.
+//
+// https://developers.themoviedb.org/3/lists/clear-list
+func (c *Client) ClearList(listID int, confirm bool) (*Response, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s/list/%d/clear?api_key=%s&session_id=%s&confirm=%t",
+		baseURL, listID, c.apiKey, c.sessionID, confirm,
+	)
+	clearList := Response{}
+	err := c.request(tmdbURL, listID, "POST", &clearList)
+	if err != nil {
+		return nil, err
+	}
+	return &clearList, nil
+}
+
+// DeleteList deletes a list.
+//
+// https://developers.themoviedb.org/3/lists/delete-list
+func (c *Client) DeleteList(listID int) (*Response, error) {
+	//https://api.themoviedb.org/3/list/12121?api_key=jsasaisajs&session_id=asasas
+	tmdbURL := fmt.Sprintf(
+		"%s/list/%d?api_key=%s&session_id=%s",
+		baseURL, listID, c.apiKey, c.sessionID,
+	)
+	deleteList := Response{}
+	err := c.request(tmdbURL, nil, "DELETE", &deleteList)
+	if err != nil {
+		return nil, err
+	}
+	return &deleteList, nil
+}
+
+// AddMovie add a movie to a list.
+//
+// https://developers.themoviedb.org/3/lists/add-movie
+func (c *Client) AddMovie(listID int, mediaID *ListMedia) (*Response, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s/list/%d/add_item?api_key=%s&session_id=%s",
+		baseURL, listID, c.apiKey, c.sessionID,
+	)
+	addMovie := Response{}
+	err := c.request(tmdbURL, mediaID, "POST", &addMovie)
+	if err != nil {
+		return nil, err
+	}
+	return &addMovie, nil
+}
+
+// RemoveMovie remove a movie from a list.
+//
+// https://developers.themoviedb.org/3/lists/remove-movie
+func (c *Client) RemoveMovie(listID int, mediaID *ListMedia) (*Response, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s/list/%d/remove_item?api_key=%s&session_id=%s",
+		baseURL, listID, c.apiKey, c.sessionID,
+	)
+	removeMovie := Response{}
+	err := c.request(tmdbURL, mediaID, "POST", &removeMovie)
+	if err != nil {
+		return nil, err
+	}
+	return &removeMovie, nil
 }
