@@ -130,7 +130,6 @@ func (c *Client) ClearList(listID int, confirm bool) (*Response, error) {
 //
 // https://developers.themoviedb.org/3/lists/delete-list
 func (c *Client) DeleteList(listID int) (*Response, error) {
-	//https://api.themoviedb.org/3/list/12121?api_key=jsasaisajs&session_id=asasas
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d?api_key=%s&session_id=%s",
 		baseURL, listID, c.apiKey, c.sessionID,
