@@ -26,6 +26,10 @@ import "github.com/cyruzin/golang-tmdb"
 
 tmdbClient, err := tmdb.Init("YOUR_APIKEY")
 
+if err != nil {
+    fmt.Println(err)
+}
+
 // OPTIONAL: Setting a custom config for the http.Client.
 // The default timeout is 10 seconds. Here you can set other
 // options like Timeout and Transport.
@@ -41,10 +45,6 @@ tmdbClient.SetSessionID("YOUR_SESSION_ID")
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
 tmdbClient.SetClientAutoRetry()
-
-if err != nil {
-    fmt.Println(err)
-}
     
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
 ```
