@@ -35,7 +35,7 @@ type MovieDetails struct {
 		OriginCountry string `json:"origin_country"`
 	} `json:"production_companies"`
 	ProductionCountries []struct {
-		Iso3166_1 string `json:"iso_31661_1"`
+		Iso3166_1 string `json:"iso_3166_1"`
 		Name      string `json:"name"`
 	} `json:"production_countries"`
 	ReleaseDate     string `json:"release_date"`
