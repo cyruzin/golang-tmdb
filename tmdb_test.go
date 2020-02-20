@@ -42,13 +42,13 @@ func (suite *TMBDTestSuite) TestRequestFail() {
 	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error(), nil)
 	err = suite.client.request("", []byte{}, "POST", nil)
 	suite.Equal("url field is empty", err.Error())
-	b := struct {
-		Title string `json:"title"`
-	}{
-		Title: "Test",
-	}
-	err = suite.client.request("https://jsonplaceholder.typicode.com/todos", b, "POST", nil)
-	suite.Contains(err.Error(), "could not decode the data")
+	// b := struct {
+	// 	Title string `json:"title"`
+	// }{
+	// 	Title: "Test",
+	// }
+	// err = suite.client.request("https://jsonplaceholder.typicode.com/todos", b, "POST", nil)
+	// suite.Contains(err.Error(), "could not decode the data")
 }
 
 func (suite *TMBDTestSuite) TestDecodeDataFail() {
