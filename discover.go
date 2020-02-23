@@ -25,28 +25,6 @@ type DiscoverMovie struct {
 	} `json:"results"`
 }
 
-// DiscoverTV type is a struct for tv JSON response.
-type DiscoverTV struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
-	Results      []struct {
-		OriginalName     string   `json:"original_name"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		Name             string   `json:"name"`
-		Popularity       float32  `json:"popularity"`
-		OriginCountry    []string `json:"origin_country"`
-		VoteCount        int64    `json:"vote_count"`
-		FirstAirDate     string   `json:"first_air_date"`
-		BackdropPath     string   `json:"backdrop_path"`
-		OriginalLanguage string   `json:"original_language"`
-		ID               int64    `json:"id"`
-		VoteAverage      float32  `json:"vote_average"`
-		Overview         string   `json:"overview"`
-		PosterPath       string   `json:"poster_path"`
-	} `json:"results"`
-}
-
 // GetDiscoverMovie discover movies by different types of data like
 // average rating, number of votes, genres and certifications. You can
 // get a valid list of certifications from the  method.
@@ -72,19 +50,44 @@ type DiscoverTV struct {
 //
 // https://developers.themoviedb.org/3/discover/movie-discover
 func (c *Client) GetDiscoverMovie(
-	o map[string]string,
+	urlOptions map[string]string,
 ) (*DiscoverMovie, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s%s",
-		baseURL, discoverURL, c.apiKey, options,
+		baseURL,
+		discoverURL,
+		c.apiKey,
+		options,
 	)
-	t := DiscoverMovie{}
-	err := c.get(tmdbURL, &t)
+	discoverMovie := DiscoverMovie{}
+	err := c.get(tmdbURL, &discoverMovie)
 	if err != nil {
 		return nil, err
 	}
-	return &t, nil
+	return &discoverMovie, nil
+}
+
+// DiscoverTV type is a struct for tv JSON response.
+type DiscoverTV struct {
+	Page         int64 `json:"page"`
+	TotalResults int64 `json:"total_results"`
+	TotalPages   int64 `json:"total_pages"`
+	Results      []struct {
+		OriginalName     string   `json:"original_name"`
+		GenreIDs         []int64  `json:"genre_ids"`
+		Name             string   `json:"name"`
+		Popularity       float32  `json:"popularity"`
+		OriginCountry    []string `json:"origin_country"`
+		VoteCount        int64    `json:"vote_count"`
+		FirstAirDate     string   `json:"first_air_date"`
+		BackdropPath     string   `json:"backdrop_path"`
+		OriginalLanguage string   `json:"original_language"`
+		ID               int64    `json:"id"`
+		VoteAverage      float32  `json:"vote_average"`
+		Overview         string   `json:"overview"`
+		PosterPath       string   `json:"poster_path"`
+	} `json:"results"`
 }
 
 // GetDiscoverTV Discover TV shows by different types of data like average
@@ -98,17 +101,20 @@ func (c *Client) GetDiscoverMovie(
 //
 // https://developers.themoviedb.org/3/discover/tv-discover
 func (c *Client) GetDiscoverTV(
-	o map[string]string,
+	urlOptions map[string]string,
 ) (*DiscoverTV, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s%s",
-		baseURL, discoverURL, c.apiKey, options,
+		baseURL,
+		discoverURL,
+		c.apiKey,
+		options,
 	)
-	t := DiscoverTV{}
-	err := c.get(tmdbURL, &t)
+	discoverTV := DiscoverTV{}
+	err := c.get(tmdbURL, &discoverTV)
 	if err != nil {
 		return nil, err
 	}
-	return &t, nil
+	return &discoverTV, nil
 }

@@ -14,36 +14,42 @@ type GenreMovieList struct {
 //
 // https://developers.themoviedb.org/3/keywords/get-keyword-details
 func (c *Client) GetGenreMovieList(
-	o map[string]string,
+	urlOptions map[string]string,
 ) (*GenreMovieList, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie/list?api_key=%s%s",
-		baseURL, genreURL, c.apiKey, options,
+		baseURL,
+		genreURL,
+		c.apiKey,
+		options,
 	)
-	k := GenreMovieList{}
-	err := c.get(tmdbURL, &k)
+	genreMovieList := GenreMovieList{}
+	err := c.get(tmdbURL, &genreMovieList)
 	if err != nil {
 		return nil, err
 	}
-	return &k, nil
+	return &genreMovieList, nil
 }
 
 // GetGenreTVList get the list of official genres for TV shows.
 //
 // https://developers.themoviedb.org/3/genres/get-tv-list
 func (c *Client) GetGenreTVList(
-	o map[string]string,
+	urlOptions map[string]string,
 ) (*GenreMovieList, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv/list?api_key=%s%s",
-		baseURL, genreURL, c.apiKey, options,
+		baseURL,
+		genreURL,
+		c.apiKey,
+		options,
 	)
-	k := GenreMovieList{}
-	err := c.get(tmdbURL, &k)
+	genreTVList := GenreMovieList{}
+	err := c.get(tmdbURL, &genreTVList)
 	if err != nil {
 		return nil, err
 	}
-	return &k, nil
+	return &genreTVList, nil
 }

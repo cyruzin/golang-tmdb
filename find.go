@@ -91,17 +91,18 @@ type FindByID struct {
 //
 // https://developers.themoviedb.org/3/find/find-by-id
 func (c *Client) GetFindByID(
-	id string, o map[string]string,
+	id string,
+	urlOptions map[string]string,
 ) (*FindByID, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s/find/%s?api_key=%s%s",
 		baseURL, id, c.apiKey, options,
 	)
-	k := FindByID{}
-	err := c.get(tmdbURL, &k)
+	findByID := FindByID{}
+	err := c.get(tmdbURL, &findByID)
 	if err != nil {
 		return nil, err
 	}
-	return &k, nil
+	return &findByID, nil
 }

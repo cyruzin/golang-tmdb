@@ -13,16 +13,6 @@ type ChangesMovie struct {
 	TotalResults int64 `json:"total_results"`
 }
 
-// ChangesTV type is a struct for tv changes JSON response.
-type ChangesTV struct {
-	*ChangesMovie
-}
-
-// ChangesPerson type is a struct for person changes JSON response.
-type ChangesPerson struct {
-	*ChangesMovie
-}
-
 // GetChangesMovie get a list of all of the movie ids
 // that have been changed in the past 24 hours.
 //
@@ -32,18 +22,27 @@ type ChangesPerson struct {
 //
 // https://developers.themoviedb.org/3/changes/get-movie-change-list
 func (c *Client) GetChangesMovie(
-	o map[string]string,
+	urlOptions map[string]string,
 ) (*ChangesMovie, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
-		"%s%schanges?api_key=%s%s", baseURL, movieURL, c.apiKey, options,
+		"%s%schanges?api_key=%s%s",
+		baseURL,
+		movieURL,
+		c.apiKey,
+		options,
 	)
-	m := ChangesMovie{}
-	err := c.get(tmdbURL, &m)
+	changesMovies := ChangesMovie{}
+	err := c.get(tmdbURL, &changesMovies)
 	if err != nil {
 		return nil, err
 	}
-	return &m, nil
+	return &changesMovies, nil
+}
+
+// ChangesTV type is a struct for tv changes JSON response.
+type ChangesTV struct {
+	*ChangesMovie
 }
 
 // GetChangesTV get a list of all of the TV show ids
@@ -55,19 +54,27 @@ func (c *Client) GetChangesMovie(
 //
 // https://developers.themoviedb.org/3/changes/get-tv-change-list
 func (c *Client) GetChangesTV(
-	o map[string]string,
+	urlOptions map[string]string,
 ) (*ChangesTV, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
-		baseURL, tvURL, c.apiKey, options,
+		baseURL,
+		tvURL,
+		c.apiKey,
+		options,
 	)
-	m := ChangesTV{}
-	err := c.get(tmdbURL, &m)
+	changesTV := ChangesTV{}
+	err := c.get(tmdbURL, &changesTV)
 	if err != nil {
 		return nil, err
 	}
-	return &m, nil
+	return &changesTV, nil
+}
+
+// ChangesPerson type is a struct for person changes JSON response.
+type ChangesPerson struct {
+	*ChangesMovie
 }
 
 // GetChangesPerson get a list of all of the person ids
@@ -79,17 +86,20 @@ func (c *Client) GetChangesTV(
 //
 // https://developers.themoviedb.org/3/changes/get-person-change-list
 func (c *Client) GetChangesPerson(
-	o map[string]string,
+	urlOptions map[string]string,
 ) (*ChangesPerson, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
-		baseURL, personURL, c.apiKey, options,
+		baseURL,
+		personURL,
+		c.apiKey,
+		options,
 	)
-	m := ChangesPerson{}
-	err := c.get(tmdbURL, &m)
+	changesPerson := ChangesPerson{}
+	err := c.get(tmdbURL, &changesPerson)
 	if err != nil {
 		return nil, err
 	}
-	return &m, nil
+	return &changesPerson, nil
 }

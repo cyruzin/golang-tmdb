@@ -20,13 +20,56 @@ type CompanyDetails struct {
 	} `json:"parent_company"`
 }
 
-// CompanyAlternativeNames type is a struct for alternative names JSON response.
+// GetCompanyDetails get a companies details by id.
+//
+// https://developers.themoviedb.org/3/companies/get-company-details
+func (c *Client) GetCompanyDetails(
+	id int,
+) (*CompanyDetails, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d?api_key=%s",
+		baseURL,
+		companyURL,
+		id,
+		c.apiKey,
+	)
+	companyDetails := CompanyDetails{}
+	err := c.get(tmdbURL, &companyDetails)
+	if err != nil {
+		return nil, err
+	}
+	return &companyDetails, nil
+}
+
+// CompanyAlternativeNames type is a struct for alternative
+// names JSON response.
 type CompanyAlternativeNames struct {
 	ID      int64 `json:"id"`
 	Results []struct {
 		Name string `json:"name"`
 		Type string `json:"type"`
 	} `json:"results"`
+}
+
+// GetCompanyAlternativeNames get the alternative names of a company.
+//
+// https://developers.themoviedb.org/3/companies/get-company-alternative-names
+func (c *Client) GetCompanyAlternativeNames(
+	id int,
+) (*CompanyAlternativeNames, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/alternative_names?api_key=%s",
+		baseURL,
+		companyURL,
+		id,
+		c.apiKey,
+	)
+	companyAlternativeNames := CompanyAlternativeNames{}
+	err := c.get(tmdbURL, &companyAlternativeNames)
+	if err != nil {
+		return nil, err
+	}
+	return &companyAlternativeNames, nil
 }
 
 // CompanyImages type is a struct for images JSON response.
@@ -44,40 +87,6 @@ type CompanyImages struct {
 	} `json:"logos"`
 }
 
-// GetCompanyDetails get a companies details by id.
-//
-// https://developers.themoviedb.org/3/companies/get-company-details
-func (c *Client) GetCompanyDetails(id int) (*CompanyDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s",
-		baseURL, companyURL, id, c.apiKey,
-	)
-	t := CompanyDetails{}
-	err := c.get(tmdbURL, &t)
-	if err != nil {
-		return nil, err
-	}
-	return &t, nil
-}
-
-// GetCompanyAlternativeNames get the alternative names of a company.
-//
-// https://developers.themoviedb.org/3/companies/get-company-alternative-names
-func (c *Client) GetCompanyAlternativeNames(
-	id int,
-) (*CompanyAlternativeNames, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_names?api_key=%s",
-		baseURL, companyURL, id, c.apiKey,
-	)
-	t := CompanyAlternativeNames{}
-	err := c.get(tmdbURL, &t)
-	if err != nil {
-		return nil, err
-	}
-	return &t, nil
-}
-
 // GetCompanyImages get a companies logos by id.
 //
 // There are two image formats that are supported for companies,
@@ -89,15 +98,20 @@ func (c *Client) GetCompanyAlternativeNames(
 // call them as a PNG.
 //
 // https://developers.themoviedb.org/3/companies/get-company-images
-func (c *Client) GetCompanyImages(id int) (*CompanyImages, error) {
+func (c *Client) GetCompanyImages(
+	id int,
+) (*CompanyImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
-		baseURL, companyURL, id, c.apiKey,
+		baseURL,
+		companyURL,
+		id,
+		c.apiKey,
 	)
-	t := CompanyImages{}
-	err := c.get(tmdbURL, &t)
+	companyImages := CompanyImages{}
+	err := c.get(tmdbURL, &companyImages)
 	if err != nil {
 		return nil, err
 	}
-	return &t, nil
+	return &companyImages, nil
 }

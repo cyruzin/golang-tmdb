@@ -8,6 +8,27 @@ type KeywordDetails struct {
 	Name string `json:"name"`
 }
 
+// GetKeywordDetails get keyword details by id.
+//
+// https://developers.themoviedb.org/3/keywords/get-keyword-details
+func (c *Client) GetKeywordDetails(
+	id int,
+) (*KeywordDetails, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d?api_key=%s",
+		baseURL,
+		keywordURL,
+		id,
+		c.apiKey,
+	)
+	keywordDetails := KeywordDetails{}
+	err := c.get(tmdbURL, &keywordDetails)
+	if err != nil {
+		return nil, err
+	}
+	return &keywordDetails, nil
+}
+
 // KeywordMovies type is a struct for movies that belong to a keyword JSON response.
 type KeywordMovies struct {
 	ID      int64 `json:"id"`
@@ -32,22 +53,6 @@ type KeywordMovies struct {
 	TotalResults int64 `json:"total_results"`
 }
 
-// GetKeywordDetails get keyword details by id.
-//
-// https://developers.themoviedb.org/3/keywords/get-keyword-details
-func (c *Client) GetKeywordDetails(id int) (*KeywordDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s",
-		baseURL, keywordURL, id, c.apiKey,
-	)
-	k := KeywordDetails{}
-	err := c.get(tmdbURL, &k)
-	if err != nil {
-		return nil, err
-	}
-	return &k, nil
-}
-
 // GetKeywordMovies get the movies that belong to a keyword.
 //
 // We highly recommend using movie discover instead of this
@@ -55,17 +60,22 @@ func (c *Client) GetKeywordDetails(id int) (*KeywordDetails, error) {
 //
 // https://developers.themoviedb.org/3/keywords/get-movies-by-keyword
 func (c *Client) GetKeywordMovies(
-	id int, o map[string]string,
+	id int,
+	urlOptions map[string]string,
 ) (*KeywordMovies, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movies?api_key=%s%s",
-		baseURL, keywordURL, id, c.apiKey, options,
+		baseURL,
+		keywordURL,
+		id,
+		c.apiKey,
+		options,
 	)
-	t := KeywordMovies{}
-	err := c.get(tmdbURL, &t)
+	keywordMovies := KeywordMovies{}
+	err := c.get(tmdbURL, &keywordMovies)
 	if err != nil {
 		return nil, err
 	}
-	return &t, nil
+	return &keywordMovies, nil
 }
