@@ -153,8 +153,3 @@ func (suite *TMBDTestSuite) TestRetryDurationEmpty() {
 	duration := retryDuration(&response)
 	suite.Equal(defaultRetryDuration, duration)
 }
-
-func (suite *TMBDTestSuite) TestSetContext() {
-	suite.client.SetClientWithContext()
-	suite.Equal(true, suite.client.withContext)
-}

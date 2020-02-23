@@ -10,7 +10,13 @@ This product uses the TMDb API but is not endorsed or certified by TMDb.
 
 ## Requirements
 
-- Go 1.11.x or higher. We aim to support the latest supported versions of go.
+- Go 1.13.x or higher. We aim to support the latest supported versions of go.
+
+## Breaking Changes
+
+**v1.3.0** (Coming Soon)
+
+- The **get/request** functions now uses [NewRequestWithContext](https://golang.org/pkg/net/http/#NewRequestWithContext). This function works only on Go 1.13.x or higher.
 
 ## Installation
 
@@ -24,7 +30,7 @@ To get started, import the `tmdb` package and initiate the client:
 ```go
 import "github.com/cyruzin/golang-tmdb"
 
-tmdbClient, err := tmdb.Init("YOUR_APIKEY")
+tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
 
 if err != nil {
     fmt.Println(err)
@@ -52,9 +58,6 @@ tmdbClient.SetSessionID("YOUR_SESSION_ID")
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
 tmdbClient.SetClientAutoRetry()
-
-// OPTIONAL (Recommended): Enabling requests with context.
-tmdbClient.SetClientWithContext()
 
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
 ```

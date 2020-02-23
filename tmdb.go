@@ -49,8 +49,6 @@ type Client struct {
 	// Auto retry flag to indicates if the client
 	// should retry the previous operation.
 	autoRetry bool
-	// withContext flag enables the request with context.
-	withContext bool
 	// http.Client for custom configuration.
 	http http.Client
 }
@@ -98,11 +96,6 @@ func (c *Client) SetClientAutoRetry() {
 	c.autoRetry = true
 }
 
-// SetClientWithContext enables the request with context.
-func (c *Client) SetClientWithContext() {
-	c.withContext = true
-}
-
 // Auto retry default duration.
 const defaultRetryDuration = time.Second * 5
 
@@ -138,15 +131,12 @@ func (c *Client) get(url string, data interface{}) error {
 		c.http.Timeout = time.Second * 10
 	}
 
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if c.withContext {
-		req, err = http.NewRequestWithContext(
-			context.Background(),
-			http.MethodGet,
-			url,
-			nil,
-		)
-	}
+	req, err := http.NewRequestWithContext(
+		context.Background(),
+		http.MethodGet,
+		url,
+		nil,
+	)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
@@ -202,19 +192,12 @@ func (c *Client) request(
 	bodyBytes := new(bytes.Buffer)
 	json.NewEncoder(bodyBytes).Encode(body)
 
-	req, err := http.NewRequest(
+	req, err := http.NewRequestWithContext(
+		context.Background(),
 		method,
 		url,
 		bytes.NewBuffer(bodyBytes.Bytes()),
 	)
-	if c.withContext {
-		req, err = http.NewRequestWithContext(
-			context.Background(),
-			method,
-			url,
-			bytes.NewBuffer(bodyBytes.Bytes()),
-		)
-	}
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
