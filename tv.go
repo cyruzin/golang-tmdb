@@ -1,8 +1,9 @@
 package tmdb
 
 import (
-	"encoding/json"
 	"fmt"
+
+	jsoniter "github.com/json-iterator/go"
 )
 
 // TVDetails type is a struct for details JSON response.
@@ -104,10 +105,10 @@ type TVDetails struct {
 
 // TVAccountStates type is a struct for account states JSON response.
 type TVAccountStates struct {
-	ID        int64           `json:"id"`
-	Favorite  bool            `json:"favorite"`
-	Rated     json.RawMessage `json:"rated"`
-	Watchlist bool            `json:"watchlist"`
+	ID        int64               `json:"id"`
+	Favorite  bool                `json:"favorite"`
+	Rated     jsoniter.RawMessage `json:"rated"`
+	Watchlist bool                `json:"watchlist"`
 }
 
 // TVAlternativeTitles type is a struct for alternative titles JSON response.

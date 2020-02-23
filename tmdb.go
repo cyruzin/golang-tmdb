@@ -6,7 +6,6 @@ package tmdb
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -14,7 +13,11 @@ import (
 	"net/url"
 	"strconv"
 	"time"
+
+	jsoniter "github.com/json-iterator/go"
 )
+
+var json = jsoniter.ConfigFastest
 
 // TMDb constants
 const (
