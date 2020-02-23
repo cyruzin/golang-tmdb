@@ -13,6 +13,9 @@ func main() {
 		fmt.Println(err)
 	}
 
+	// Enabling requests with context.
+	tmdbClient.SetClientWithContext()
+
 	options := map[string]string{
 		"append_to_response": "videos",
 	}
@@ -22,15 +25,5 @@ func main() {
 		fmt.Println(err)
 	}
 
-	// Generating Image URLs
-	fmt.Println(tmdb.GetImageURL(movie.BackdropPath, "w500"))
-	fmt.Println(tmdb.GetImageURL(movie.PosterPath, "original"))
-
-	// Generating Video URLs
-	for _, video := range movie.MovieVideosAppend.Videos.MovieVideos.Results {
-		if video.Key != "" {
-			fmt.Println(tmdb.GetVideoURL(video.Key))
-		}
-	}
-
+	fmt.Println(movie.Title)
 }

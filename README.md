@@ -33,7 +33,14 @@ if err != nil {
 // OPTIONAL: Setting a custom config for the http.Client.
 // The default timeout is 10 seconds. Here you can set other
 // options like Timeout and Transport.
-tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
+customClient := http.Client{
+    Timeout: time.Second * 5,
+    Transport: &http.Transport{
+        MaxIdleConns: 10,
+        IdleConnTimeout: 15 * time.Second,
+    }
+}
+tmdbClient.SetClientConfig(customClient)
 
 // OPTIONAL: Enable this option if you're going to use endpoints
 // that needs session id.
@@ -45,7 +52,10 @@ tmdbClient.SetSessionID("YOUR_SESSION_ID")
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
 tmdbClient.SetClientAutoRetry()
-    
+
+// OPTIONAL (Recommended): Enabling requests with context.
+tmdbClient.SetClientWithContext()
+
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
 ```
 
