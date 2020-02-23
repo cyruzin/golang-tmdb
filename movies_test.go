@@ -1,5 +1,10 @@
 package tmdb
 
+import (
+	"os"
+	"testing"
+)
+
 const (
 	bumblebeeID   = 424783
 	jackReacherID = 75780
@@ -393,4 +398,19 @@ func (suite *TMBDTestSuite) TestDeleteMovieRatingFail() {
 	suite.client.sessionID = ""
 	_, err := suite.client.DeleteMovieRating(aquamanID, nil)
 	suite.NotNil(err)
+}
+
+func BenchmarkGetMovieDetails(b *testing.B) {
+	var tmdbClient Client
+	tmdbClient.apiKey = os.Getenv("APIKey")
+
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_, err := tmdbClient.GetMovieDetails(500, nil)
+		if err != nil {
+			b.Error(err)
+		}
+	}
 }

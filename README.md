@@ -65,13 +65,28 @@ movie, err := tmdbClient.GetMovieDetails(297802, nil)
 With optional params:
 
 ```go
-options := make(map[string]string)
-options["language"] = "pt-BR"
-options["append_to_response"] = "credits,images"
+options := map[string]string{
+  "language": "pt-BR",
+  "append_to_response": "credits,images",
+}
 movie, err := tmdbClient.GetMovieDetails(297802, options)
 ```
 
 For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/master/examples).
+
+## Performance
+
+Getting Movie Details:
+
+| Iterations | ns/op    | B/op  | allocs/op |
+|------------|----------|-------|-----------|
+| 18         | 62246826 | 61799 | 197       |
+
+Multi Search:
+
+| Iterations | ns/op    | B/op   | allocs/op |
+|------------|----------|--------|-----------|
+| 16         | 67642648 | 136352 | 197       |
 
 ## Contributing
 
