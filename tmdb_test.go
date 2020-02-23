@@ -30,16 +30,30 @@ func (suite *TMBDTestSuite) TestGetFail() {
 	err := suite.client.get("http://www.testfakewebsite.org", nil)
 	suite.Contains(err.Error(), "no such host")
 	err = suite.client.get("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Contains("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 	err = suite.client.get("", nil)
 	suite.Equal("url field is empty", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestRequestFail() {
-	err := suite.client.request("http://www.testfakewebsite.org", []byte{}, "POST", nil)
+	err := suite.client.request(
+		"http://www.testfakewebsite.org",
+		[]byte{},
+		"POST",
+		nil,
+	)
 	suite.Contains(err.Error(), "no such host")
-	err = suite.client.request("https://api.themoviedb.org/3/authentication/session/new", []byte{}, "POST", nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error(), nil)
+	err = suite.client.request(
+		"https://api.themoviedb.org/3/authentication/session/new",
+		[]byte{},
+		"POST",
+		nil,
+	)
+	suite.Contains(
+		"code: 7 | success: false | message: Invalid API key: You must be granted a valid key.",
+		err.Error(),
+		nil,
+	)
 	err = suite.client.request("", []byte{}, "POST", nil)
 	suite.Equal("url field is empty", err.Error())
 	// b := struct {
@@ -138,4 +152,9 @@ func (suite *TMBDTestSuite) TestRetryDurationEmpty() {
 	response := http.Response{}
 	duration := retryDuration(&response)
 	suite.Equal(defaultRetryDuration, duration)
+}
+
+func (suite *TMBDTestSuite) TestSetContext() {
+	suite.client.SetClientWithContext()
+	suite.Equal(true, suite.client.withContext)
 }

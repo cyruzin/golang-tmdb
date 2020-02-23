@@ -11,7 +11,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsDetails() {
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsDetailsFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetTVEpisodeGroupsDetails("", nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsDetailsWithOptions() {

@@ -8,7 +8,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonDetails() {
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetailsFail() {
 	_, err := suite.client.GetTVSeasonDetails(0, 1, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetailsWithOptions() {
@@ -38,7 +38,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonCredits() {
 func (suite *TMBDTestSuite) TestGetTVSeasonCreditsFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetTVSeasonCredits(0, 7, nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonCreditsWithOptions() {
@@ -58,7 +58,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonExternalIDs() {
 func (suite *TMBDTestSuite) TestGetTVSeasonExternalIDsFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetTVSeasonExternalIDs(0, 7, nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonExternalIDsWithOptions() {
@@ -78,7 +78,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonImages() {
 func (suite *TMBDTestSuite) TestGetTVSeasonImagesFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetTVSeasonImages(0, 7, nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonImagesWithOptions() {
@@ -98,7 +98,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonVideos() {
 func (suite *TMBDTestSuite) TestGetTVSeasonVideosFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetTVSeasonVideos(0, 7, nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonVideosWithOptions() {

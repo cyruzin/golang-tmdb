@@ -13,6 +13,8 @@ func main() {
 		fmt.Println(err)
 	}
 
+	tmdbClient.SetClientWithContext()
+
 	options := map[string]string{
 		"append_to_response": "videos",
 	}

@@ -14,7 +14,7 @@ func (suite *TMBDTestSuite) TestGetMovieDetails() {
 
 func (suite *TMBDTestSuite) TestGetMovieDetailsFail() {
 	_, err := suite.client.GetMovieDetails(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieDetailsWithOptions() {
@@ -37,7 +37,7 @@ func (suite *TMBDTestSuite) TestGetMovieAlternativeTitles() {
 
 func (suite *TMBDTestSuite) TestGetMovieAlternativeTitlesFail() {
 	_, err := suite.client.GetMovieAlternativeTitles(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAlternativeTitlesWithOptions() {
@@ -87,7 +87,7 @@ func (suite *TMBDTestSuite) TestGetMovieCredits() {
 
 func (suite *TMBDTestSuite) TestGetMovieCreditsFail() {
 	_, err := suite.client.GetMovieCredits(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieExternalIDs() {
@@ -98,7 +98,7 @@ func (suite *TMBDTestSuite) TestGetMovieExternalIDs() {
 
 func (suite *TMBDTestSuite) TestGetMovieExternalIDsFail() {
 	_, err := suite.client.GetMovieExternalIDs(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieImages() {
@@ -109,7 +109,7 @@ func (suite *TMBDTestSuite) TestGetMovieImages() {
 
 func (suite *TMBDTestSuite) TestGetMovieImagesFail() {
 	_, err := suite.client.GetMovieImages(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieImagesWithOptions() {
@@ -128,7 +128,7 @@ func (suite *TMBDTestSuite) TestGetMovieKeywords() {
 
 func (suite *TMBDTestSuite) TestGetMovieKeywordsFail() {
 	_, err := suite.client.GetMovieKeywords(0)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReleaseDates() {
@@ -139,12 +139,12 @@ func (suite *TMBDTestSuite) TestGetMovieReleaseDates() {
 
 func (suite *TMBDTestSuite) TestGetMovieReleaseDatesFail() {
 	_, err := suite.client.GetMovieReleaseDates(0)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAccountStatesFail() {
 	_, err := suite.client.GetMovieAccountStates(0, nil)
-	suite.Equal("Authentication failed: You do not have permissions to access the service.", err.Error())
+	suite.Equal("code: 3 | success: false | message: Authentication failed: You do not have permissions to access the service.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAccountStatesWithOptions() {
@@ -152,7 +152,7 @@ func (suite *TMBDTestSuite) TestGetMovieAccountStatesWithOptions() {
 	options := make(map[string]string)
 	options["session_id"] = "koQubnkaZ"
 	_, err := suite.client.GetMovieAccountStates(jackReacherID, options)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieVideos() {
@@ -163,7 +163,7 @@ func (suite *TMBDTestSuite) TestGetMovieVideos() {
 
 func (suite *TMBDTestSuite) TestGetMovieVideosFail() {
 	_, err := suite.client.GetMovieVideos(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieVideosWithOptions() {
@@ -182,7 +182,7 @@ func (suite *TMBDTestSuite) TestGetMovieTranslations() {
 
 func (suite *TMBDTestSuite) TestGetMovieTranslationsFail() {
 	_, err := suite.client.GetMovieTranslations(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTranslationsWithOptions() {
@@ -201,7 +201,7 @@ func (suite *TMBDTestSuite) TestGetMovieRecommendations() {
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendationsFail() {
 	_, err := suite.client.GetMovieRecommendations(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendationsWithOptions() {
@@ -220,7 +220,7 @@ func (suite *TMBDTestSuite) TestGetMovieSimilar() {
 
 func (suite *TMBDTestSuite) TestGetMovieSimilarFail() {
 	_, err := suite.client.GetMovieSimilar(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieSimilarWithOptions() {
@@ -239,7 +239,7 @@ func (suite *TMBDTestSuite) TestGetMovieReviews() {
 
 func (suite *TMBDTestSuite) TestGetMovieReviewsFail() {
 	_, err := suite.client.GetMovieReviews(0, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReviewsWithOptions() {
@@ -278,7 +278,7 @@ func (suite *TMBDTestSuite) TestGetMovieLatest() {
 func (suite *TMBDTestSuite) TestGetMovieLatestFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieLatest(nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLatestWithOptions() {
@@ -298,7 +298,7 @@ func (suite *TMBDTestSuite) TestGetMovieNowPlaying() {
 func (suite *TMBDTestSuite) TestGetMovieNowPlayingFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieNowPlaying(nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieNowPlayingWithOptions() {
@@ -318,7 +318,7 @@ func (suite *TMBDTestSuite) TestGetMoviePopular() {
 func (suite *TMBDTestSuite) TestGetMoviePopularFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetMoviePopular(nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMoviePopularWithOptions() {
@@ -338,7 +338,7 @@ func (suite *TMBDTestSuite) TestGetMovieTopRated() {
 func (suite *TMBDTestSuite) TestGetMovieTopRatedFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieTopRated(nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTopRatedWithOptions() {
@@ -358,7 +358,7 @@ func (suite *TMBDTestSuite) TestGetMovieUpcoming() {
 func (suite *TMBDTestSuite) TestGetMovieUpcomingFail() {
 	suite.client.apiKey = ""
 	_, err := suite.client.GetMovieUpcoming(nil)
-	suite.Equal("Invalid API key: You must be granted a valid key.", err.Error())
+	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieUpcomingWithOptions() {

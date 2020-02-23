@@ -5,6 +5,7 @@ package tmdb
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -39,9 +40,6 @@ const (
 	accountURL        = "/account/"
 )
 
-// Auto retry default duration.
-const defaultRetryDuration = time.Second * 5
-
 // Client type is a struct to instantiate this pkg.
 type Client struct {
 	// TMDb apiKey to use the client.
@@ -51,6 +49,8 @@ type Client struct {
 	// Auto retry flag to indicates if the client
 	// should retry the previous operation.
 	autoRetry bool
+	// withContext flag enables the request with context.
+	withContext bool
 	// http.Client for custom configuration.
 	http http.Client
 }
@@ -73,6 +73,7 @@ func Init(apiKey string) (*Client, error) {
 	if apiKey == "" {
 		return nil, errors.New("APIKey is empty")
 	}
+
 	return &Client{apiKey: apiKey}, nil
 }
 
@@ -81,7 +82,9 @@ func (c *Client) SetSessionID(sid string) error {
 	if sid == "" {
 		return errors.New("The SessionID is empty")
 	}
+
 	c.sessionID = sid
+
 	return nil
 }
 
@@ -95,16 +98,28 @@ func (c *Client) SetClientAutoRetry() {
 	c.autoRetry = true
 }
 
+// SetClientWithContext enables the request with context.
+func (c *Client) SetClientWithContext() {
+	c.withContext = true
+}
+
+// Auto retry default duration.
+const defaultRetryDuration = time.Second * 5
+
 // retryDuration calculates the retry duration time.
 func retryDuration(resp *http.Response) time.Duration {
 	retryTime := resp.Header.Get("Retry-After")
+
 	if retryTime == "" {
 		return defaultRetryDuration
 	}
+
 	seconds, err := strconv.ParseInt(retryTime, 10, 32)
+
 	if err != nil {
 		return defaultRetryDuration
 	}
+
 	return time.Duration(seconds) * time.Second
 }
 
@@ -119,12 +134,19 @@ func (c *Client) get(url string, data interface{}) error {
 		return errors.New("url field is empty")
 	}
 
-	// Setting default timeout to 10 seconds, if none is provided.
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if c.withContext {
+		req, err = http.NewRequestWithContext(
+			context.Background(),
+			http.MethodGet,
+			url,
+			nil,
+		)
+	}
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
@@ -133,6 +155,7 @@ func (c *Client) get(url string, data interface{}) error {
 
 	for {
 		res, err := c.http.Do(req)
+
 		if err != nil {
 			return err
 		}
@@ -162,12 +185,16 @@ func (c *Client) get(url string, data interface{}) error {
 	return nil
 }
 
-func (c *Client) request(url string, body interface{}, method string, data interface{}) error {
+func (c *Client) request(
+	url string,
+	body interface{},
+	method string,
+	data interface{},
+) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
 
-	// Setting default timeout to 10 seconds, if none is provided.
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
@@ -175,9 +202,21 @@ func (c *Client) request(url string, body interface{}, method string, data inter
 	bodyBytes := new(bytes.Buffer)
 	json.NewEncoder(bodyBytes).Encode(body)
 
-	req, err := http.NewRequest(method, url, bytes.NewBuffer(bodyBytes.Bytes()))
+	req, err := http.NewRequest(
+		method,
+		url,
+		bytes.NewBuffer(bodyBytes.Bytes()),
+	)
+	if c.withContext {
+		req, err = http.NewRequestWithContext(
+			context.Background(),
+			method,
+			url,
+			bytes.NewBuffer(bodyBytes.Bytes()),
+		)
+	}
 	if err != nil {
-		return errors.New(err.Error())
+		return fmt.Errorf("could not fetch the url: %s", err)
 	}
 
 	req.Header.Add("content-type", "application/json;charset=utf-8")
@@ -195,7 +234,8 @@ func (c *Client) request(url string, body interface{}, method string, data inter
 			continue
 		}
 
-		// Checking if the response is greater or equal to 300 or less than 200.
+		// Checking if the response is greater or equal
+		// to 300 or less than 200.
 		if res.StatusCode >= http.StatusMultipleChoices ||
 			res.StatusCode < http.StatusOK ||
 			res.StatusCode == http.StatusNoContent {
@@ -211,12 +251,18 @@ func (c *Client) request(url string, body interface{}, method string, data inter
 	return nil
 }
 
-func (c *Client) fmtOptions(o map[string]string) string {
+func (c *Client) fmtOptions(
+	urlOptions map[string]string,
+) string {
 	options := ""
 
-	if len(o) > 0 {
-		for k, v := range o {
-			options += fmt.Sprintf("&%s=%s", k, url.QueryEscape(v))
+	if len(urlOptions) > 0 {
+		for key, value := range urlOptions {
+			options += fmt.Sprintf(
+				"&%s=%s",
+				key,
+				url.QueryEscape(value),
+			)
 		}
 	}
 
@@ -224,7 +270,12 @@ func (c *Client) fmtOptions(o map[string]string) string {
 }
 
 func (e Error) Error() string {
-	return e.StatusMessage
+	return fmt.Sprintf(
+		"code: %d | success: %t | message: %s",
+		e.StatusCode,
+		e.Success,
+		e.StatusMessage,
+	)
 }
 
 func (c *Client) decodeError(r *http.Response) error {
@@ -234,16 +285,23 @@ func (c *Client) decodeError(r *http.Response) error {
 	}
 
 	if len(resBody) == 0 {
-		return fmt.Errorf("[%d]: empty body %s", r.StatusCode, http.StatusText(r.StatusCode))
+		return fmt.Errorf(
+			"[%d]: empty body %s",
+			r.StatusCode,
+			http.StatusText(r.StatusCode),
+		)
 	}
 
 	buf := bytes.NewBuffer(resBody)
+	var clientError Error
 
-	var e Error
-
-	err = json.NewDecoder(buf).Decode(&e)
-	if err != nil {
-		return fmt.Errorf("couldn't decode error: (%d) [%s]", len(resBody), resBody)
+	if err := json.NewDecoder(buf).Decode(&clientError); err != nil {
+		return fmt.Errorf(
+			"couldn't decode error: (%d) [%s]",
+			len(resBody),
+			resBody,
+		)
 	}
-	return e
+
+	return clientError
 }
