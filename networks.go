@@ -11,6 +11,26 @@ type NetworkDetails struct {
 	OriginCountry string `json:"origin_country"`
 }
 
+// GetNetworkDetails get the details of a network.
+//
+// https://developers.themoviedb.org/3/networks/get-network-details
+func (c *Client) GetNetworkDetails(
+	id int,
+) (*NetworkDetails, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d?api_key=%s",
+		baseURL,
+		networkURL,
+		id,
+		c.apiKey,
+	)
+	networkDetails := NetworkDetails{}
+	if err := c.get(tmdbURL, &networkDetails); err != nil {
+		return nil, err
+	}
+	return &networkDetails, nil
+}
+
 // NetworkAlternativeNames type is a struct for alternative names JSON response.
 type NetworkAlternativeNames struct {
 	ID      int64 `json:"id"`
@@ -18,6 +38,26 @@ type NetworkAlternativeNames struct {
 		Name string `json:"name"`
 		Type string `json:"type"`
 	} `json:"results"`
+}
+
+// GetNetworkAlternativeNames get the alternative names of a network.
+//
+// https://developers.themoviedb.org/3/networks/get-network-alternative-names
+func (c *Client) GetNetworkAlternativeNames(
+	id int,
+) (*NetworkAlternativeNames, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/alternative_names?api_key=%s",
+		baseURL,
+		networkURL,
+		id,
+		c.apiKey,
+	)
+	networkAltenativeNames := NetworkAlternativeNames{}
+	if err := c.get(tmdbURL, &networkAltenativeNames); err != nil {
+		return nil, err
+	}
+	return &networkAltenativeNames, nil
 }
 
 // NetworkImages type is a struct for images JSON response.
@@ -35,40 +75,6 @@ type NetworkImages struct {
 	} `json:"logos"`
 }
 
-// GetNetworkDetails get the details of a network.
-//
-// https://developers.themoviedb.org/3/networks/get-network-details
-func (c *Client) GetNetworkDetails(id int) (*NetworkDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s",
-		baseURL, networkURL, id, c.apiKey,
-	)
-	n := NetworkDetails{}
-	err := c.get(tmdbURL, &n)
-	if err != nil {
-		return nil, err
-	}
-	return &n, nil
-}
-
-// GetNetworkAlternativeNames get the alternative names of a network.
-//
-// https://developers.themoviedb.org/3/networks/get-network-alternative-names
-func (c *Client) GetNetworkAlternativeNames(
-	id int,
-) (*NetworkAlternativeNames, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_names?api_key=%s",
-		baseURL, networkURL, id, c.apiKey,
-	)
-	n := NetworkAlternativeNames{}
-	err := c.get(tmdbURL, &n)
-	if err != nil {
-		return nil, err
-	}
-	return &n, nil
-}
-
 // GetNetworkImages get the TV network logos by id.
 //
 // There are two image formats that are supported for networks,
@@ -82,15 +88,19 @@ func (c *Client) GetNetworkAlternativeNames(
 //
 //
 // https://developers.themoviedb.org/3/networks/get-network-images
-func (c *Client) GetNetworkImages(id int) (*NetworkImages, error) {
+func (c *Client) GetNetworkImages(
+	id int,
+) (*NetworkImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
-		baseURL, networkURL, id, c.apiKey,
+		baseURL,
+		networkURL,
+		id,
+		c.apiKey,
 	)
-	n := NetworkImages{}
-	err := c.get(tmdbURL, &n)
-	if err != nil {
+	networkImages := NetworkImages{}
+	if err := c.get(tmdbURL, &networkImages); err != nil {
 		return nil, err
 	}
-	return &n, nil
+	return &networkImages, nil
 }
