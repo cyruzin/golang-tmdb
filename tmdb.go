@@ -56,13 +56,6 @@ type Client struct {
 	http http.Client
 }
 
-// Error type represents an error returned by the TMDB API.
-type Error struct {
-	StatusMessage string `json:"status_message,omitempty"`
-	Success       bool   `json:"success,omitempty"`
-	StatusCode    int    `json:"status_code,omitempty"`
-}
-
 // Response type is a struct for http responses.
 type Response struct {
 	StatusCode    int    `json:"status_code"`
@@ -74,7 +67,6 @@ func Init(apiKey string) (*Client, error) {
 	if apiKey == "" {
 		return nil, errors.New("APIKey is empty")
 	}
-
 	return &Client{apiKey: apiKey}, nil
 }
 
@@ -83,9 +75,7 @@ func (c *Client) SetSessionID(sid string) error {
 	if sid == "" {
 		return errors.New("The SessionID is empty")
 	}
-
 	c.sessionID = sid
-
 	return nil
 }
 
@@ -105,17 +95,13 @@ const defaultRetryDuration = time.Second * 5
 // retryDuration calculates the retry duration time.
 func retryDuration(resp *http.Response) time.Duration {
 	retryTime := resp.Header.Get("Retry-After")
-
 	if retryTime == "" {
 		return defaultRetryDuration
 	}
-
 	seconds, err := strconv.ParseInt(retryTime, 10, 32)
-
 	if err != nil {
 		return defaultRetryDuration
 	}
-
 	return time.Duration(seconds) * time.Second
 }
 
@@ -129,11 +115,9 @@ func (c *Client) get(url string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
-
 	req, err := http.NewRequestWithContext(
 		context.Background(),
 		http.MethodGet,
@@ -143,38 +127,28 @@ func (c *Client) get(url string, data interface{}) error {
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-
 	req.Header.Add("content-type", "application/json;charset=utf-8")
-
 	for {
 		res, err := c.http.Do(req)
-
 		if err != nil {
 			return err
 		}
-
 		defer res.Body.Close()
-
 		if res.StatusCode == http.StatusTooManyRequests && c.autoRetry {
 			time.Sleep(retryDuration(res))
 			continue
 		}
-
 		if res.StatusCode == http.StatusNoContent {
 			return nil
 		}
-
 		if res.StatusCode != http.StatusOK {
 			return c.decodeError(res)
 		}
-
 		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
 			return fmt.Errorf("could not decode the data: %s", err)
 		}
-
 		break
 	}
-
 	return nil
 }
 
@@ -187,14 +161,11 @@ func (c *Client) request(
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
-
 	bodyBytes := new(bytes.Buffer)
 	json.NewEncoder(bodyBytes).Encode(body)
-
 	req, err := http.NewRequestWithContext(
 		context.Background(),
 		method,
@@ -204,22 +175,17 @@ func (c *Client) request(
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-
 	req.Header.Add("content-type", "application/json;charset=utf-8")
-
 	for {
 		res, err := c.http.Do(req)
 		if err != nil {
 			return errors.New(err.Error())
 		}
-
 		defer res.Body.Close()
-
 		if c.autoRetry && shouldRetry(res.StatusCode) {
 			time.Sleep(retryDuration(res))
 			continue
 		}
-
 		// Checking if the response is greater or equal
 		// to 300 or less than 200.
 		if res.StatusCode >= http.StatusMultipleChoices ||
@@ -227,11 +193,9 @@ func (c *Client) request(
 			res.StatusCode == http.StatusNoContent {
 			return c.decodeError(res)
 		}
-
 		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
 			return fmt.Errorf("could not decode the data: %s", err)
 		}
-
 		break
 	}
 	return nil
@@ -241,7 +205,6 @@ func (c *Client) fmtOptions(
 	urlOptions map[string]string,
 ) string {
 	options := ""
-
 	if len(urlOptions) > 0 {
 		for key, value := range urlOptions {
 			options += fmt.Sprintf(
@@ -251,8 +214,14 @@ func (c *Client) fmtOptions(
 			)
 		}
 	}
-
 	return options
+}
+
+// Error type represents an error returned by the TMDB API.
+type Error struct {
+	StatusMessage string `json:"status_message,omitempty"`
+	Success       bool   `json:"success,omitempty"`
+	StatusCode    int    `json:"status_code,omitempty"`
 }
 
 func (e Error) Error() string {
@@ -269,7 +238,6 @@ func (c *Client) decodeError(r *http.Response) error {
 	if err != nil {
 		return fmt.Errorf("could not read body response: %s", err)
 	}
-
 	if len(resBody) == 0 {
 		return fmt.Errorf(
 			"[%d]: empty body %s",
@@ -277,10 +245,8 @@ func (c *Client) decodeError(r *http.Response) error {
 			http.StatusText(r.StatusCode),
 		)
 	}
-
 	buf := bytes.NewBuffer(resBody)
 	var clientError Error
-
 	if err := json.NewDecoder(buf).Decode(&clientError); err != nil {
 		return fmt.Errorf(
 			"couldn't decode error: (%d) [%s]",
@@ -288,6 +254,5 @@ func (c *Client) decodeError(r *http.Response) error {
 			resBody,
 		)
 	}
-
 	return clientError
 }
