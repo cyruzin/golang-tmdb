@@ -122,7 +122,9 @@ func (c *Client) get(url string, data interface{}) error {
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-	req = req.WithContext(context.Background())
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
 	for {
 		res, err := c.http.Do(req)
@@ -170,7 +172,9 @@ func (c *Client) request(
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-	req = req.WithContext(context.Background())
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
 	for {
 		res, err := c.http.Do(req)
