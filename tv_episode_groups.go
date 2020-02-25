@@ -1,8 +1,9 @@
 package tmdb
 
 import (
-	"encoding/json"
 	"fmt"
+
+	jsoniter "github.com/json-iterator/go"
 )
 
 // TVEpisodeGroupsDetails type is a struct for details JSON response.
@@ -15,18 +16,18 @@ type TVEpisodeGroupsDetails struct {
 		Name     string `json:"name"`
 		Order    int    `json:"order"`
 		Episodes []struct {
-			AirDate        string          `json:"air_date"`
-			EpisodeNumber  int             `json:"episode_number"`
-			ID             int64           `json:"id"`
-			Name           string          `json:"name"`
-			Overview       string          `json:"overview"`
-			ProductionCode json.RawMessage `json:"production_code"`
-			SeasonNumber   int             `json:"season_number"`
-			ShowID         int64           `json:"show_id"`
-			StillPath      string          `json:"still_path"`
-			VoteAverage    float32         `json:"vote_average"`
-			VoteCount      int64           `json:"vote_count"`
-			Order          int             `json:"order"`
+			AirDate        string              `json:"air_date"`
+			EpisodeNumber  int                 `json:"episode_number"`
+			ID             int64               `json:"id"`
+			Name           string              `json:"name"`
+			Overview       string              `json:"overview"`
+			ProductionCode jsoniter.RawMessage `json:"production_code"`
+			SeasonNumber   int                 `json:"season_number"`
+			ShowID         int64               `json:"show_id"`
+			StillPath      string              `json:"still_path"`
+			VoteAverage    float32             `json:"vote_average"`
+			VoteCount      int64               `json:"vote_count"`
+			Order          int                 `json:"order"`
 		} `json:"episodes"`
 		Locked bool `json:"locked"`
 	} `json:"groups"`
@@ -54,17 +55,21 @@ type TVEpisodeGroupsDetails struct {
 //
 // https://developers.themoviedb.org/3/tv-episode-groups/get-tv-episode-group-details
 func (c *Client) GetTVEpisodeGroupsDetails(
-	id string, o map[string]string,
+	id string,
+	urlOptions map[string]string,
 ) (*TVEpisodeGroupsDetails, error) {
-	options := c.fmtOptions(o)
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sepisode_group/%s?api_key=%s%s",
-		baseURL, tvURL, id, c.apiKey, options,
+		baseURL,
+		tvURL,
+		id,
+		c.apiKey,
+		options,
 	)
-	t := TVEpisodeGroupsDetails{}
-	err := c.get(tmdbURL, &t)
-	if err != nil {
+	tvEpisodeGroupDetails := TVEpisodeGroupsDetails{}
+	if err := c.get(tmdbURL, &tvEpisodeGroupDetails); err != nil {
 		return nil, err
 	}
-	return &t, nil
+	return &tvEpisodeGroupDetails, nil
 }

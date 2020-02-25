@@ -5,7 +5,7 @@ package tmdb
 
 import (
 	"bytes"
-	"encoding/json"
+	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -13,7 +13,11 @@ import (
 	"net/url"
 	"strconv"
 	"time"
+
+	jsoniter "github.com/json-iterator/go"
 )
+
+var json = jsoniter.ConfigFastest
 
 // TMDb constants
 const (
@@ -39,9 +43,6 @@ const (
 	accountURL        = "/account/"
 )
 
-// Auto retry default duration.
-const defaultRetryDuration = time.Second * 5
-
 // Client type is a struct to instantiate this pkg.
 type Client struct {
 	// TMDb apiKey to use the client.
@@ -53,13 +54,6 @@ type Client struct {
 	autoRetry bool
 	// http.Client for custom configuration.
 	http http.Client
-}
-
-// Error type represents an error returned by the TMDB API.
-type Error struct {
-	StatusMessage string `json:"status_message,omitempty"`
-	Success       bool   `json:"success,omitempty"`
-	StatusCode    int    `json:"status_code,omitempty"`
 }
 
 // Response type is a struct for http responses.
@@ -95,6 +89,9 @@ func (c *Client) SetClientAutoRetry() {
 	c.autoRetry = true
 }
 
+// Auto retry default duration.
+const defaultRetryDuration = time.Second * 5
+
 // retryDuration calculates the retry duration time.
 func retryDuration(resp *http.Response) time.Duration {
 	retryTime := resp.Header.Get("Retry-After")
@@ -118,113 +115,118 @@ func (c *Client) get(url string, data interface{}) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-
-	// Setting default timeout to 10 seconds, if none is provided.
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
-
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-
+	req = req.WithContext(context.Background())
 	req.Header.Add("content-type", "application/json;charset=utf-8")
-
 	for {
 		res, err := c.http.Do(req)
 		if err != nil {
 			return err
 		}
-
 		defer res.Body.Close()
-
 		if res.StatusCode == http.StatusTooManyRequests && c.autoRetry {
 			time.Sleep(retryDuration(res))
 			continue
 		}
-
 		if res.StatusCode == http.StatusNoContent {
 			return nil
 		}
-
 		if res.StatusCode != http.StatusOK {
 			return c.decodeError(res)
 		}
-
 		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
 			return fmt.Errorf("could not decode the data: %s", err)
 		}
-
 		break
 	}
-
 	return nil
 }
 
-func (c *Client) request(url string, body interface{}, method string, data interface{}) error {
+func (c *Client) request(
+	url string,
+	body interface{},
+	method string,
+	data interface{},
+) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
-
-	// Setting default timeout to 10 seconds, if none is provided.
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
-
 	bodyBytes := new(bytes.Buffer)
 	json.NewEncoder(bodyBytes).Encode(body)
-
-	req, err := http.NewRequest(method, url, bytes.NewBuffer(bodyBytes.Bytes()))
+	req, err := http.NewRequest(
+		method,
+		url,
+		bytes.NewBuffer(bodyBytes.Bytes()),
+	)
 	if err != nil {
-		return errors.New(err.Error())
+		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-
+	req = req.WithContext(context.Background())
 	req.Header.Add("content-type", "application/json;charset=utf-8")
-
 	for {
 		res, err := c.http.Do(req)
 		if err != nil {
 			return errors.New(err.Error())
 		}
-
 		defer res.Body.Close()
-
 		if c.autoRetry && shouldRetry(res.StatusCode) {
 			time.Sleep(retryDuration(res))
 			continue
 		}
-
-		// Checking if the response is greater or equal to 300 or less than 200.
+		// Checking if the response is greater or equal
+		// to 300 or less than 200.
 		if res.StatusCode >= http.StatusMultipleChoices ||
 			res.StatusCode < http.StatusOK ||
 			res.StatusCode == http.StatusNoContent {
 			return c.decodeError(res)
 		}
-
 		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
 			return fmt.Errorf("could not decode the data: %s", err)
 		}
-
 		break
 	}
 	return nil
 }
 
-func (c *Client) fmtOptions(o map[string]string) string {
+func (c *Client) fmtOptions(
+	urlOptions map[string]string,
+) string {
 	options := ""
-
-	if len(o) > 0 {
-		for k, v := range o {
-			options += fmt.Sprintf("&%s=%s", k, url.QueryEscape(v))
+	if len(urlOptions) > 0 {
+		for key, value := range urlOptions {
+			options += fmt.Sprintf(
+				"&%s=%s",
+				key,
+				url.QueryEscape(value),
+			)
 		}
 	}
-
 	return options
 }
 
+// Error type represents an error returned by the TMDB API.
+type Error struct {
+	StatusMessage string `json:"status_message,omitempty"`
+	Success       bool   `json:"success,omitempty"`
+	StatusCode    int    `json:"status_code,omitempty"`
+}
+
 func (e Error) Error() string {
-	return e.StatusMessage
+	return fmt.Sprintf(
+		"code: %d | success: %t | message: %s",
+		e.StatusCode,
+		e.Success,
+		e.StatusMessage,
+	)
 }
 
 func (c *Client) decodeError(r *http.Response) error {
@@ -232,18 +234,21 @@ func (c *Client) decodeError(r *http.Response) error {
 	if err != nil {
 		return fmt.Errorf("could not read body response: %s", err)
 	}
-
 	if len(resBody) == 0 {
-		return fmt.Errorf("[%d]: empty body %s", r.StatusCode, http.StatusText(r.StatusCode))
+		return fmt.Errorf(
+			"[%d]: empty body %s",
+			r.StatusCode,
+			http.StatusText(r.StatusCode),
+		)
 	}
-
 	buf := bytes.NewBuffer(resBody)
-
-	var e Error
-
-	err = json.NewDecoder(buf).Decode(&e)
-	if err != nil {
-		return fmt.Errorf("couldn't decode error: (%d) [%s]", len(resBody), resBody)
+	var clientError Error
+	if err := json.NewDecoder(buf).Decode(&clientError); err != nil {
+		return fmt.Errorf(
+			"couldn't decode error: (%d) [%s]",
+			len(resBody),
+			resBody,
+		)
 	}
-	return e
+	return clientError
 }

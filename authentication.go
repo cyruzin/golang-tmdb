@@ -12,6 +12,42 @@ type RequestToken struct {
 	RequestToken   string `json:"request_token,omitempty"`
 }
 
+// CreateGuestSession creates a temporary request token
+// that can be used to validate a TMDb user login.
+//
+// https://developers.themoviedb.org/3/authentication/create-guest-session
+func (c *Client) CreateGuestSession() (*RequestToken, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%sguest_session/new?api_key=%s",
+		baseURL,
+		authenticationURL,
+		c.apiKey,
+	)
+	requestToken := RequestToken{}
+	if err := c.get(tmdbURL, &requestToken); err != nil {
+		return nil, err
+	}
+	return &requestToken, nil
+}
+
+// CreateRequestToken creates a temporary request token
+// that can be used to validate a TMDb user login.
+//
+// https://developers.themoviedb.org/3/authentication/create-request-token
+func (c *Client) CreateRequestToken() (*RequestToken, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%stoken/new?api_key=%s",
+		baseURL,
+		authenticationURL,
+		c.apiKey,
+	)
+	requestToken := RequestToken{}
+	if err := c.get(tmdbURL, &requestToken); err != nil {
+		return nil, err
+	}
+	return &requestToken, nil
+}
+
 // AccessToken type is a struct for access token JSON request.
 type AccessToken struct {
 	AccessToken string `json:"access_token"`
@@ -28,34 +64,6 @@ type SessionWithLogin struct {
 	Username     string `json:"username"`
 	Password     string `json:"password"`
 	RequestToken string `json:"request_token"`
-}
-
-// CreateGuestSession creates a temporary request token
-// that can be used to validate a TMDb user login.
-//
-// https://developers.themoviedb.org/3/authentication/create-guest-session
-func (c *Client) CreateGuestSession() (*RequestToken, error) {
-	tmdbURL := fmt.Sprintf("%s%sguest_session/new?api_key=%s", baseURL, authenticationURL, c.apiKey)
-	a := RequestToken{}
-	err := c.get(tmdbURL, &a)
-	if err != nil {
-		return nil, err
-	}
-	return &a, nil
-}
-
-// CreateRequestToken creates a temporary request token
-// that can be used to validate a TMDb user login.
-//
-// https://developers.themoviedb.org/3/authentication/create-request-token
-func (c *Client) CreateRequestToken() (*RequestToken, error) {
-	tmdbURL := fmt.Sprintf("%s%stoken/new?api_key=%s", baseURL, authenticationURL, c.apiKey)
-	a := RequestToken{}
-	err := c.get(tmdbURL, &a)
-	if err != nil {
-		return nil, err
-	}
-	return &a, nil
 }
 
 // CreateSession creates a new session id.

@@ -1,5 +1,10 @@
 package tmdb
 
+import (
+	"os"
+	"testing"
+)
+
 const (
 	defaultQuery = "a"
 	warner       = "Warner Bros"
@@ -143,4 +148,19 @@ func (suite *TMBDTestSuite) TestGetSearchTVShowWithOptions() {
 	search, err := suite.client.GetSearchTVShow(defaultQuery, options)
 	suite.Nil(err)
 	suite.NotNil(search.Page)
+}
+
+func BenchmarkGetSearchMulti(b *testing.B) {
+	var tmdbClient Client
+	tmdbClient.apiKey = os.Getenv("APIKey")
+
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		_, err := tmdbClient.GetSearchMulti(defaultQuery, nil)
+		if err != nil {
+			b.Error(err)
+		}
+	}
 }

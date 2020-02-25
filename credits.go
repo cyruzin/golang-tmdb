@@ -80,14 +80,19 @@ type CreditsDetails struct {
 // GetCreditDetails get a movie or TV credit details by id.
 //
 // https://developers.themoviedb.org/3/credits/get-credit-details
-func (c *Client) GetCreditDetails(id string) (*CreditsDetails, error) {
+func (c *Client) GetCreditDetails(
+	id string,
+) (*CreditsDetails, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%s?api_key=%s", baseURL, creditURL, id, c.apiKey,
+		"%s%s%s?api_key=%s",
+		baseURL,
+		creditURL,
+		id,
+		c.apiKey,
 	)
-	t := CreditsDetails{}
-	err := c.get(tmdbURL, &t)
-	if err != nil {
+	creditsDetails := CreditsDetails{}
+	if err := c.get(tmdbURL, &creditsDetails); err != nil {
 		return nil, err
 	}
-	return &t, nil
+	return &creditsDetails, nil
 }

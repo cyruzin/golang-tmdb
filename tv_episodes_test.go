@@ -8,7 +8,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeDetails() {
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeDetailsFail() {
 	_, err := suite.client.GetTVEpisodeDetails(0, 1, 1, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeDetailsWithOptions() {
@@ -52,7 +52,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeCredits() {
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeCreditsFail() {
 	_, err := suite.client.GetTVEpisodeCredits(0, 1, 1)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDs() {
@@ -63,7 +63,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDs() {
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDsFail() {
 	_, err := suite.client.GetTVEpisodeExternalIDs(0, 1, 1)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeImages() {
@@ -74,7 +74,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeImages() {
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeImagesFail() {
 	_, err := suite.client.GetTVEpisodeImages(0, 1, 1)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeTranslations() {
@@ -85,7 +85,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeTranslations() {
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeTranslationsFail() {
 	_, err := suite.client.GetTVEpisodeTranslations(0, 1, 1)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeVideos() {
@@ -96,7 +96,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeVideos() {
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeVideosFail() {
 	_, err := suite.client.GetTVEpisodeVideos(0, 1, 2, nil)
-	suite.Equal("The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeVideosWithOptions() {

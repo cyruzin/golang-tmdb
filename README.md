@@ -24,7 +24,7 @@ To get started, import the `tmdb` package and initiate the client:
 ```go
 import "github.com/cyruzin/golang-tmdb"
 
-tmdbClient, err := tmdb.Init("YOUR_APIKEY")
+tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
 
 if err != nil {
     fmt.Println(err)
@@ -33,7 +33,14 @@ if err != nil {
 // OPTIONAL: Setting a custom config for the http.Client.
 // The default timeout is 10 seconds. Here you can set other
 // options like Timeout and Transport.
-tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
+customClient := http.Client{
+    Timeout: time.Second * 5,
+    Transport: &http.Transport{
+        MaxIdleConns: 10,
+        IdleConnTimeout: 15 * time.Second,
+    }
+}
+tmdbClient.SetClientConfig(customClient)
 
 // OPTIONAL: Enable this option if you're going to use endpoints
 // that needs session id.
@@ -45,20 +52,35 @@ tmdbClient.SetSessionID("YOUR_SESSION_ID")
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
 tmdbClient.SetClientAutoRetry()
-    
+
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
 ```
 
 With optional params:
 
 ```go
-options := make(map[string]string)
-options["language"] = "pt-BR"
-options["append_to_response"] = "credits,images"
+options := map[string]string{
+  "language": "pt-BR",
+  "append_to_response": "credits,images",
+}
 movie, err := tmdbClient.GetMovieDetails(297802, options)
 ```
 
 For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/master/examples).
+
+## Performance
+
+Getting Movie Details:
+
+| Iterations | ns/op    | B/op  | allocs/op |
+|------------|----------|-------|-----------|
+| 19         | 60886648 | 60632 | 184       |
+
+Multi Search:
+
+| Iterations | ns/op    | B/op   | allocs/op |
+|------------|----------|--------|-----------|
+| 16         | 66596963 | 107109 | 608       |
 
 ## Contributing
 
