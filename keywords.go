@@ -22,8 +22,7 @@ func (c *Client) GetKeywordDetails(
 		c.apiKey,
 	)
 	keywordDetails := KeywordDetails{}
-	err := c.get(tmdbURL, &keywordDetails)
-	if err != nil {
+	if err := c.get(tmdbURL, &keywordDetails); err != nil {
 		return nil, err
 	}
 	return &keywordDetails, nil
@@ -73,8 +72,7 @@ func (c *Client) GetKeywordMovies(
 		options,
 	)
 	keywordMovies := KeywordMovies{}
-	err := c.get(tmdbURL, &keywordMovies)
-	if err != nil {
+	if err := c.get(tmdbURL, &keywordMovies); err != nil {
 		return nil, err
 	}
 	return &keywordMovies, nil

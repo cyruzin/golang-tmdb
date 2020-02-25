@@ -10,15 +10,7 @@ This product uses the TMDb API but is not endorsed or certified by TMDb.
 
 ## Requirements
 
-- Go 1.13.x or higher. We aim to support the latest supported versions of go.
-
-## Breaking Changes
-
-**v1.3.0**
-
-- The **get/request** functions now uses [NewRequestWithContext](https://golang.org/pkg/net/http/#NewRequestWithContext). This function works only on Go 1.13.x or higher.
-
-If you get any error, update your Go version or downgrade to v1.2.2.
+- Go 1.11.x or higher. We aim to support the latest supported versions of go.
 
 ## Installation
 

@@ -43,8 +43,7 @@ func (c *Client) GetGuestSessionRatedMovies(
 		options,
 	)
 	guestSessionRatedMovies := GuestSessionRatedMovies{}
-	err := c.get(tmdbURL, &guestSessionRatedMovies)
-	if err != nil {
+	if err := c.get(tmdbURL, &guestSessionRatedMovies); err != nil {
 		return nil, err
 	}
 	return &guestSessionRatedMovies, nil
@@ -90,8 +89,7 @@ func (c *Client) GetGuestSessionRatedTVShows(
 		options,
 	)
 	guestSessionRatedTVShows := GuestSessionRatedTVShows{}
-	err := c.get(tmdbURL, &guestSessionRatedTVShows)
-	if err != nil {
+	if err := c.get(tmdbURL, &guestSessionRatedTVShows); err != nil {
 		return nil, err
 	}
 	return &guestSessionRatedTVShows, nil
@@ -135,8 +133,7 @@ func (c *Client) GetGuestSessionRatedTVEpisodes(
 		options,
 	)
 	guestSessionRatedTVEpisodes := GuestSessionRatedTVEpisodes{}
-	err := c.get(tmdbURL, &guestSessionRatedTVEpisodes)
-	if err != nil {
+	if err := c.get(tmdbURL, &guestSessionRatedTVEpisodes); err != nil {
 		return nil, err
 	}
 	return &guestSessionRatedTVEpisodes, nil

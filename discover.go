@@ -61,8 +61,7 @@ func (c *Client) GetDiscoverMovie(
 		options,
 	)
 	discoverMovie := DiscoverMovie{}
-	err := c.get(tmdbURL, &discoverMovie)
-	if err != nil {
+	if err := c.get(tmdbURL, &discoverMovie); err != nil {
 		return nil, err
 	}
 	return &discoverMovie, nil
@@ -112,8 +111,7 @@ func (c *Client) GetDiscoverTV(
 		options,
 	)
 	discoverTV := DiscoverTV{}
-	err := c.get(tmdbURL, &discoverTV)
-	if err != nil {
+	if err := c.get(tmdbURL, &discoverTV); err != nil {
 		return nil, err
 	}
 	return &discoverTV, nil

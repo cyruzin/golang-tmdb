@@ -34,8 +34,7 @@ func (c *Client) GetCompanyDetails(
 		c.apiKey,
 	)
 	companyDetails := CompanyDetails{}
-	err := c.get(tmdbURL, &companyDetails)
-	if err != nil {
+	if err := c.get(tmdbURL, &companyDetails); err != nil {
 		return nil, err
 	}
 	return &companyDetails, nil
@@ -65,8 +64,7 @@ func (c *Client) GetCompanyAlternativeNames(
 		c.apiKey,
 	)
 	companyAlternativeNames := CompanyAlternativeNames{}
-	err := c.get(tmdbURL, &companyAlternativeNames)
-	if err != nil {
+	if err := c.get(tmdbURL, &companyAlternativeNames); err != nil {
 		return nil, err
 	}
 	return &companyAlternativeNames, nil
@@ -109,8 +107,7 @@ func (c *Client) GetCompanyImages(
 		c.apiKey,
 	)
 	companyImages := CompanyImages{}
-	err := c.get(tmdbURL, &companyImages)
-	if err != nil {
+	if err := c.get(tmdbURL, &companyImages); err != nil {
 		return nil, err
 	}
 	return &companyImages, nil

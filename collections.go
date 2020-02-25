@@ -40,8 +40,7 @@ func (c *Client) GetCollectionDetails(
 		baseURL, collectionURL, id, c.apiKey, options,
 	)
 	collectionDetails := CollectionDetails{}
-	err := c.get(tmdbURL, &collectionDetails)
-	if err != nil {
+	if err := c.get(tmdbURL, &collectionDetails); err != nil {
 		return nil, err
 	}
 	return &collectionDetails, nil
@@ -83,8 +82,7 @@ func (c *Client) GetCollectionImages(
 		baseURL, collectionURL, id, c.apiKey, options,
 	)
 	collectionImages := CollectionImages{}
-	err := c.get(tmdbURL, &collectionImages)
-	if err != nil {
+	if err := c.get(tmdbURL, &collectionImages); err != nil {
 		return nil, err
 	}
 	return &collectionImages, nil
@@ -119,8 +117,7 @@ func (c *Client) GetCollectionTranslations(
 		baseURL, collectionURL, id, c.apiKey, options,
 	)
 	collectionTranslations := CollectionTranslations{}
-	err := c.get(tmdbURL, &collectionTranslations)
-	if err != nil {
+	if err := c.get(tmdbURL, &collectionTranslations); err != nil {
 		return nil, err
 	}
 	return &collectionTranslations, nil

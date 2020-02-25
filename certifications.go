@@ -75,8 +75,7 @@ func (c *Client) GetCertificationMovie() (
 		c.apiKey,
 	)
 	certificationMovie := CertificationMovie{}
-	err := c.get(tmdbURL, &certificationMovie)
-	if err != nil {
+	if err := c.get(tmdbURL, &certificationMovie); err != nil {
 		return nil, err
 	}
 	return &certificationMovie, nil
@@ -133,8 +132,7 @@ func (c *Client) GetCertificationTV() (
 		c.apiKey,
 	)
 	certificationTV := CertificationTV{}
-	err := c.get(tmdbURL, &certificationTV)
-	if err != nil {
+	if err := c.get(tmdbURL, &certificationTV); err != nil {
 		return nil, err
 	}
 	return &certificationTV, nil

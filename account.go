@@ -2,6 +2,7 @@ package tmdb
 
 import (
 	"fmt"
+	"net/http"
 )
 
 // AccountDetails type is a struct for details JSON response.
@@ -25,11 +26,12 @@ type AccountDetails struct {
 func (c *Client) GetAccountDetails() (*AccountDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/account?api_key=%s&session_id=%s",
-		baseURL, c.apiKey, c.sessionID,
+		baseURL,
+		c.apiKey,
+		c.sessionID,
 	)
 	details := AccountDetails{}
-	err := c.get(tmdbURL, &details)
-	if err != nil {
+	if err := c.get(tmdbURL, &details); err != nil {
 		return nil, err
 	}
 	return &details, nil
@@ -63,11 +65,15 @@ func (c *Client) GetCreatedLists(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s&session_id=%s%s",
-		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+		baseURL,
+		accountURL,
+		id,
+		c.apiKey,
+		c.sessionID,
+		options,
 	)
 	createdLists := AccountCreatedLists{}
-	err := c.get(tmdbURL, &createdLists)
-	if err != nil {
+	if err := c.get(tmdbURL, &createdLists); err != nil {
 		return nil, err
 	}
 	return &createdLists, nil
@@ -106,11 +112,15 @@ func (c *Client) GetFavoriteMovies(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/movies?api_key=%s&session_id=%s%s",
-		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+		baseURL,
+		accountURL,
+		id,
+		c.apiKey,
+		c.sessionID,
+		options,
 	)
 	favoriteMovies := AccountFavoriteMovies{}
-	err := c.get(tmdbURL, &favoriteMovies)
-	if err != nil {
+	if err := c.get(tmdbURL, &favoriteMovies); err != nil {
 		return nil, err
 	}
 	return &favoriteMovies, nil
@@ -148,11 +158,15 @@ func (c *Client) GetFavoriteTVShows(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/tv?api_key=%s&session_id=%s%s",
-		baseURL, accountURL, id, c.apiKey, c.sessionID, options,
+		baseURL,
+		accountURL,
+		id,
+		c.apiKey,
+		c.sessionID,
+		options,
 	)
 	favoriteTVShows := AccountFavoriteTVShows{}
-	err := c.get(tmdbURL, &favoriteTVShows)
-	if err != nil {
+	if err := c.get(tmdbURL, &favoriteTVShows); err != nil {
 		return nil, err
 	}
 	return &favoriteTVShows, nil
@@ -176,11 +190,19 @@ func (c *Client) MarkAsFavorite(
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite?api_key=%s&session_id=%s",
-		baseURL, accountURL, id, c.apiKey, c.sessionID,
+		baseURL,
+		accountURL,
+		id,
+		c.apiKey,
+		c.sessionID,
 	)
 	markAsFavorite := Response{}
-	err := c.request(tmdbURL, title, "POST", &markAsFavorite)
-	if err != nil {
+	if err := c.request(
+		tmdbURL,
+		title,
+		http.MethodPost,
+		&markAsFavorite,
+	); err != nil {
 		return nil, err
 	}
 	return &markAsFavorite, nil
@@ -209,8 +231,7 @@ func (c *Client) GetRatedMovies(
 		options,
 	)
 	ratedMovies := AccountRatedMovies{}
-	err := c.get(tmdbURL, &ratedMovies)
-	if err != nil {
+	if err := c.get(tmdbURL, &ratedMovies); err != nil {
 		return nil, err
 	}
 	return &ratedMovies, nil
@@ -239,8 +260,7 @@ func (c *Client) GetRatedTVShows(
 		options,
 	)
 	ratedTVShows := AccountRatedTVShows{}
-	err := c.get(tmdbURL, &ratedTVShows)
-	if err != nil {
+	if err := c.get(tmdbURL, &ratedTVShows); err != nil {
 		return nil, err
 	}
 	return &ratedTVShows, nil
@@ -285,8 +305,7 @@ func (c *Client) GetRatedTVEpisodes(
 		options,
 	)
 	ratedTVEpisodes := AccountRatedTVEpisodes{}
-	err := c.get(tmdbURL, &ratedTVEpisodes)
-	if err != nil {
+	if err := c.get(tmdbURL, &ratedTVEpisodes); err != nil {
 		return nil, err
 	}
 	return &ratedTVEpisodes, nil
@@ -315,8 +334,7 @@ func (c *Client) GetMovieWatchlist(
 		options,
 	)
 	movieWatchlist := AccountMovieWatchlist{}
-	err := c.get(tmdbURL, &movieWatchlist)
-	if err != nil {
+	if err := c.get(tmdbURL, &movieWatchlist); err != nil {
 		return nil, err
 	}
 	return &movieWatchlist, nil
@@ -345,8 +363,7 @@ func (c *Client) GetTVShowsWatchlist(
 		options,
 	)
 	tvShowsWatchlist := AccountTVShowsWatchlist{}
-	err := c.get(tmdbURL, &tvShowsWatchlist)
-	if err != nil {
+	if err := c.get(tmdbURL, &tvShowsWatchlist); err != nil {
 		return nil, err
 	}
 	return &tvShowsWatchlist, nil
@@ -376,8 +393,12 @@ func (c *Client) AddToWatchlist(
 		c.sessionID,
 	)
 	addToWatchlist := Response{}
-	err := c.request(tmdbURL, title, "POST", &addToWatchlist)
-	if err != nil {
+	if err := c.request(
+		tmdbURL,
+		title,
+		http.MethodPost,
+		&addToWatchlist,
+	); err != nil {
 		return nil, err
 	}
 	return &addToWatchlist, nil

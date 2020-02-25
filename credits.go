@@ -91,8 +91,7 @@ func (c *Client) GetCreditDetails(
 		c.apiKey,
 	)
 	creditsDetails := CreditsDetails{}
-	err := c.get(tmdbURL, &creditsDetails)
-	if err != nil {
+	if err := c.get(tmdbURL, &creditsDetails); err != nil {
 		return nil, err
 	}
 	return &creditsDetails, nil

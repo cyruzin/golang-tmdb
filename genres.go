@@ -25,8 +25,7 @@ func (c *Client) GetGenreMovieList(
 		options,
 	)
 	genreMovieList := GenreMovieList{}
-	err := c.get(tmdbURL, &genreMovieList)
-	if err != nil {
+	if err := c.get(tmdbURL, &genreMovieList); err != nil {
 		return nil, err
 	}
 	return &genreMovieList, nil
@@ -47,8 +46,7 @@ func (c *Client) GetGenreTVList(
 		options,
 	)
 	genreTVList := GenreMovieList{}
-	err := c.get(tmdbURL, &genreTVList)
-	if err != nil {
+	if err := c.get(tmdbURL, &genreTVList); err != nil {
 		return nil, err
 	}
 	return &genreTVList, nil

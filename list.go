@@ -51,8 +51,7 @@ func (c *Client) GetListDetails(
 		options,
 	)
 	ListDetails := ListDetails{}
-	err := c.get(tmdbURL, &ListDetails)
-	if err != nil {
+	if err := c.get(tmdbURL, &ListDetails); err != nil {
 		return nil, err
 	}
 	return &ListDetails, nil
@@ -81,8 +80,7 @@ func (c *Client) GetListItemStatus(
 		options,
 	)
 	listItemStatus := ListItemStatus{}
-	err := c.get(tmdbURL, &listItemStatus)
-	if err != nil {
+	if err := c.get(tmdbURL, &listItemStatus); err != nil {
 		return nil, err
 	}
 	return &listItemStatus, nil
@@ -115,8 +113,12 @@ func (c *Client) CreateList(
 		c.sessionID,
 	)
 	createList := ListResponse{}
-	err := c.request(tmdbURL, list, http.MethodPost, &createList)
-	if err != nil {
+	if err := c.request(
+		tmdbURL,
+		list,
+		http.MethodPost,
+		&createList,
+	); err != nil {
 		return nil, err
 	}
 	return &createList, nil
@@ -142,8 +144,12 @@ func (c *Client) AddMovie(
 		c.sessionID,
 	)
 	response := Response{}
-	err := c.request(tmdbURL, mediaID, http.MethodPost, &response)
-	if err != nil {
+	if err := c.request(
+		tmdbURL,
+		mediaID,
+		http.MethodPost,
+		&response,
+	); err != nil {
 		return nil, err
 	}
 	return &response, nil
@@ -164,8 +170,12 @@ func (c *Client) RemoveMovie(
 		c.sessionID,
 	)
 	response := Response{}
-	err := c.request(tmdbURL, mediaID, http.MethodPost, &response)
-	if err != nil {
+	if err := c.request(
+		tmdbURL,
+		mediaID,
+		http.MethodPost,
+		&response,
+	); err != nil {
 		return nil, err
 	}
 	return &response, nil
@@ -187,8 +197,12 @@ func (c *Client) ClearList(
 		confirm,
 	)
 	response := Response{}
-	err := c.request(tmdbURL, listID, http.MethodPost, &response)
-	if err != nil {
+	if err := c.request(
+		tmdbURL,
+		listID,
+		http.MethodPost,
+		&response,
+	); err != nil {
 		return nil, err
 	}
 	return &response, nil
@@ -208,8 +222,12 @@ func (c *Client) DeleteList(
 		c.sessionID,
 	)
 	response := Response{}
-	err := c.request(tmdbURL, nil, http.MethodDelete, &response)
-	if err != nil {
+	if err := c.request(
+		tmdbURL,
+		nil,
+		http.MethodDelete,
+		&response,
+	); err != nil {
 		return nil, err
 	}
 	return &response, nil

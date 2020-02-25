@@ -33,8 +33,7 @@ func (c *Client) GetChangesMovie(
 		options,
 	)
 	changesMovies := ChangesMovie{}
-	err := c.get(tmdbURL, &changesMovies)
-	if err != nil {
+	if err := c.get(tmdbURL, &changesMovies); err != nil {
 		return nil, err
 	}
 	return &changesMovies, nil
@@ -65,8 +64,7 @@ func (c *Client) GetChangesTV(
 		options,
 	)
 	changesTV := ChangesTV{}
-	err := c.get(tmdbURL, &changesTV)
-	if err != nil {
+	if err := c.get(tmdbURL, &changesTV); err != nil {
 		return nil, err
 	}
 	return &changesTV, nil
@@ -97,8 +95,7 @@ func (c *Client) GetChangesPerson(
 		options,
 	)
 	changesPerson := ChangesPerson{}
-	err := c.get(tmdbURL, &changesPerson)
-	if err != nil {
+	if err := c.get(tmdbURL, &changesPerson); err != nil {
 		return nil, err
 	}
 	return &changesPerson, nil

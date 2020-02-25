@@ -100,8 +100,7 @@ func (c *Client) GetFindByID(
 		baseURL, id, c.apiKey, options,
 	)
 	findByID := FindByID{}
-	err := c.get(tmdbURL, &findByID)
-	if err != nil {
+	if err := c.get(tmdbURL, &findByID); err != nil {
 		return nil, err
 	}
 	return &findByID, nil

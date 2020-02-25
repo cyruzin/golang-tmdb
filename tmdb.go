@@ -118,15 +118,11 @@ func (c *Client) get(url string, data interface{}) error {
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
-	req, err := http.NewRequestWithContext(
-		context.Background(),
-		http.MethodGet,
-		url,
-		nil,
-	)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
+	req = req.WithContext(context.Background())
 	req.Header.Add("content-type", "application/json;charset=utf-8")
 	for {
 		res, err := c.http.Do(req)
@@ -166,8 +162,7 @@ func (c *Client) request(
 	}
 	bodyBytes := new(bytes.Buffer)
 	json.NewEncoder(bodyBytes).Encode(body)
-	req, err := http.NewRequestWithContext(
-		context.Background(),
+	req, err := http.NewRequest(
 		method,
 		url,
 		bytes.NewBuffer(bodyBytes.Bytes()),
@@ -175,6 +170,7 @@ func (c *Client) request(
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
+	req = req.WithContext(context.Background())
 	req.Header.Add("content-type", "application/json;charset=utf-8")
 	for {
 		res, err := c.http.Do(req)

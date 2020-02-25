@@ -45,8 +45,7 @@ func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 		c.apiKey,
 	)
 	configurationAPI := ConfigurationAPI{}
-	err := c.get(tmdbURL, &configurationAPI)
-	if err != nil {
+	if err := c.get(tmdbURL, &configurationAPI); err != nil {
 		return nil, err
 	}
 	return &configurationAPI, nil
@@ -73,8 +72,7 @@ func (c *Client) GetConfigurationCountries() (
 		c.apiKey,
 	)
 	configurationCountries := ConfigurationCountries{}
-	err := c.get(tmdbURL, &configurationCountries)
-	if err != nil {
+	if err := c.get(tmdbURL, &configurationCountries); err != nil {
 		return nil, err
 	}
 	return &configurationCountries, nil
@@ -97,8 +95,7 @@ func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
 		c.apiKey,
 	)
 	configurationJobs := ConfigurationJobs{}
-	err := c.get(tmdbURL, &configurationJobs)
-	if err != nil {
+	if err := c.get(tmdbURL, &configurationJobs); err != nil {
 		return nil, err
 	}
 	return &configurationJobs, nil
@@ -126,8 +123,7 @@ func (c *Client) GetConfigurationLanguages() (
 		c.apiKey,
 	)
 	configurationLanguages := ConfigurationLanguages{}
-	err := c.get(tmdbURL, &configurationLanguages)
-	if err != nil {
+	if err := c.get(tmdbURL, &configurationLanguages); err != nil {
 		return nil, err
 	}
 	return &configurationLanguages, nil
@@ -168,8 +164,7 @@ func (c *Client) GetConfigurationPrimaryTranslations() (
 		baseURL, configurationURL, c.apiKey,
 	)
 	configurationPrimaryTranslations := ConfigurationPrimaryTranslations{}
-	err := c.get(tmdbURL, &configurationPrimaryTranslations)
-	if err != nil {
+	if err := c.get(tmdbURL, &configurationPrimaryTranslations); err != nil {
 		return nil, err
 	}
 	return &configurationPrimaryTranslations, nil
@@ -197,8 +192,7 @@ func (c *Client) GetConfigurationTimezones() (
 		c.apiKey,
 	)
 	configurationTimeZones := ConfigurationTimezones{}
-	err := c.get(tmdbURL, &configurationTimeZones)
-	if err != nil {
+	if err := c.get(tmdbURL, &configurationTimeZones); err != nil {
 		return nil, err
 	}
 	return &configurationTimeZones, nil

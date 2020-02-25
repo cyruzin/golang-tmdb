@@ -24,8 +24,7 @@ func (c *Client) CreateGuestSession() (*RequestToken, error) {
 		c.apiKey,
 	)
 	requestToken := RequestToken{}
-	err := c.get(tmdbURL, &requestToken)
-	if err != nil {
+	if err := c.get(tmdbURL, &requestToken); err != nil {
 		return nil, err
 	}
 	return &requestToken, nil
@@ -43,8 +42,7 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 		c.apiKey,
 	)
 	requestToken := RequestToken{}
-	err := c.get(tmdbURL, &requestToken)
-	if err != nil {
+	if err := c.get(tmdbURL, &requestToken); err != nil {
 		return nil, err
 	}
 	return &requestToken, nil
