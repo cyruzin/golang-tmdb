@@ -25,7 +25,6 @@ To get started, import the `tmdb` package and initiate the client:
 import "github.com/cyruzin/golang-tmdb"
 
 tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
-
 if err != nil {
     fmt.Println(err)
 }
@@ -40,6 +39,7 @@ customClient := http.Client{
         IdleConnTimeout: 15 * time.Second,
     }
 }
+
 tmdbClient.SetClientConfig(customClient)
 
 // OPTIONAL: Enable this option if you're going to use endpoints
@@ -47,13 +47,20 @@ tmdbClient.SetClientConfig(customClient)
 // 
 // You can read more about how this works:
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
-tmdbClient.SetSessionID("YOUR_SESSION_ID")
+
+tmdbClient.SetSessionID(os.GetEnv("YOUR_SESSION_ID"))
 
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
+
 tmdbClient.SetClientAutoRetry()
 
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
+if err != nil {
+ fmt.Println(err)
+}
+
+fmt.Println(movie.Title)
 ```
 
 With optional params:
@@ -63,7 +70,40 @@ options := map[string]string{
   "language": "pt-BR",
   "append_to_response": "credits,images",
 }
+
 movie, err := tmdbClient.GetMovieDetails(297802, options)
+if err != nil {
+ fmt.Println(err)
+}
+
+fmt.Println(movie.Title)
+```
+
+Helpers:
+
+Generate image and video URLs:
+
+```go
+options := map[string]string{
+ "append_to_response": "videos",
+}
+    
+movie, err := tmdbClient.GetMovieDetails(297802, options)
+if err != nil {
+ fmt.Println(err)
+}
+
+fmt.Println(tmdb.GetImageURL(movie.BackdropPath, "w500"))
+// Output: https://image.tmdb.org/t/p/w500/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg
+fmt.Println(tmdb.GetImageURL(movie.PosterPath, "original"))
+// Ouput: https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg
+
+for _, video := range movie.MovieVideosAppend.Videos.MovieVideos.Results {
+   if video.Key != "" {
+	 fmt.Println(tmdb.GetVideoURL(video.Key))
+     // Output: https://www.youtube.com/watch?v=6ZfuNTqbHE8
+   }
+}
 ```
 
 For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/master/examples).
