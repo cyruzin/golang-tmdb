@@ -290,7 +290,7 @@ func (suite *TMBDTestSuite) TestGetTVVideosWithOptions() {
 	options["language"] = "en-US"
 	flash, err := suite.client.GetTVVideos(flashID, options)
 	suite.Nil(err)
-	suite.Equal("552d7e27c3a368750100138b", flash.Results[0].ID)
+	suite.NotNil(flash.Results[0].ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVLatest() {
