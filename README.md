@@ -47,12 +47,10 @@ tmdbClient.SetClientConfig(customClient)
 // 
 // You can read more about how this works:
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
-
 tmdbClient.SetSessionID(os.GetEnv("YOUR_SESSION_ID"))
 
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail.
-
 tmdbClient.SetClientAutoRetry()
 
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
