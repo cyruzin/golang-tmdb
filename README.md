@@ -10,7 +10,7 @@ This product uses the TMDb API but is not endorsed or certified by TMDb.
 
 ## Requirements
 
-- Go 1.11.x or higher. We aim to support the latest supported versions of go.
+- Go 1.13.x or higher. We aim to support the latest supported versions of go.
 
 ## Installation
 
