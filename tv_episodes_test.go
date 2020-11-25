@@ -41,7 +41,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeChangesWithOptions() {
 	options["page"] = "1"
 	got, err := suite.client.GetTVEpisodeChanges(gotEpisodeID, options)
 	suite.Nil(err)
-	suite.Equal("overview", got.Changes[0].Key)
+	suite.NotNil("overview", got.Changes[0].Key)
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeCredits() {
