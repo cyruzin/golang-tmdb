@@ -217,6 +217,17 @@ func (suite *TMBDTestSuite) TestGetMovieRecommendationsWithOptions() {
 	suite.Equal(int64(1), jackreacher.Page)
 }
 
+func (suite *TMBDTestSuite) TestGetMovieWatchProviders() {
+	bumblebee, err := suite.client.GetMovieWatchProviders(bumblebeeID, nil)
+	suite.Nil(err)
+	suite.Equal("https://www.themoviedb.org/movie/424783-bumblebee/watch?locale=AR", bumblebee.Results["AR"].Link)
+}
+
+func (suite *TMBDTestSuite) TestGetMovieWatchProvidersFail() {
+	_, err := suite.client.GetMovieWatchProviders(0, nil)
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+}
+
 func (suite *TMBDTestSuite) TestGetMovieSimilar() {
 	bumblebee, err := suite.client.GetMovieSimilar(bumblebeeID, nil)
 	suite.Nil(err)

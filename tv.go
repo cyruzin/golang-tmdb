@@ -102,6 +102,7 @@ type TVDetails struct {
 	*TVSimilarAppend
 	*TVTranslationsAppend
 	*TVVideosAppend
+	*TVWatchProvidersAppend
 }
 
 // TVAlternativeTitlesAppend type is a struct
@@ -188,6 +189,12 @@ type TVVideosAppend struct {
 	Videos struct {
 		*TVVideos
 	} `json:"videos,omitempty"`
+}
+
+// TVWatchProvidersAppend type is a struct for
+// watch/providers in append to response.
+type TVWatchProvidersAppend struct {
+	WatchProviders *TVWatchProviders `json:"watch/providers,omitempty"`
 }
 
 // GetTVDetails get the primary TV show details by id.
@@ -721,6 +728,55 @@ func (c *Client) GetTVSimilar(
 		return nil, err
 	}
 	return &tVSimilar, nil
+}
+
+// TVWatchProviders type is a struct for watch/providers JSON response.
+type TVWatchProviders struct {
+	ID      int64 `json:"id,omitempty"`
+	Results map[string]struct {
+		Link     string `json:"link"`
+		Flatrate []struct {
+			DisplayPriority int64  `json:"display_priority"`
+			LogoPath        string `json:"logo_path"`
+			ProviderID      int64  `json:"provider_id"`
+			ProviderName    string `json:"provider_name"`
+		} `json:"flatrate,omitempty"`
+		Rent []struct {
+			DisplayPriority int64  `json:"display_priority"`
+			LogoPath        string `json:"logo_path"`
+			ProviderID      int64  `json:"provider_id"`
+			ProviderName    string `json:"provider_name"`
+		} `json:"rent,omitempty"`
+		Buy []struct {
+			DisplayPriority int64  `json:"display_priority"`
+			LogoPath        string `json:"logo_path"`
+			ProviderID      int64  `json:"provider_id"`
+			ProviderName    string `json:"provider_name"`
+		} `json:"buy,omitempty"`
+	} `json:"results"`
+}
+
+// GetTVWatchProviders get a list of the availabilities per country by provider for a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-watch-providers
+func (c *Client) GetTVWatchProviders(
+	id int,
+	urlOptions map[string]string,
+) (*TVWatchProviders, error) {
+	options := c.fmtOptions(urlOptions)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/watch/providers?api_key=%s%s",
+		baseURL,
+		tvURL,
+		id,
+		c.apiKey,
+		options,
+	)
+	tvWatchProviders := TVWatchProviders{}
+	if err := c.get(tmdbURL, &tvWatchProviders); err != nil {
+		return nil, err
+	}
+	return &tvWatchProviders, nil
 }
 
 // TVTranslations type is a struct for translations JSON response.
