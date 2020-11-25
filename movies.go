@@ -66,6 +66,7 @@ type MovieDetails struct {
 	*MovieSimilarAppend
 	*MovieReviewsAppend
 	*MovieListsAppend
+	*MovieWatchProvidersAppend
 }
 
 // MovieAlternativeTitlesAppend type is a struct for alternative
@@ -141,6 +142,12 @@ type MovieKeywordsAppend struct {
 	Keywords struct {
 		*MovieKeywords
 	} `json:"keywords,omitempty"`
+}
+
+// MovieWatchProvidersAppend type is a struct for
+// watch/providers in append to response.
+type MovieWatchProvidersAppend struct {
+	WatchProviders *MovieWatchProviders `json:"watch/providers,omitempty"`
 }
 
 // GetMovieDetails get the primary information about a movie.
@@ -513,6 +520,55 @@ func (c *Client) GetMovieVideos(
 		return nil, err
 	}
 	return &movieVideos, nil
+}
+
+// MovieWatchProviders type is a struct for watch/providers JSON response.
+type MovieWatchProviders struct {
+	ID      int64 `json:"id,omitempty"`
+	Results map[string]struct {
+		Link     string `json:"link"`
+		Flatrate []struct {
+			DisplayPriority int64  `json:"display_priority"`
+			LogoPath        string `json:"logo_path"`
+			ProviderID      int64  `json:"provider_id"`
+			ProviderName    string `json:"provider_name"`
+		} `json:"flatrate,omitempty"`
+		Rent []struct {
+			DisplayPriority int64  `json:"display_priority"`
+			LogoPath        string `json:"logo_path"`
+			ProviderID      int64  `json:"provider_id"`
+			ProviderName    string `json:"provider_name"`
+		} `json:"rent,omitempty"`
+		Buy []struct {
+			DisplayPriority int64  `json:"display_priority"`
+			LogoPath        string `json:"logo_path"`
+			ProviderID      int64  `json:"provider_id"`
+			ProviderName    string `json:"provider_name"`
+		} `json:"buy,omitempty"`
+	} `json:"results"`
+}
+
+// GetMovieWatchProviders get a list of the availabilities per country by provider for a movie.
+//
+// https://developers.themoviedb.org/3/movies/get-movie-watch-providers
+func (c *Client) GetMovieWatchProviders(
+	id int,
+	urlOptions map[string]string,
+) (*MovieWatchProviders, error) {
+	options := c.fmtOptions(urlOptions)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/watch/providers?api_key=%s%s",
+		baseURL,
+		movieURL,
+		id,
+		c.apiKey,
+		options,
+	)
+	movieWatchProviders := MovieWatchProviders{}
+	if err := c.get(tmdbURL, &movieWatchProviders); err != nil {
+		return nil, err
+	}
+	return &movieWatchProviders, nil
 }
 
 // MovieTranslations type is a struct for translations JSON response.

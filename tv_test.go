@@ -236,6 +236,17 @@ func (suite *TMBDTestSuite) TestGetTVReviewsWithOptions() {
 	suite.Equal(int64(1), flash.Page)
 }
 
+func (suite *TMBDTestSuite) TestGetTVWatchProviders() {
+	bumblebee, err := suite.client.GetTVWatchProviders(flashID, nil)
+	suite.Nil(err)
+	suite.Equal("https://www.themoviedb.org/tv/60735-the-flash/watch?locale=AR", bumblebee.Results["AR"].Link)
+}
+
+func (suite *TMBDTestSuite) TestGetTVWatchProvidersFail() {
+	_, err := suite.client.GetTVWatchProviders(0, nil)
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+}
+
 func (suite *TMBDTestSuite) TestGetTVSimilar() {
 	flashID, err := suite.client.GetTVSimilar(flashID, nil)
 	suite.Nil(err)
