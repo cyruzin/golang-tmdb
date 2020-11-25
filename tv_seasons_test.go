@@ -26,7 +26,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonChange() {
 	options["page"] = "1"
 	got, err := suite.client.GetTVSeasonChanges(gotSeasonID, options)
 	suite.Nil(err)
-	suite.Equal("5c423aaf925141344cb32a9d", got.Changes[0].Items[0].ID)
+	suite.NotNil(got.Changes[0].Items[0].ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonCredits() {
