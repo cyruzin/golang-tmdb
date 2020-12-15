@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cyruzin/golang-tmdb.svg?branch=master)](https://travis-ci.org/cyruzin/golang-tmdb) [![Build status](https://ci.appveyor.com/api/projects/status/vv76pwj3n4jssuhh?svg=true)](https://ci.appveyor.com/project/cyruzin/golang-tmdb) [![Coverage Status](https://coveralls.io/repos/github/cyruzin/golang-tmdb/badge.svg?branch=master&service=github)](https://coveralls.io/github/cyruzin/golang-tmdb?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/cyruzin/golang-tmdb)](https://goreportcard.com/report/github.com/cyruzin/golang-tmdb) [![GoDoc](https://godoc.org/github.com/cyruzin/golang-tmdb?status.svg)](https://godoc.org/github.com/cyruzin/golang-tmdb) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/cyruzin/golang-tmdb) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 
-This is a Golang wrapper for working with TMDb API. It aims to support version 3. 
+This is a Golang wrapper for working with TMDb API. It aims to support version 3.
 
 An API Key is required. To register for one, head over to [themoviedb.org](https://www.themoviedb.org/settings/api).
 
@@ -17,6 +17,7 @@ This product uses the TMDb API but is not endorsed or certified by TMDb.
 ```sh
 go get -u github.com/cyruzin/golang-tmdb
 ```
+
 ## Usage
 
 To get started, import the `tmdb` package and initiate the client:
@@ -44,7 +45,7 @@ tmdbClient.SetClientConfig(customClient)
 
 // OPTIONAL: Enable this option if you're going to use endpoints
 // that needs session id.
-// 
+//
 // You can read more about how this works:
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 tmdbClient.SetSessionID(os.GetEnv("YOUR_SESSION_ID"))
@@ -64,6 +65,13 @@ fmt.Println(movie.Title)
 With optional params:
 
 ```go
+import "github.com/cyruzin/golang-tmdb"
+
+tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
+if err != nil {
+    fmt.Println(err)
+}
+
 options := map[string]string{
   "language": "pt-BR",
   "append_to_response": "credits,images",
@@ -82,18 +90,25 @@ Helpers:
 Generate image and video URLs:
 
 ```go
+import "github.com/cyruzin/golang-tmdb"
+
+tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
+if err != nil {
+    fmt.Println(err)
+}
+
 options := map[string]string{
  "append_to_response": "videos",
 }
-    
+
 movie, err := tmdbClient.GetMovieDetails(297802, options)
 if err != nil {
  fmt.Println(err)
 }
 
-fmt.Println(tmdb.GetImageURL(movie.BackdropPath, "w500"))
+fmt.Println(tmdb.GetImageURL(movie.BackdropPath, tmdb.W500))
 // Output: https://image.tmdb.org/t/p/w500/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg
-fmt.Println(tmdb.GetImageURL(movie.PosterPath, "original"))
+fmt.Println(tmdb.GetImageURL(movie.PosterPath, tmdb.Original))
 // Ouput: https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg
 
 for _, video := range movie.MovieVideosAppend.Videos.MovieVideos.Results {
@@ -111,13 +126,13 @@ For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/mast
 Getting Movie Details:
 
 | Iterations | ns/op    | B/op  | allocs/op |
-|------------|----------|-------|-----------|
+| ---------- | -------- | ----- | --------- |
 | 19         | 60886648 | 60632 | 184       |
 
 Multi Search:
 
 | Iterations | ns/op    | B/op   | allocs/op |
-|------------|----------|--------|-----------|
+| ---------- | -------- | ------ | --------- |
 | 16         | 66596963 | 107109 | 608       |
 
 ## Contributing

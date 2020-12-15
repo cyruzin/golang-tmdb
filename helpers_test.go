@@ -8,7 +8,7 @@ import (
 
 func TestGetImageURL(t *testing.T) {
 	url := "https://image.tmdb.org/t/p/w500/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
-	generatedURL := GetImageURL("/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg", "w500")
+	generatedURL := GetImageURL("/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg", W500)
 	assert.Equal(t, generatedURL, url)
 }
 

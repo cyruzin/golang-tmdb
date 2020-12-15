@@ -2,20 +2,45 @@ package tmdb
 
 const imageURL = "https://image.tmdb.org/t/p/"
 
+const (
+	// W45 size
+	W45 = "w45"
+	// W92 size
+	W92 = "w92"
+	// W154 size
+	W154 = "w154"
+	// W185 size
+	W185 = "w185"
+	// W300 size
+	W300 = "w300"
+	// W342 size
+	W342 = "w342"
+	// W500 size
+	W500 = "w500"
+	// W780 size
+	W780 = "w780"
+	// W1280 size
+	W1280 = "w1280"
+	// H632 size
+	H632 = "h632"
+	// Original size
+	Original = "original"
+)
+
 // All supported sizes including logos, posters, backdrops,
 // profiles and still sizes.
 var imageSize = map[string]string{
-	"w45":      imageURL + "w45",
-	"w92":      imageURL + "w92",
-	"w154":     imageURL + "w154",
-	"w185":     imageURL + "w185",
-	"w300":     imageURL + "w300",
-	"w342":     imageURL + "w342",
-	"w500":     imageURL + "w500",
-	"w780":     imageURL + "w780",
-	"w1280":    imageURL + "w1280",
-	"h632":     imageURL + "632",
-	"original": imageURL + "original",
+	W45:      imageURL + W45,
+	W92:      imageURL + W92,
+	W154:     imageURL + W154,
+	W185:     imageURL + W185,
+	W300:     imageURL + W300,
+	W342:     imageURL + W342,
+	W500:     imageURL + W500,
+	W780:     imageURL + W780,
+	W1280:    imageURL + W1280,
+	H632:     imageURL + H632,
+	Original: imageURL + Original,
 }
 
 // GetImageURL accepts two parameters, the key and the size

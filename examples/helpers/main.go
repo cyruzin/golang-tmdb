@@ -23,8 +23,8 @@ func main() {
 	}
 
 	// Generating Image URLs
-	fmt.Println(tmdb.GetImageURL(movie.BackdropPath, "w500"))
-	fmt.Println(tmdb.GetImageURL(movie.PosterPath, "original"))
+	fmt.Println(tmdb.GetImageURL(movie.BackdropPath, tmdb.W500))
+	fmt.Println(tmdb.GetImageURL(movie.PosterPath, tmdb.Original))
 
 	// Generating Video URLs
 	for _, video := range movie.MovieVideosAppend.Videos.MovieVideos.Results {
