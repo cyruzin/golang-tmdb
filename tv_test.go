@@ -43,6 +43,17 @@ func (suite *TMBDTestSuite) TestGetTVAccountStatesWithOptions() {
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
+func (suite *TMBDTestSuite) TestGetTVAggregateCredits() {
+	vikings, err := suite.client.GetTVAggregateCredits(vikingsID, nil)
+	suite.Nil(err)
+	suite.Equal(int64(vikingsID), vikings.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVAggregateFail() {
+	_, err := suite.client.GetTVAggregateCredits(0, nil)
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+}
+
 func (suite *TMBDTestSuite) TestGetTVAlternativeTitles() {
 	flash, err := suite.client.GetTVAlternativeTitles(flashID, nil)
 	suite.Nil(err)
