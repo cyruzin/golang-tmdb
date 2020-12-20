@@ -85,9 +85,11 @@ type TVDetails struct {
 		SeasonNumber int    `json:"season_number"`
 	} `json:"seasons"`
 	Status      string  `json:"status"`
+	Tagline     string  `json:"tagline"`
 	Type        string  `json:"type"`
 	VoteAverage float32 `json:"vote_average"`
 	VoteCount   int64   `json:"vote_count"`
+	*TVAggregateCreditsAppend
 	*TVAlternativeTitlesAppend
 	*TVChangesAppend
 	*TVContentRatingsAppend
@@ -103,6 +105,12 @@ type TVDetails struct {
 	*TVTranslationsAppend
 	*TVVideosAppend
 	*TVWatchProvidersAppend
+}
+
+// TVAggregateCreditsAppend type is a struct
+// for aggregate credits in append to response.
+type TVAggregateCreditsAppend struct {
+	AggregateCredits *TVAggregateCredits `json:"aggregate_credits,omitempty"`
 }
 
 // TVAlternativeTitlesAppend type is a struct
@@ -258,6 +266,68 @@ func (c *Client) GetTVAccountStates(
 		return nil, err
 	}
 	return &tvAccountStates, nil
+}
+
+// TVAggregateCredits type is a struct for aggregate credits JSON response.
+type TVAggregateCredits struct {
+	ID   int64 `json:"id,omitempty"`
+	Cast []struct {
+		ID                 int64   `json:"id"`
+		Adult              bool    `json:"adult"`
+		Gender             int     `json:"gender"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		Order              int     `json:"order"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float64 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
+		Roles              []struct {
+			Character    string `json:"character"`
+			CreditID     string `json:"credit_id"`
+			EpisodeCount int    `json:"episode_count"`
+		} `json:"roles"`
+		TotalEpisodeCount int `json:"total_episode_count"`
+	} `json:"cast"`
+	Crew []struct {
+		ID                 int64   `json:"id"`
+		Adult              bool    `json:"adult"`
+		Department         string  `json:"department"`
+		Gender             int     `json:"gender"`
+		Jobs               []struct {
+			CreditID     string `json:"credit_id"`
+			EpisodeCount int    `json:"episode_count"`
+			Job          string `json:"job"`
+		} `json:"jobs"`
+		TotalEpisodeCount int `json:"total_episode_count"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float64 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
+	} `json:"crew"`
+}
+
+// GetTVAggregateCredits get the aggregate credits (cast and crew) that have been added to a TV show.
+//
+// https://developers.themoviedb.org/3/tv/get-tv-aggregate-credits
+func (c *Client) GetTVAggregateCredits(
+	id int,
+	urlOptions map[string]string,
+) (*TVAggregateCredits, error) {
+	options := c.fmtOptions(urlOptions)
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d/aggregate_credits?api_key=%s%s",
+		baseURL,
+		tvURL,
+		id,
+		c.apiKey,
+		options,
+	)
+	tvAggregateCredits := TVAggregateCredits{}
+	if err := c.get(tmdbURL, &tvAggregateCredits); err != nil {
+		return nil, err
+	}
+	return &tvAggregateCredits, nil
 }
 
 // TVAlternativeTitles type is a struct for alternative titles JSON response.
