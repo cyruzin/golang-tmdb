@@ -66,7 +66,7 @@ func (c *Client) GetWatchProvidersMovie(
 	return &watchProvider, nil
 }
 
-// GetWatchProvidersMovie get a list of the watch provider (OTT/streaming) data we have available for TV series.
+// GetWatchProvidersTv get a list of the watch provider (OTT/streaming) data we have available for TV series.
 // You can specify a watch_region param if you want to further filter the list by country.
 //
 // https://developers.themoviedb.org/3/watch-providers/get-tv-providers
