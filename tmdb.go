@@ -41,6 +41,7 @@ const (
 	guestSessionURL   = "/guest_session/"
 	listURL           = "/list/"
 	accountURL        = "/account/"
+	watchProvidersURL = "/watch/providers/"
 )
 
 // Client type is a struct to instantiate this pkg.
