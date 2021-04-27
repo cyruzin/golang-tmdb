@@ -582,6 +582,7 @@ type MovieTranslations struct {
 		Data        struct {
 			Title    string `json:"title"`
 			Overview string `json:"overview"`
+			Tagline  string `json:"tagline"`
 			Homepage string `json:"homepage"`
 		} `json:"data"`
 	} `json:"translations"`
