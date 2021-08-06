@@ -18,7 +18,7 @@ type TMBDTestSuite struct {
 }
 
 func (suite *TMBDTestSuite) SetupTest() {
-	suite.client.apiKey = os.Getenv("APIKEY")
+	suite.client.apiKey = "9aca69849a23528a419aea463387945f"
 	suite.client.SetClientAutoRetry()
 }
 
