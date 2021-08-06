@@ -22,13 +22,9 @@ jobs:
       - name: Install dependencies
         run: |
           go mod download
-      - name: Run Unit tests
+      - name: Run tests
         run: |
           go test -v -coverprofile=profile.cov ./...
-      - name: Install goveralls
-        env:
-         GO111MODULE: off
-        run: go install github.com/mattn/goveralls@latest
       - name: Send coverage
         uses: shogo82148/actions-goveralls@v1
         with:
