@@ -8,6 +8,9 @@ on:
   schedule:
     - cron: "0 2 * * 1-5"
 
+env:
+ APIKEY: ${{ secrets.APIKEY }}
+
 jobs:
   test:
     name: Test with Coverage
@@ -23,8 +26,6 @@ jobs:
         run: |
           go mod download
       - name: Run Unit tests
-        env:
-         APIKEY: ${{ secrets.APIKEY }}
         run: |
           go test -race -covermode atomic -coverprofile=covprofile ./...
       - name: Install goveralls
