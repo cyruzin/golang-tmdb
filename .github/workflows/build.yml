@@ -24,12 +24,13 @@ jobs:
           go mod download
       - name: Run Unit tests
         run: |
-          go test -race -covermode atomic -coverprofile=covprofile ./...
+          go test -v -coverprofile=profile.cov ./...
       - name: Install goveralls
         env:
          GO111MODULE: off
         run: go install github.com/mattn/goveralls@latest
       - name: Send coverage
-        env:
-         COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: goveralls -coverprofile=covprofile -service=github
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          path-to-profile: profile.cov
+          parallel: true
