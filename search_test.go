@@ -1,7 +1,6 @@
 package tmdb
 
 import (
-	"os"
 	"testing"
 )
 
@@ -152,7 +151,7 @@ func (suite *TMBDTestSuite) TestGetSearchTVShowWithOptions() {
 
 func BenchmarkGetSearchMulti(b *testing.B) {
 	var tmdbClient Client
-	tmdbClient.apiKey = os.Getenv("APIKey")
+	tmdbClient.apiKey = apiKey
 
 	b.ReportAllocs()
 	b.ResetTimer()

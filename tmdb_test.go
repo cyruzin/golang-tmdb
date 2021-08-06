@@ -3,7 +3,6 @@ package tmdb
 import (
 	"bytes"
 	"net/http"
-	"os"
 	"testing"
 	"time"
 
@@ -11,6 +10,7 @@ import (
 )
 
 const sessionID = "a5722b9dd3467bd630c28e9ca63baf880c9940ae"
+const apiKey = "9aca69849a23528a419aea463387945f"
 
 type TMBDTestSuite struct {
 	suite.Suite
@@ -18,7 +18,7 @@ type TMBDTestSuite struct {
 }
 
 func (suite *TMBDTestSuite) SetupTest() {
-	suite.client.apiKey = "9aca69849a23528a419aea463387945f"
+	suite.client.apiKey = apiKey
 	suite.client.SetClientAutoRetry()
 }
 
@@ -97,12 +97,12 @@ func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
 }
 
 func (suite *TMBDTestSuite) TestInit() {
-	_, err := Init(os.Getenv("APIKey"))
+	_, err := Init(apiKey)
 	suite.Nil(err)
 }
 
 func (suite *TMBDTestSuite) TestInitFail() {
-	_, err := Init(os.Getenv(""))
+	_, err := Init("")
 	suite.NotNil(err)
 }
 
