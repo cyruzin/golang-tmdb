@@ -66,7 +66,7 @@ type Response struct {
 // Init setups the Client with an apiKey.
 func Init(apiKey string) (*Client, error) {
 	if apiKey == "" {
-		return nil, errors.New("APIKey is empty")
+		return nil, errors.New("api key is empty")
 	}
 	return &Client{apiKey: apiKey}, nil
 }
@@ -74,7 +74,7 @@ func Init(apiKey string) (*Client, error) {
 // SetSessionID will set the session id.
 func (c *Client) SetSessionID(sid string) error {
 	if sid == "" {
-		return errors.New("The SessionID is empty")
+		return errors.New("the session id is empty")
 	}
 	c.sessionID = sid
 	return nil

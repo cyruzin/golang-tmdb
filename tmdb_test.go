@@ -18,7 +18,7 @@ type TMBDTestSuite struct {
 }
 
 func (suite *TMBDTestSuite) SetupTest() {
-	suite.client.apiKey = os.Getenv("APIKey")
+	suite.client.apiKey = os.Getenv("APIKEY")
 	suite.client.SetClientAutoRetry()
 }
 
@@ -73,6 +73,7 @@ func (suite *TMBDTestSuite) TestDecodeDataFail() {
 
 func (suite *TMBDTestSuite) TestDecodeErrorFail() {
 	r, err := http.Get("https://golang.org/")
+	suite.Nil(err)
 	err = suite.client.decodeError(r)
 	defer r.Body.Close()
 	suite.Contains(err.Error(), "couldn't decode error")
@@ -80,6 +81,7 @@ func (suite *TMBDTestSuite) TestDecodeErrorFail() {
 
 func (suite *TMBDTestSuite) TestDecodeErrorEmptyBodyFail() {
 	r, err := http.Get("https://golang.org/")
+	suite.Nil(err)
 	r.Write(bytes.NewBuffer([]byte("")))
 	err = suite.client.decodeError(r)
 	defer r.Body.Close()
@@ -88,6 +90,7 @@ func (suite *TMBDTestSuite) TestDecodeErrorEmptyBodyFail() {
 
 func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
 	r, err := http.Get("https://golang.org/")
+	suite.Nil(err)
 	r.Body.Close()
 	err = suite.client.decodeError(r)
 	suite.Contains(err.Error(), "could not read body response")
@@ -120,7 +123,7 @@ func (suite *TMBDTestSuite) TestSetAutoRetry() {
 
 func (suite *TMBDTestSuite) TestSetSessionIDFail() {
 	err := suite.client.SetSessionID("")
-	suite.Equal("The SessionID is empty", err.Error())
+	suite.Equal("the session id is empty", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestRetryDuration() {

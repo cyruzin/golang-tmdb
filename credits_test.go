@@ -1,7 +1,8 @@
 package tmdb
 
 const tyrionLannisterID = "5256c8b219c2956ff6047cd8"
-const oliverQueenID = "5256ce3819c2956ff608293d"
+
+// const oliverQueenID = "5256ce3819c2956ff608293d"
 
 // Commented until they fix this issue
 //
