@@ -143,9 +143,9 @@ To start contributing, please check [CONTRIBUTING](https://github.com/cyruzin/go
 
 For local testing, just run:
 
-´´´sh
+```go
  go test -v 
-´´´
+```
 
 ## License
 
