@@ -141,7 +141,11 @@ To start contributing, please check [CONTRIBUTING](https://github.com/cyruzin/go
 
 ### Tests
 
-For local testing, create a environment variable called "APIKey" and enter your TMDb key. Check the "tmdb_test.go" file for more details.
+For local testing, just run:
+
+´´´sh
+ go test -v 
+´´´
 
 ## License
 
