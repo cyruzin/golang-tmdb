@@ -4,10 +4,7 @@ import "fmt"
 
 // ChangesMovie type is a struct for movie changes JSON response.
 type ChangesMovie struct {
-	Results []struct {
-		ID    int64 `json:"id"`
-		Adult bool  `json:"adult"`
-	} `json:"results"`
+	*ChangesMovieResults
 	Page         int64 `json:"page"`
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`

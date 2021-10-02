@@ -7,22 +7,7 @@ type DiscoverMovie struct {
 	Page         int64 `json:"page"`
 	TotalResults int64 `json:"total_results"`
 	TotalPages   int64 `json:"total_pages"`
-	Results      []struct {
-		VoteCount        int64   `json:"vote_count"`
-		ID               int64   `json:"id"`
-		Video            bool    `json:"video"`
-		VoteAverage      float32 `json:"vote_average"`
-		Title            string  `json:"title"`
-		Popularity       float32 `json:"popularity"`
-		PosterPath       string  `json:"poster_path"`
-		OriginalLanguage string  `json:"original_language"`
-		OriginalTitle    string  `json:"original_title"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		BackdropPath     string  `json:"backdrop_path"`
-		Adult            bool    `json:"adult"`
-		Overview         string  `json:"overview"`
-		ReleaseDate      string  `json:"release_date"`
-	} `json:"results"`
+	*DiscoverMovieResults
 }
 
 // GetDiscoverMovie discover movies by different types of data like
@@ -72,21 +57,7 @@ type DiscoverTV struct {
 	Page         int64 `json:"page"`
 	TotalResults int64 `json:"total_results"`
 	TotalPages   int64 `json:"total_pages"`
-	Results      []struct {
-		OriginalName     string   `json:"original_name"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		Name             string   `json:"name"`
-		Popularity       float32  `json:"popularity"`
-		OriginCountry    []string `json:"origin_country"`
-		VoteCount        int64    `json:"vote_count"`
-		FirstAirDate     string   `json:"first_air_date"`
-		BackdropPath     string   `json:"backdrop_path"`
-		OriginalLanguage string   `json:"original_language"`
-		ID               int64    `json:"id"`
-		VoteAverage      float32  `json:"vote_average"`
-		Overview         string   `json:"overview"`
-		PosterPath       string   `json:"poster_path"`
-	} `json:"results"`
+	*DiscoverTVResults
 }
 
 // GetDiscoverTV Discover TV shows by different types of data like average
