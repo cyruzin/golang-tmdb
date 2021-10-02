@@ -43,11 +43,8 @@ func (c *Client) GetCompanyDetails(
 // CompanyAlternativeNames type is a struct for alternative
 // names JSON response.
 type CompanyAlternativeNames struct {
-	ID      int64 `json:"id"`
-	Results []struct {
-		Name string `json:"name"`
-		Type string `json:"type"`
-	} `json:"results"`
+	ID int64 `json:"id"`
+	*CompanyAlternativeNamesResult
 }
 
 // GetCompanyAlternativeNames get the alternative names of a company.

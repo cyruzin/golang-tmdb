@@ -39,17 +39,8 @@ func (c *Client) GetAccountDetails() (*AccountDetails, error) {
 
 // AccountCreatedLists type is a struct for created lists JSON response.
 type AccountCreatedLists struct {
-	Page    int64 `json:"page"`
-	Results []struct {
-		Description   string `json:"description"`
-		FavoriteCount int64  `json:"favorite_count"`
-		ID            int64  `json:"id"`
-		ItemCount     int64  `json:"item_count"`
-		Iso639_1      string `json:"iso_639_1"`
-		ListType      string `json:"list_type"`
-		Name          string `json:"name"`
-		PosterPath    string `json:"poster_path"`
-	} `json:"results"`
+	Page int64 `json:"page"`
+	*AccountCreatedListsResults
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`
 }
@@ -81,23 +72,8 @@ func (c *Client) GetCreatedLists(
 
 // AccountFavoriteMovies type is a struct for favorite movies JSON response.
 type AccountFavoriteMovies struct {
-	Page    int64 `json:"page"`
-	Results []struct {
-		Adult            bool    `json:"adult"`
-		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int   `json:"genre_ids"`
-		ID               int64   `json:"id"`
-		OriginalLanguage string  `json:"original_language"`
-		OriginalTitle    string  `json:"original_title"`
-		Overview         string  `json:"overview"`
-		ReleaseDate      string  `json:"release_date"`
-		PosterPath       string  `json:"poster_path"`
-		Popularity       float64 `json:"popularity"`
-		Title            string  `json:"title"`
-		Video            bool    `json:"video"`
-		VoteAverage      float64 `json:"vote_average"`
-		VoteCount        int64   `json:"vote_count"`
-	} `json:"results"`
+	Page int64 `json:"page"`
+	*AccountFavoriteMoviesResults
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`
 }
@@ -128,22 +104,8 @@ func (c *Client) GetFavoriteMovies(
 
 // AccountFavoriteTVShows type is a struct for favorite tv shows JSON response.
 type AccountFavoriteTVShows struct {
-	Page    int64 `json:"page"`
-	Results []struct {
-		BackdropPath     string   `json:"backdrop_path"`
-		FirstAirDate     string   `json:"first_air_date"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		ID               int64    `json:"id"`
-		OriginalLanguage string   `json:"original_language"`
-		OriginalName     string   `json:"original_name"`
-		Overview         string   `json:"overview"`
-		OriginCountry    []string `json:"origin_country"`
-		PosterPath       string   `json:"poster_path"`
-		Popularity       float64  `json:"popularity"`
-		Name             string   `json:"name"`
-		VoteAverage      float64  `json:"vote_average"`
-		VoteCount        int64    `json:"vote_count"`
-	} `json:"results"`
+	Page int64 `json:"page"`
+	*AccountFavoriteTVShowsResults
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`
 }
@@ -268,21 +230,8 @@ func (c *Client) GetRatedTVShows(
 
 // AccountRatedTVEpisodes type is a struct for rated TV episodes JSON response.
 type AccountRatedTVEpisodes struct {
-	Page    int64 `json:"page"`
-	Results []struct {
-		AirDate        string  `json:"air_date"`
-		EpisodeNumber  int     `json:"episode_number"`
-		ID             int64   `json:"id"`
-		Name           string  `json:"name"`
-		Overview       string  `json:"overview"`
-		ProductionCode string  `json:"production_code"`
-		SeasonNumber   int     `json:"season_number"`
-		ShowID         int64   `json:"show_id"`
-		StillPath      string  `json:"still_path"`
-		VoteAverage    float64 `json:"vote_average"`
-		VoteCount      int64   `json:"vote_count"`
-		Rating         float32 `json:"rating"`
-	} `json:"results"`
+	Page int64 `json:"page"`
+	*AccountRatedTVEpisodesResults
 	TotalPages   int64 `json:"total_pages"`
 	TotalResults int64 `json:"total_results"`
 }
