@@ -51,7 +51,7 @@ tmdbClient.SetClientConfig(customClient)
 tmdbClient.SetSessionID(os.GetEnv("YOUR_SESSION_ID"))
 
 // OPTIONAL (Recommended): Enabling auto retry functionality.
-// This option will retry if the previous request fail.
+// This option will retry if the previous request fail (429 TOO MANY REQUESTS).
 tmdbClient.SetClientAutoRetry()
 
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
