@@ -2,6 +2,8 @@ package tmdb
 
 import (
 	"fmt"
+
+	jsoniter "github.com/json-iterator/go"
 )
 
 // TVEpisodeDetails type is a struct for details JSON response.
@@ -118,12 +120,7 @@ type TVEpisodeChanges struct {
 				Order     int64  `json:"order"`
 				CreditID  string `json:"credit_id"`
 			} `json:"original_values,omitempty"`
-			Value struct {
-				PersonID  int64  `json:"person_id"`
-				Character string `json:"character"`
-				Order     int64  `json:"order"`
-				CreditID  string `json:"credit_id"`
-			} `json:"value,omitempty"`
+			Value jsoniter.RawMessage `json:"value,omitempty"`
 		} `json:"items"`
 	} `json:"changes"`
 }
