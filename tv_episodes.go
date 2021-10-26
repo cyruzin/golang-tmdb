@@ -107,10 +107,23 @@ type TVEpisodeChanges struct {
 	Changes []struct {
 		Key   string `json:"key"`
 		Items []struct {
-			ID     string `json:"id"`
-			Action string `json:"action"`
-			Time   string `json:"time"`
-			Value  string `json:"value"`
+			ID            string `json:"id"`
+			Action        string `json:"action"`
+			Time          string `json:"time"`
+			Iso639_1      string `json:"iso_639_1"`
+			Iso3166_1     string `json:"iso_3166_1"`
+			OriginalValue struct {
+				PersonID  int64  `json:"person_id"`
+				Character string `json:"character"`
+				Order     int64  `json:"order"`
+				CreditID  string `json:"credit_id"`
+			} `json:"original_values,omitempty"`
+			Values struct {
+				PersonID  int64  `json:"person_id"`
+				Character string `json:"character"`
+				Order     int64  `json:"order"`
+				CreditID  string `json:"credit_id"`
+			} `json:"values,omitempty"`
 		} `json:"items"`
 	} `json:"changes"`
 }
