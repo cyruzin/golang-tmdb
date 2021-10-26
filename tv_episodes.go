@@ -118,12 +118,12 @@ type TVEpisodeChanges struct {
 				Order     int64  `json:"order"`
 				CreditID  string `json:"credit_id"`
 			} `json:"original_values,omitempty"`
-			Values struct {
+			Value struct {
 				PersonID  int64  `json:"person_id"`
 				Character string `json:"character"`
 				Order     int64  `json:"order"`
 				CreditID  string `json:"credit_id"`
-			} `json:"values,omitempty"`
+			} `json:"value,omitempty"`
 		} `json:"items"`
 	} `json:"changes"`
 }
