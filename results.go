@@ -1,7 +1,6 @@
 package tmdb
 
-// Account Embedded Result Types
-
+// AccountCreatedListsResults Result Types
 type AccountCreatedListsResults struct {
 	Results []struct {
 		Description   string `json:"description"`
@@ -15,6 +14,7 @@ type AccountCreatedListsResults struct {
 	} `json:"results"`
 }
 
+// AccountFavoriteMoviesResults Result Types
 type AccountFavoriteMoviesResults struct {
 	Results []struct {
 		Adult            bool    `json:"adult"`
@@ -34,6 +34,7 @@ type AccountFavoriteMoviesResults struct {
 	} `json:"results"`
 }
 
+// AccountFavoriteTVShowsResults Result Types
 type AccountFavoriteTVShowsResults struct {
 	Results []struct {
 		BackdropPath     string   `json:"backdrop_path"`
@@ -52,6 +53,7 @@ type AccountFavoriteTVShowsResults struct {
 	} `json:"results"`
 }
 
+// AccountRatedTVEpisodesResults Result Types
 type AccountRatedTVEpisodesResults struct {
 	Results []struct {
 		AirDate        string  `json:"air_date"`
@@ -69,8 +71,7 @@ type AccountRatedTVEpisodesResults struct {
 	} `json:"results"`
 }
 
-// Changes Embedded Result Types
-
+// ChangesMovieResults Result Types
 type ChangesMovieResults struct {
 	Results []struct {
 		ID    int64 `json:"id"`
@@ -78,8 +79,7 @@ type ChangesMovieResults struct {
 	} `json:"results"`
 }
 
-// Companies Embedded Result Types
-
+// CompanyAlternativeNamesResult Result Types
 type CompanyAlternativeNamesResult struct {
 	Results []struct {
 		Name string `json:"name"`
@@ -87,8 +87,7 @@ type CompanyAlternativeNamesResult struct {
 	} `json:"results"`
 }
 
-// Discover Embedded Result Types
-
+// DiscoverMovieResults Result Types
 type DiscoverMovieResults struct {
 	Results []struct {
 		VoteCount        int64   `json:"vote_count"`
@@ -108,6 +107,7 @@ type DiscoverMovieResults struct {
 	} `json:"results"`
 }
 
+// DiscoverTVResults Result Types
 type DiscoverTVResults struct {
 	Results []struct {
 		OriginalName     string   `json:"original_name"`
@@ -126,8 +126,7 @@ type DiscoverTVResults struct {
 	} `json:"results"`
 }
 
-// Search Embedded Result Types
-
+// SearchCompaniesResults Result Types
 type SearchCompaniesResults struct {
 	Results []struct {
 		ID       int64  `json:"id"`
@@ -136,6 +135,7 @@ type SearchCompaniesResults struct {
 	} `json:"results"`
 }
 
+// SearchCollectionsResults Result Types
 type SearchCollectionsResults struct {
 	Results []struct {
 		Adult            bool   `json:"adult"`
@@ -149,6 +149,7 @@ type SearchCollectionsResults struct {
 	} `json:"results"`
 }
 
+// SearchKeywordsResults Result Types
 type SearchKeywordsResults struct {
 	Results []struct {
 		ID   int64  `json:"id"`
@@ -156,6 +157,7 @@ type SearchKeywordsResults struct {
 	} `json:"results"`
 }
 
+// SearchMoviesResults Result Types
 type SearchMoviesResults struct {
 	Results []struct {
 		VoteCount        int64   `json:"vote_count"`
@@ -175,6 +177,7 @@ type SearchMoviesResults struct {
 	} `json:"results"`
 }
 
+// SearchMultiResults Result Types
 type SearchMultiResults struct {
 	Results []struct {
 		PosterPath       string   `json:"poster_path,omitempty"`
@@ -217,6 +220,7 @@ type SearchMultiResults struct {
 	} `json:"results"`
 }
 
+// SearchPeopleResults Result Types
 type SearchPeopleResults struct {
 	Results []struct {
 		Popularity  float32 `json:"popularity"`
@@ -244,6 +248,7 @@ type SearchPeopleResults struct {
 	} `json:"results"`
 }
 
+// SearchTVShowsResults Result Types
 type SearchTVShowsResults struct {
 	Results []struct {
 		OriginalName     string   `json:"original_name"`
@@ -262,8 +267,7 @@ type SearchTVShowsResults struct {
 	} `json:"results"`
 }
 
-// Trending Embedded Result Types
-
+// TrendingResults Result Types
 type TrendingResults struct {
 	Results []struct {
 		Adult              bool     `json:"adult,omitempty"`
@@ -307,8 +311,7 @@ type TrendingResults struct {
 	} `json:"results"`
 }
 
-// Movie Embedded Result Types
-
+// MovieReleaseDatesResults Result Types
 type MovieReleaseDatesResults struct {
 	Results []struct {
 		Iso3166_1    string `json:"iso_3166_1"`
@@ -322,6 +325,7 @@ type MovieReleaseDatesResults struct {
 	} `json:"results"`
 }
 
+// MovieVideosResults Result Types
 type MovieVideosResults struct {
 	Results []struct {
 		ID        string `json:"id"`
@@ -335,6 +339,7 @@ type MovieVideosResults struct {
 	} `json:"results"`
 }
 
+// MovieWatchProvidersResults Result Types
 type MovieWatchProvidersResults struct {
 	Results map[string]struct {
 		Link     string `json:"link"`
@@ -359,6 +364,7 @@ type MovieWatchProvidersResults struct {
 	} `json:"results"`
 }
 
+// MovieRecommendationsResults Result Types
 type MovieRecommendationsResults struct {
 	Results []struct {
 		PosterPath       string  `json:"poster_path"`
@@ -378,6 +384,7 @@ type MovieRecommendationsResults struct {
 	} `json:"results"`
 }
 
+// MovieReviewsResults Result Types
 type MovieReviewsResults struct {
 	Results []struct {
 		ID      string `json:"id"`
@@ -387,6 +394,7 @@ type MovieReviewsResults struct {
 	} `json:"results"`
 }
 
+// MovieListsResults Result Types
 type MovieListsResults struct {
 	Results []struct {
 		Description   string `json:"description"`
@@ -400,6 +408,7 @@ type MovieListsResults struct {
 	} `json:"results"`
 }
 
+// MovieNowPlayingResults Result Types
 type MovieNowPlayingResults struct {
 	Results []struct {
 		PosterPath  string `json:"poster_path"`
@@ -422,6 +431,7 @@ type MovieNowPlayingResults struct {
 	} `json:"results"`
 }
 
+// MoviePopularResults Result Types
 type MoviePopularResults struct {
 	Results []struct {
 		PosterPath  string `json:"poster_path"`
@@ -444,8 +454,7 @@ type MoviePopularResults struct {
 	} `json:"results"`
 }
 
-// TV Embedded Result Types
-
+// TVAlternativeTitlesResults Result Types
 type TVAlternativeTitlesResults struct {
 	Results []struct {
 		Iso3166_1 string `json:"iso_3166_1"`
@@ -454,6 +463,7 @@ type TVAlternativeTitlesResults struct {
 	} `json:"results"`
 }
 
+// TVContentRatingsResults Result Types
 type TVContentRatingsResults struct {
 	Results []struct {
 		Iso3166_1 string `json:"iso_3166_1"`
@@ -461,6 +471,7 @@ type TVContentRatingsResults struct {
 	} `json:"results"`
 }
 
+// TVEpisodeGroupsResults Result Types
 type TVEpisodeGroupsResults struct {
 	Results []struct {
 		Description  string `json:"description"`
@@ -478,6 +489,7 @@ type TVEpisodeGroupsResults struct {
 	} `json:"results"`
 }
 
+// TVKeywordsResults Result Types
 type TVKeywordsResults struct {
 	Results []struct {
 		ID   int64  `json:"id"`
@@ -485,6 +497,7 @@ type TVKeywordsResults struct {
 	} `json:"results"`
 }
 
+// TVRecommendationsResults Result Types
 type TVRecommendationsResults struct {
 	Results []struct {
 		PosterPath       string   `json:"poster_path"`
@@ -503,6 +516,7 @@ type TVRecommendationsResults struct {
 	} `json:"results"`
 }
 
+// TVReviewsResults Result Types
 type TVReviewsResults struct {
 	Results []struct {
 		ID      string `json:"id"`
@@ -512,6 +526,7 @@ type TVReviewsResults struct {
 	} `json:"results"`
 }
 
+// TVScreenedTheatricallyResults Result Types
 type TVScreenedTheatricallyResults struct {
 	Results []struct {
 		ID            int64 `json:"id"`
@@ -520,6 +535,7 @@ type TVScreenedTheatricallyResults struct {
 	} `json:"results"`
 }
 
+// TVWatchProvidersResults Result Types
 type TVWatchProvidersResults struct {
 	Results map[string]struct {
 		Link     string `json:"link"`
@@ -544,6 +560,7 @@ type TVWatchProvidersResults struct {
 	} `json:"results"`
 }
 
+// TVVideosResults Result Types
 type TVVideosResults struct {
 	Results []struct {
 		ID        string `json:"id"`
@@ -557,6 +574,7 @@ type TVVideosResults struct {
 	} `json:"results"`
 }
 
+// TVAiringTodayResults Result Types
 type TVAiringTodayResults struct {
 	Results []struct {
 		OriginalName     string   `json:"original_name"`
