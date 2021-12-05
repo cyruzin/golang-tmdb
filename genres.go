@@ -12,7 +12,7 @@ type GenreMovieList struct {
 
 // GetGenreMovieList get the list of official genres for movies.
 //
-// https://developers.themoviedb.org/3/keywords/get-keyword-details
+// https://developers.themoviedb.org/3/genres/get-movie-list
 func (c *Client) GetGenreMovieList(
 	urlOptions map[string]string,
 ) (*GenreMovieList, error) {
