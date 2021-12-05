@@ -291,23 +291,31 @@ func (c *Client) GetMovieChanges(
 type MovieCredits struct {
 	ID   int64 `json:"id,omitempty"`
 	Cast []struct {
-		CastID      int64  `json:"cast_id"`
-		Character   string `json:"character"`
-		CreditID    string `json:"credit_id"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		Order       int    `json:"order"`
-		ProfilePath string `json:"profile_path"`
+		Adult              bool    `json:"adult"`
+		CastID             int64   `json:"cast_id"`
+		Character          string  `json:"character"`
+		CreditID           string  `json:"credit_id"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		Order              int     `json:"order"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"cast"`
 	Crew []struct {
-		CreditID    string `json:"credit_id"`
-		Department  string `json:"department"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Job         string `json:"job"`
-		Name        string `json:"name"`
-		ProfilePath string `json:"profile_path"`
+		Adult              bool    `json:"adult"`
+		CreditID           string  `json:"credit_id"`
+		Department         string  `json:"department"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		Job                string  `json:"job"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"crew"`
 }
 
@@ -383,6 +391,15 @@ type MovieImages struct {
 		VoteCount   int64   `json:"vote_count"`
 		Width       int     `json:"width"`
 	} `json:"backdrops"`
+	Logos []struct {
+		AspectRatio float32 `json:"aspect_ratio"`
+		FilePath    string  `json:"file_path"`
+		Height      int     `json:"height"`
+		Iso639_1    string  `json:"iso_639_1"`
+		VoteAverage float32 `json:"vote_average"`
+		VoteCount   int64   `json:"vote_count"`
+		Width       int     `json:"width"`
+	} `json:"logos"`
 	Posters []struct {
 		AspectRatio float32 `json:"aspect_ratio"`
 		FilePath    string  `json:"file_path"`
@@ -544,6 +561,7 @@ type MovieTranslations struct {
 		Data        struct {
 			Title    string `json:"title"`
 			Overview string `json:"overview"`
+			Runtime  int    `json:"runtime"`
 			Tagline  string `json:"tagline"`
 			Homepage string `json:"homepage"`
 		} `json:"data"`

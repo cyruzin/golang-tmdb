@@ -153,6 +153,7 @@ type PersonMovieCredits struct {
 		CreditID         string  `json:"credit_id"`
 		PosterPath       string  `json:"poster_path"`
 		ID               int64   `json:"id"`
+		Order            int     `json:"order"`
 		Video            bool    `json:"video"`
 		VoteCount        int64   `json:"vote_count"`
 		Adult            bool    `json:"adult"`
@@ -492,9 +493,9 @@ type PersonTranslations struct {
 	ID int64 `json:"id,omitempty"`
 }
 
-// GetPersonTranslations get the images that this person has been tagged in.
+// GetPersonTranslations get a list of translations that have been created for a person.
 //
-// https://developers.themoviedb.org/3/people/get-tagged-images
+// https://developers.themoviedb.org/3/people/get-person-translations
 func (c *Client) GetPersonTranslations(
 	id int,
 	urlOptions map[string]string,
