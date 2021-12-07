@@ -12,21 +12,25 @@ type ListDetails struct {
 	FavoriteCount int64  `json:"favorite_count"`
 	ID            string `json:"id"`
 	Items         []struct {
-		VoteAverage      float32 `json:"vote_average"`
-		VoteCount        int64   `json:"vote_count"`
-		ID               int64   `json:"id"`
-		Video            bool    `json:"video"`
-		MediaType        string  `json:"media_type"`
-		Title            string  `json:"title"`
-		Popularity       float32 `json:"popularity"`
-		PosterPath       string  `json:"poster_path"`
-		OriginalLanguage string  `json:"original_language"`
-		OriginalTitle    string  `json:"original_title"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		BackdropPath     string  `json:"backdrop_path"`
-		Adult            bool    `json:"adult"`
-		Overview         string  `json:"overview"`
-		ReleaseDate      string  `json:"release_date"`
+		Adult            bool     `json:"adult,omitempty"` // Movie
+		BackdropPath     string   `json:"backdrop_path"`
+		FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
+		GenreIDs         []int64  `json:"genre_ids"`
+		ID               int64    `json:"id"`
+		MediaType        string   `json:"media_type"`
+		Name             string   `json:"name,omitempty"` // TV
+		OriginalLanguage string   `json:"original_language"`
+		OriginalName     string   `json:"original_name,omitempty"`  // TV
+		OriginalTitle    string   `json:"original_title,omitempty"` // Movie
+		OriginCountry    []string `json:"origin_country,omitempty"` // TV
+		Overview         string   `json:"overview"`
+		Popularity       float32  `json:"popularity"`
+		PosterPath       string   `json:"poster_path"`
+		ReleaseDate      string   `json:"release_date,omitempty"` // Movie
+		Title            string   `json:"title,omitempty"`        // Movie
+		Video            bool     `json:"video,omitempty"`        // Movie
+		VoteAverage      float32  `json:"vote_average"`
+		VoteCount        int64    `json:"vote_count"`
 	} `json:"items"`
 	ItemCount  int64  `json:"item_count"`
 	Iso639_1   string `json:"iso_639_1"`

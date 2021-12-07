@@ -26,21 +26,25 @@ type FindByID struct {
 		Name     string `json:"name"`
 		ID       int64  `json:"id"`
 		KnownFor []struct {
-			Adult        bool   `json:"adult"`
+			Adult        bool   `json:"adult,omitempty"` // Movie
 			BackdropPath string `json:"backdrop_path"`
+			FirstAirDate string `json:"first_air_date,omitempty"` // TV
 			// GenreIDs         []int64 `json:"genre_ids"` // FIXME: -> []float32
 			// ID               int64   `json:"id"` // FIXME: -> float32
-			OriginalLanguage string  `json:"original_language"`
-			OriginalTitle    string  `json:"original_title"`
-			Overview         string  `json:"overview"`
-			PosterPath       string  `json:"poster_path"`
-			ReleaseDate      string  `json:"release_date"`
-			Title            string  `json:"title"`
-			Video            bool    `json:"video"`
-			VoteAverage      float32 `json:"vote_average"`
+			MediaType        string   `json:"media_type"`
+			Name             string   `json:"name,omitempty"` // TV
+			OriginalLanguage string   `json:"original_language"`
+			OriginalName     string   `json:"original_name,omitempty"`  // TV
+			OriginalTitle    string   `json:"original_title,omitempty"` // Movie
+			OriginCountry    []string `json:"origin_country,omitempty"` // TV
+			Overview         string   `json:"overview"`
+			Popularity       float32  `json:"popularity"`
+			PosterPath       string   `json:"poster_path"`
+			ReleaseDate      string   `json:"release_date,omitempty"` // Movie
+			Title            string   `json:"title,omitempty"`        // Movie
+			Video            bool     `json:"video,omitempty"`        // Movie
+			VoteAverage      float32  `json:"vote_average"`
 			// VoteCount        int64   `json:"vote_count"` // FIXME: -> float32
-			Popularity float32 `json:"popularity"`
-			MediaType  string  `json:"media_type"`
 		} `json:"known_for"`
 		KnownForDepartment string  `json:"known_for_department"`
 		ProfilePath        string  `json:"profile_path"`

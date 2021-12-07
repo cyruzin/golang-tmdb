@@ -55,6 +55,7 @@ func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 type ConfigurationCountries []struct {
 	Iso3166_1   string `json:"iso_3166_1"`
 	EnglishName string `json:"english_name"`
+	NativeName  string `json:"native_name"`
 }
 
 // GetConfigurationCountries get the list of countries
