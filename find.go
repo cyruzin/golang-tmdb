@@ -26,10 +26,10 @@ type FindByID struct {
 		Name     string `json:"name"`
 		ID       int64  `json:"id"`
 		KnownFor []struct {
-			Adult            bool    `json:"adult"`
-			BackdropPath     string  `json:"backdrop_path"`
-			GenreIDs         []int64 `json:"genre_ids"`
-			ID               int64   `json:"id"`
+			Adult        bool   `json:"adult"`
+			BackdropPath string `json:"backdrop_path"`
+			// GenreIDs         []int64 `json:"genre_ids"` // FIXME: -> []float32
+			// ID               int64   `json:"id"` // FIXME: -> float32
 			OriginalLanguage string  `json:"original_language"`
 			OriginalTitle    string  `json:"original_title"`
 			Overview         string  `json:"overview"`
@@ -38,9 +38,9 @@ type FindByID struct {
 			Title            string  `json:"title"`
 			Video            bool    `json:"video"`
 			VoteAverage      float32 `json:"vote_average"`
-			VoteCount        int64   `json:"vote_count"`
-			Popularity       float32 `json:"popularity"`
-			MediaType        string  `json:"media_type"`
+			// VoteCount        int64   `json:"vote_count"` // FIXME: -> float32
+			Popularity float32 `json:"popularity"`
+			MediaType  string  `json:"media_type"`
 		} `json:"known_for"`
 		KnownForDepartment string  `json:"known_for_department"`
 		ProfilePath        string  `json:"profile_path"`
