@@ -12,51 +12,78 @@ type Certification struct {
 // CertificationMovie type is a struct for movie certifications JSON response.
 type CertificationMovie struct {
 	Certifications struct {
-		US []struct {
-			*Certification
-		} `json:"US"`
-		CA []struct {
-			*Certification
-		} `json:"CA"`
 		AU []struct {
 			*Certification
 		} `json:"AU"`
-		DE []struct {
-			*Certification
-		} `json:"DE"`
-		FR []struct {
-			*Certification
-		} `json:"FR"`
-		NZ []struct {
-			*Certification
-		} `json:"NZ"`
-		IN []struct {
-			*Certification
-		} `json:"IN"`
-		GB []struct {
-			*Certification
-		} `json:"GB"`
-		NL []struct {
-			*Certification
-		} `json:"NL"`
-		BR []struct {
-			*Certification
-		} `json:"BR"`
-		FI []struct {
-			*Certification
-		} `json:"FI"`
 		BG []struct {
 			*Certification
 		} `json:"BG"`
+		BR []struct {
+			*Certification
+		} `json:"BR"`
+		CA []struct {
+			*Certification
+		} `json:"CA"`
+		CA_QC []struct {
+			*Certification
+		} `json:"CA-QC"`
+		DE []struct {
+			*Certification
+		} `json:"DE"`
+		DK []struct {
+			*Certification
+		} `json:"DK"`
 		ES []struct {
 			*Certification
 		} `json:"ES"`
+		FI []struct {
+			*Certification
+		} `json:"FI"`
+		FR []struct {
+			*Certification
+		} `json:"FR"`
+		GB []struct {
+			*Certification
+		} `json:"GB"`
+		HU []struct {
+			*Certification
+		} `json:"HU"`
+		IN []struct {
+			*Certification
+		} `json:"IN"`
+		IT []struct {
+			*Certification
+		} `json:"IT"`
+		LT []struct {
+			*Certification
+		} `json:"LT"`
+		MY []struct {
+			*Certification
+		} `json:"MY"`
+		NL []struct {
+			*Certification
+		} `json:"NL"`
+		NO []struct {
+			*Certification
+		} `json:"NO"`
+		NZ []struct {
+			*Certification
+		} `json:"NZ"`
 		PH []struct {
 			*Certification
 		} `json:"PH"`
 		PT []struct {
 			*Certification
 		} `json:"PT"`
+		RU []struct {
+			*Certification
+		} `json:"RU"`
+		SE []struct {
+			*Certification
+		} `json:"SE"`
+		US []struct {
+			*Certification
+		} `json:"US"`
 	} `json:"certifications"`
 }
 
@@ -84,36 +111,60 @@ func (c *Client) GetCertificationMovie() (
 // CertificationTV type is a struct for tv certifications JSON response.
 type CertificationTV struct {
 	Certifications struct {
-		RU []struct {
-			*Certification
-		} `json:"RU"`
-		US []struct {
-			*Certification
-		} `json:"US"`
-		CA []struct {
-			*Certification
-		} `json:"CA"`
 		AU []struct {
 			*Certification
 		} `json:"AU"`
-		FR []struct {
-			*Certification
-		} `json:"FR"`
-		DE []struct {
-			*Certification
-		} `json:"DE"`
-		TH []struct {
-			*Certification
-		} `json:"TH"`
-		KR []struct {
-			*Certification
-		} `json:"KR"`
-		GB []struct {
-			*Certification
-		} `json:"GB"`
 		BR []struct {
 			*Certification
 		} `json:"BR"`
+		CA []struct {
+			*Certification
+		} `json:"CA"`
+		CA_QC []struct {
+			*Certification
+		} `json:"CA-QC"`
+		DE []struct {
+			*Certification
+		} `json:"DE"`
+		ES []struct {
+			*Certification
+		} `json:"ES"`
+		FR []struct {
+			*Certification
+		} `json:"FR"`
+		GB []struct {
+			*Certification
+		} `json:"GB"`
+		HU []struct {
+			*Certification
+		} `json:"HU"`
+		KR []struct {
+			*Certification
+		} `json:"KR"`
+		LT []struct {
+			*Certification
+		} `json:"LT"`
+		NL []struct {
+			*Certification
+		} `json:"NL"`
+		PH []struct {
+			*Certification
+		} `json:"PH"`
+		PT []struct {
+			*Certification
+		} `json:"PT"`
+		RU []struct {
+			*Certification
+		} `json:"RU"`
+		SK []struct {
+			*Certification
+		} `json:"SK"`
+		TH []struct {
+			*Certification
+		} `json:"TH"`
+		US []struct {
+			*Certification
+		} `json:"US"`
 	} `json:"certifications"`
 }
 
