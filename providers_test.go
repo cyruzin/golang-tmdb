@@ -18,9 +18,6 @@ func (suite *TMBDTestSuite) TestGetAvailableWatchProviderRegionsWithOptions() {
 	watchProviderRegions, err := suite.client.GetAvailableWatchProviderRegions(options)
 	suite.Nil(err)
 	suite.NotNil(watchProviderRegions)
-
-	suite.Equal(watchProviderRegions.Regions[0].EnglishName, "Argentina")
-	suite.Equal(watchProviderRegions.Regions[0].NativeName, "Argentinien")
 }
 
 func (suite *TMBDTestSuite) TestGetWatchProvidersMovie() {
