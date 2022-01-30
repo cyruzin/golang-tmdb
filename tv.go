@@ -75,6 +75,10 @@ type TVDetails struct {
 		LogoPath      string `json:"logo_path"`
 		OriginCountry string `json:"origin_country"`
 	} `json:"production_companies"`
+	ProductionCountries []struct {
+		Iso3166_1 string `json:"iso_3166_1"`
+		Name      string `json:"name"`
+	} `json:"production_countries"`
 	Seasons []struct {
 		AirDate      string `json:"air_date"`
 		EpisodeCount int    `json:"episode_count"`
@@ -441,22 +445,28 @@ func (c *Client) GetTVContentRatings(
 type TVCredits struct {
 	ID   int64 `json:"id,omitempty"`
 	Cast []struct {
-		Character   string `json:"character"`
-		CreditID    string `json:"credit_id"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		Order       int    `json:"order"`
-		ProfilePath string `json:"profile_path"`
+		Character          string  `json:"character"`
+		CreditID           string  `json:"credit_id"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		Order              int     `json:"order"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"cast"`
 	Crew []struct {
-		CreditID    string `json:"credit_id"`
-		Department  string `json:"department"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Job         string `json:"job"`
-		Name        string `json:"name"`
-		ProfilePath string `json:"profile_path"`
+		CreditID           string  `json:"credit_id"`
+		Department         string  `json:"department"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		Job                string  `json:"job"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"crew"`
 }
 
