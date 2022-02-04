@@ -368,13 +368,13 @@ type TVChanges struct {
 	Changes []struct {
 		Key   string `json:"key"`
 		Items []struct {
-			ID     string `json:"id"`
-			Action string `json:"action"`
-			Time   string `json:"time"`
-			Value  struct {
-				SeasonID     int64 `json:"season_id"`
-				SeasonNumber int   `json:"season_number"`
-			} `json:"value"`
+			ID            string              `json:"id"`
+			Action        string              `json:"action"`
+			Time          string              `json:"time"`
+			Iso639_1      string              `json:"iso_639_1"`
+			Iso3166_1     string              `json:"iso_3166_1"`
+			Value         jsoniter.RawMessage `json:"value"`
+			OriginalValue jsoniter.RawMessage `json:"original_value"`
 		} `json:"items"`
 	} `json:"changes"`
 }

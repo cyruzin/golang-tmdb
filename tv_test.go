@@ -78,9 +78,9 @@ func (suite *TMBDTestSuite) TestGetTVAlternativeTitlesWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVChanges() {
-	vikingsID, err := suite.client.GetTVChanges(vikingsID, nil)
+	changes, err := suite.client.GetTVChanges(vikingsID, nil)
 	suite.Nil(err)
-	suite.NotNil(vikingsID)
+	suite.NotNil(changes)
 }
 
 // The API isn't handling zero values for this end-point.
