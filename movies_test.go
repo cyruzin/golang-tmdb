@@ -26,7 +26,7 @@ func (suite *TMBDTestSuite) TestGetMovieDetailsWithOptions() {
 	options["language"] = "pt-BR"
 	jackreacher, err := suite.client.GetMovieDetails(jackReacherID, options)
 	suite.Nil(err)
-	suite.Equal("Jack Reacher: O Último Tiro", jackreacher.Title)
+	suite.Equal("Jack Reacher", jackreacher.Title)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAlternativeTitles() {
