@@ -186,7 +186,7 @@ func (suite *TMBDTestSuite) TestGetTVImagesWithOptions() {
 func (suite *TMBDTestSuite) TestGetTVKeywords() {
 	flash, err := suite.client.GetTVKeywords(flashID)
 	suite.Nil(err)
-	suite.Equal("dc comics", flash.Results[0].Name)
+	suite.NotEmpty(flash.Results[0].Name)
 }
 
 func (suite *TMBDTestSuite) TestGetTVKeywordsFail() {
