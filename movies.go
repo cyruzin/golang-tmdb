@@ -379,36 +379,23 @@ func (c *Client) GetMovieExternalIDs(
 	return &movieExternalIDs, nil
 }
 
+// MovieImage type is a struct for a single image.
+type MovieImage struct {
+	AspectRatio float32 `json:"aspect_ratio"`
+	FilePath    string  `json:"file_path"`
+	Height      int     `json:"height"`
+	Iso639_1    string  `json:"iso_639_1"`
+	VoteAverage float32 `json:"vote_average"`
+	VoteCount   int64   `json:"vote_count"`
+	Width       int     `json:"width"`
+}
+
 // MovieImages type is a struct for images JSON response.
 type MovieImages struct {
 	ID        int64 `json:"id,omitempty"`
-	Backdrops []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		Iso639_1    string  `json:"iso_639_1"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"backdrops"`
-	Logos []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		Iso639_1    string  `json:"iso_639_1"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"logos"`
-	Posters []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		Iso639_1    string  `json:"iso_639_1"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"posters"`
+	Backdrops []MovieImage `json:"backdrops"`
+	Logos     []MovieImage `json:"logos"`
+	Posters   []MovieImage `json:"posters"`
 }
 
 // GetMovieImages get the images that belong to a movie.
