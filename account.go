@@ -11,6 +11,9 @@ type AccountDetails struct {
 		Gravatar struct {
 			Hash string `json:"hash"`
 		} `json:"gravatar"`
+		TMDB struct {
+			AvatarPath string `json:"avatar_path"`
+		} `json:"tmdb"`
 	} `json:"avatar"`
 	ID           int64  `json:"id"`
 	Iso639_1     string `json:"iso_639_1"`
