@@ -97,7 +97,7 @@ func (c *Client) GetCertificationMovie() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s/certification%slist?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		movieURL,
 		c.apiKey,
 	)
@@ -178,7 +178,7 @@ func (c *Client) GetCertificationTV() (
 ) {
 	tmdbURL := fmt.Sprintf(
 		"%s/certification%slist?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		tvURL,
 		c.apiKey,
 	)

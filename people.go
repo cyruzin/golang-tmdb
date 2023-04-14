@@ -88,7 +88,7 @@ func (c *Client) GetPersonDetails(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -132,7 +132,7 @@ func (c *Client) GetPersonChanges(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -199,7 +199,7 @@ func (c *Client) GetPersonMovieCredits(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movie_credits?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -264,7 +264,7 @@ func (c *Client) GetPersonTVCredits(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tv_credits?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -336,7 +336,7 @@ func (c *Client) GetPersonCombinedCredits(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/combined_credits?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -375,7 +375,7 @@ func (c *Client) GetPersonExternalIDs(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -410,7 +410,7 @@ func (c *Client) GetPersonImages(
 ) (*PersonImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -466,7 +466,7 @@ func (c *Client) GetPersonTaggedImages(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tagged_images?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -503,7 +503,7 @@ func (c *Client) GetPersonTranslations(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		id,
 		c.apiKey,
@@ -543,7 +543,7 @@ func (c *Client) GetPersonLatest(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		c.apiKey,
 		options,
@@ -598,7 +598,7 @@ func (c *Client) GetPersonPopular(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		c.apiKey,
 		options,

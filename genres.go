@@ -19,7 +19,7 @@ func (c *Client) GetGenreMovieList(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie/list?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		genreURL,
 		c.apiKey,
 		options,
@@ -40,7 +40,7 @@ func (c *Client) GetGenreTVList(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv/list?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		genreURL,
 		c.apiKey,
 		options,

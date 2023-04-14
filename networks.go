@@ -20,7 +20,7 @@ func (c *Client) GetNetworkDetails(
 ) (*NetworkDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		networkURL,
 		id,
 		c.apiKey,
@@ -49,7 +49,7 @@ func (c *Client) GetNetworkAlternativeNames(
 ) (*NetworkAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_names?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		networkURL,
 		id,
 		c.apiKey,
@@ -94,7 +94,7 @@ func (c *Client) GetNetworkImages(
 ) (*NetworkImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		networkURL,
 		id,
 		c.apiKey,

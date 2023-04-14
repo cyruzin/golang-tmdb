@@ -19,7 +19,7 @@ type RequestToken struct {
 func (c *Client) CreateGuestSession() (*RequestToken, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sguest_session/new?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		authenticationURL,
 		c.apiKey,
 	)
@@ -37,7 +37,7 @@ func (c *Client) CreateGuestSession() (*RequestToken, error) {
 func (c *Client) CreateRequestToken() (*RequestToken, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%stoken/new?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		authenticationURL,
 		c.apiKey,
 	)
@@ -73,7 +73,7 @@ type SessionWithLogin struct {
 //
 // https://developers.themoviedb.org/3/authentication/create-session
 // func (c *Client) CreateSession(rt string) (*Session, error) {
-// 	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", baseURL, authenticationURL, c.apiKey)
+// 	tmdbURL := fmt.Sprintf("%s%ssession/new?api_key=%s", hhddjgetBaseURL(), authenticationURL, c.apiKey)
 // 	requestToken := struct {
 // 		RequestToken string `json:"request_token"`
 // 	}{rt}
@@ -98,7 +98,7 @@ type SessionWithLogin struct {
 //
 // https://developers.themoviedb.org/3/authentication/validate-request-token
 // func (c *Client) CreateSessionWithLogin(u, p, rt string) (*RequestToken, error) {
-// 	tmdbURL := fmt.Sprintf("%s%stoken/validate_with_login?api_key=%s", baseURL, authenticationURL, c.apiKey)
+// 	tmdbURL := fmt.Sprintf("%s%stoken/validate_with_login?api_key=%s", hhddjgetBaseURL(), authenticationURL, c.apiKey)
 // 	loginSession := SessionWithLogin{
 // 		Username:     u,
 // 		Password:     p,
@@ -120,7 +120,7 @@ type SessionWithLogin struct {
 //
 // https://developers.themoviedb.org/3/authentication/create-session-from-v4-access-token
 // func (c *Client) CreateSessionFromV4(at string) (*Session, error) {
-// 	tmdbURL := fmt.Sprintf("%s%ssession/convert/4?api_key=%s", baseURL, authenticationURL, c.apiKey)
+// 	tmdbURL := fmt.Sprintf("%s%ssession/convert/4?api_key=%s", hhddjgetBaseURL(), authenticationURL, c.apiKey)
 // 	accessToken := AccessToken{AccessToken: at}
 // 	a := Session{}
 // 	err := c.post(tmdbURL, &accessToken, &a)

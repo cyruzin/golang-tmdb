@@ -16,7 +16,7 @@ func (c *Client) GetKeywordDetails(
 ) (*KeywordDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		keywordURL,
 		id,
 		c.apiKey,
@@ -65,7 +65,7 @@ func (c *Client) GetKeywordMovies(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movies?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		keywordURL,
 		id,
 		c.apiKey,

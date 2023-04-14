@@ -23,7 +23,7 @@ func (c *Client) GetSearchCompanies(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%scompany?api_key=%s&query=%s%s",
-		baseURL,
+		getBaseURL(),
 		searchURL,
 		c.apiKey,
 		url.QueryEscape(query),
@@ -54,7 +54,7 @@ func (c *Client) GetSearchCollections(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%scollection?api_key=%s&query=%s%s",
-		baseURL,
+		getBaseURL(),
 		searchURL,
 		c.apiKey,
 		url.QueryEscape(query),
@@ -85,7 +85,7 @@ func (c *Client) GetSearchKeywords(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%skeyword?api_key=%s&query=%s%s",
-		baseURL,
+		getBaseURL(),
 		searchURL,
 		c.apiKey,
 		url.QueryEscape(query),
@@ -116,7 +116,7 @@ func (c *Client) GetSearchMovies(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s&query=%s%s",
-		baseURL,
+		getBaseURL(),
 		searchURL,
 		c.apiKey,
 		url.QueryEscape(query),
@@ -149,7 +149,7 @@ func (c *Client) GetSearchMulti(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smulti?api_key=%s&query=%s%s",
-		baseURL,
+		getBaseURL(),
 		searchURL,
 		c.apiKey,
 		url.QueryEscape(query),
@@ -180,7 +180,7 @@ func (c *Client) GetSearchPeople(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sperson?api_key=%s&query=%s%s",
-		baseURL,
+		getBaseURL(),
 		searchURL,
 		c.apiKey,
 		url.QueryEscape(query),
@@ -211,7 +211,7 @@ func (c *Client) GetSearchTVShow(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s&query=%s%s",
-		baseURL,
+		getBaseURL(),
 		searchURL,
 		c.apiKey,
 		url.QueryEscape(query),

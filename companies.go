@@ -28,7 +28,7 @@ func (c *Client) GetCompanyDetails(
 ) (*CompanyDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		companyURL,
 		id,
 		c.apiKey,
@@ -55,7 +55,7 @@ func (c *Client) GetCompanyAlternativeNames(
 ) (*CompanyAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_names?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		companyURL,
 		id,
 		c.apiKey,
@@ -98,7 +98,7 @@ func (c *Client) GetCompanyImages(
 ) (*CompanyImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
-		baseURL,
+		getBaseURL(),
 		companyURL,
 		id,
 		c.apiKey,

@@ -37,7 +37,7 @@ func (c *Client) GetCollectionDetails(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
-		baseURL, collectionURL, id, c.apiKey, options,
+		getBaseURL(), collectionURL, id, c.apiKey, options,
 	)
 	collectionDetails := CollectionDetails{}
 	if err := c.get(tmdbURL, &collectionDetails); err != nil {
@@ -79,7 +79,7 @@ func (c *Client) GetCollectionImages(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
-		baseURL, collectionURL, id, c.apiKey, options,
+		getBaseURL(), collectionURL, id, c.apiKey, options,
 	)
 	collectionImages := CollectionImages{}
 	if err := c.get(tmdbURL, &collectionImages); err != nil {
@@ -114,7 +114,7 @@ func (c *Client) GetCollectionTranslations(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
-		baseURL, collectionURL, id, c.apiKey, options,
+		getBaseURL(), collectionURL, id, c.apiKey, options,
 	)
 	collectionTranslations := CollectionTranslations{}
 	if err := c.get(tmdbURL, &collectionTranslations); err != nil {

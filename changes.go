@@ -24,7 +24,7 @@ func (c *Client) GetChangesMovie(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		movieURL,
 		c.apiKey,
 		options,
@@ -55,7 +55,7 @@ func (c *Client) GetChangesTV(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		tvURL,
 		c.apiKey,
 		options,
@@ -86,7 +86,7 @@ func (c *Client) GetChangesPerson(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%schanges?api_key=%s%s",
-		baseURL,
+		getBaseURL(),
 		personURL,
 		c.apiKey,
 		options,

@@ -19,29 +19,33 @@ import (
 
 var json = jsoniter.ConfigFastest
 
+var nowBaseURL = baseURL
+
 // TMDb constants
 const (
-	baseURL           = "https://api.themoviedb.org/3"
-	permissionURL     = "https://www.themoviedb.org/authenticate/"
-	authenticationURL = "/authentication/"
-	movieURL          = "/movie/"
-	tvURL             = "/tv/"
-	tvSeasonURL       = "/season/"
-	tvEpisodeURL      = "/episode/"
-	personURL         = "/person/"
-	searchURL         = "/search/"
-	collectionURL     = "/collection/"
-	companyURL        = "/company/"
-	configurationURL  = "/configuration/"
-	creditURL         = "/credit/"
-	discoverURL       = "/discover/"
-	networkURL        = "/network/"
-	keywordURL        = "/keyword/"
-	genreURL          = "/genre/"
-	guestSessionURL   = "/guest_session/"
-	listURL           = "/list/"
-	accountURL        = "/account/"
-	watchProvidersURL = "/watch/providers/"
+	baseURL            = "https://api.themoviedb.org/3"
+	otherBaseURL       = "https://api.tmdb.org/3"
+	permissionURL      = "https://www.themoviedb.org/authenticate/"
+	ohterPermissionURL = "https://www.tmdb.org/authenticate/"
+	authenticationURL  = "/authentication/"
+	movieURL           = "/movie/"
+	tvURL              = "/tv/"
+	tvSeasonURL        = "/season/"
+	tvEpisodeURL       = "/episode/"
+	personURL          = "/person/"
+	searchURL          = "/search/"
+	collectionURL      = "/collection/"
+	companyURL         = "/company/"
+	configurationURL   = "/configuration/"
+	creditURL          = "/credit/"
+	discoverURL        = "/discover/"
+	networkURL         = "/network/"
+	keywordURL         = "/keyword/"
+	genreURL           = "/genre/"
+	guestSessionURL    = "/guest_session/"
+	listURL            = "/list/"
+	accountURL         = "/account/"
+	watchProvidersURL  = "/watch/providers/"
 )
 
 // Client type is a struct to instantiate this pkg.
@@ -92,6 +96,27 @@ func (c *Client) SetClientAutoRetry() {
 
 // Auto retry default duration.
 const defaultRetryDuration = time.Second * 5
+
+type BaseURLType int
+
+const (
+	Themoviedb BaseURLType = iota + 1
+	TMDB
+)
+
+// SwitchBaseURL switch the base url.
+func SwitchBaseURL(urlType BaseURLType) {
+	if urlType == Themoviedb {
+		nowBaseURL = baseURL
+	} else {
+		nowBaseURL = otherBaseURL
+	}
+}
+
+// getBaseURL() returns the base url.
+func getBaseURL() string {
+	return nowBaseURL
+}
 
 // retryDuration calculates the retry duration time.
 func retryDuration(resp *http.Response) time.Duration {
