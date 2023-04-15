@@ -4,7 +4,7 @@
 
 This is a Golang wrapper for working with TMDb API. It aims to support version 3.
 
-An API Key is required. To register for one, head over to [themoviedb.org](https://www.themoviedb.org/settings/api).
+An API Key is required. To register for one, head over to [themoviedb.org](https://www.themoviedb.org/).
 
 This product uses the TMDb API but is not endorsed or certified by TMDb.
 
