@@ -21,7 +21,8 @@ var json = jsoniter.ConfigFastest
 
 // TMDb constants
 const (
-	baseURL           = "https://api.themoviedb.org/3"
+	defaultBaseURL    = "https://api.themoviedb.org/3"
+	alternateBaseURL  = "https://api.tmdb.org/3"
 	permissionURL     = "https://www.themoviedb.org/authenticate/"
 	authenticationURL = "/authentication/"
 	movieURL          = "/movie/"
@@ -43,6 +44,8 @@ const (
 	accountURL        = "/account/"
 	watchProvidersURL = "/watch/providers/"
 )
+
+var baseURL = defaultBaseURL
 
 // Client type is a struct to instantiate this pkg.
 type Client struct {
@@ -216,6 +219,11 @@ func (c *Client) fmtOptions(
 		}
 	}
 	return options
+}
+
+// SetAlternateBaseURL sets an alternate base url.
+func (c *Client) SetAlternateBaseURL() {
+	baseURL = alternateBaseURL
 }
 
 // Error type represents an error returned by the TMDB API.
