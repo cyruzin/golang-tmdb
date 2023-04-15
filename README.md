@@ -30,6 +30,14 @@ if err != nil {
     fmt.Println(err)
 }
 
+// OPTIONAL (Recommended): Enabling auto retry functionality.
+// This option will retry if the previous request fail (429 TOO MANY REQUESTS).
+tmdbClient.SetClientAutoRetry()
+
+// OPTIONAL: Set an alternate base URL if you have problems with the default one.
+// Use https://api.tmdb.org/3 instead of https://api.themoviedb.org/3.
+tmdbClient.SetAlternateBaseURL()
+
 // OPTIONAL: Setting a custom config for the http.Client.
 // The default timeout is 10 seconds. Here you can set other
 // options like Timeout and Transport.
@@ -49,10 +57,6 @@ tmdbClient.SetClientConfig(customClient)
 // You can read more about how this works:
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 tmdbClient.SetSessionID(os.GetEnv("YOUR_SESSION_ID"))
-
-// OPTIONAL (Recommended): Enabling auto retry functionality.
-// This option will retry if the previous request fail (429 TOO MANY REQUESTS).
-tmdbClient.SetClientAutoRetry()
 
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
 if err != nil {
