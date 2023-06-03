@@ -1,6 +1,10 @@
 <p align="center"><img src="./img/logo.png" width="350"></p>
 
-[![build](https://github.com/cyruzin/golang-tmdb/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/cyruzin/golang-tmdb/actions/workflows/build.yml) [![Coverage Status](https://coveralls.io/repos/github/cyruzin/golang-tmdb/badge.svg?branch=master&service=github)](https://coveralls.io/github/cyruzin/golang-tmdb?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/cyruzin/golang-tmdb)](https://goreportcard.com/report/github.com/cyruzin/golang-tmdb) [![GoDoc](https://godoc.org/github.com/cyruzin/golang-tmdb?status.svg)](https://godoc.org/github.com/cyruzin/golang-tmdb) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/cyruzin/golang-tmdb) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+[![build](https://github.com/benlei/go-tmdb/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/benlei/go-tmdb/actions/workflows/build.yml) [![Coverage Status](https://coveralls.io/repos/github/benlei/go-tmdb/badge.svg?branch=main&service=github)](https://coveralls.io/github/benlei/go-tmdb?branch=main) [![Go Report Card](https://goreportcard.com/badge/github.com/benlei/go-tmdb)](https://goreportcard.com/report/github.com/benlei/go-tmdb) [![GoDoc](https://godoc.org/github.com/benlei/go-tmdb?status.svg)](https://godoc.org/github.com/benlei/go-tmdb) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/benlei/go-tmdb) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
+
+Fork of https://github.com/cyruzin/golang-tmdb, which seems to still be maintained by [Cyro Dubeux](https://github.com/cyruzin).
+This fork has the goal of introducing more structs, an interface for the client (for mockgen), and anything else that
+may be a QoL for my other personal project.
 
 This is a Golang wrapper for working with TMDb API. It aims to support version 3.
 
@@ -15,7 +19,7 @@ This product uses the TMDb API but is not endorsed or certified by TMDb.
 ## Installation
 
 ```sh
-go get -u github.com/cyruzin/golang-tmdb
+go get -u github.com/benlei/go-tmdb
 ```
 
 ## Usage
@@ -23,7 +27,7 @@ go get -u github.com/cyruzin/golang-tmdb
 To get started, import the `tmdb` package and initiate the client:
 
 ```go
-import "github.com/cyruzin/golang-tmdb"
+import "github.com/benlei/go-tmdb"
 
 tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
 if err != nil {
@@ -69,7 +73,7 @@ fmt.Println(movie.Title)
 With optional params:
 
 ```go
-import "github.com/cyruzin/golang-tmdb"
+import "github.com/benlei/go-tmdb"
 
 tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
 if err != nil {
@@ -94,7 +98,7 @@ Helpers:
 Generate image and video URLs:
 
 ```go
-import "github.com/cyruzin/golang-tmdb"
+import "github.com/benlei/go-tmdb"
 
 tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
 if err != nil {
@@ -123,7 +127,7 @@ for _, video := range movie.MovieVideosAppend.Videos.MovieVideos.Results {
 }
 ```
 
-For more examples, [click here](https://github.com/cyruzin/golang-tmdb/tree/master/examples).
+For more examples, [click here](https://github.com/benlei/go-tmdb/tree/master/examples).
 
 ## Performance
 
@@ -141,7 +145,7 @@ Multi Search:
 
 ## Contributing
 
-To start contributing, please check [CONTRIBUTING](https://github.com/cyruzin/golang-tmdb/blob/master/CONTRIBUTING.md).
+To start contributing, please check [CONTRIBUTING](https://github.com/benlei/go-tmdb/blob/master/CONTRIBUTING.md).
 
 ### Tests
 
