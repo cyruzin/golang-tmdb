@@ -251,7 +251,6 @@ type TVAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-account-states
-//
 func (c *Client) GetTVAccountStates(
 	id int,
 	urlOptions map[string]string,
@@ -1053,10 +1052,7 @@ func (c *Client) PostTVShowRating(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/tv/delete-tv-show-rating
-func (c *Client) DeleteTVShowRating(
-	id int,
-	urlOptions map[string]string,
-) (*Response, error) {
+func (c *Client) DeleteTVShowRating(id int64, urlOptions map[string]string) (*Response, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",

@@ -136,10 +136,7 @@ type ListMedia struct {
 // AddMovie add a movie to a list.
 //
 // https://developers.themoviedb.org/3/lists/add-movie
-func (c *Client) AddMovie(
-	listID int,
-	mediaID *ListMedia,
-) (*Response, error) {
+func (c *Client) AddMovie(listID int64, mediaID *ListMedia) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/add_item?api_key=%s&session_id=%s",
 		baseURL,
@@ -188,10 +185,7 @@ func (c *Client) RemoveMovie(
 // ClearList clear all of the items from a list.
 //
 // https://developers.themoviedb.org/3/lists/clear-list
-func (c *Client) ClearList(
-	listID int,
-	confirm bool,
-) (*Response, error) {
+func (c *Client) ClearList(listID int64, confirm bool) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/clear?api_key=%s&session_id=%s&confirm=%t",
 		baseURL,
@@ -215,9 +209,7 @@ func (c *Client) ClearList(
 // DeleteList deletes a list.
 //
 // https://developers.themoviedb.org/3/lists/delete-list
-func (c *Client) DeleteList(
-	listID int,
-) (*Response, error) {
+func (c *Client) DeleteList(listID int64) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d?api_key=%s&session_id=%s",
 		baseURL,

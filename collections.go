@@ -30,10 +30,7 @@ type CollectionDetails struct {
 // GetCollectionDetails get collection details by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-details
-func (c *Client) GetCollectionDetails(
-	id int,
-	urlOptions map[string]string,
-) (*CollectionDetails, error) {
+func (c *Client) GetCollectionDetails(id int64, urlOptions map[string]string) (*CollectionDetails, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
@@ -72,10 +69,7 @@ type CollectionImages struct {
 // GetCollectionImages get the images for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-images
-func (c *Client) GetCollectionImages(
-	id int,
-	urlOptions map[string]string,
-) (*CollectionImages, error) {
+func (c *Client) GetCollectionImages(id int64, urlOptions map[string]string) (*CollectionImages, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
@@ -107,10 +101,7 @@ type CollectionTranslations struct {
 // GetCollectionTranslations get the list translations for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-translations
-func (c *Client) GetCollectionTranslations(
-	id int,
-	urlOptions map[string]string,
-) (*CollectionTranslations, error) {
+func (c *Client) GetCollectionTranslations(id int64, urlOptions map[string]string) (*CollectionTranslations, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",

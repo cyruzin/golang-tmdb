@@ -52,10 +52,7 @@ type AccountCreatedLists struct {
 // Will invlude private lists if you are the owner.
 //
 // https://developers.themoviedb.org/3/account/get-created-lists
-func (c *Client) GetCreatedLists(
-	id int,
-	urlOptions map[string]string,
-) (*AccountCreatedLists, error) {
+func (c *Client) GetCreatedLists(id int64, urlOptions map[string]string) (*AccountCreatedLists, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s&session_id=%s%s",
@@ -84,10 +81,7 @@ type AccountFavoriteMovies struct {
 // GetFavoriteMovies get the list of your favorite movies.
 //
 // https://developers.themoviedb.org/3/account/get-favorite-movies
-func (c *Client) GetFavoriteMovies(
-	id int,
-	urlOptions map[string]string,
-) (*AccountFavoriteMovies, error) {
+func (c *Client) GetFavoriteMovies(id int64, urlOptions map[string]string) (*AccountFavoriteMovies, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/movies?api_key=%s&session_id=%s%s",
@@ -116,10 +110,7 @@ type AccountFavoriteTVShows struct {
 // GetFavoriteTVShows get the list of your favorite TV shows.
 //
 // https://developers.themoviedb.org/3/account/get-favorite-tv-shows
-func (c *Client) GetFavoriteTVShows(
-	id int,
-	urlOptions map[string]string,
-) (*AccountFavoriteTVShows, error) {
+func (c *Client) GetFavoriteTVShows(id int64, urlOptions map[string]string) (*AccountFavoriteTVShows, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/tv?api_key=%s&session_id=%s%s",
@@ -332,10 +323,7 @@ type AccountWatchlist struct {
 // AddToWatchlist add a movie or TV show to your watchlist.
 //
 // https://developers.themoviedb.org/3/account/add-to-watchlist
-func (c *Client) AddToWatchlist(
-	id int,
-	title *AccountWatchlist,
-) (*Response, error) {
+func (c *Client) AddToWatchlist(id int64, title *AccountWatchlist) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist?api_key=%s&session_id=%s",
 		baseURL,

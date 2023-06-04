@@ -153,7 +153,6 @@ type MovieWatchProvidersAppend struct {
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
-//
 func (c *Client) GetMovieDetails(
 	id int,
 	urlOptions map[string]string,
@@ -191,7 +190,6 @@ type MovieAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-account-states
-//
 func (c *Client) GetMovieAccountStates(
 	id int,
 	urlOptions map[string]string,
@@ -267,10 +265,7 @@ type MovieChanges struct {
 // the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-changes
-func (c *Client) GetMovieChanges(
-	id int,
-	urlOptions map[string]string,
-) (*MovieChanges, error) {
+func (c *Client) GetMovieChanges(id int64, urlOptions map[string]string) (*MovieChanges, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
@@ -322,10 +317,7 @@ type MovieCredits struct {
 // GetMovieCredits get the cast and crew for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-credits
-func (c *Client) GetMovieCredits(
-	id int,
-	urlOptions map[string]string,
-) (*MovieCredits, error) {
+func (c *Client) GetMovieCredits(id int64, urlOptions map[string]string) (*MovieCredits, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf("%s%s%d/credits?api_key=%s%s",
 		baseURL,
@@ -392,7 +384,7 @@ type MovieImage struct {
 
 // MovieImages type is a struct for images JSON response.
 type MovieImages struct {
-	ID        int64 `json:"id,omitempty"`
+	ID        int64        `json:"id,omitempty"`
 	Backdrops []MovieImage `json:"backdrops"`
 	Logos     []MovieImage `json:"logos"`
 	Posters   []MovieImage `json:"posters"`
@@ -908,10 +900,7 @@ func (c *Client) PostMovieRating(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/movies/delete-movie-rating
-func (c *Client) DeleteMovieRating(
-	id int,
-	urlOptions map[string]string,
-) (*Response, error) {
+func (c *Client) DeleteMovieRating(id int64, urlOptions map[string]string) (*Response, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",

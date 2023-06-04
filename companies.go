@@ -23,9 +23,7 @@ type CompanyDetails struct {
 // GetCompanyDetails get a companies details by id.
 //
 // https://developers.themoviedb.org/3/companies/get-company-details
-func (c *Client) GetCompanyDetails(
-	id int,
-) (*CompanyDetails, error) {
+func (c *Client) GetCompanyDetails(id int64) (*CompanyDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
 		baseURL,
@@ -50,9 +48,7 @@ type CompanyAlternativeNames struct {
 // GetCompanyAlternativeNames get the alternative names of a company.
 //
 // https://developers.themoviedb.org/3/companies/get-company-alternative-names
-func (c *Client) GetCompanyAlternativeNames(
-	id int,
-) (*CompanyAlternativeNames, error) {
+func (c *Client) GetCompanyAlternativeNames(id int64) (*CompanyAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_names?api_key=%s",
 		baseURL,
@@ -93,9 +89,7 @@ type CompanyImages struct {
 // call them as a PNG.
 //
 // https://developers.themoviedb.org/3/companies/get-company-images
-func (c *Client) GetCompanyImages(
-	id int,
-) (*CompanyImages, error) {
+func (c *Client) GetCompanyImages(id int64) (*CompanyImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
 		baseURL,
