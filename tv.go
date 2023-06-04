@@ -214,10 +214,7 @@ type TVWatchProvidersAppend struct {
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-details
-func (c *Client) GetTVDetails(
-	id int,
-	urlOptions map[string]string,
-) (*TVDetails, error) {
+func (c *Client) GetTVDetails(id int64, urlOptions map[string]string) (*TVDetails, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
@@ -251,10 +248,7 @@ type TVAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-account-states
-func (c *Client) GetTVAccountStates(
-	id int,
-	urlOptions map[string]string,
-) (*TVAccountStates, error) {
+func (c *Client) GetTVAccountStates(id int64, urlOptions map[string]string) (*TVAccountStates, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/account_states?api_key=%s%s",
@@ -313,10 +307,7 @@ type TVAggregateCredits struct {
 // GetTVAggregateCredits get the aggregate credits (cast and crew) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-aggregate-credits
-func (c *Client) GetTVAggregateCredits(
-	id int,
-	urlOptions map[string]string,
-) (*TVAggregateCredits, error) {
+func (c *Client) GetTVAggregateCredits(id int64, urlOptions map[string]string) (*TVAggregateCredits, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/aggregate_credits?api_key=%s%s",
@@ -342,10 +333,7 @@ type TVAlternativeTitles struct {
 // GetTVAlternativeTitles get all of the alternative titles for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-alternative-titles
-func (c *Client) GetTVAlternativeTitles(
-	id int,
-	urlOptions map[string]string,
-) (*TVAlternativeTitles, error) {
+func (c *Client) GetTVAlternativeTitles(id int64, urlOptions map[string]string) (*TVAlternativeTitles, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_titles?api_key=%s%s",
@@ -391,10 +379,7 @@ type TVChanges struct {
 // You can use the and methods to look these up individually.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-changes
-func (c *Client) GetTVChanges(
-	id int,
-	urlOptions map[string]string,
-) (*TVChanges, error) {
+func (c *Client) GetTVChanges(id int64, urlOptions map[string]string) (*TVChanges, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
@@ -420,10 +405,7 @@ type TVContentRatings struct {
 // GetTVContentRatings get the list of content ratings (certifications) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-content-ratings
-func (c *Client) GetTVContentRatings(
-	id int,
-	urlOptions map[string]string,
-) (*TVContentRatings, error) {
+func (c *Client) GetTVContentRatings(id int64, urlOptions map[string]string) (*TVContentRatings, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/content_ratings?api_key=%s%s",
@@ -472,10 +454,7 @@ type TVCredits struct {
 // GetTVCredits get the credits (cast and crew) that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-credits
-func (c *Client) GetTVCredits(
-	id int,
-	urlOptions map[string]string,
-) (*TVCredits, error) {
+func (c *Client) GetTVCredits(id int64, urlOptions map[string]string) (*TVCredits, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/credits?api_key=%s%s",
@@ -627,9 +606,7 @@ type TVKeywords struct {
 // GetTVKeywords get the keywords that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-keywords
-func (c *Client) GetTVKeywords(
-	id int,
-) (*TVKeywords, error) {
+func (c *Client) GetTVKeywords(id int64) (*TVKeywords, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/keywords?api_key=%s",
 		baseURL,
@@ -717,9 +694,7 @@ type TVScreenedTheatrically struct {
 // have been screened in a film festival or theatre.
 //
 // https://developers.themoviedb.org/3/tv/get-screened-theatrically
-func (c *Client) GetTVScreenedTheatrically(
-	id int,
-) (*TVScreenedTheatrically, error) {
+func (c *Client) GetTVScreenedTheatrically(id int64) (*TVScreenedTheatrically, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/screened_theatrically?api_key=%s",
 		baseURL,

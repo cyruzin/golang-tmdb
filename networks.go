@@ -15,9 +15,7 @@ type NetworkDetails struct {
 // GetNetworkDetails get the details of a network.
 //
 // https://developers.themoviedb.org/3/networks/get-network-details
-func (c *Client) GetNetworkDetails(
-	id int,
-) (*NetworkDetails, error) {
+func (c *Client) GetNetworkDetails(id int64) (*NetworkDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
 		baseURL,
@@ -44,9 +42,7 @@ type NetworkAlternativeNames struct {
 // GetNetworkAlternativeNames get the alternative names of a network.
 //
 // https://developers.themoviedb.org/3/networks/get-network-alternative-names
-func (c *Client) GetNetworkAlternativeNames(
-	id int,
-) (*NetworkAlternativeNames, error) {
+func (c *Client) GetNetworkAlternativeNames(id int64) (*NetworkAlternativeNames, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_names?api_key=%s",
 		baseURL,
@@ -86,12 +82,8 @@ type NetworkImages struct {
 // An SVG can be scaled properly beyond those dimensions if you
 // call them as a PNG.
 //
-//
-//
 // https://developers.themoviedb.org/3/networks/get-network-images
-func (c *Client) GetNetworkImages(
-	id int,
-) (*NetworkImages, error) {
+func (c *Client) GetNetworkImages(id int64) (*NetworkImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
 		baseURL,

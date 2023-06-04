@@ -153,10 +153,7 @@ type MovieWatchProvidersAppend struct {
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
-func (c *Client) GetMovieDetails(
-	id int,
-	urlOptions map[string]string,
-) (*MovieDetails, error) {
+func (c *Client) GetMovieDetails(id int64, urlOptions map[string]string) (*MovieDetails, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
@@ -190,10 +187,7 @@ type MovieAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-account-states
-func (c *Client) GetMovieAccountStates(
-	id int,
-	urlOptions map[string]string,
-) (*MovieAccountStates, error) {
+func (c *Client) GetMovieAccountStates(id int64, urlOptions map[string]string) (*MovieAccountStates, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/account_states?api_key=%s%s",
@@ -223,10 +217,7 @@ type MovieAlternativeTitles struct {
 // GetMovieAlternativeTitles get all of the alternative titles for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
-func (c *Client) GetMovieAlternativeTitles(
-	id int,
-	urlOptions map[string]string,
-) (*MovieAlternativeTitles, error) {
+func (c *Client) GetMovieAlternativeTitles(id int64, urlOptions map[string]string) (*MovieAlternativeTitles, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_titles?api_key=%s%s",
@@ -351,10 +342,7 @@ type MovieExternalIDs struct {
 // Social IDs: Facebook, Instagram and Twitter.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-external-ids
-func (c *Client) GetMovieExternalIDs(
-	id int,
-	urlOptions map[string]string,
-) (*MovieExternalIDs, error) {
+func (c *Client) GetMovieExternalIDs(id int64, urlOptions map[string]string) (*MovieExternalIDs, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
@@ -398,10 +386,7 @@ type MovieImages struct {
 // separated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-images
-func (c *Client) GetMovieImages(
-	id int,
-	urlOptions map[string]string,
-) (*MovieImages, error) {
+func (c *Client) GetMovieImages(id int64, urlOptions map[string]string) (*MovieImages, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
@@ -430,7 +415,7 @@ type MovieKeywords struct {
 // GetMovieKeywords get the keywords that have been added to a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-keywords
-func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
+func (c *Client) GetMovieKeywords(id int64) (*MovieKeywords, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/keywords?api_key=%s",
 		baseURL,
@@ -454,9 +439,7 @@ type MovieReleaseDates struct {
 // GetMovieReleaseDates get the release date along with the certification for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-release-dates
-func (c *Client) GetMovieReleaseDates(
-	id int,
-) (*MovieReleaseDates, error) {
+func (c *Client) GetMovieReleaseDates(id int64) (*MovieReleaseDates, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/release_dates?api_key=%s",
 		baseURL,
@@ -480,10 +463,7 @@ type MovieVideos struct {
 // GetMovieVideos get the videos that have been added to a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-videos
-func (c *Client) GetMovieVideos(
-	id int,
-	urlOptions map[string]string,
-) (*MovieVideos, error) {
+func (c *Client) GetMovieVideos(id int64, urlOptions map[string]string) (*MovieVideos, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
@@ -509,10 +489,7 @@ type MovieWatchProviders struct {
 // GetMovieWatchProviders get a list of the availabilities per country by provider for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-watch-providers
-func (c *Client) GetMovieWatchProviders(
-	id int,
-	urlOptions map[string]string,
-) (*MovieWatchProviders, error) {
+func (c *Client) GetMovieWatchProviders(id int64, urlOptions map[string]string) (*MovieWatchProviders, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watch/providers?api_key=%s%s",
@@ -550,10 +527,7 @@ type MovieTranslations struct {
 // GetMovieTranslations get a list of translations that have been created for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-translations
-func (c *Client) GetMovieTranslations(
-	id int,
-	urlOptions map[string]string,
-) (*MovieTranslations, error) {
+func (c *Client) GetMovieTranslations(id int64, urlOptions map[string]string) (*MovieTranslations, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
@@ -581,10 +555,7 @@ type MovieRecommendations struct {
 // GetMovieRecommendations get a list of recommended movies for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-recommendations
-func (c *Client) GetMovieRecommendations(
-	id int,
-	urlOptions map[string]string,
-) (*MovieRecommendations, error) {
+func (c *Client) GetMovieRecommendations(id int64, urlOptions map[string]string) (*MovieRecommendations, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/recommendations?api_key=%s%s",
@@ -612,10 +583,7 @@ type MovieSimilar struct {
 // These items are assembled by looking at keywords and genres.
 //
 // https://developers.themoviedb.org/3/movies/get-similar-movies
-func (c *Client) GetMovieSimilar(
-	id int,
-	urlOptions map[string]string,
-) (*MovieSimilar, error) {
+func (c *Client) GetMovieSimilar(id int64, urlOptions map[string]string) (*MovieSimilar, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/similar?api_key=%s%s",
@@ -644,10 +612,7 @@ type MovieReviews struct {
 // GetMovieReviews get the user reviews for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-reviews
-func (c *Client) GetMovieReviews(
-	id int,
-	urlOptions map[string]string,
-) (*MovieReviews, error) {
+func (c *Client) GetMovieReviews(id int64, urlOptions map[string]string) (*MovieReviews, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/reviews?api_key=%s%s",
@@ -676,10 +641,7 @@ type MovieLists struct {
 // GetMovieLists get a list of lists that this movie belongs to.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-lists
-func (c *Client) GetMovieLists(
-	id int,
-	urlOptions map[string]string,
-) (*MovieLists, error) {
+func (c *Client) GetMovieLists(id int64, urlOptions map[string]string) (*MovieLists, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s%s",

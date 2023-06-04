@@ -81,10 +81,7 @@ type PersonTranslationsAppend struct {
 // Supports append_to_response.
 //
 // https://developers.themoviedb.org/3/people/get-person-details
-func (c *Client) GetPersonDetails(
-	id int,
-	urlOptions map[string]string,
-) (*PersonDetails, error) {
+func (c *Client) GetPersonDetails(id int64, urlOptions map[string]string) (*PersonDetails, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
@@ -125,10 +122,7 @@ type PersonChanges struct {
 // using the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/people/get-person-changes
-func (c *Client) GetPersonChanges(
-	id int,
-	urlOptions map[string]string,
-) (*PersonChanges, error) {
+func (c *Client) GetPersonChanges(id int64, urlOptions map[string]string) (*PersonChanges, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
@@ -192,10 +186,7 @@ type PersonMovieCredits struct {
 // GetPersonMovieCredits get the movie credits for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-movie-credits
-func (c *Client) GetPersonMovieCredits(
-	id int,
-	urlOptions map[string]string,
-) (*PersonMovieCredits, error) {
+func (c *Client) GetPersonMovieCredits(id int64, urlOptions map[string]string) (*PersonMovieCredits, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/movie_credits?api_key=%s%s",
@@ -257,10 +248,7 @@ type PersonTVCredits struct {
 // GetPersonTVCredits get the TV show credits for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-tv-credits
-func (c *Client) GetPersonTVCredits(
-	id int,
-	urlOptions map[string]string,
-) (*PersonTVCredits, error) {
+func (c *Client) GetPersonTVCredits(id int64, urlOptions map[string]string) (*PersonTVCredits, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tv_credits?api_key=%s%s",
@@ -329,10 +317,7 @@ type PersonCombinedCredits struct {
 // GetPersonCombinedCredits get the movie and TV credits together in a single response.
 //
 // https://developers.themoviedb.org/3/people/get-person-combined-credits
-func (c *Client) GetPersonCombinedCredits(
-	id int,
-	urlOptions map[string]string,
-) (*PersonCombinedCredits, error) {
+func (c *Client) GetPersonCombinedCredits(id int64, urlOptions map[string]string) (*PersonCombinedCredits, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/combined_credits?api_key=%s%s",
@@ -368,10 +353,7 @@ type PersonExternalIDs struct {
 // Instagram, TVRage ID, Twitter.
 //
 // https://developers.themoviedb.org/3/people/get-person-external-ids
-func (c *Client) GetPersonExternalIDs(
-	id int,
-	urlOptions map[string]string,
-) (*PersonExternalIDs, error) {
+func (c *Client) GetPersonExternalIDs(id int64, urlOptions map[string]string) (*PersonExternalIDs, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
@@ -405,9 +387,7 @@ type PersonImages struct {
 // GetPersonImages get the images for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-images
-func (c *Client) GetPersonImages(
-	id int,
-) (*PersonImages, error) {
+func (c *Client) GetPersonImages(id int64) (*PersonImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
 		baseURL,
@@ -459,10 +439,7 @@ type PersonTaggedImages struct {
 // GetPersonTaggedImages get the images that this person has been tagged in.
 //
 // https://developers.themoviedb.org/3/people/get-tagged-images
-func (c *Client) GetPersonTaggedImages(
-	id int,
-	urlOptions map[string]string,
-) (*PersonTaggedImages, error) {
+func (c *Client) GetPersonTaggedImages(id int64, urlOptions map[string]string) (*PersonTaggedImages, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tagged_images?api_key=%s%s",
@@ -496,10 +473,7 @@ type PersonTranslations struct {
 // GetPersonTranslations get a list of translations that have been created for a person.
 //
 // https://developers.themoviedb.org/3/people/get-person-translations
-func (c *Client) GetPersonTranslations(
-	id int,
-	urlOptions map[string]string,
-) (*PersonTranslations, error) {
+func (c *Client) GetPersonTranslations(id int64, urlOptions map[string]string) (*PersonTranslations, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",

@@ -172,10 +172,7 @@ type AccountRatedMovies struct {
 // GetRatedMovies get a list of all the movies you have rated.
 //
 // https://developers.themoviedb.org/3/account/get-rated-movies
-func (c *Client) GetRatedMovies(
-	id int,
-	urlOptions map[string]string,
-) (*AccountRatedMovies, error) {
+func (c *Client) GetRatedMovies(id int64, urlOptions map[string]string) (*AccountRatedMovies, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/movies?api_key=%s&session_id=%s%s",
@@ -201,10 +198,7 @@ type AccountRatedTVShows struct {
 // GetRatedTVShows get a list of all the TV shows you have rated.
 //
 // https://developers.themoviedb.org/3/account/get-rated-tv-shows
-func (c *Client) GetRatedTVShows(
-	id int,
-	urlOptions map[string]string,
-) (*AccountRatedTVShows, error) {
+func (c *Client) GetRatedTVShows(id int64, urlOptions map[string]string) (*AccountRatedTVShows, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/tv?api_key=%s&session_id=%s%s",
@@ -233,10 +227,7 @@ type AccountRatedTVEpisodes struct {
 // GetRatedTVEpisodes get a list of all the TV episodes you have rated.
 //
 // https://developers.themoviedb.org/3/account/get-rated-tv-episodes
-func (c *Client) GetRatedTVEpisodes(
-	id int,
-	urlOptions map[string]string,
-) (*AccountRatedTVEpisodes, error) {
+func (c *Client) GetRatedTVEpisodes(id int64, urlOptions map[string]string) (*AccountRatedTVEpisodes, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/tv/episodes?api_key=%s&session_id=%s%s",
@@ -262,10 +253,7 @@ type AccountMovieWatchlist struct {
 // GetMovieWatchlist get a list of all the movies you have added to your watchlist.
 //
 // https://developers.themoviedb.org/3/account/get-movie-watchlist
-func (c *Client) GetMovieWatchlist(
-	id int,
-	urlOptions map[string]string,
-) (*AccountMovieWatchlist, error) {
+func (c *Client) GetMovieWatchlist(id int64, urlOptions map[string]string) (*AccountMovieWatchlist, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist/movies?api_key=%s&session_id=%s%s",

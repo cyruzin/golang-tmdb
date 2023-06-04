@@ -132,10 +132,7 @@ type TVEpisodeChanges struct {
 // the start_date and end_date query parameters.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-changes
-func (c *Client) GetTVEpisodeChanges(
-	id int,
-	urlOptions map[string]string,
-) (*TVEpisodeChanges, error) {
+func (c *Client) GetTVEpisodeChanges(id int64, urlOptions map[string]string) (*TVEpisodeChanges, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sepisode/%d/changes?api_key=%s%s",
@@ -187,11 +184,7 @@ type TVEpisodeCredits struct {
 // GetTVEpisodeCredits get the credits (cast, crew and guest stars) for a TV episode.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-credits
-func (c *Client) GetTVEpisodeCredits(
-	id int,
-	seasonNumber int,
-	episodeNumber int,
-) (*TVEpisodeCredits, error) {
+func (c *Client) GetTVEpisodeCredits(id int64, seasonNumber int, episodeNumber int) (*TVEpisodeCredits, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/credits?api_key=%s",
 		baseURL,
