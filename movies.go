@@ -824,11 +824,7 @@ func (c *Client) GetMovieUpcoming(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/movies/rate-movie
-func (c *Client) PostMovieRating(
-	id int,
-	rating float32,
-	urlOptions map[string]string,
-) (*Response, error) {
+func (c *Client) PostMovieRating(id int64, rating float32, urlOptions map[string]string) (*Response, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",

@@ -482,10 +482,7 @@ type TVEpisodeGroups struct {
 // With a group ID you can call the get TV episode group details method.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-episode-groups
-func (c *Client) GetTVEpisodeGroups(
-	id int,
-	urlOptions map[string]string,
-) (*TVEpisodeGroups, error) {
+func (c *Client) GetTVEpisodeGroups(id int64, urlOptions map[string]string) (*TVEpisodeGroups, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/episode_groups?api_key=%s%s",
@@ -526,10 +523,7 @@ type TVExternalIDs struct {
 // *Defunct or no longer available as a service.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-external-ids
-func (c *Client) GetTVExternalIDs(
-	id int,
-	urlOptions map[string]string,
-) (*TVExternalIDs, error) {
+func (c *Client) GetTVExternalIDs(id int64, urlOptions map[string]string) (*TVExternalIDs, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
@@ -577,10 +571,7 @@ type TVImages struct {
 // separated value like so: include_image_language=en,null.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-images
-func (c *Client) GetTVImages(
-	id int,
-	urlOptions map[string]string,
-) (*TVImages, error) {
+func (c *Client) GetTVImages(id int64, urlOptions map[string]string) (*TVImages, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
@@ -632,10 +623,7 @@ type TVRecommendations struct {
 // GetTVRecommendations get the list of TV show recommendations for this item.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-recommendations
-func (c *Client) GetTVRecommendations(
-	id int,
-	urlOptions map[string]string,
-) (*TVRecommendations, error) {
+func (c *Client) GetTVRecommendations(id int64, urlOptions map[string]string) (*TVRecommendations, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/recommendations?api_key=%s%s",
@@ -664,10 +652,7 @@ type TVReviews struct {
 // GetTVReviews get the reviews for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-reviews
-func (c *Client) GetTVReviews(
-	id int,
-	urlOptions map[string]string,
-) (*TVReviews, error) {
+func (c *Client) GetTVReviews(id int64, urlOptions map[string]string) (*TVReviews, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/reviews?api_key=%s%s",
@@ -718,10 +703,7 @@ type TVSimilar struct {
 // These items are assembled by looking at keywords and genres.
 //
 // https://developers.themoviedb.org/3/tv/get-similar-tv-shows
-func (c *Client) GetTVSimilar(
-	id int,
-	urlOptions map[string]string,
-) (*TVSimilar, error) {
+func (c *Client) GetTVSimilar(id int64, urlOptions map[string]string) (*TVSimilar, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/similar?api_key=%s%s",
@@ -747,10 +729,7 @@ type TVWatchProviders struct {
 // GetTVWatchProviders get a list of the availabilities per country by provider for a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-watch-providers
-func (c *Client) GetTVWatchProviders(
-	id int,
-	urlOptions map[string]string,
-) (*TVWatchProviders, error) {
+func (c *Client) GetTVWatchProviders(id int64, urlOptions map[string]string) (*TVWatchProviders, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watch/providers?api_key=%s%s",
@@ -787,10 +766,7 @@ type TVTranslations struct {
 // GetTVTranslations get a list fo translations that have been created for a TV Show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-translations
-func (c *Client) GetTVTranslations(
-	id int,
-	urlOptions map[string]string,
-) (*TVTranslations, error) {
+func (c *Client) GetTVTranslations(id int64, urlOptions map[string]string) (*TVTranslations, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
@@ -816,10 +792,7 @@ type TVVideos struct {
 // GetTVVideos get the videos that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-videos
-func (c *Client) GetTVVideos(
-	id int,
-	urlOptions map[string]string,
-) (*TVVideos, error) {
+func (c *Client) GetTVVideos(id int64, urlOptions map[string]string) (*TVVideos, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
@@ -989,11 +962,7 @@ func (c *Client) GetTVTopRated(
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 //
 // https://developers.themoviedb.org/3/tv/rate-tv-show
-func (c *Client) PostTVShowRating(
-	id int,
-	rating float32,
-	urlOptions map[string]string,
-) (*Response, error) {
+func (c *Client) PostTVShowRating(id int64, rating float32, urlOptions map[string]string) (*Response, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",

@@ -2,6 +2,7 @@ package tmdb
 
 import (
 	"bytes"
+	"io"
 	"net/http"
 	"testing"
 	"time"
@@ -80,10 +81,10 @@ func (suite *TMBDTestSuite) TestDecodeErrorFail() {
 }
 
 func (suite *TMBDTestSuite) TestDecodeErrorEmptyBodyFail() {
-	r, err := http.Get("https://golang.org/")
-	suite.Nil(err)
-	r.Write(bytes.NewBuffer([]byte("")))
-	err = suite.client.decodeError(r)
+	r := &http.Response{
+		Body: io.NopCloser(bytes.NewReader([]byte(""))),
+	}
+	err := suite.client.decodeError(r)
 	defer r.Body.Close()
 	suite.Contains(err.Error(), "empty body")
 }

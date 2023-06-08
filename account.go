@@ -140,10 +140,7 @@ type AccountFavorite struct {
 // or TV show as a favorite item.
 //
 // https://developers.themoviedb.org/3/account/mark-as-favorite
-func (c *Client) MarkAsFavorite(
-	id int,
-	title *AccountFavorite,
-) (*Response, error) {
+func (c *Client) MarkAsFavorite(id int64, title *AccountFavorite) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite?api_key=%s&session_id=%s",
 		baseURL,
@@ -279,10 +276,7 @@ type AccountTVShowsWatchlist struct {
 // GetTVShowsWatchlist get a list of all the TV shows you have added to your watchlist.
 //
 // https://developers.themoviedb.org/3/account/get-tv-show-watchlist
-func (c *Client) GetTVShowsWatchlist(
-	id int,
-	urlOptions map[string]string,
-) (*AccountTVShowsWatchlist, error) {
+func (c *Client) GetTVShowsWatchlist(id int64, urlOptions map[string]string) (*AccountTVShowsWatchlist, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist/tv?api_key=%s&session_id=%s%s",

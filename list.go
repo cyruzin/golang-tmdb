@@ -159,10 +159,7 @@ func (c *Client) AddMovie(listID int64, mediaID *ListMedia) (*Response, error) {
 // RemoveMovie remove a movie from a list.
 //
 // https://developers.themoviedb.org/3/lists/remove-movie
-func (c *Client) RemoveMovie(
-	listID int,
-	mediaID *ListMedia,
-) (*Response, error) {
+func (c *Client) RemoveMovie(listID int64, mediaID *ListMedia) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/remove_item?api_key=%s&session_id=%s",
 		baseURL,
