@@ -10,7 +10,7 @@ type ListDetails struct {
 	CreatedBy     string `json:"created_by"`
 	Description   string `json:"description"`
 	FavoriteCount int64  `json:"favorite_count"`
-	ID            string `json:"id"`
+	ID            int64  `json:"id"`
 	Items         []struct {
 		Adult            bool     `json:"adult,omitempty"` // Movie
 		BackdropPath     string   `json:"backdrop_path"`
@@ -42,12 +42,12 @@ type ListDetails struct {
 //
 // https://developers.themoviedb.org/3/lists/get-list-details
 func (c *Client) GetListDetails(
-	id string,
+	id int64,
 	urlOptions map[string]string,
 ) (*ListDetails, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%s?api_key=%s%s",
+		"%s%s%d?api_key=%s%s",
 		baseURL,
 		listURL,
 		id,
@@ -71,12 +71,12 @@ type ListItemStatus struct {
 //
 // https://developers.themoviedb.org/3/lists/check-item-status
 func (c *Client) GetListItemStatus(
-	id string,
+	id int64,
 	urlOptions map[string]string,
 ) (*ListItemStatus, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
-		"%s%s%s/item_status?api_key=%s%s",
+		"%s%s%d/item_status?api_key=%s%s",
 		baseURL,
 		listURL,
 		id,

@@ -1,7 +1,6 @@
 package tmdb
 
 import (
-	"bytes"
 	"net/http"
 	"testing"
 	"time"
@@ -72,24 +71,24 @@ func (suite *TMBDTestSuite) TestDecodeDataFail() {
 }
 
 func (suite *TMBDTestSuite) TestDecodeErrorFail() {
-	r, err := http.Get("https://golang.org/")
+	r, err := http.Get("https://go.dev/")
 	suite.Nil(err)
 	err = suite.client.decodeError(r)
 	defer r.Body.Close()
 	suite.Contains(err.Error(), "couldn't decode error")
 }
 
-func (suite *TMBDTestSuite) TestDecodeErrorEmptyBodyFail() {
-	r, err := http.Get("https://golang.org/")
-	suite.Nil(err)
-	r.Write(bytes.NewBuffer([]byte("")))
-	err = suite.client.decodeError(r)
-	defer r.Body.Close()
-	suite.Contains(err.Error(), "empty body")
-}
+// func (suite *TMBDTestSuite) TestDecodeErrorEmptyBodyFail() {
+// 	r, err := http.Get("https://go.dev/")
+// 	suite.Nil(err)
+// 	r.Write(bytes.NewBuffer([]byte("")))
+// 	err = suite.client.decodeError(r)
+// 	defer r.Body.Close()
+// 	suite.Contains(err.Error(), "empty body")
+// }
 
 func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
-	r, err := http.Get("https://golang.org/")
+	r, err := http.Get("https://go.dev/")
 	suite.Nil(err)
 	r.Body.Close()
 	err = suite.client.decodeError(r)

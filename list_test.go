@@ -1,6 +1,7 @@
 package tmdb
 
-const listID = "50941077760ee35e1500000c"
+// const listID = "50941077760ee35e1500000c"
+const listID = 1
 
 func (suite *TMBDTestSuite) TestGetListDetails() {
 	list, err := suite.client.GetListDetails(listID, nil)
