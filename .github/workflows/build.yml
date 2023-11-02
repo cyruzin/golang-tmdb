@@ -22,11 +22,12 @@ jobs:
       - name: Install dependencies
         run: |
           go mod download
-      - name: Run tests
+      - name: Run Unit tests
         run: |
-          go test -v -coverprofile=profile.cov ./...
+        go test -race -covermode atomic -coverprofile=covprofile ./...
+      - name: Install goveralls
+        run: go install github.com/mattn/goveralls@latest
       - name: Send coverage
-        uses: shogo82148/actions-goveralls@v1
-        with:
-          path-to-profile: profile.cov
-          parallel: true
+        env:
+          COVERALLS_TOKEN: "::add-mask::${{ secrets.COVERALLS_TOKEN }}"
+        run: goveralls -coverprofile=covprofile -service=github
