@@ -8,7 +8,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -243,7 +243,7 @@ func (e Error) Error() string {
 }
 
 func (c *Client) decodeError(r *http.Response) error {
-	resBody, err := ioutil.ReadAll(r.Body)
+	resBody, err := io.ReadAll(r.Body)
 	if err != nil {
 		return fmt.Errorf("could not read body response: %s", err)
 	}
