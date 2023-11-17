@@ -58,6 +58,7 @@ type Client struct {
 	autoRetry bool
 	// http.Client for custom configuration.
 	http http.Client
+	authorization string
 }
 
 // Response type is a struct for http responses.
@@ -72,6 +73,21 @@ func Init(apiKey string) (*Client, error) {
 		return nil, errors.New("api key is empty")
 	}
 	return &Client{apiKey: apiKey}, nil
+}
+
+// new Client
+func NewClient() *Client {
+	return &Client{}
+}
+
+// set apikey
+func (c *Client) SetApiKey(apikey string) {
+	c.apiKey = apikey
+}
+
+// set Authorization
+func (c *Client) SetAuthorization(authorization string) {
+	c.authorization = authorization
 }
 
 // SetSessionID will set the session id.
@@ -130,6 +146,9 @@ func (c *Client) get(url string, data interface{}) error {
 	defer cancel()
 	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
+	if c.authorization != "" {
+		req.Header.Add("Authorization", "Bearer "+c.authorization)
+	}
 	for {
 		res, err := c.http.Do(req)
 		if err != nil {
@@ -180,6 +199,9 @@ func (c *Client) request(
 	defer cancel()
 	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
+	if c.authorization != "" {
+		req.Header.Add("Authorization", "Bearer "+c.authorization)
+	}
 	for {
 		res, err := c.http.Do(req)
 		if err != nil {
