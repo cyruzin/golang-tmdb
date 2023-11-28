@@ -1,7 +1,7 @@
 package tmdb
 
 const collectionID = 10
-const collectionIDImage = 2
+const collectionIDImage = 10
 
 func (suite *TMBDTestSuite) TestGetCollectionDetails() {
 	collection, err := suite.client.GetCollectionDetails(collectionID, nil)
