@@ -580,10 +580,10 @@ type TVImage struct {
 
 // TVImages type is a struct for images JSON response.
 type TVImages struct {
-	ID        int64        `json:"id,omitempty"`
-	Backdrops []MovieImage `json:"backdrops"`
-	Logos     []MovieImage `json:"logos"`
-	Posters   []MovieImage `json:"posters"`
+	ID        int64     `json:"id,omitempty"`
+	Backdrops []TVImage `json:"backdrops"`
+	Logos     []TVImage `json:"logos"`
+	Posters   []TVImage `json:"posters"`
 }
 
 // GetTVImages get the images that belong to a TV show.
