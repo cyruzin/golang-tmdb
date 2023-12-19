@@ -249,8 +249,8 @@ type TVSeasonImage struct {
 
 // TVSeasonImages type is a struct for images JSON response.
 type TVSeasonImages struct {
-	ID    int64           `json:"id,omitempty"`
-	Logos []TVSeasonImage `json:"posters"`
+	ID      int64           `json:"id,omitempty"`
+	Posters []TVSeasonImage `json:"posters"`
 }
 
 // GetTVSeasonImages get the images that belong to a TV season.
