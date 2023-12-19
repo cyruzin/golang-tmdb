@@ -251,7 +251,6 @@ type TVAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-account-states
-//
 func (c *Client) GetTVAccountStates(
 	id int,
 	urlOptions map[string]string,
@@ -568,27 +567,23 @@ func (c *Client) GetTVExternalIDs(
 	return &tvExternalIDs, nil
 }
 
+// TVImage type is a struct for a single image.
+type TVImage struct {
+	AspectRatio float32 `json:"aspect_ratio"`
+	FilePath    string  `json:"file_path"`
+	Height      int     `json:"height"`
+	Iso639_1    string  `json:"iso_639_1"`
+	VoteAverage float32 `json:"vote_average"`
+	VoteCount   int64   `json:"vote_count"`
+	Width       int     `json:"width"`
+}
+
 // TVImages type is a struct for images JSON response.
 type TVImages struct {
-	ID        int64 `json:"id,omitempty"`
-	Backdrops []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		Iso639_1    string  `json:"iso_639_1"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"backdrops"`
-	Posters []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		Iso639_1    string  `json:"iso_639_1"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"posters"`
+	ID        int64        `json:"id,omitempty"`
+	Backdrops []MovieImage `json:"backdrops"`
+	Logos     []MovieImage `json:"logos"`
+	Posters   []MovieImage `json:"posters"`
 }
 
 // GetTVImages get the images that belong to a TV show.
