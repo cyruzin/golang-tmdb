@@ -401,8 +401,8 @@ type PersonImage struct {
 
 // PersonImages type is a struct for images JSON response.
 type PersonImages struct {
-	LogoProfiless []PersonImage `json:"profiles"`
-	ID            int           `json:"id,omitempty"`
+	Profiless []PersonImage `json:"profiles"`
+	ID        int           `json:"id,omitempty"`
 }
 
 // GetPersonImages get the images for a person.
