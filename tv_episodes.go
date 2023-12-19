@@ -252,18 +252,21 @@ func (c *Client) GetTVEpisodeExternalIDs(
 	return &tvEpisodeExternalIDs, nil
 }
 
+// TVEpisodeImage type is a struct for a single image.
+type TVEpisodeImage struct {
+	AspectRatio float32     `json:"aspect_ratio"`
+	FilePath    string      `json:"file_path"`
+	Height      int         `json:"height"`
+	Iso6391     interface{} `json:"iso_639_1"`
+	VoteAverage float32     `json:"vote_average"`
+	VoteCount   int64       `json:"vote_count"`
+	Width       int         `json:"width"`
+}
+
 // TVEpisodeImages type is a struct for images JSON response.
 type TVEpisodeImages struct {
-	ID     int64 `json:"id,omitempty"`
-	Stills []struct {
-		AspectRatio float32     `json:"aspect_ratio"`
-		FilePath    string      `json:"file_path"`
-		Height      int         `json:"height"`
-		Iso6391     interface{} `json:"iso_639_1"`
-		VoteAverage float32     `json:"vote_average"`
-		VoteCount   int64       `json:"vote_count"`
-		Width       int         `json:"width"`
-	} `json:"stills"`
+	ID     int64             `json:"id,omitempty"`
+	Stills []TVEpisodeImages `json:"stills"`
 }
 
 // GetTVEpisodeImages get the images that belong to a TV episode.
