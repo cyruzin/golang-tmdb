@@ -67,19 +67,22 @@ func (c *Client) GetCompanyAlternativeNames(
 	return &companyAlternativeNames, nil
 }
 
+// CompanyImage type is a struct for a single image.
+type CompanyImage struct {
+	AspectRatio float32 `json:"aspect_ratio"`
+	FilePath    string  `json:"file_path"`
+	Height      int     `json:"height"`
+	ID          string  `json:"id"`
+	FileType    string  `json:"file_type"`
+	VoteAverage float32 `json:"vote_average"`
+	VoteCount   int64   `json:"vote_count"`
+	Width       int     `json:"width"`
+}
+
 // CompanyImages type is a struct for images JSON response.
 type CompanyImages struct {
-	ID    int64 `json:"id"`
-	Logos []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		ID          string  `json:"id"`
-		FileType    string  `json:"file_type"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"logos"`
+	ID    int64          `json:"id"`
+	Logos []CompanyImage `json:"logos"`
 }
 
 // GetCompanyImages get a companies logos by id.
