@@ -59,9 +59,9 @@ type CollectionImage struct {
 
 // CollectionImages type is a struct for images JSON response.
 type CollectionImages struct {
-	ID        int64              `json:"id"`
-	Backdrops []CollectionImages `json:"backdrops"`
-	Posters   []CollectionImages `json:"posters"`
+	ID        int64             `json:"id"`
+	Backdrops []CollectionImage `json:"backdrops"`
+	Posters   []CollectionImage `json:"posters"`
 }
 
 // GetCollectionImages get the images for a collection by id.
