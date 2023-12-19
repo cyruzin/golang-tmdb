@@ -61,19 +61,22 @@ func (c *Client) GetNetworkAlternativeNames(
 	return &networkAltenativeNames, nil
 }
 
+// NetworkImage type is a struct for a single image.
+type NetworkImage struct {
+	AspectRatio float64 `json:"aspect_ratio"`
+	FilePath    string  `json:"file_path"`
+	Height      int     `json:"height"`
+	ID          string  `json:"id"`
+	FileType    string  `json:"file_type"`
+	VoteAverage float64 `json:"vote_average"`
+	VoteCount   int64   `json:"vote_count"`
+	Width       int     `json:"width"`
+}
+
 // NetworkImages type is a struct for images JSON response.
 type NetworkImages struct {
-	ID    int64 `json:"id"`
-	Logos []struct {
-		AspectRatio float64 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		ID          string  `json:"id"`
-		FileType    string  `json:"file_type"`
-		VoteAverage float64 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"logos"`
+	ID    int64          `json:"id"`
+	Logos []NetworkImage `json:"logos"`
 }
 
 // GetNetworkImages get the TV network logos by id.
@@ -85,8 +88,6 @@ type NetworkImages struct {
 // only there to reflect the original asset that was uploaded.
 // An SVG can be scaled properly beyond those dimensions if you
 // call them as a PNG.
-//
-//
 //
 // https://developers.themoviedb.org/3/networks/get-network-images
 func (c *Client) GetNetworkImages(
