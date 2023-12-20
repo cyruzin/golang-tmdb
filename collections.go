@@ -46,27 +46,22 @@ func (c *Client) GetCollectionDetails(
 	return &collectionDetails, nil
 }
 
+// CollectionImage type is a struct for a single image.
+type CollectionImage struct {
+	AspectRatio float32 `json:"aspect_ratio"`
+	FilePath    string  `json:"file_path"`
+	Height      int     `json:"height"`
+	Iso639_1    string  `json:"iso_639_1"`
+	VoteAverage float32 `json:"vote_average"`
+	VoteCount   int64   `json:"vote_count"`
+	Width       int     `json:"width"`
+}
+
 // CollectionImages type is a struct for images JSON response.
 type CollectionImages struct {
-	ID        int64 `json:"id"`
-	Backdrops []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		Iso639_1    string  `json:"iso_639_1"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"backdrops"`
-	Posters []struct {
-		AspectRatio float32 `json:"aspect_ratio"`
-		FilePath    string  `json:"file_path"`
-		Height      int     `json:"height"`
-		Iso639_1    string  `json:"iso_639_1"`
-		VoteAverage float32 `json:"vote_average"`
-		VoteCount   int64   `json:"vote_count"`
-		Width       int     `json:"width"`
-	} `json:"posters"`
+	ID        int64             `json:"id"`
+	Backdrops []CollectionImage `json:"backdrops"`
+	Posters   []CollectionImage `json:"posters"`
 }
 
 // GetCollectionImages get the images for a collection by id.
