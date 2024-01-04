@@ -108,3 +108,14 @@ func (suite *TMBDTestSuite) TestGetTVSeasonVideosWithOptions() {
 	suite.Nil(err)
 	suite.NotNil(tv.ID)
 }
+
+func (suite *TMBDTestSuite) TestGetTVSeasonTranslations() {
+	got, err := suite.client.GetTVSeasonTranslations(gotID, 1)
+	suite.Nil(err)
+	suite.Equal(int64(gotSeasonID), got.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonTranslationsFail() {
+	_, err := suite.client.GetTVSeasonTranslations(0, 1)
+	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+}

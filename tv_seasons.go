@@ -75,6 +75,7 @@ type TVSeasonTranslationsAppend struct {
 
 // TVSeasonTranslations type is a struct
 type TVSeasonTranslations struct {
+	ID           int64 `json:"id,omitempty"`
 	Translations []struct {
 		Iso31661    string `json:"iso_3166_1"`
 		Iso6391     string `json:"iso_639_1"`
@@ -352,9 +353,7 @@ func (c *Client) GetTVSeasonVideos(
 func (c *Client) GetTVSeasonTranslations(
 	id int,
 	seasonNumber int,
-	urlOptions map[string]string,
 ) (*TVSeasonTranslations, error) {
-	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d/translations?api_key=%s%s",
 		baseURL,
@@ -363,7 +362,6 @@ func (c *Client) GetTVSeasonTranslations(
 		tvSeasonURL,
 		seasonNumber,
 		c.apiKey,
-		options,
 	)
 	tvSeasonTranslations := TVSeasonTranslations{}
 	if err := c.get(tmdbURL, &tvSeasonTranslations); err != nil {
