@@ -355,7 +355,7 @@ func (c *Client) GetTVSeasonTranslations(
 	seasonNumber int,
 ) (*TVSeasonTranslations, error) {
 	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d/translations?api_key=%s%s",
+		"%s%s%d%s%d/translations?api_key=%s",
 		baseURL,
 		tvURL,
 		id,
