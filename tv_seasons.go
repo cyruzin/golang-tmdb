@@ -365,9 +365,9 @@ func (c *Client) GetTVSeasonTranslations(
 		c.apiKey,
 		options,
 	)
-	tvSeasonVideos := TVSeasonTranslations{}
-	if err := c.get(tmdbURL, &tvSeasonVideos); err != nil {
+	tvSeasonTranslations := TVSeasonTranslations{}
+	if err := c.get(tmdbURL, &tvSeasonTranslations); err != nil {
 		return nil, err
 	}
-	return &tvSeasonVideos, nil
+	return &tvSeasonTranslations, nil
 }
