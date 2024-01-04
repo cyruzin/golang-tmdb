@@ -109,11 +109,9 @@ type PersonChanges struct {
 			ID            string `json:"id"`
 			Action        string `json:"action"`
 			Time          string `json:"time"`
-			OriginalValue struct {
-				Profile struct {
-					FilePath string `json:"file_path"`
-				} `json:"profile"`
-			} `json:"original_value"`
+			Iso639_1      string `json:"iso_639_1"`
+			Iso3166_1     string `json:"iso_3166_1"`
+			OriginalValue string `json:"original_value"`
 		} `json:"items"`
 	} `json:"changes"`
 }
