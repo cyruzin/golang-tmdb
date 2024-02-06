@@ -19,7 +19,7 @@ func (suite *TMBDTestSuite) TestGetTVDetails() {
 
 func (suite *TMBDTestSuite) TestGetTVDetailsFail() {
 	_, err := suite.client.GetTVDetails(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVDetailsWithOptions() {
@@ -51,7 +51,7 @@ func (suite *TMBDTestSuite) TestGetTVAggregateCredits() {
 
 func (suite *TMBDTestSuite) TestGetTVAggregateFail() {
 	_, err := suite.client.GetTVAggregateCredits(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVAlternativeTitles() {
@@ -66,7 +66,7 @@ func (suite *TMBDTestSuite) TestGetTVAlternativeTitles() {
 
 func (suite *TMBDTestSuite) TestGetTVAlternativeTitlesFail() {
 	_, err := suite.client.GetTVAlternativeTitles(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVAlternativeTitlesWithOptions() {
@@ -83,11 +83,9 @@ func (suite *TMBDTestSuite) TestGetTVChanges() {
 	suite.NotNil(changes)
 }
 
-// The API isn't handling zero values for this end-point.
-// TODO: Fix this test later.
 func (suite *TMBDTestSuite) TestGetTVChangesFail() {
 	_, err := suite.client.GetTVChanges(0, nil)
-	suite.Nil(err)
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVChangesWithOptions() {
@@ -112,7 +110,7 @@ func (suite *TMBDTestSuite) TestGetTVContentRatings() {
 
 func (suite *TMBDTestSuite) TestGetTVContentRatingsFail() {
 	_, err := suite.client.GetTVContentRatings(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVContentRatingsWithOptions() {
@@ -131,7 +129,7 @@ func (suite *TMBDTestSuite) TestGetTVCredits() {
 
 func (suite *TMBDTestSuite) TestGetTVCreditsFail() {
 	_, err := suite.client.GetTVCredits(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroups() {
@@ -142,7 +140,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeGroups() {
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsFail() {
 	_, err := suite.client.GetTVEpisodeGroups(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsWithOptions() {
@@ -161,7 +159,7 @@ func (suite *TMBDTestSuite) TestGetTVExternalIDs() {
 
 func (suite *TMBDTestSuite) TestGetTVExternalIDsFail() {
 	_, err := suite.client.GetTVExternalIDs(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVImages() {
@@ -172,7 +170,7 @@ func (suite *TMBDTestSuite) TestGetTVImages() {
 
 func (suite *TMBDTestSuite) TestGetTVImagesFail() {
 	_, err := suite.client.GetTVImages(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVImagesWithOptions() {
@@ -191,7 +189,7 @@ func (suite *TMBDTestSuite) TestGetTVKeywords() {
 
 func (suite *TMBDTestSuite) TestGetTVKeywordsFail() {
 	_, err := suite.client.GetTVKeywords(0)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVRecommendations() {
@@ -202,7 +200,7 @@ func (suite *TMBDTestSuite) TestGetTVRecommendations() {
 
 func (suite *TMBDTestSuite) TestGetTVRecommendationsFail() {
 	_, err := suite.client.GetTVRecommendations(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVRecommendationsWithOptions() {
@@ -221,7 +219,7 @@ func (suite *TMBDTestSuite) TestGetTVScreenedTheatrically() {
 
 func (suite *TMBDTestSuite) TestGetTVScreenedTheatricallyFail() {
 	_, err := suite.client.GetTVScreenedTheatrically(0)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVReviews() {
@@ -232,7 +230,7 @@ func (suite *TMBDTestSuite) TestGetTVReviews() {
 
 func (suite *TMBDTestSuite) TestGetTVReviewsFail() {
 	_, err := suite.client.GetTVReviews(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVReviewsWithOptions() {
@@ -251,7 +249,7 @@ func (suite *TMBDTestSuite) TestGetTVWatchProviders() {
 
 func (suite *TMBDTestSuite) TestGetTVWatchProvidersFail() {
 	_, err := suite.client.GetTVWatchProviders(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSimilar() {
@@ -262,7 +260,7 @@ func (suite *TMBDTestSuite) TestGetTVSimilar() {
 
 func (suite *TMBDTestSuite) TestGetTVSimilarFail() {
 	_, err := suite.client.GetTVSimilar(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSimilarWithOptions() {
@@ -281,7 +279,7 @@ func (suite *TMBDTestSuite) TestGetTVTranslations() {
 
 func (suite *TMBDTestSuite) TestGetTVTranslationsFail() {
 	_, err := suite.client.GetTVTranslations(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVTranslationsWithOptions() {
@@ -300,7 +298,7 @@ func (suite *TMBDTestSuite) TestGetTVVideos() {
 
 func (suite *TMBDTestSuite) TestGetTVVideosFail() {
 	_, err := suite.client.GetTVVideos(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVVideosWithOptions() {

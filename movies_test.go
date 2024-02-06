@@ -18,7 +18,7 @@ func (suite *TMBDTestSuite) TestGetMovieDetails() {
 
 func (suite *TMBDTestSuite) TestGetMovieDetailsFail() {
 	_, err := suite.client.GetMovieDetails(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieDetailsWithOptions() {
@@ -41,7 +41,7 @@ func (suite *TMBDTestSuite) TestGetMovieAlternativeTitles() {
 
 func (suite *TMBDTestSuite) TestGetMovieAlternativeTitlesFail() {
 	_, err := suite.client.GetMovieAlternativeTitles(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAlternativeTitlesWithOptions() {
@@ -62,11 +62,9 @@ func (suite *TMBDTestSuite) TestGetMovieChanges() {
 	}
 }
 
-// The API isn't handling zero values for this end-point.
-// TODO: Fix this test later.
 func (suite *TMBDTestSuite) TestGetMovieChangesFail() {
 	_, err := suite.client.GetMovieChanges(0, nil)
-	suite.Nil(err)
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieChangesWithOptions() {
@@ -91,7 +89,7 @@ func (suite *TMBDTestSuite) TestGetMovieCredits() {
 
 func (suite *TMBDTestSuite) TestGetMovieCreditsFail() {
 	_, err := suite.client.GetMovieCredits(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieExternalIDs() {
@@ -102,7 +100,7 @@ func (suite *TMBDTestSuite) TestGetMovieExternalIDs() {
 
 func (suite *TMBDTestSuite) TestGetMovieExternalIDsFail() {
 	_, err := suite.client.GetMovieExternalIDs(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieImages() {
@@ -113,7 +111,7 @@ func (suite *TMBDTestSuite) TestGetMovieImages() {
 
 func (suite *TMBDTestSuite) TestGetMovieImagesFail() {
 	_, err := suite.client.GetMovieImages(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieImagesWithOptions() {
@@ -132,7 +130,7 @@ func (suite *TMBDTestSuite) TestGetMovieKeywords() {
 
 func (suite *TMBDTestSuite) TestGetMovieKeywordsFail() {
 	_, err := suite.client.GetMovieKeywords(0)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReleaseDates() {
@@ -143,7 +141,7 @@ func (suite *TMBDTestSuite) TestGetMovieReleaseDates() {
 
 func (suite *TMBDTestSuite) TestGetMovieReleaseDatesFail() {
 	_, err := suite.client.GetMovieReleaseDates(0)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAccountStatesFail() {
@@ -167,7 +165,7 @@ func (suite *TMBDTestSuite) TestGetMovieVideos() {
 
 func (suite *TMBDTestSuite) TestGetMovieVideosFail() {
 	_, err := suite.client.GetMovieVideos(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieVideosWithOptions() {
@@ -186,7 +184,7 @@ func (suite *TMBDTestSuite) TestGetMovieTranslations() {
 
 func (suite *TMBDTestSuite) TestGetMovieTranslationsFail() {
 	_, err := suite.client.GetMovieTranslations(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTranslationsWithOptions() {
@@ -205,7 +203,7 @@ func (suite *TMBDTestSuite) TestGetMovieRecommendations() {
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendationsFail() {
 	_, err := suite.client.GetMovieRecommendations(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendationsWithOptions() {
@@ -224,7 +222,7 @@ func (suite *TMBDTestSuite) TestGetMovieWatchProviders() {
 
 func (suite *TMBDTestSuite) TestGetMovieWatchProvidersFail() {
 	_, err := suite.client.GetMovieWatchProviders(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieSimilar() {
@@ -235,7 +233,7 @@ func (suite *TMBDTestSuite) TestGetMovieSimilar() {
 
 func (suite *TMBDTestSuite) TestGetMovieSimilarFail() {
 	_, err := suite.client.GetMovieSimilar(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieSimilarWithOptions() {
@@ -254,7 +252,7 @@ func (suite *TMBDTestSuite) TestGetMovieReviews() {
 
 func (suite *TMBDTestSuite) TestGetMovieReviewsFail() {
 	_, err := suite.client.GetMovieReviews(0, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReviewsWithOptions() {

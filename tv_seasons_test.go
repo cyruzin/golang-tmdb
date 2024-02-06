@@ -8,7 +8,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonDetails() {
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetailsFail() {
 	_, err := suite.client.GetTVSeasonDetails(0, 1, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetailsWithOptions() {
@@ -117,5 +117,5 @@ func (suite *TMBDTestSuite) TestGetTVSeasonTranslations() {
 
 func (suite *TMBDTestSuite) TestGetTVSeasonTranslationsFail() {
 	_, err := suite.client.GetTVSeasonTranslations(0, 1)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
