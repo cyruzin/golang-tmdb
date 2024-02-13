@@ -13,6 +13,7 @@ type TVSeasonDetails struct {
 		Name           string  `json:"name"`
 		Overview       string  `json:"overview"`
 		ProductionCode string  `json:"production_code"`
+		Runtime        int     `json:"runtime"`
 		SeasonNumber   int     `json:"season_number"`
 		ShowID         int64   `json:"show_id"`
 		StillPath      string  `json:"still_path"`
