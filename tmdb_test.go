@@ -155,3 +155,15 @@ func (suite *TMBDTestSuite) TestRetryDurationEmpty() {
 	duration := retryDuration(&response)
 	suite.Equal(defaultRetryDuration, duration)
 }
+
+func (suite *TMBDTestSuite) TestClientV4() {
+	_, err := InitV4("FAKE_BEARER_TOKEN")
+
+	suite.Nil(err)
+}
+
+func (suite *TMBDTestSuite) TestClientV4Fail() {
+	_, err := InitV4("")
+
+	suite.EqualError(err, "bearer token is empty")
+}

@@ -30,6 +30,12 @@ if err != nil {
     fmt.Println(err)
 }
 
+// Using v4
+tmdbClient, err := tmdb.InitV4(os.GetEnv("YOUR_BEARER_TOKEN"))
+if err != nil {
+    fmt.Println(err)
+}
+
 // OPTIONAL (Recommended): Enabling auto retry functionality.
 // This option will retry if the previous request fail (429 TOO MANY REQUESTS).
 tmdbClient.SetClientAutoRetry()
@@ -72,6 +78,12 @@ With optional params:
 import "github.com/cyruzin/golang-tmdb"
 
 tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
+if err != nil {
+    fmt.Println(err)
+}
+
+// Using v4
+tmdbClient, err := tmdb.InitV4(os.GetEnv("YOUR_BEARER_TOKEN"))
 if err != nil {
     fmt.Println(err)
 }
