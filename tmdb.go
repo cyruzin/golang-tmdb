@@ -51,6 +51,8 @@ var baseURL = defaultBaseURL
 type Client struct {
 	// TMDb apiKey to use the client.
 	apiKey string
+	// bearerToken will be used for v4 requests.
+	bearerToken string
 	// sessionId to use the client.
 	sessionID string
 	// Auto retry flag to indicates if the client
@@ -72,6 +74,14 @@ func Init(apiKey string) (*Client, error) {
 		return nil, errors.New("api key is empty")
 	}
 	return &Client{apiKey: apiKey}, nil
+}
+
+// InitV4 setups the Client with an bearer token.
+func InitV4(bearerToken string) (*Client, error) {
+	if bearerToken == "" {
+		return nil, errors.New("bearer token is empty")
+	}
+	return &Client{bearerToken: bearerToken}, nil
 }
 
 // SetSessionID will set the session id.
@@ -130,6 +140,9 @@ func (c *Client) get(url string, data interface{}) error {
 	defer cancel()
 	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
+	if c.bearerToken != "" {
+		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
+	}
 	for {
 		res, err := c.http.Do(req)
 		if err != nil {
@@ -180,6 +193,9 @@ func (c *Client) request(
 	defer cancel()
 	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
+	if c.bearerToken != "" {
+		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
+	}
 	for {
 		res, err := c.http.Do(req)
 		if err != nil {
