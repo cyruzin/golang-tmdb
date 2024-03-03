@@ -2,7 +2,7 @@
 
 [![build](https://github.com/cyruzin/golang-tmdb/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/cyruzin/golang-tmdb/actions/workflows/build.yml) [![Coverage Status](https://coveralls.io/repos/github/cyruzin/golang-tmdb/badge.svg?branch=master&service=github)](https://coveralls.io/github/cyruzin/golang-tmdb?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/cyruzin/golang-tmdb)](https://goreportcard.com/report/github.com/cyruzin/golang-tmdb) [![GoDoc](https://godoc.org/github.com/cyruzin/golang-tmdb?status.svg)](https://godoc.org/github.com/cyruzin/golang-tmdb) ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/cyruzin/golang-tmdb) [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 
-This is a Golang wrapper for working with TMDb API. It aims to support version 3.
+This is a Golang wrapper for working with TMDb API.
 
 An API Key is required. To register for one, head over to [themoviedb.org](https://www.themoviedb.org/).
 
