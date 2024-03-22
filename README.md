@@ -25,13 +25,13 @@ To get started, import the `tmdb` package and initiate the client:
 ```go
 import "github.com/cyruzin/golang-tmdb"
 
-tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
+tmdbClient, err := tmdb.Init(os.Getenv("YOUR_APIKEY"))
 if err != nil {
     fmt.Println(err)
 }
 
 // Using v4
-tmdbClient, err := tmdb.InitV4(os.GetEnv("YOUR_BEARER_TOKEN"))
+tmdbClient, err := tmdb.InitV4(os.Getenv("YOUR_BEARER_TOKEN"))
 if err != nil {
     fmt.Println(err)
 }
@@ -52,7 +52,7 @@ customClient := http.Client{
     Transport: &http.Transport{
         MaxIdleConns: 10,
         IdleConnTimeout: 15 * time.Second,
-    }
+    },
 }
 
 tmdbClient.SetClientConfig(customClient)
@@ -62,7 +62,7 @@ tmdbClient.SetClientConfig(customClient)
 //
 // You can read more about how this works:
 // https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
-tmdbClient.SetSessionID(os.GetEnv("YOUR_SESSION_ID"))
+tmdbClient.SetSessionID(os.Getenv("YOUR_SESSION_ID"))
 
 movie, err := tmdbClient.GetMovieDetails(297802, nil)
 if err != nil {
@@ -77,13 +77,13 @@ With optional params:
 ```go
 import "github.com/cyruzin/golang-tmdb"
 
-tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
+tmdbClient, err := tmdb.Init(os.Getenv("YOUR_APIKEY"))
 if err != nil {
     fmt.Println(err)
 }
 
 // Using v4
-tmdbClient, err := tmdb.InitV4(os.GetEnv("YOUR_BEARER_TOKEN"))
+tmdbClient, err := tmdb.InitV4(os.Getenv("YOUR_BEARER_TOKEN"))
 if err != nil {
     fmt.Println(err)
 }
@@ -108,7 +108,7 @@ Generate image and video URLs:
 ```go
 import "github.com/cyruzin/golang-tmdb"
 
-tmdbClient, err := tmdb.Init(os.GetEnv("YOUR_APIKEY"))
+tmdbClient, err := tmdb.Init(os.Getenv("YOUR_APIKEY"))
 if err != nil {
     fmt.Println(err)
 }
