@@ -242,9 +242,9 @@ func (suite *TMBDTestSuite) TestGetTVReviewsWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestGetTVWatchProviders() {
-	bumblebee, err := suite.client.GetTVWatchProviders(flashID, nil)
+	gameOfThrones, err := suite.client.GetTVWatchProviders(gotID, nil)
 	suite.Nil(err)
-	suite.Equal("https://www.themoviedb.org/tv/60735-the-flash/watch?locale=AR", bumblebee.Results["AR"].Link)
+	suite.Equal("https://www.themoviedb.org/tv/1399-game-of-thrones/watch?locale=AR", gameOfThrones.Results["AR"].Link)
 }
 
 func (suite *TMBDTestSuite) TestGetTVWatchProvidersFail() {
