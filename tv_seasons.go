@@ -43,6 +43,7 @@ type TVSeasonDetails struct {
 	ID           int64  `json:"id"`
 	PosterPath   string `json:"poster_path"`
 	SeasonNumber int    `json:"season_number"`
+	*TVAggregateCreditsAppend
 	*TVSeasonCreditsAppend
 	*TVSeasonExternalIDsAppend
 	*TVSeasonImagesAppend
