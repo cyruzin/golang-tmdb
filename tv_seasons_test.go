@@ -4,6 +4,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonDetails() {
 	got, err := suite.client.GetTVSeasonDetails(gotID, 1, nil)
 	suite.Nil(err)
 	suite.Equal("Season 1", got.Name)
+	suite.True(got.VoteAverage > 0)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetailsFail() {

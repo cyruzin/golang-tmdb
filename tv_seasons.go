@@ -38,11 +38,12 @@ type TVSeasonDetails struct {
 			ProfilePath string `json:"profile_path"`
 		} `json:"guest_stars"`
 	} `json:"episodes"`
-	Name         string `json:"name"`
-	Overview     string `json:"overview"`
-	ID           int64  `json:"id"`
-	PosterPath   string `json:"poster_path"`
-	SeasonNumber int    `json:"season_number"`
+	Name         string  `json:"name"`
+	Overview     string  `json:"overview"`
+	ID           int64   `json:"id"`
+	PosterPath   string  `json:"poster_path"`
+	SeasonNumber int     `json:"season_number"`
+	VoteAverage  float32 `json:"vote_average"`
 	*TVAggregateCreditsAppend
 	*TVSeasonCreditsAppend
 	*TVSeasonExternalIDsAppend
