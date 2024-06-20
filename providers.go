@@ -14,12 +14,13 @@ type WatchRegionList struct {
 // WatchProviderList type is a struct for watch provider list JSON response.
 type WatchProviderList struct {
 	Providers []struct {
-		ID              int64  `json:"id"`
-		Name            string `json:"name"`
-		DisplayPriority int64  `json:"display_priority"`
-		LogoPath        string `json:"logo_path"`
-		ProviderName    string `json:"provider_name"`
-		ProviderID      int    `json:"provider_id"`
+		ID                int64          `json:"id"`
+		Name              string         `json:"name"`
+		DisplayPriorities map[string]int `json:"display_priorities"`
+		DisplayPriority   int64          `json:"display_priority"`
+		LogoPath          string         `json:"logo_path"`
+		ProviderName      string         `json:"provider_name"`
+		ProviderID        int            `json:"provider_id"`
 	} `json:"results"`
 }
 
