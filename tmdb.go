@@ -242,6 +242,16 @@ func (c *Client) SetAlternateBaseURL() {
 	baseURL = alternateBaseURL
 }
 
+// SetCustomBaseURL sets an custom base url.
+func (c *Client) SetCustomBaseURL(url string) {
+	baseURL = url
+}
+
+// GetBaseURL gets the current base url.
+func (c *Client) GetBaseURL() string {
+	return baseURL
+}
+
 // Error type represents an error returned by the TMDB API.
 type Error struct {
 	StatusMessage string `json:"status_message,omitempty"`
