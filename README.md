@@ -44,6 +44,12 @@ tmdbClient.SetClientAutoRetry()
 // Use https://api.tmdb.org/3 instead of https://api.themoviedb.org/3.
 tmdbClient.SetAlternateBaseURL()
 
+// OPTIONAL: For tests, set a custom base URL
+tmdbClient.SetCustomBaseURL("http://localhost:3000")
+
+// Get the current base URL
+tmdbClient.GetBaseURL()
+
 // OPTIONAL: Setting a custom config for the http.Client.
 // The default timeout is 10 seconds. Here you can set other
 // options like Timeout and Transport.
