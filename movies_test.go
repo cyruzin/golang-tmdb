@@ -14,6 +14,7 @@ func (suite *TMBDTestSuite) TestGetMovieDetails() {
 	bumblebee, err := suite.client.GetMovieDetails(bumblebeeID, nil)
 	suite.Nil(err)
 	suite.Equal("Bumblebee", bumblebee.Title)
+	suite.Equal([]string{"US"}, bumblebee.OriginCountry)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieDetailsFail() {
