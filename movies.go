@@ -30,6 +30,7 @@ type MovieDetails struct {
 	Overview            string  `json:"overview"`
 	Popularity          float32 `json:"popularity"`
 	PosterPath          string  `json:"poster_path"`
+	OriginCountry []string `json:"origin_country"`
 	ProductionCompanies []struct {
 		Name          string `json:"name"`
 		ID            int64  `json:"id"`
