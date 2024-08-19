@@ -534,6 +534,7 @@ type TVExternalIDs struct {
 	FacebookID  string `json:"facebook_id"`
 	InstagramID string `json:"instagram_id"`
 	TwitterID   string `json:"twitter_id"`
+	WikiData    string `json:"wikidata_id,omitempty"`
 	ID          int64  `json:"id,omitempty"`
 }
 
