@@ -7,18 +7,21 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
+// BelongsToCollection type is a struct for a collection the movie is a part of.
+type BelongsToCollection struct {
+	ID           int64  `json:"id"`
+	Name         string `json:"name"`
+	PosterPath   string `json:"poster_path"`
+	BackdropPath string `json:"backdrop_path"`
+}
+
 // MovieDetails type is a struct for movie details JSON response.
 type MovieDetails struct {
-	Adult               bool   `json:"adult"`
-	BackdropPath        string `json:"backdrop_path"`
-	BelongsToCollection struct {
-		ID           int64  `json:"id"`
-		Name         string `json:"name"`
-		PosterPath   string `json:"poster_path"`
-		BackdropPath string `json:"backdrop_path"`
-	} `json:"belongs_to_collection"`
-	Budget int64 `json:"budget"`
-	Genres []struct {
+	Adult               bool                `json:"adult"`
+	BackdropPath        string              `json:"backdrop_path"`
+	BelongsToCollection BelongsToCollection `json:"belongs_to_collection"`
+	Budget              int64               `json:"budget"`
+	Genres              []struct {
 		ID   int64  `json:"id"`
 		Name string `json:"name"`
 	} `json:"genres"`
