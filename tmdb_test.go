@@ -155,3 +155,27 @@ func (suite *TMBDTestSuite) TestRetryDurationEmpty() {
 	duration := retryDuration(&response)
 	suite.Equal(defaultRetryDuration, duration)
 }
+
+func (suite *TMBDTestSuite) TestClientV4() {
+	_, err := InitV4("FAKE_BEARER_TOKEN")
+
+	suite.Nil(err)
+}
+
+func (suite *TMBDTestSuite) TestClientV4Fail() {
+	_, err := InitV4("")
+
+	suite.EqualError(err, "bearer token is empty")
+}
+
+func (suite *TMBDTestSuite) TestAlternateBaseURL() {
+	suite.client.SetAlternateBaseURL()
+
+	suite.Equal(suite.client.GetBaseURL(), "https://api.tmdb.org/3")
+}
+
+func (suite *TMBDTestSuite) TestCustomBaseURL() {
+	suite.client.SetCustomBaseURL("https://api.themoviedb.org/3")
+
+	suite.Equal(suite.client.GetBaseURL(), "https://api.themoviedb.org/3")
+}

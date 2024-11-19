@@ -40,20 +40,17 @@ type Trending struct {
 func (c *Client) GetTrending(
 	mediaType string,
 	timeWindow string,
-	options map[string]string,
+	urlOptions map[string]string,
 ) (*Trending, error) {
+	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
-		"%s/trending/%s/%s?api_key=%s",
+		"%s/trending/%s/%s?api_key=%s%s",
 		baseURL,
 		mediaType,
 		timeWindow,
 		c.apiKey,
+		options,
 	)
-	if options != nil {
-		for key, value := range options {
-			tmdbURL += fmt.Sprintf("&%s=%s", key, value)
-		}
-	}
 	trending := Trending{}
 	if err := c.get(tmdbURL, &trending); err != nil {
 		return nil, err

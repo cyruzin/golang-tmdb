@@ -13,6 +13,7 @@ type TVSeasonDetails struct {
 		Name           string  `json:"name"`
 		Overview       string  `json:"overview"`
 		ProductionCode string  `json:"production_code"`
+		Runtime        int     `json:"runtime"`
 		SeasonNumber   int     `json:"season_number"`
 		ShowID         int64   `json:"show_id"`
 		StillPath      string  `json:"still_path"`
@@ -37,15 +38,18 @@ type TVSeasonDetails struct {
 			ProfilePath string `json:"profile_path"`
 		} `json:"guest_stars"`
 	} `json:"episodes"`
-	Name         string `json:"name"`
-	Overview     string `json:"overview"`
-	ID           int64  `json:"id"`
-	PosterPath   string `json:"poster_path"`
-	SeasonNumber int    `json:"season_number"`
+	Name         string  `json:"name"`
+	Overview     string  `json:"overview"`
+	ID           int64   `json:"id"`
+	PosterPath   string  `json:"poster_path"`
+	SeasonNumber int     `json:"season_number"`
+	VoteAverage  float32 `json:"vote_average"`
+	*TVAggregateCreditsAppend
 	*TVSeasonCreditsAppend
 	*TVSeasonExternalIDsAppend
 	*TVSeasonImagesAppend
 	*TVSeasonVideosAppend
+	*TVSeasonTranslationsAppend
 }
 
 // TVSeasonCreditsAppend type is a struct
@@ -64,6 +68,27 @@ type TVSeasonExternalIDsAppend struct {
 // for images in append to response.
 type TVSeasonImagesAppend struct {
 	Images *TVSeasonImages `json:"images,omitempty"`
+}
+
+// TVSeasonTranslationsAppend type is a struct
+// for translations in append to response.
+type TVSeasonTranslationsAppend struct {
+	Translations *TVSeasonTranslations `json:"translations,omitempty"`
+}
+
+// TVSeasonTranslations type is a struct
+type TVSeasonTranslations struct {
+	ID           int64 `json:"id,omitempty"`
+	Translations []struct {
+		Iso31661    string `json:"iso_3166_1"`
+		Iso6391     string `json:"iso_639_1"`
+		Name        string `json:"name"`
+		EnglishName string `json:"english_name"`
+		Data        struct {
+			Name     string `json:"name"`
+			Overview string `json:"overview"`
+		} `json:"data"`
+	} `json:"translations"`
 }
 
 // TVSeasonVideosAppend type is a struct
@@ -323,4 +348,27 @@ func (c *Client) GetTVSeasonVideos(
 		return nil, err
 	}
 	return &tvSeasonVideos, nil
+}
+
+// GetTVSeasonTranslations get the translation data for an season.
+//
+// https://developer.themoviedb.org/reference/tv-season-translations
+func (c *Client) GetTVSeasonTranslations(
+	id int,
+	seasonNumber int,
+) (*TVSeasonTranslations, error) {
+	tmdbURL := fmt.Sprintf(
+		"%s%s%d%s%d/translations?api_key=%s",
+		baseURL,
+		tvURL,
+		id,
+		tvSeasonURL,
+		seasonNumber,
+		c.apiKey,
+	)
+	tvSeasonTranslations := TVSeasonTranslations{}
+	if err := c.get(tmdbURL, &tvSeasonTranslations); err != nil {
+		return nil, err
+	}
+	return &tvSeasonTranslations, nil
 }

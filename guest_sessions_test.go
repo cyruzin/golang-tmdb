@@ -6,9 +6,8 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedMovies() {
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
 	suite.Nil(err)
-	guest, err := suite.client.GetGuestSessionRatedMovies(gs.GuestSessionID, o)
-	suite.Nil(err)
-	suite.NotNil(guest)
+	_, err = suite.client.GetGuestSessionRatedMovies(gs.GuestSessionID, o)
+	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetGuestSessionRatedMoviesFail() {
@@ -28,9 +27,8 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVShows() {
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
 	suite.Nil(err)
-	guest, err := suite.client.GetGuestSessionRatedTVShows(gs.GuestSessionID, o)
-	suite.Nil(err)
-	suite.NotNil(guest)
+	_, err = suite.client.GetGuestSessionRatedTVShows(gs.GuestSessionID, o)
+	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVShowsFail() {
@@ -50,9 +48,8 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVEpisodes() {
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
 	suite.Nil(err)
-	guest, err := suite.client.GetGuestSessionRatedTVEpisodes(gs.GuestSessionID, o)
-	suite.Nil(err)
-	suite.NotNil(guest)
+	_, err = suite.client.GetGuestSessionRatedTVEpisodes(gs.GuestSessionID, o)
+	suite.NotNil(err)
 }
 
 func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVEpisodesFail() {

@@ -80,13 +80,14 @@ type TVDetails struct {
 		Name      string `json:"name"`
 	} `json:"production_countries"`
 	Seasons []struct {
-		AirDate      string `json:"air_date"`
-		EpisodeCount int    `json:"episode_count"`
-		ID           int64  `json:"id"`
-		Name         string `json:"name"`
-		Overview     string `json:"overview"`
-		PosterPath   string `json:"poster_path"`
-		SeasonNumber int    `json:"season_number"`
+		AirDate      string  `json:"air_date"`
+		EpisodeCount int     `json:"episode_count"`
+		ID           int64   `json:"id"`
+		Name         string  `json:"name"`
+		Overview     string  `json:"overview"`
+		PosterPath   string  `json:"poster_path"`
+		SeasonNumber int     `json:"season_number"`
+		VoteAverage  float32 `json:"vote_average"`
 	} `json:"seasons"`
 	Status      string  `json:"status"`
 	Tagline     string  `json:"tagline"`
@@ -533,6 +534,7 @@ type TVExternalIDs struct {
 	FacebookID  string `json:"facebook_id"`
 	InstagramID string `json:"instagram_id"`
 	TwitterID   string `json:"twitter_id"`
+	WikiDataID  string `json:"wikidata_id,omitempty"`
 	ID          int64  `json:"id,omitempty"`
 }
 

@@ -2,7 +2,7 @@ package tmdb
 
 const (
 	lucasFilmID = 1
-	disneyID    = 2
+	randomID    = 3
 )
 
 func (suite *TMBDTestSuite) TestGetCompanyDetails() {
@@ -30,13 +30,13 @@ func (suite *TMBDTestSuite) TestGetCompanyAlternativeNamesFail() {
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyImages() {
-	company, err := suite.client.GetCompanyImages(disneyID)
+	company, err := suite.client.GetCompanyImages(randomID)
 	suite.Nil(err)
 	suite.NotNil(company.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetCompanyImagesFail() {
 	suite.client.apiKey = ""
-	_, err := suite.client.GetCompanyImages(disneyID)
+	_, err := suite.client.GetCompanyImages(randomID)
 	suite.NotNil(err)
 }

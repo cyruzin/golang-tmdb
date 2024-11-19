@@ -25,14 +25,15 @@ type MovieDetails struct {
 		ID   int64  `json:"id"`
 		Name string `json:"name"`
 	} `json:"genres"`
-	Homepage            string  `json:"homepage"`
-	ID                  int64   `json:"id"`
-	IMDbID              string  `json:"imdb_id"`
-	OriginalLanguage    string  `json:"original_language"`
-	OriginalTitle       string  `json:"original_title"`
-	Overview            string  `json:"overview"`
-	Popularity          float32 `json:"popularity"`
-	PosterPath          string  `json:"poster_path"`
+	Homepage            string   `json:"homepage"`
+	ID                  int64    `json:"id"`
+	IMDbID              string   `json:"imdb_id"`
+	OriginalLanguage    string   `json:"original_language"`
+	OriginalTitle       string   `json:"original_title"`
+	Overview            string   `json:"overview"`
+	Popularity          float32  `json:"popularity"`
+	PosterPath          string   `json:"poster_path"`
+	OriginCountry       []string `json:"origin_country"`
 	ProductionCompanies []struct {
 		Name          string `json:"name"`
 		ID            int64  `json:"id"`
@@ -156,7 +157,6 @@ type MovieWatchProvidersAppend struct {
 // GetMovieDetails get the primary information about a movie.
 //
 // https://developers.themoviedb.org/3/movies
-//
 func (c *Client) GetMovieDetails(
 	id int,
 	urlOptions map[string]string,
@@ -194,7 +194,6 @@ type MovieAccountStates struct {
 // If it belongs to your favourite list.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-account-states
-//
 func (c *Client) GetMovieAccountStates(
 	id int,
 	urlOptions map[string]string,
@@ -350,6 +349,7 @@ type MovieExternalIDs struct {
 	FacebookID  string `json:"facebook_id"`
 	InstagramID string `json:"instagram_id"`
 	TwitterID   string `json:"twitter_id"`
+	WikiDataID  string `json:"wikidata_id,omitempty"`
 	ID          int64  `json:"id,omitempty"`
 }
 
@@ -395,7 +395,7 @@ type MovieImage struct {
 
 // MovieImages type is a struct for images JSON response.
 type MovieImages struct {
-	ID        int64 `json:"id,omitempty"`
+	ID        int64        `json:"id,omitempty"`
 	Backdrops []MovieImage `json:"backdrops"`
 	Logos     []MovieImage `json:"logos"`
 	Posters   []MovieImage `json:"posters"`

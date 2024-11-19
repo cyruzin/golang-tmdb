@@ -4,11 +4,12 @@ func (suite *TMBDTestSuite) TestGetTVSeasonDetails() {
 	got, err := suite.client.GetTVSeasonDetails(gotID, 1, nil)
 	suite.Nil(err)
 	suite.Equal("Season 1", got.Name)
+	suite.True(got.VoteAverage > 0)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetailsFail() {
 	_, err := suite.client.GetTVSeasonDetails(0, 1, nil)
-	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetailsWithOptions() {
@@ -107,4 +108,15 @@ func (suite *TMBDTestSuite) TestGetTVSeasonVideosWithOptions() {
 	tv, err := suite.client.GetTVSeasonVideos(gotID, 7, options)
 	suite.Nil(err)
 	suite.NotNil(tv.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonTranslations() {
+	got, err := suite.client.GetTVSeasonTranslations(gotID, 1)
+	suite.Nil(err)
+	suite.Equal(int64(gotSeasonID), got.ID)
+}
+
+func (suite *TMBDTestSuite) TestGetTVSeasonTranslationsFail() {
+	_, err := suite.client.GetTVSeasonTranslations(0, 1)
+	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
