@@ -24,6 +24,17 @@ func (suite *TMBDTestSuite) TestGetPersonDetailsWithOptions() {
 	suite.Equal("Jason Momoa", jasonMomoa.Name)
 }
 
+func (suite *TMBDTestSuite) TestGetPersonDetailsWithAppend() {
+	options := make(map[string]string)
+	options["append_to_response"] = "translations"
+	jasonMomoa, err := suite.client.GetPersonDetails(jasonMomoaID, options)
+	suite.Nil(err)
+	suite.NotNil(jasonMomoa.PersonTranslationsAppend)
+	suite.NotNil(jasonMomoa.Translations)
+	suite.NotEmpty(jasonMomoa.Translations.Translations)
+	suite.Equal("Jason Momoa", jasonMomoa.Translations.Translations[0].Data.Name)
+}
+
 func (suite *TMBDTestSuite) TestGetPersonChanges() {
 	jasonMomoa, err := suite.client.GetPersonChanges(jasonMomoaID, nil)
 	suite.Nil(err)
@@ -174,6 +185,8 @@ func (suite *TMBDTestSuite) TestGetPersonTranslationsWithOptions() {
 	tomCruise, err := suite.client.GetPersonTranslations(tomCruiseID, options)
 	suite.Nil(err)
 	suite.NotNil(tomCruise.ID)
+	suite.NotEmpty(tomCruise.Translations)
+	suite.NotEmpty(tomCruise.Translations[0].Data.Name)
 }
 
 func (suite *TMBDTestSuite) TestGetPersonLatest() {
