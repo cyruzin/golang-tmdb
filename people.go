@@ -488,6 +488,8 @@ type PersonTranslations struct {
 		Name      string `json:"name"`
 		Data      struct {
 			Biography string `json:"biography"`
+			Name      string `json:"name"`
+			Primary   bool   `json:"primary"`
 		} `json:"data"`
 		EnglishName string `json:"english_name"`
 	} `json:"translations"`
