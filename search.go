@@ -7,10 +7,8 @@ import (
 
 // SearchCompanies type is a struct for companies JSON response.
 type SearchCompanies struct {
-	Page int64 `json:"page"`
 	*SearchCompaniesResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetSearchCompanies search for companies.
@@ -38,10 +36,8 @@ func (c *Client) GetSearchCompanies(
 
 // SearchCollections type is a strcut for collections JSON response.
 type SearchCollections struct {
-	Page int64 `json:"page"`
 	*SearchCollectionsResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetSearchCollections search for collections.
@@ -69,10 +65,8 @@ func (c *Client) GetSearchCollections(
 
 // SearchKeywords type is a struct for keywords JSON response.
 type SearchKeywords struct {
-	Page int64 `json:"page"`
 	*SearchKeywordsResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetSearchKeywords search for keywords.
@@ -100,9 +94,7 @@ func (c *Client) GetSearchKeywords(
 
 // SearchMovies type is a struct for movies JSON response.
 type SearchMovies struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
+	PaginatedResultsMeta
 	*SearchMoviesResults
 }
 
@@ -131,10 +123,8 @@ func (c *Client) GetSearchMovies(
 
 // SearchMulti type is a struct for multi JSON response.
 type SearchMulti struct {
-	Page int `json:"page"`
 	*SearchMultiResults
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
+	PaginatedResultsMeta
 }
 
 // GetSearchMulti search multiple models in a single request.
@@ -164,9 +154,7 @@ func (c *Client) GetSearchMulti(
 
 // SearchPeople type is a struct for people JSON response.
 type SearchPeople struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
+	PaginatedResultsMeta
 	*SearchPeopleResults
 }
 
@@ -195,9 +183,7 @@ func (c *Client) GetSearchPeople(
 
 // SearchTVShows type is a struct for tv show JSON response.
 type SearchTVShows struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
+	PaginatedResultsMeta
 	*SearchTVShowsResults
 }
 

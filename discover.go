@@ -4,9 +4,7 @@ import "fmt"
 
 // DiscoverMovie type is a struct for movie JSON response.
 type DiscoverMovie struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
+	PaginatedResultsMeta
 	*DiscoverMovieResults
 }
 
@@ -54,9 +52,7 @@ func (c *Client) GetDiscoverMovie(
 
 // DiscoverTV type is a struct for tv JSON response.
 type DiscoverTV struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
+	PaginatedResultsMeta
 	*DiscoverTVResults
 }
 

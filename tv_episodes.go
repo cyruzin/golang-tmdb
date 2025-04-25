@@ -302,17 +302,8 @@ func (c *Client) GetTVEpisodeImages(
 
 // TVEpisodeTranslations type is a struct for translations JSON response.
 type TVEpisodeTranslations struct {
-	ID           int64 `json:"id,omitempty"`
-	Translations []struct {
-		Iso3166_1   string `json:"iso_3166_1"`
-		Iso639_1    string `json:"iso_639_1"`
-		Name        string `json:"name"`
-		EnglishName string `json:"english_name"`
-		Data        struct {
-			Name     string `json:"name"`
-			Overview string `json:"overview"`
-		} `json:"data"`
-	} `json:"translations"`
+	ID           int64         `json:"id,omitempty"`
+	Translations []Translation `json:"translations"`
 }
 
 // GetTVEpisodeTranslations get the translation data for an episode.

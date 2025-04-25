@@ -85,18 +85,8 @@ func (c *Client) GetCollectionImages(
 
 // CollectionTranslations type is a struct for translations JSON response.
 type CollectionTranslations struct {
-	ID           int64 `json:"id"`
-	Translations []struct {
-		Iso3166_1   string `json:"iso_3166_1"`
-		Iso639_1    string `json:"iso_639_1"`
-		Name        string `json:"name"`
-		EnglishName string `json:"english_name"`
-		Data        struct {
-			Title    string `json:"title"`
-			Overview string `json:"overview"`
-			Homepage string `json:"homepage"`
-		} `json:"data"`
-	} `json:"translations"`
+	ID           int64         `json:"id"`
+	Translations []Translation `json:"translations"`
 }
 
 // GetCollectionTranslations get the list translations for a collection by id.

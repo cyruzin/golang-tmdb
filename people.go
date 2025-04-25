@@ -425,11 +425,9 @@ func (c *Client) GetPersonImages(
 
 // PersonTaggedImages type is a struct for tagged images JSON response.
 type PersonTaggedImages struct {
-	ID           int64 `json:"id"`
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
-	Results      []struct {
+	ID int64 `json:"id"`
+	PaginatedResultsMeta
+	Results []struct {
 		Iso639_1    string  `json:"iso_639_1"`
 		VoteCount   int64   `json:"vote_count"`
 		MediaType   string  `json:"media_type"`
@@ -482,18 +480,8 @@ func (c *Client) GetPersonTaggedImages(
 
 // PersonTranslations type is a struct for translations JSON response.
 type PersonTranslations struct {
-	Translations []struct {
-		Iso639_1  string `json:"iso_639_1"`
-		Iso3166_1 string `json:"iso_3166_1"`
-		Name      string `json:"name"`
-		Data      struct {
-			Biography string `json:"biography"`
-			Name      string `json:"name"`
-			Primary   bool   `json:"primary"`
-		} `json:"data"`
-		EnglishName string `json:"english_name"`
-	} `json:"translations"`
-	ID int64 `json:"id,omitempty"`
+	Translations []Translation `json:"translations"`
+	ID           int64         `json:"id,omitempty"`
 }
 
 // GetPersonTranslations get a list of translations that have been created for a person.
@@ -560,10 +548,8 @@ func (c *Client) GetPersonLatest(
 
 // PersonPopular type is a struct for popular JSON response.
 type PersonPopular struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
-	Results      []struct {
+	PaginatedResultsMeta
+	Results []struct {
 		Popularity  float32 `json:"popularity"`
 		ID          int64   `json:"id"`
 		ProfilePath string  `json:"profile_path"`

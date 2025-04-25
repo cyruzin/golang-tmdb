@@ -78,17 +78,8 @@ type TVSeasonTranslationsAppend struct {
 
 // TVSeasonTranslations type is a struct
 type TVSeasonTranslations struct {
-	ID           int64 `json:"id,omitempty"`
-	Translations []struct {
-		Iso31661    string `json:"iso_3166_1"`
-		Iso6391     string `json:"iso_639_1"`
-		Name        string `json:"name"`
-		EnglishName string `json:"english_name"`
-		Data        struct {
-			Name     string `json:"name"`
-			Overview string `json:"overview"`
-		} `json:"data"`
-	} `json:"translations"`
+	ID           int64         `json:"id,omitempty"`
+	Translations []Translation `json:"translations"`
 }
 
 // TVSeasonVideosAppend type is a struct
