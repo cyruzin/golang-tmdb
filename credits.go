@@ -37,16 +37,7 @@ type CreditsDetails struct {
 			SeasonNumber  int    `json:"season_number"`
 			StillPath     string `json:"still_path"`
 		} `json:"episodes,omitempty"` // TV
-		Seasons []struct {
-			AirDate      string `json:"air_date"`
-			EpisodeCount int    `json:"episode_count"`
-			ID           int64  `json:"id"`
-			Name         string `json:"name"`
-			Overview     string `json:"overview"`
-			PosterPath   string `json:"poster_path"`
-			SeasonNumber int    `json:"season_number"`
-			ShowID       int64  `json:"show_id"`
-		} `json:"seasons,omitempty"` // TV
+		Seasons []Season `json:"seasons,omitempty"` // TV
 	} `json:"media"`
 	MediaType string `json:"media_type"`
 	ID        string `json:"id"`

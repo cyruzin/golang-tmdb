@@ -31,7 +31,6 @@ func (c *Client) GetKeywordDetails(
 // KeywordMovies type is a struct for movies that belong to a keyword JSON response.
 type KeywordMovies struct {
 	ID      int64 `json:"id"`
-	Page    int64 `json:"page"`
 	Results []struct {
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
@@ -48,8 +47,7 @@ type KeywordMovies struct {
 		VoteCount        int64   `json:"vote_count"`
 		Popularity       float32 `json:"popularity"`
 	} `json:"results"`
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetKeywordMovies get the movies that belong to a keyword.

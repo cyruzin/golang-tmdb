@@ -5,9 +5,7 @@ import "fmt"
 // ChangesMovie type is a struct for movie changes JSON response.
 type ChangesMovie struct {
 	*ChangesMovieResults
-	Page         int64 `json:"page"`
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetChangesMovie get a list of all of the movie ids

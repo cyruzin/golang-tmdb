@@ -42,10 +42,8 @@ func (c *Client) GetAccountDetails() (*AccountDetails, error) {
 
 // AccountCreatedLists type is a struct for created lists JSON response.
 type AccountCreatedLists struct {
-	Page int64 `json:"page"`
 	*AccountCreatedListsResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetCreatedLists get all of the lists created by an account.
@@ -75,10 +73,8 @@ func (c *Client) GetCreatedLists(
 
 // AccountFavoriteMovies type is a struct for favorite movies JSON response.
 type AccountFavoriteMovies struct {
-	Page int64 `json:"page"`
 	*AccountFavoriteMoviesResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetFavoriteMovies get the list of your favorite movies.
@@ -107,10 +103,8 @@ func (c *Client) GetFavoriteMovies(
 
 // AccountFavoriteTVShows type is a struct for favorite tv shows JSON response.
 type AccountFavoriteTVShows struct {
-	Page int64 `json:"page"`
 	*AccountFavoriteTVShowsResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetFavoriteTVShows get the list of your favorite TV shows.
@@ -233,10 +227,8 @@ func (c *Client) GetRatedTVShows(
 
 // AccountRatedTVEpisodes type is a struct for rated TV episodes JSON response.
 type AccountRatedTVEpisodes struct {
-	Page int64 `json:"page"`
 	*AccountRatedTVEpisodesResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetRatedTVEpisodes get a list of all the TV episodes you have rated.

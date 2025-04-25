@@ -6,10 +6,8 @@ import (
 
 // Trending type is a struct for trending JSON response.
 type Trending struct {
-	Page int `json:"page"`
 	*TrendingResults
-	TotalPages   int64 `json:"total_pages"`
-	TotalResults int64 `json:"total_results"`
+	PaginatedResultsMeta
 }
 
 // GetTrending get the daily or weekly trending items.
