@@ -281,6 +281,7 @@ type TrendingResults struct {
 		OriginalName       string   `json:"original_name,omitempty"`
 		KnownForDepartment string   `json:"known_for_department,omitempty"`
 		ProfilePath        string   `json:"profile_path,omitempty"`
+		MediaType          string   `json:"media_type,omitempty"`
 		KnownFor           []struct {
 			Adult            bool    `json:"adult"`
 			BackdropPath     string  `json:"backdrop_path"`
