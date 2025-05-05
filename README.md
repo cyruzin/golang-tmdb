@@ -10,7 +10,7 @@ This product uses the TMDb API but is not endorsed or certified by TMDb.
 
 ## Requirements
 
-- Go 1.13.x or higher. We aim to support the latest supported versions of go.
+- Go 1.18.x or higher. We aim to support the latest supported versions of go.
 
 ## Installation
 
@@ -36,7 +36,7 @@ if err != nil {
     fmt.Println(err)
 }
 
-// OPTIONAL (Recommended): Enabling auto retry functionality.
+// OPTIONAL: Enabling auto retry functionality.
 // This option will retry if the previous request fail (429 TOO MANY REQUESTS).
 tmdbClient.SetClientAutoRetry()
 

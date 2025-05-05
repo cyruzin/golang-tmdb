@@ -125,20 +125,19 @@ func shouldRetry(status int) bool {
 	return status == http.StatusAccepted || status == http.StatusTooManyRequests
 }
 
-func (c *Client) get(url string, data interface{}) error {
+func (c *Client) get(url string, data any) error {
 	if url == "" {
 		return errors.New("url field is empty")
 	}
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
+	defer cancel()
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
 	if c.bearerToken != "" {
 		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
@@ -169,9 +168,9 @@ func (c *Client) get(url string, data interface{}) error {
 
 func (c *Client) request(
 	url string,
-	body interface{},
+	body any,
 	method string,
-	data interface{},
+	data any,
 ) error {
 	if url == "" {
 		return errors.New("url field is empty")
@@ -179,9 +178,12 @@ func (c *Client) request(
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
+	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
+	defer cancel()
 	bodyBytes := new(bytes.Buffer)
 	json.NewEncoder(bodyBytes).Encode(body)
-	req, err := http.NewRequest(
+	req, err := http.NewRequestWithContext(
+		ctx,
 		method,
 		url,
 		bytes.NewBuffer(bodyBytes.Bytes()),
@@ -189,9 +191,6 @@ func (c *Client) request(
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-	req = req.WithContext(ctx)
 	req.Header.Add("content-type", "application/json;charset=utf-8")
 	if c.bearerToken != "" {
 		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
