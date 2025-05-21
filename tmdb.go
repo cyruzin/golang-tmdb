@@ -14,10 +14,8 @@ import (
 	"strconv"
 	"time"
 
-	jsoniter "github.com/json-iterator/go"
+	json "github.com/goccy/go-json"
 )
-
-var json = jsoniter.ConfigFastest
 
 // TMDb constants
 const (
