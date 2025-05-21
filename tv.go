@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	jsoniter "github.com/json-iterator/go"
+	json "github.com/goccy/go-json"
 )
 
 // TVDetails type is a struct for details JSON response.
@@ -182,10 +182,10 @@ func (c *Client) GetTVDetails(
 
 // TVAccountStates type is a struct for account states JSON response.
 type TVAccountStates struct {
-	ID        int64               `json:"id"`
-	Favorite  bool                `json:"favorite"`
-	Rated     jsoniter.RawMessage `json:"rated"`
-	Watchlist bool                `json:"watchlist"`
+	ID        int64           `json:"id"`
+	Favorite  bool            `json:"favorite"`
+	Rated     json.RawMessage `json:"rated"`
+	Watchlist bool            `json:"watchlist"`
 }
 
 // GetTVAccountStates grab the following account states for a session:
@@ -313,13 +313,13 @@ type TVChanges struct {
 	Changes []struct {
 		Key   string `json:"key"`
 		Items []struct {
-			ID            string              `json:"id"`
-			Action        string              `json:"action"`
-			Time          string              `json:"time"`
-			Iso639_1      string              `json:"iso_639_1"`
-			Iso3166_1     string              `json:"iso_3166_1"`
-			Value         jsoniter.RawMessage `json:"value"`
-			OriginalValue jsoniter.RawMessage `json:"original_value"`
+			ID            string          `json:"id"`
+			Action        string          `json:"action"`
+			Time          string          `json:"time"`
+			Iso639_1      string          `json:"iso_639_1"`
+			Iso3166_1     string          `json:"iso_3166_1"`
+			Value         json.RawMessage `json:"value"`
+			OriginalValue json.RawMessage `json:"original_value"`
 		} `json:"items"`
 	} `json:"changes"`
 }
