@@ -74,9 +74,8 @@ type CompanyImage struct {
 	Height      int     `json:"height"`
 	ID          string  `json:"id"`
 	FileType    string  `json:"file_type"`
-	VoteAverage float32 `json:"vote_average"`
-	VoteCount   int64   `json:"vote_count"`
 	Width       int     `json:"width"`
+	VoteMetrics
 }
 
 // CompanyImages type is a struct for images JSON response.

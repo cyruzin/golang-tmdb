@@ -33,8 +33,7 @@ type MovieDetails struct {
 	Tagline             string              `json:"tagline"`
 	Title               string              `json:"title"`
 	Video               bool                `json:"video"`
-	VoteAverage         float32             `json:"vote_average"`
-	VoteCount           int64               `json:"vote_count"`
+	VoteMetrics
 	*MovieAlternativeTitlesAppend
 	*MovieChangesAppend
 	*MovieCreditsAppend
@@ -366,9 +365,8 @@ type MovieImage struct {
 	FilePath    string  `json:"file_path"`
 	Height      int     `json:"height"`
 	Iso639_1    string  `json:"iso_639_1"`
-	VoteAverage float32 `json:"vote_average"`
-	VoteCount   int64   `json:"vote_count"`
 	Width       int     `json:"width"`
+	VoteMetrics
 }
 
 // MovieImages type is a struct for images JSON response.

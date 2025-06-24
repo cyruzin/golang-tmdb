@@ -84,34 +84,32 @@ type Season struct {
 // It includes information such as air date, episode and season numbers, production code,
 // episode overview, voting statistics, and related media paths.
 type LastEpisodeToAir struct {
-	AirDate        string  `json:"air_date"`
-	EpisodeNumber  int     `json:"episode_number"`
-	ID             int64   `json:"id"`
-	Name           string  `json:"name"`
-	Overview       string  `json:"overview"`
-	ProductionCode string  `json:"production_code"`
-	SeasonNumber   int     `json:"season_number"`
-	ShowID         int64   `json:"show_id"`
-	StillPath      string  `json:"still_path"`
-	VoteAverage    float32 `json:"vote_average"`
-	VoteCount      int64   `json:"vote_count"`
+	AirDate        string `json:"air_date"`
+	EpisodeNumber  int    `json:"episode_number"`
+	ID             int64  `json:"id"`
+	Name           string `json:"name"`
+	Overview       string `json:"overview"`
+	ProductionCode string `json:"production_code"`
+	SeasonNumber   int    `json:"season_number"`
+	ShowID         int64  `json:"show_id"`
+	StillPath      string `json:"still_path"`
+	VoteMetrics
 }
 
 // NextEpisodeToAir represents the details of the next episode scheduled to air for a TV show.
 // It includes information such as air date, episode and season numbers, show and episode IDs,
 // episode name and overview, production code, still image path, and voting statistics.
 type NextEpisodeToAir struct {
-	AirDate        string  `json:"air_date"`
-	EpisodeNumber  int     `json:"episode_number"`
-	ID             int64   `json:"id"`
-	Name           string  `json:"name"`
-	Overview       string  `json:"overview"`
-	ProductionCode string  `json:"production_code"`
-	SeasonNumber   int     `json:"season_number"`
-	ShowID         int64   `json:"show_id"`
-	StillPath      string  `json:"still_path"`
-	VoteAverage    float32 `json:"vote_average"`
-	VoteCount      int64   `json:"vote_count"`
+	AirDate        string `json:"air_date"`
+	EpisodeNumber  int    `json:"episode_number"`
+	ID             int64  `json:"id"`
+	Name           string `json:"name"`
+	Overview       string `json:"overview"`
+	ProductionCode string `json:"production_code"`
+	SeasonNumber   int    `json:"season_number"`
+	ShowID         int64  `json:"show_id"`
+	StillPath      string `json:"still_path"`
+	VoteMetrics
 }
 
 // Network represents a television network with its identifying information,
@@ -131,4 +129,9 @@ type CreatedBy struct {
 	Name        string `json:"name"`
 	Gender      int    `json:"gender"`
 	ProfilePath string `json:"profile_path"`
+}
+
+type VoteMetrics struct {
+	VoteCount   int64   `json:"vote_count"`
+	VoteAverage float32 `json:"vote_average"`
 }
