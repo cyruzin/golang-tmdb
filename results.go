@@ -547,20 +547,6 @@ type TVWatchProvidersResults struct {
 	} `json:"results"`
 }
 
-// TVVideosResults Result Types
-type TVVideosResults struct {
-	Results []struct {
-		ID        string `json:"id"`
-		Iso639_1  string `json:"iso_639_1"`
-		Iso3166_1 string `json:"iso_3166_1"`
-		Key       string `json:"key"`
-		Name      string `json:"name"`
-		Site      string `json:"site"`
-		Size      int    `json:"size"`
-		Type      string `json:"type"`
-	} `json:"results"`
-}
-
 // TVAiringTodayResults Result Types
 type TVAiringTodayResults struct {
 	Results []struct {
@@ -578,4 +564,22 @@ type TVAiringTodayResults struct {
 		Overview         string   `json:"overview"`
 		PosterPath       string   `json:"poster_path"`
 	} `json:"results"`
+}
+
+type VideoResult struct {
+	ID          string `json:"id"`
+	Iso639_1    string `json:"iso_639_1"`
+	Iso3166_1   string `json:"iso_3166_1"`
+	Key         string `json:"key"`
+	Name        string `json:"name"`
+	Official    bool   `json:"official"`
+	PublishedAt string `json:"published_at"`
+	Site        string `json:"site"`
+	Size        int    `json:"size"`
+	Type        string `json:"type"`
+}
+
+type VideoResults struct {
+	ID      int64         `json:"id"`
+	Results []VideoResult `json:"results"`
 }

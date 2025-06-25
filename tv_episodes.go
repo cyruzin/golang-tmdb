@@ -71,7 +71,7 @@ type TVEpisodeTranslationsAppend struct {
 // TVEpisodeVideosAppend type is a struct
 // for videos in append to response.
 type TVEpisodeVideosAppend struct {
-	Videos *TVEpisodeVideos `json:"videos,omitempty"`
+	Videos *VideoResults `json:"videos"`
 }
 
 // GetTVEpisodeDetails get the TV episode details by id.
@@ -338,21 +338,6 @@ type TVEpisodeRate struct {
 	StatusMessage string `json:"status_message"`
 }
 
-// TVEpisodeVideos type is a struct for videos JSON response.
-type TVEpisodeVideos struct {
-	ID      int64 `json:"id,omitempty"`
-	Results []struct {
-		ID        string `json:"id"`
-		Iso639_1  string `json:"iso_639_1"`
-		Iso3166_1 string `json:"iso_3166_1"`
-		Key       string `json:"key"`
-		Name      string `json:"name"`
-		Site      string `json:"site"`
-		Size      int    `json:"size"`
-		Type      string `json:"type"`
-	} `json:"results"`
-}
-
 // GetTVEpisodeVideos get the videos that have been added to a TV episode.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-videos
@@ -361,7 +346,7 @@ func (c *Client) GetTVEpisodeVideos(
 	seasonNumber int,
 	episodeNumber int,
 	urlOptions map[string]string,
-) (*TVEpisodeVideos, error) {
+) (*VideoResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d%s%d%s%d/videos?api_key=%s%s",
@@ -375,7 +360,7 @@ func (c *Client) GetTVEpisodeVideos(
 		c.apiKey,
 		options,
 	)
-	tvEpisodeVideos := TVEpisodeVideos{}
+	tvEpisodeVideos := VideoResults{}
 	if err := c.get(tmdbURL, &tvEpisodeVideos); err != nil {
 		return nil, err
 	}

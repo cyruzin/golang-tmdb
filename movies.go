@@ -86,9 +86,7 @@ type MovieReleaseDatesAppend struct {
 
 // MovieVideosAppend type is a struct for videos in append to response.
 type MovieVideosAppend struct {
-	Videos struct {
-		*MovieVideos
-	} `json:"videos,omitempty"`
+	Videos *VideoResults `json:"videos"`
 }
 
 // MovieTranslationsAppend type is a struct for translations in append to response.
@@ -460,19 +458,13 @@ func (c *Client) GetMovieReleaseDates(
 	return &movieReleaseDates, nil
 }
 
-// MovieVideos type is a struct for videos JSON response.
-type MovieVideos struct {
-	ID int64 `json:"id,omitempty"`
-	*MovieVideosResults
-}
-
 // GetMovieVideos get the videos that have been added to a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-videos
 func (c *Client) GetMovieVideos(
 	id int,
 	urlOptions map[string]string,
-) (*MovieVideos, error) {
+) (*VideoResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
@@ -482,7 +474,7 @@ func (c *Client) GetMovieVideos(
 		c.apiKey,
 		options,
 	)
-	movieVideos := MovieVideos{}
+	movieVideos := VideoResults{}
 	if err := c.get(tmdbURL, &movieVideos); err != nil {
 		return nil, err
 	}
