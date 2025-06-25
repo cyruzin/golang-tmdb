@@ -278,8 +278,8 @@ func (c *Client) GetTVAggregateCredits(
 
 // TVAlternativeTitles type is a struct for alternative titles JSON response.
 type TVAlternativeTitles struct {
-	ID int `json:"id,omitempty"`
-	*TVAlternativeTitlesResults
+	ID      int                `json:"id"`
+	Results []AlternativeTitle `json:"results"`
 }
 
 // GetTVAlternativeTitles get all of the alternative titles for a TV show.
