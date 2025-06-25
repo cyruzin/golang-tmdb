@@ -135,3 +135,11 @@ type VoteMetrics struct {
 	VoteCount   int64   `json:"vote_count"`
 	VoteAverage float32 `json:"vote_average"`
 }
+
+type ImageBase struct {
+	AspectRatio float64 `json:"aspect_ratio"`
+	FilePath    string  `json:"file_path"`
+	Height      int     `json:"height"`
+	Width       int     `json:"width"`
+	VoteMetrics
+}

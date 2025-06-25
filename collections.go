@@ -48,12 +48,8 @@ func (c *Client) GetCollectionDetails(
 
 // CollectionImage type is a struct for a single image.
 type CollectionImage struct {
-	AspectRatio float32 `json:"aspect_ratio"`
-	FilePath    string  `json:"file_path"`
-	Height      int     `json:"height"`
-	Iso639_1    string  `json:"iso_639_1"`
-	Width       int     `json:"width"`
-	VoteMetrics
+	ImageBase
+	Iso639_1 string `json:"iso_639_1"`
 }
 
 // CollectionImages type is a struct for images JSON response.
