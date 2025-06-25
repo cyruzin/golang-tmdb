@@ -143,3 +143,10 @@ type ImageBase struct {
 	Width       int     `json:"width"`
 	VoteMetrics
 }
+
+type WatchProvider struct {
+	LogoPath        string `json:"logo_path"`
+	ProviderID      int    `json:"provider_id"`
+	ProviderName    string `json:"provider_name"`
+	DisplayPriority int    `json:"display_priority"`
+}
