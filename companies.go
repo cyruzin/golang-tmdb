@@ -6,18 +6,11 @@ import (
 
 // CompanyDetails type is a struct for details JSON response.
 type CompanyDetails struct {
+	CompanyInfo
 	Description   string `json:"description"`
 	Headquarters  string `json:"headquarters"`
 	Homepage      string `json:"homepage"`
-	ID            int64  `json:"id"`
-	LogoPath      string `json:"logo_path"`
-	Name          string `json:"name"`
-	OriginCountry string `json:"origin_country"`
-	ParentCompany struct {
-		Name     string `json:"name"`
-		ID       int64  `json:"id"`
-		LogoPath string `json:"logo_path"`
-	} `json:"parent_company"`
+	ParentCompany *CompanyInfo `json:"parent_company"`
 }
 
 // GetCompanyDetails get a companies details by id.

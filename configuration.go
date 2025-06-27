@@ -52,11 +52,7 @@ func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 }
 
 // ConfigurationCountries type is a struct for countries configuration JSON response.
-type ConfigurationCountries []struct {
-	Iso3166_1   string `json:"iso_3166_1"`
-	EnglishName string `json:"english_name"`
-	NativeName  string `json:"native_name"`
-}
+type ConfigurationCountries []Country
 
 // GetConfigurationCountries get the list of countries
 // (ISO 3166-1 tags) used throughout TMDb.

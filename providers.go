@@ -4,11 +4,7 @@ import "fmt"
 
 // WatchRegionList type is a struct for watch region list JSON response.
 type WatchRegionList struct {
-	Regions []struct {
-		Iso3166_1   string `json:"iso_3166_1"`
-		EnglishName string `json:"english_name"`
-		NativeName  string `json:"native_name"`
-	} `json:"results"`
+	Regions []Country `json:"results"`
 }
 
 // WatchProviderList type is a struct for watch provider list JSON response.
