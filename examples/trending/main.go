@@ -21,7 +21,12 @@ func main() {
 	}
 
 	for _, result := range trending.Results {
-		fmt.Println(result.Title)
+		switch media := result.(type) {
+		case tmdb.MovieMedia:
+			fmt.Println(media.Title)
+		case tmdb.TVShowMedia:
+			fmt.Println(media.OriginalName)
+		}
 	}
 
 	fmt.Println("------")
@@ -38,6 +43,11 @@ func main() {
 	}
 
 	for _, result := range trending.Results {
-		fmt.Println(result.Name)
+		switch media := result.(type) {
+		case tmdb.MovieMedia:
+			fmt.Println(media.Title)
+		case tmdb.TVShowMedia:
+			fmt.Println(media.OriginalName)
+		}
 	}
 }

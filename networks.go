@@ -2,22 +2,12 @@ package tmdb
 
 import "fmt"
 
-// NetworkDetails type is a struct for details JSON response.
-type NetworkDetails struct {
-	Headquarters  string `json:"headquarters"`
-	Homepage      string `json:"homepage"`
-	ID            int64  `json:"id"`
-	LogoPath      string `json:"logo_path"`
-	Name          string `json:"name"`
-	OriginCountry string `json:"origin_country"`
-}
-
 // GetNetworkDetails get the details of a network.
 //
-// https://developers.themoviedb.org/3/networks/get-network-details
+// https://developer.themoviedb.org/reference/network-details
 func (c *Client) GetNetworkDetails(
 	id int,
-) (*NetworkDetails, error) {
+) (*CompanyInfoDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s",
 		baseURL,
@@ -25,28 +15,19 @@ func (c *Client) GetNetworkDetails(
 		id,
 		c.apiKey,
 	)
-	networkDetails := NetworkDetails{}
+	networkDetails := CompanyInfoDetails{}
 	if err := c.get(tmdbURL, &networkDetails); err != nil {
 		return nil, err
 	}
 	return &networkDetails, nil
 }
 
-// NetworkAlternativeNames type is a struct for alternative names JSON response.
-type NetworkAlternativeNames struct {
-	ID      int64 `json:"id"`
-	Results []struct {
-		Name string `json:"name"`
-		Type string `json:"type"`
-	} `json:"results"`
-}
-
 // GetNetworkAlternativeNames get the alternative names of a network.
 //
-// https://developers.themoviedb.org/3/networks/get-network-alternative-names
+// https://developer.themoviedb.org/reference/details-copy
 func (c *Client) GetNetworkAlternativeNames(
 	id int,
-) (*NetworkAlternativeNames, error) {
+) (*IDAlternativeNameResults, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_names?api_key=%s",
 		baseURL,
@@ -54,24 +35,11 @@ func (c *Client) GetNetworkAlternativeNames(
 		id,
 		c.apiKey,
 	)
-	networkAltenativeNames := NetworkAlternativeNames{}
+	networkAltenativeNames := IDAlternativeNameResults{}
 	if err := c.get(tmdbURL, &networkAltenativeNames); err != nil {
 		return nil, err
 	}
 	return &networkAltenativeNames, nil
-}
-
-// NetworkImage type is a struct for a single image.
-type NetworkImage struct {
-	ImageBase
-	ID       string `json:"id"`
-	FileType string `json:"file_type"`
-}
-
-// NetworkImages type is a struct for images JSON response.
-type NetworkImages struct {
-	ID    int64          `json:"id"`
-	Logos []NetworkImage `json:"logos"`
 }
 
 // GetNetworkImages get the TV network logos by id.
@@ -84,10 +52,10 @@ type NetworkImages struct {
 // An SVG can be scaled properly beyond those dimensions if you
 // call them as a PNG.
 //
-// https://developers.themoviedb.org/3/networks/get-network-images
+// https://developer.themoviedb.org/reference/alternative-names-copy
 func (c *Client) GetNetworkImages(
 	id int,
-) (*NetworkImages, error) {
+) (*CompanyImages, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s",
 		baseURL,
@@ -95,7 +63,7 @@ func (c *Client) GetNetworkImages(
 		id,
 		c.apiKey,
 	)
-	networkImages := NetworkImages{}
+	networkImages := CompanyImages{}
 	if err := c.get(tmdbURL, &networkImages); err != nil {
 		return nil, err
 	}

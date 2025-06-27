@@ -5,45 +5,13 @@ import (
 	"net/http"
 )
 
-// ListDetails type is a struct for details JSON response.
-type ListDetails struct {
-	CreatedBy     string `json:"created_by"`
-	Description   string `json:"description"`
-	FavoriteCount int64  `json:"favorite_count"`
-	ID            int64  `json:"id"`
-	Items         []struct {
-		Adult            bool     `json:"adult,omitempty"` // Movie
-		BackdropPath     string   `json:"backdrop_path"`
-		FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
-		GenreIDs         []int64  `json:"genre_ids"`
-		ID               int64    `json:"id"`
-		MediaType        string   `json:"media_type"`
-		Name             string   `json:"name,omitempty"` // TV
-		OriginalLanguage string   `json:"original_language"`
-		OriginalName     string   `json:"original_name,omitempty"`  // TV
-		OriginalTitle    string   `json:"original_title,omitempty"` // Movie
-		OriginCountry    []string `json:"origin_country,omitempty"` // TV
-		Overview         string   `json:"overview"`
-		Popularity       float32  `json:"popularity"`
-		PosterPath       string   `json:"poster_path"`
-		ReleaseDate      string   `json:"release_date,omitempty"` // Movie
-		Title            string   `json:"title,omitempty"`        // Movie
-		Video            bool     `json:"video,omitempty"`        // Movie
-		VoteMetrics
-	} `json:"items"`
-	ItemCount  int64  `json:"item_count"`
-	Iso639_1   string `json:"iso_639_1"`
-	Name       string `json:"name"`
-	PosterPath string `json:"poster_path"`
-}
-
 // GetListDetails get the details of a list.
 //
-// https://developers.themoviedb.org/3/lists/get-list-details
+// https://developer.themoviedb.org/reference/list-details
 func (c *Client) GetListDetails(
 	id int64,
 	urlOptions map[string]string,
-) (*ListDetails, error) {
+) (*PaginatedListDetails, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
@@ -53,22 +21,16 @@ func (c *Client) GetListDetails(
 		c.apiKey,
 		options,
 	)
-	ListDetails := ListDetails{}
+	ListDetails := PaginatedListDetails{}
 	if err := c.get(tmdbURL, &ListDetails); err != nil {
 		return nil, err
 	}
 	return &ListDetails, nil
 }
 
-// ListItemStatus type is a struct for item status JSON response.
-type ListItemStatus struct {
-	ID          string `json:"id"`
-	ItemPresent bool   `json:"item_present"`
-}
-
 // GetListItemStatus check if a movie has already been added to the list.
 //
-// https://developers.themoviedb.org/3/lists/check-item-status
+// https://developer.themoviedb.org/reference/list-check-item-status
 func (c *Client) GetListItemStatus(
 	id int64,
 	urlOptions map[string]string,
@@ -89,33 +51,19 @@ func (c *Client) GetListItemStatus(
 	return &listItemStatus, nil
 }
 
-// ListResponse type is a struct for list creation JSON response.
-type ListResponse struct {
-	*Response
-	Success bool  `json:"success"`
-	ListID  int64 `json:"list_id"`
-}
-
-// ListCreate type is a struct for list creation JSON request.
-type ListCreate struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Language    string `json:"language"`
-}
-
 // CreateList creates a list.
 //
-// https://developers.themoviedb.org/3/lists/create-list
+// https://developer.themoviedb.org/reference/list-create
 func (c *Client) CreateList(
 	list *ListCreate,
-) (*ListResponse, error) {
+) (*IDListResponse, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list?api_key=%s&session_id=%s",
 		baseURL,
 		c.apiKey,
 		c.sessionID,
 	)
-	createList := ListResponse{}
+	createList := IDListResponse{}
 	if err := c.request(
 		tmdbURL,
 		list,
@@ -127,18 +75,13 @@ func (c *Client) CreateList(
 	return &createList, nil
 }
 
-// ListMedia type is a struct for list media JSON request.
-type ListMedia struct {
-	MediaID int64 `json:"media_id"`
-}
-
 // AddMovie add a movie to a list.
 //
-// https://developers.themoviedb.org/3/lists/add-movie
+// https://developer.themoviedb.org/reference/list-add-movie
 func (c *Client) AddMovie(
 	listID int,
 	mediaID *ListMedia,
-) (*Response, error) {
+) (*ListResponse, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/add_item?api_key=%s&session_id=%s",
 		baseURL,
@@ -146,7 +89,7 @@ func (c *Client) AddMovie(
 		c.apiKey,
 		c.sessionID,
 	)
-	response := Response{}
+	response := ListResponse{}
 	if err := c.request(
 		tmdbURL,
 		mediaID,
@@ -160,11 +103,11 @@ func (c *Client) AddMovie(
 
 // RemoveMovie remove a movie from a list.
 //
-// https://developers.themoviedb.org/3/lists/remove-movie
+// https://developer.themoviedb.org/reference/list-remove-movie
 func (c *Client) RemoveMovie(
 	listID int,
 	mediaID *ListMedia,
-) (*Response, error) {
+) (*ListResponse, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/remove_item?api_key=%s&session_id=%s",
 		baseURL,
@@ -172,7 +115,7 @@ func (c *Client) RemoveMovie(
 		c.apiKey,
 		c.sessionID,
 	)
-	response := Response{}
+	response := ListResponse{}
 	if err := c.request(
 		tmdbURL,
 		mediaID,
@@ -186,11 +129,11 @@ func (c *Client) RemoveMovie(
 
 // ClearList clear all of the items from a list.
 //
-// https://developers.themoviedb.org/3/lists/clear-list
+// https://developer.themoviedb.org/reference/list-clear
 func (c *Client) ClearList(
 	listID int,
 	confirm bool,
-) (*Response, error) {
+) (*ListResponse, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/clear?api_key=%s&session_id=%s&confirm=%t",
 		baseURL,
@@ -199,7 +142,7 @@ func (c *Client) ClearList(
 		c.sessionID,
 		confirm,
 	)
-	response := Response{}
+	response := ListResponse{}
 	if err := c.request(
 		tmdbURL,
 		listID,
@@ -213,7 +156,7 @@ func (c *Client) ClearList(
 
 // DeleteList deletes a list.
 //
-// https://developers.themoviedb.org/3/lists/delete-list
+// https://developer.themoviedb.org/reference/list-delete
 func (c *Client) DeleteList(
 	listID int,
 ) (*Response, error) {

@@ -5,19 +5,13 @@ import (
 	"net/url"
 )
 
-// SearchCompanies type is a struct for companies JSON response.
-type SearchCompanies struct {
-	*SearchCompaniesResults
-	PaginatedResultsMeta
-}
-
 // GetSearchCompanies search for companies.
 //
 // https://developers.themoviedb.org/3/search/search-companies
 func (c *Client) GetSearchCompanies(
 	query string,
 	urlOptions map[string]string,
-) (*SearchCompanies, error) {
+) (*PaginatedCompanyInfoResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%scompany?api_key=%s&query=%s%s",
@@ -27,26 +21,20 @@ func (c *Client) GetSearchCompanies(
 		url.QueryEscape(query),
 		options,
 	)
-	SearchCompanies := SearchCompanies{}
+	SearchCompanies := PaginatedCompanyInfoResults{}
 	if err := c.get(tmdbURL, &SearchCompanies); err != nil {
 		return nil, err
 	}
 	return &SearchCompanies, nil
 }
 
-// SearchCollections type is a strcut for collections JSON response.
-type SearchCollections struct {
-	*SearchCollectionsResults
-	PaginatedResultsMeta
-}
-
 // GetSearchCollections search for collections.
 //
-// https://developers.themoviedb.org/3/search/search-collections
+// https://developer.themoviedb.org/reference/search-collection
 func (c *Client) GetSearchCollections(
 	query string,
 	urlOptions map[string]string,
-) (*SearchCollections, error) {
+) (*PaginatedCollectionResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%scollection?api_key=%s&query=%s%s",
@@ -56,26 +44,20 @@ func (c *Client) GetSearchCollections(
 		url.QueryEscape(query),
 		options,
 	)
-	searchCollections := SearchCollections{}
+	searchCollections := PaginatedCollectionResults{}
 	if err := c.get(tmdbURL, &searchCollections); err != nil {
 		return nil, err
 	}
 	return &searchCollections, nil
 }
 
-// SearchKeywords type is a struct for keywords JSON response.
-type SearchKeywords struct {
-	*SearchKeywordsResults
-	PaginatedResultsMeta
-}
-
 // GetSearchKeywords search for keywords.
 //
-// https://developers.themoviedb.org/3/search/search-keywords
+// https://developer.themoviedb.org/reference/search-keyword
 func (c *Client) GetSearchKeywords(
 	query string,
 	urlOptions map[string]string,
-) (*SearchKeywords, error) {
+) (*PaginatedKeywordsResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%skeyword?api_key=%s&query=%s%s",
@@ -85,17 +67,11 @@ func (c *Client) GetSearchKeywords(
 		url.QueryEscape(query),
 		options,
 	)
-	searchKeywords := SearchKeywords{}
+	searchKeywords := PaginatedKeywordsResults{}
 	if err := c.get(tmdbURL, &searchKeywords); err != nil {
 		return nil, err
 	}
 	return &searchKeywords, nil
-}
-
-// SearchMovies type is a struct for movies JSON response.
-type SearchMovies struct {
-	PaginatedResultsMeta
-	*SearchMoviesResults
 }
 
 // GetSearchMovies search for keywords.
@@ -104,7 +80,7 @@ type SearchMovies struct {
 func (c *Client) GetSearchMovies(
 	query string,
 	urlOptions map[string]string,
-) (*SearchMovies, error) {
+) (*PaginatedMovieMediaResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s&query=%s%s",
@@ -114,17 +90,11 @@ func (c *Client) GetSearchMovies(
 		url.QueryEscape(query),
 		options,
 	)
-	searchMovies := SearchMovies{}
+	searchMovies := PaginatedMovieMediaResults{}
 	if err := c.get(tmdbURL, &searchMovies); err != nil {
 		return nil, err
 	}
 	return &searchMovies, nil
-}
-
-// SearchMulti type is a struct for multi JSON response.
-type SearchMulti struct {
-	*SearchMultiResults
-	PaginatedResultsMeta
 }
 
 // GetSearchMulti search multiple models in a single request.
@@ -135,7 +105,7 @@ type SearchMulti struct {
 func (c *Client) GetSearchMulti(
 	query string,
 	urlOptions map[string]string,
-) (*SearchMulti, error) {
+) (*PaginatedMediaResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smulti?api_key=%s&query=%s%s",
@@ -145,17 +115,11 @@ func (c *Client) GetSearchMulti(
 		url.QueryEscape(query),
 		options,
 	)
-	searchMulti := SearchMulti{}
+	searchMulti := PaginatedMediaResults{}
 	if err := c.get(tmdbURL, &searchMulti); err != nil {
 		return nil, err
 	}
 	return &searchMulti, nil
-}
-
-// SearchPeople type is a struct for people JSON response.
-type SearchPeople struct {
-	PaginatedResultsMeta
-	*SearchPeopleResults
 }
 
 // GetSearchPeople search for people.
@@ -164,7 +128,7 @@ type SearchPeople struct {
 func (c *Client) GetSearchPeople(
 	query string,
 	urlOptions map[string]string,
-) (*SearchPeople, error) {
+) (*PaginatedPersonResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sperson?api_key=%s&query=%s%s",
@@ -174,17 +138,11 @@ func (c *Client) GetSearchPeople(
 		url.QueryEscape(query),
 		options,
 	)
-	searchPeople := SearchPeople{}
+	searchPeople := PaginatedPersonResults{}
 	if err := c.get(tmdbURL, &searchPeople); err != nil {
 		return nil, err
 	}
 	return &searchPeople, nil
-}
-
-// SearchTVShows type is a struct for tv show JSON response.
-type SearchTVShows struct {
-	PaginatedResultsMeta
-	*SearchTVShowsResults
 }
 
 // GetSearchTVShow search for a TV Show.
@@ -193,7 +151,7 @@ type SearchTVShows struct {
 func (c *Client) GetSearchTVShow(
 	query string,
 	urlOptions map[string]string,
-) (*SearchTVShows, error) {
+) (*PaginatedTVShowResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s&query=%s%s",
@@ -203,7 +161,7 @@ func (c *Client) GetSearchTVShow(
 		url.QueryEscape(query),
 		options,
 	)
-	searchTVShows := SearchTVShows{}
+	searchTVShows := PaginatedTVShowResults{}
 	if err := c.get(tmdbURL, &searchTVShows); err != nil {
 		return nil, err
 	}

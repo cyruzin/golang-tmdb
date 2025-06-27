@@ -2,11 +2,6 @@ package tmdb
 
 import "fmt"
 
-// GenreMovieList type is a struct for genres movie list JSON response.
-type GenreMovieList struct {
-	Genres []Genre `json:"genres"`
-}
-
 // GetGenreMovieList get the list of official genres for movies.
 //
 // https://developers.themoviedb.org/3/genres/get-movie-list
