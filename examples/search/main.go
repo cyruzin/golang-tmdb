@@ -25,14 +25,14 @@ func main() {
 	}
 
 	// Iterate
-	for _, v := range search.Results {
-		switch v.MediaType {
-		case "movie":
-			fmt.Println("Movie Title: ", v.Title)
-		case "tv":
-			fmt.Println("TV Show: ", v.Name)
-		case "person":
-			fmt.Println("Person: ", v.Name)
+	for _, result := range search.Results {
+		switch media := result.(type) {
+		case tmdb.MovieMedia:
+			fmt.Println("Movie Title: ", media.Title)
+		case tmdb.TVShowMedia:
+			fmt.Println("TV Show: ", media.Name)
+		case tmdb.PersonMedia:
+			fmt.Println("Person: ", media.Name)
 		}
 	}
 }

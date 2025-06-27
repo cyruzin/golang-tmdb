@@ -2,12 +2,6 @@ package tmdb
 
 import "fmt"
 
-// DiscoverMovie type is a struct for movie JSON response.
-type DiscoverMovie struct {
-	PaginatedResultsMeta
-	*DiscoverMovieResults
-}
-
 // GetDiscoverMovie discover movies by different types of data like
 // average rating, number of votes, genres and certifications. You can
 // get a valid list of certifications from the  method.
@@ -34,7 +28,7 @@ type DiscoverMovie struct {
 // https://developers.themoviedb.org/3/discover/movie-discover
 func (c *Client) GetDiscoverMovie(
 	urlOptions map[string]string,
-) (*DiscoverMovie, error) {
+) (*PaginatedMovieMediaResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s%s",
@@ -43,17 +37,11 @@ func (c *Client) GetDiscoverMovie(
 		c.apiKey,
 		options,
 	)
-	discoverMovie := DiscoverMovie{}
+	discoverMovie := PaginatedMovieMediaResults{}
 	if err := c.get(tmdbURL, &discoverMovie); err != nil {
 		return nil, err
 	}
 	return &discoverMovie, nil
-}
-
-// DiscoverTV type is a struct for tv JSON response.
-type DiscoverTV struct {
-	PaginatedResultsMeta
-	*DiscoverTVResults
 }
 
 // GetDiscoverTV Discover TV shows by different types of data like average
@@ -68,7 +56,7 @@ type DiscoverTV struct {
 // https://developers.themoviedb.org/3/discover/tv-discover
 func (c *Client) GetDiscoverTV(
 	urlOptions map[string]string,
-) (*DiscoverTV, error) {
+) (*PaginatedTVShowResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s%s",
@@ -77,7 +65,7 @@ func (c *Client) GetDiscoverTV(
 		c.apiKey,
 		options,
 	)
-	discoverTV := DiscoverTV{}
+	discoverTV := PaginatedTVShowResults{}
 	if err := c.get(tmdbURL, &discoverTV); err != nil {
 		return nil, err
 	}

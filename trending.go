@@ -4,12 +4,6 @@ import (
 	"fmt"
 )
 
-// Trending type is a struct for trending JSON response.
-type Trending struct {
-	*TrendingResults
-	PaginatedResultsMeta
-}
-
 // GetTrending get the daily or weekly trending items.
 //
 // The daily trending list tracks items over the period of
@@ -34,12 +28,12 @@ type Trending struct {
 //
 // week - View the trending list for the week.
 //
-// https://developers.themoviedb.org/3/trending/get-trending
+// https://developer.themoviedb.org/reference/trending-all
 func (c *Client) GetTrending(
 	mediaType string,
 	timeWindow string,
 	urlOptions map[string]string,
-) (*Trending, error) {
+) (*PaginatedMediaResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s/trending/%s/%s?api_key=%s%s",
@@ -49,7 +43,7 @@ func (c *Client) GetTrending(
 		c.apiKey,
 		options,
 	)
-	trending := Trending{}
+	trending := PaginatedMediaResults{}
 	if err := c.get(tmdbURL, &trending); err != nil {
 		return nil, err
 	}
