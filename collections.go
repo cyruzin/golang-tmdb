@@ -14,6 +14,7 @@ type CollectionDetails struct {
 		BackdropPath     string  `json:"backdrop_path"`
 		GenreIDs         []int64 `json:"genre_ids"`
 		ID               int64   `json:"id"`
+		MediaType        string  `json:"media_type"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
 		Overview         string  `json:"overview"`
