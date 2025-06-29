@@ -153,7 +153,6 @@ type PersonMovieCredits struct {
 		ID               int64   `json:"id"`
 		Order            int     `json:"order"`
 		Video            bool    `json:"video"`
-		VoteCount        int64   `json:"vote_count"`
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
 		GenreIDs         []int64 `json:"genre_ids"`
@@ -161,9 +160,9 @@ type PersonMovieCredits struct {
 		OriginalTitle    string  `json:"original_title"`
 		Popularity       float32 `json:"popularity"`
 		Title            string  `json:"title"`
-		VoteAverage      float32 `json:"vote_average"`
 		Overview         string  `json:"overview"`
 		ReleaseDate      string  `json:"release_date"`
+		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
 		ID               int64   `json:"id"`
@@ -172,10 +171,8 @@ type PersonMovieCredits struct {
 		OriginalTitle    string  `json:"original_title"`
 		Job              string  `json:"job"`
 		Overview         string  `json:"overview"`
-		VoteCount        int64   `json:"vote_count"`
 		Video            bool    `json:"video"`
 		ReleaseDate      string  `json:"release_date"`
-		VoteAverage      float32 `json:"vote_average"`
 		Title            string  `json:"title"`
 		Popularity       float32 `json:"popularity"`
 		GenreIDs         []int64 `json:"genre_ids"`
@@ -183,6 +180,7 @@ type PersonMovieCredits struct {
 		Adult            bool    `json:"adult"`
 		PosterPath       string  `json:"poster_path"`
 		CreditID         string  `json:"credit_id"`
+		VoteMetrics
 	} `json:"crew"`
 	ID int64 `json:"id,omitempty"`
 }
@@ -220,8 +218,6 @@ type PersonTVCredits struct {
 		Character        string   `json:"character"`
 		Name             string   `json:"name"`
 		PosterPath       string   `json:"poster_path"`
-		VoteCount        int64    `json:"vote_count"`
-		VoteAverage      float32  `json:"vote_average"`
 		Popularity       float32  `json:"popularity"`
 		EpisodeCount     int      `json:"episode_count"`
 		OriginalLanguage string   `json:"original_language"`
@@ -229,6 +225,7 @@ type PersonTVCredits struct {
 		BackdropPath     string   `json:"backdrop_path"`
 		Overview         string   `json:"overview"`
 		OriginCountry    []string `json:"origin_country"`
+		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
 		ID               int64    `json:"id"`
@@ -244,10 +241,9 @@ type PersonTVCredits struct {
 		FirstAirDate     string   `json:"first_air_date"`
 		BackdropPath     string   `json:"backdrop_path"`
 		Popularity       float32  `json:"popularity"`
-		VoteCount        int64    `json:"vote_count"`
-		VoteAverage      float32  `json:"vote_average"`
 		PosterPath       string   `json:"poster_path"`
 		CreditID         string   `json:"credit_id"`
+		VoteMetrics
 	} `json:"crew"`
 	ID int64 `json:"id,omitempty"`
 }
@@ -282,11 +278,9 @@ type PersonCombinedCredits struct {
 		Character        string   `json:"character"`
 		OriginalTitle    string   `json:"original_title"`
 		Overview         string   `json:"overview"`
-		VoteCount        int64    `json:"vote_count"`
 		Video            bool     `json:"video"`
 		MediaType        string   `json:"media_type"`
 		ReleaseDate      string   `json:"release_date"`
-		VoteAverage      float32  `json:"vote_average"`
 		Title            string   `json:"title"`
 		Popularity       float32  `json:"popularity"`
 		OriginalLanguage string   `json:"original_language"`
@@ -300,6 +294,7 @@ type PersonCombinedCredits struct {
 		OriginalName     string   `json:"original_name"`
 		Name             string   `json:"name"`
 		FirstAirDate     string   `json:"first_air_date"`
+		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
 		ID               int64   `json:"id"`
@@ -308,7 +303,6 @@ type PersonCombinedCredits struct {
 		OriginalTitle    string  `json:"original_title"`
 		Job              string  `json:"job"`
 		Overview         string  `json:"overview"`
-		VoteCount        int64   `json:"vote_count"`
 		Video            bool    `json:"video"`
 		MediaType        string  `json:"media_type"`
 		PosterPath       string  `json:"poster_path"`
@@ -316,10 +310,10 @@ type PersonCombinedCredits struct {
 		Title            string  `json:"title"`
 		Popularity       float32 `json:"popularity"`
 		GenreIDs         []int64 `json:"genre_ids"`
-		VoteAverage      float32 `json:"vote_average"`
 		Adult            bool    `json:"adult"`
 		ReleaseDate      string  `json:"release_date"`
 		CreditID         string  `json:"credit_id"`
+		VoteMetrics
 	} `json:"crew"`
 	ID int64 `json:"id,omitempty"`
 }
@@ -391,10 +385,9 @@ type PersonImage struct {
 	Iso639_1    string  `json:"iso_639_1"`
 	Width       int     `json:"width"`
 	Height      int     `json:"height"`
-	VoteCount   int64   `json:"vote_count"`
-	VoteAverage float32 `json:"vote_average"`
 	FilePath    string  `json:"file_path"`
 	AspectRatio float32 `json:"aspect_ratio"`
+	VoteMetrics
 }
 
 // PersonImages type is a struct for images JSON response.
@@ -429,13 +422,11 @@ type PersonTaggedImages struct {
 	PaginatedResultsMeta
 	Results []struct {
 		Iso639_1    string  `json:"iso_639_1"`
-		VoteCount   int64   `json:"vote_count"`
 		MediaType   string  `json:"media_type"`
 		FilePath    string  `json:"file_path"`
 		AspectRatio float32 `json:"aspect_ratio"`
 		Media       struct {
 			Popularity       float32 `json:"popularity"`
-			VoteCount        int64   `json:"vote_count"`
 			Video            bool    `json:"video"`
 			PosterPath       string  `json:"poster_path"`
 			ID               int64   `json:"id"`
@@ -445,13 +436,13 @@ type PersonTaggedImages struct {
 			OriginalTitle    string  `json:"original_title"`
 			GenreIDs         []int64 `json:"genre_ids"`
 			Title            string  `json:"title"`
-			VoteAverage      float32 `json:"vote_average"`
 			Overview         string  `json:"overview"`
 			ReleaseDate      string  `json:"release_date"`
+			VoteMetrics
 		} `json:"media"`
-		Height      int     `json:"height"`
-		VoteAverage float32 `json:"vote_average"`
-		Width       int     `json:"width"`
+		Height int `json:"height"`
+		Width  int `json:"width"`
+		VoteMetrics
 	} `json:"results"`
 }
 
@@ -561,8 +552,6 @@ type PersonPopular struct {
 			MediaType        string   `json:"media_type"`
 			Name             string   `json:"name,omitempty"`
 			Title            string   `json:"title,omitempty"`
-			VoteCount        int64    `json:"vote_count"`
-			VoteAverage      float32  `json:"vote_average"`
 			PosterPath       string   `json:"poster_path"`
 			FirstAirDate     string   `json:"first_air_date,omitempty"`
 			ReleaseDate      string   `json:"release_date,omitempty"`
@@ -572,6 +561,7 @@ type PersonPopular struct {
 			BackdropPath     string   `json:"backdrop_path"`
 			Overview         string   `json:"overview"`
 			OriginCountry    []string `json:"origin_country,omitempty"`
+			VoteMetrics
 		} `json:"known_for"`
 		Adult bool `json:"adult"`
 	} `json:"results"`

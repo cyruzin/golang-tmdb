@@ -17,9 +17,8 @@ type GuestSessionRatedMovies struct {
 		Popularity       float32 `json:"popularity"`
 		Title            string  `json:"title"`
 		Video            bool    `json:"video"`
-		VoteAverage      float32 `json:"vote_average"`
-		VoteCount        int64   `json:"vote_count"`
 		Rating           float32 `json:"rating"`
+		VoteMetrics
 	} `json:"results"`
 	PaginatedResultsMeta
 }
@@ -61,9 +60,8 @@ type GuestSessionRatedTVShows struct {
 		PosterPath       string   `json:"poster_path"`
 		Popularity       float32  `json:"popularity"`
 		Name             string   `json:"name"`
-		VoteAverage      float32  `json:"vote_average"`
-		VoteCount        int64    `json:"vote_count"`
 		Rating           float32  `json:"rating"`
+		VoteMetrics
 	} `json:"results"`
 	PaginatedResultsMeta
 }
@@ -103,9 +101,8 @@ type GuestSessionRatedTVEpisodes struct {
 		SeasonNumber   int     `json:"season_number"`
 		ShowID         int64   `json:"show_id"`
 		StillPath      string  `json:"still_path"`
-		VoteAverage    float32 `json:"vote_average"`
-		VoteCount      int64   `json:"vote_count"`
 		Rating         float32 `json:"rating"`
+		VoteMetrics
 	} `json:"results"`
 	PaginatedResultsMeta
 }

@@ -16,9 +16,8 @@ type FindByID struct {
 		ReleaseDate      string  `json:"release_date"`
 		Title            string  `json:"title"`
 		Video            bool    `json:"video"`
-		VoteAverage      float32 `json:"vote_average"`
-		VoteCount        int64   `json:"vote_count"`
 		Popularity       float32 `json:"popularity"`
+		VoteMetrics
 	} `json:"movie_results,omitempty"`
 	PersonResults []struct {
 		Adult    bool   `json:"adult"`
@@ -43,8 +42,7 @@ type FindByID struct {
 			ReleaseDate      string   `json:"release_date,omitempty"` // Movie
 			Title            string   `json:"title,omitempty"`        // Movie
 			Video            bool     `json:"video,omitempty"`        // Movie
-			VoteAverage      float32  `json:"vote_average"`
-			// VoteCount        int64   `json:"vote_count"` // FIXME: -> float32
+			VoteMetrics
 		} `json:"known_for"`
 		KnownForDepartment string  `json:"known_for_department"`
 		ProfilePath        string  `json:"profile_path"`
@@ -54,8 +52,6 @@ type FindByID struct {
 		OriginalName     string   `json:"original_name"`
 		ID               int64    `json:"id"`
 		Name             string   `json:"name"`
-		VoteCount        int64    `json:"vote_count"`
-		VoteAverage      float32  `json:"vote_average"`
 		FirstAirDate     string   `json:"first_air_date"`
 		PosterPath       string   `json:"poster_path"`
 		GenreIDs         []int64  `json:"genre_ids"`
@@ -64,19 +60,19 @@ type FindByID struct {
 		Overview         string   `json:"overview"`
 		OriginCountry    []string `json:"origin_country"`
 		Popularity       float32  `json:"popularity"`
+		VoteMetrics
 	} `json:"tv_results,omitempty"`
 	TvEpisodeResults []struct {
-		AirDate        string  `json:"air_date"`
-		EpisodeNumber  int     `json:"episode_number"`
-		ID             int64   `json:"id"`
-		Name           string  `json:"name"`
-		Overview       string  `json:"overview"`
-		ProductionCode string  `json:"production_code"`
-		SeasonNumber   int     `json:"season_number"`
-		ShowID         int64   `json:"show_id"`
-		StillPath      string  `json:"still_path"`
-		VoteAverage    float32 `json:"vote_average"`
-		VoteCount      int64   `json:"vote_count"`
+		AirDate        string `json:"air_date"`
+		EpisodeNumber  int    `json:"episode_number"`
+		ID             int64  `json:"id"`
+		Name           string `json:"name"`
+		Overview       string `json:"overview"`
+		ProductionCode string `json:"production_code"`
+		SeasonNumber   int    `json:"season_number"`
+		ShowID         int64  `json:"show_id"`
+		StillPath      string `json:"still_path"`
+		VoteMetrics
 	} `json:"tv_episode_results,omitempty"`
 	TvSeasonResults []struct {
 		AirDate      string `json:"air_date"`

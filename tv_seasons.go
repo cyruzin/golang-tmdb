@@ -7,19 +7,18 @@ type TVSeasonDetails struct {
 	IDString string `json:"_id"`
 	AirDate  string `json:"air_date"`
 	Episodes []struct {
-		AirDate        string  `json:"air_date"`
-		EpisodeNumber  int     `json:"episode_number"`
-		ID             int64   `json:"id"`
-		Name           string  `json:"name"`
-		Overview       string  `json:"overview"`
-		ProductionCode string  `json:"production_code"`
-		Runtime        int     `json:"runtime"`
-		SeasonNumber   int     `json:"season_number"`
-		ShowID         int64   `json:"show_id"`
-		StillPath      string  `json:"still_path"`
-		VoteAverage    float32 `json:"vote_average"`
-		VoteCount      int64   `json:"vote_count"`
-		Crew           []struct {
+		AirDate        string `json:"air_date"`
+		EpisodeNumber  int    `json:"episode_number"`
+		ID             int64  `json:"id"`
+		Name           string `json:"name"`
+		Overview       string `json:"overview"`
+		ProductionCode string `json:"production_code"`
+		Runtime        int    `json:"runtime"`
+		SeasonNumber   int    `json:"season_number"`
+		ShowID         int64  `json:"show_id"`
+		StillPath      string `json:"still_path"`
+		VoteMetrics
+		Crew []struct {
 			ID          int64  `json:"id"`
 			CreditID    string `json:"credit_id"`
 			Name        string `json:"name"`
@@ -258,9 +257,8 @@ type TVSeasonImage struct {
 	FilePath    string  `json:"file_path"`
 	Height      int     `json:"height"`
 	Iso639_1    string  `json:"iso_639_1"`
-	VoteAverage float32 `json:"vote_average"`
-	VoteCount   int64   `json:"vote_count"`
 	Width       int     `json:"width"`
+	VoteMetrics
 }
 
 // TVSeasonImages type is a struct for images JSON response.

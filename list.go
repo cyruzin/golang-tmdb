@@ -29,8 +29,7 @@ type ListDetails struct {
 		ReleaseDate      string   `json:"release_date,omitempty"` // Movie
 		Title            string   `json:"title,omitempty"`        // Movie
 		Video            bool     `json:"video,omitempty"`        // Movie
-		VoteAverage      float32  `json:"vote_average"`
-		VoteCount        int64    `json:"vote_count"`
+		VoteMetrics
 	} `json:"items"`
 	ItemCount  int64  `json:"item_count"`
 	Iso639_1   string `json:"iso_639_1"`

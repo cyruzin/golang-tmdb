@@ -25,9 +25,8 @@ type TVEpisodeGroupsDetails struct {
 			SeasonNumber   int             `json:"season_number"`
 			ShowID         int64           `json:"show_id"`
 			StillPath      string          `json:"still_path"`
-			VoteAverage    float32         `json:"vote_average"`
-			VoteCount      int64           `json:"vote_count"`
 			Order          int             `json:"order"`
+			VoteMetrics
 		} `json:"episodes"`
 		Locked bool `json:"locked"`
 	} `json:"groups"`

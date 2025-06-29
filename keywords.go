@@ -43,9 +43,8 @@ type KeywordMovies struct {
 		ReleaseDate      string  `json:"release_date"`
 		Title            string  `json:"title"`
 		Video            bool    `json:"video"`
-		VoteAverage      float32 `json:"vote_average"`
-		VoteCount        int64   `json:"vote_count"`
 		Popularity       float32 `json:"popularity"`
+		VoteMetrics
 	} `json:"results"`
 	PaginatedResultsMeta
 }

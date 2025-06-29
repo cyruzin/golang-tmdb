@@ -37,8 +37,7 @@ type TVDetails struct {
 	Status              string              `json:"status"`
 	Tagline             string              `json:"tagline"`
 	Type                string              `json:"type"`
-	VoteAverage         float32             `json:"vote_average"`
-	VoteCount           int64               `json:"vote_count"`
+	VoteMetrics
 	*TVAggregateCreditsAppend
 	*TVAlternativeTitlesAppend
 	*TVChangesAppend
@@ -520,9 +519,8 @@ type TVImage struct {
 	FilePath    string  `json:"file_path"`
 	Height      int     `json:"height"`
 	Iso639_1    string  `json:"iso_639_1"`
-	VoteAverage float32 `json:"vote_average"`
-	VoteCount   int64   `json:"vote_count"`
 	Width       int     `json:"width"`
+	VoteMetrics
 }
 
 // TVImages type is a struct for images JSON response.

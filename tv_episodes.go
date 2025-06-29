@@ -28,15 +28,14 @@ type TVEpisodeDetails struct {
 		Gender      int    `json:"gender"`
 		ProfilePath string `json:"profile_path"`
 	} `json:"guest_stars"`
-	Name           string  `json:"name"`
-	Overview       string  `json:"overview"`
-	ID             int64   `json:"id"`
-	ProductionCode string  `json:"production_code"`
-	Runtime        int     `json:"runtime"`
-	SeasonNumber   int     `json:"season_number"`
-	StillPath      string  `json:"still_path"`
-	VoteAverage    float32 `json:"vote_average"`
-	VoteCount      int64   `json:"vote_count"`
+	Name           string `json:"name"`
+	Overview       string `json:"overview"`
+	ID             int64  `json:"id"`
+	ProductionCode string `json:"production_code"`
+	Runtime        int    `json:"runtime"`
+	SeasonNumber   int    `json:"season_number"`
+	StillPath      string `json:"still_path"`
+	VoteMetrics
 	*TVEpisodeCreditsAppend
 	*TVEpisodeExternalIDsAppend
 	*TVEpisodeImagesAppend
@@ -258,9 +257,8 @@ type TVEpisodeImage struct {
 	FilePath    string  `json:"file_path"`
 	Height      int     `json:"height"`
 	Iso6391     any     `json:"iso_639_1"`
-	VoteAverage float32 `json:"vote_average"`
-	VoteCount   int64   `json:"vote_count"`
 	Width       int     `json:"width"`
+	VoteMetrics
 }
 
 // TVEpisodeImages type is a struct for images JSON response.
