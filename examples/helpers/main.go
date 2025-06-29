@@ -27,7 +27,7 @@ func main() {
 	fmt.Println(tmdb.GetImageURL(movie.PosterPath, tmdb.Original))
 
 	// Generating Video URLs
-	for _, video := range movie.MovieVideosAppend.Videos.MovieVideos.Results {
+	for _, video := range movie.MovieVideosAppend.Videos.Results {
 		if video.Key != "" {
 			fmt.Println(tmdb.GetVideoURL(video.Key))
 		}

@@ -133,7 +133,7 @@ fmt.Println(tmdb.GetImageURL(movie.BackdropPath, tmdb.W500))
 fmt.Println(tmdb.GetImageURL(movie.PosterPath, tmdb.Original))
 // Ouput: https://image.tmdb.org/t/p/original/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg
 
-for _, video := range movie.MovieVideosAppend.Videos.MovieVideos.Results {
+for _, video := range movie.MovieVideosAppend.Videos.Results {
    if video.Key != "" {
 	 fmt.Println(tmdb.GetVideoURL(video.Key))
      // Output: https://www.youtube.com/watch?v=6ZfuNTqbHE8

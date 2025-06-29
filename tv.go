@@ -143,9 +143,7 @@ type TVTranslationsAppend struct {
 
 // TVVideosAppend type is a struct for videos in append to response.
 type TVVideosAppend struct {
-	Videos struct {
-		*TVVideos
-	} `json:"videos,omitempty"`
+	Videos *VideoResults `json:"videos"`
 }
 
 // TVWatchProvidersAppend type is a struct for
@@ -758,19 +756,13 @@ func (c *Client) GetTVTranslations(
 	return &tvTranslations, nil
 }
 
-// TVVideos type is a struct for videos JSON response.
-type TVVideos struct {
-	ID int64 `json:"id,omitempty"`
-	*TVVideosResults
-}
-
 // GetTVVideos get the videos that have been added to a TV show.
 //
 // https://developers.themoviedb.org/3/tv/get-tv-videos
 func (c *Client) GetTVVideos(
 	id int,
 	urlOptions map[string]string,
-) (*TVVideos, error) {
+) (*VideoResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
@@ -780,7 +772,7 @@ func (c *Client) GetTVVideos(
 		c.apiKey,
 		options,
 	)
-	tvVideos := TVVideos{}
+	tvVideos := VideoResults{}
 	if err := c.get(tmdbURL, &tvVideos); err != nil {
 		return nil, err
 	}
