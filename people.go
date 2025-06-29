@@ -382,12 +382,8 @@ func (c *Client) GetPersonExternalIDs(
 
 // PersonImage type is a struct for a single image.
 type PersonImage struct {
-	Iso639_1    string  `json:"iso_639_1"`
-	Width       int     `json:"width"`
-	Height      int     `json:"height"`
-	FilePath    string  `json:"file_path"`
-	AspectRatio float32 `json:"aspect_ratio"`
-	VoteMetrics
+	ImageBase
+	Iso639_1 string `json:"iso_639_1"`
 }
 
 // PersonImages type is a struct for images JSON response.
@@ -421,11 +417,10 @@ type PersonTaggedImages struct {
 	ID int64 `json:"id"`
 	PaginatedResultsMeta
 	Results []struct {
-		Iso639_1    string  `json:"iso_639_1"`
-		MediaType   string  `json:"media_type"`
-		FilePath    string  `json:"file_path"`
-		AspectRatio float32 `json:"aspect_ratio"`
-		Media       struct {
+		ImageBase
+		Iso639_1  string `json:"iso_639_1"`
+		MediaType string `json:"media_type"`
+		Media     struct {
 			Popularity       float32 `json:"popularity"`
 			Video            bool    `json:"video"`
 			PosterPath       string  `json:"poster_path"`
@@ -440,9 +435,6 @@ type PersonTaggedImages struct {
 			ReleaseDate      string  `json:"release_date"`
 			VoteMetrics
 		} `json:"media"`
-		Height int `json:"height"`
-		Width  int `json:"width"`
-		VoteMetrics
 	} `json:"results"`
 }
 
