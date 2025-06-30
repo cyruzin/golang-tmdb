@@ -126,7 +126,7 @@ type MovieKeywordsAppend struct {
 // MovieWatchProvidersAppend type is a struct for
 // watch/providers in append to response.
 type MovieWatchProvidersAppend struct {
-	WatchProviders *MovieWatchProviders `json:"watch/providers,omitempty"`
+	WatchProviders *WatchProviderResults `json:"watch/providers"`
 }
 
 // GetMovieDetails get the primary information about a movie.
@@ -475,19 +475,13 @@ func (c *Client) GetMovieVideos(
 	return &movieVideos, nil
 }
 
-// MovieWatchProviders type is a struct for watch/providers JSON response.
-type MovieWatchProviders struct {
-	ID int64 `json:"id,omitempty"`
-	*MovieWatchProvidersResults
-}
-
 // GetMovieWatchProviders get a list of the availabilities per country by provider for a movie.
 //
 // https://developers.themoviedb.org/3/movies/get-movie-watch-providers
 func (c *Client) GetMovieWatchProviders(
 	id int,
 	urlOptions map[string]string,
-) (*MovieWatchProviders, error) {
+) (*WatchProviderResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watch/providers?api_key=%s%s",
@@ -497,7 +491,7 @@ func (c *Client) GetMovieWatchProviders(
 		c.apiKey,
 		options,
 	)
-	movieWatchProviders := MovieWatchProviders{}
+	movieWatchProviders := WatchProviderResults{}
 	if err := c.get(tmdbURL, &movieWatchProviders); err != nil {
 		return nil, err
 	}

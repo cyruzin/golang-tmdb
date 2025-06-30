@@ -322,29 +322,16 @@ type MovieVideosResults struct {
 	} `json:"results"`
 }
 
-// MovieWatchProvidersResults Result Types
-type MovieWatchProvidersResults struct {
-	Results map[string]struct {
-		Link     string `json:"link"`
-		Flatrate []struct {
-			DisplayPriority int64  `json:"display_priority"`
-			LogoPath        string `json:"logo_path"`
-			ProviderID      int64  `json:"provider_id"`
-			ProviderName    string `json:"provider_name"`
-		} `json:"flatrate,omitempty"`
-		Rent []struct {
-			DisplayPriority int64  `json:"display_priority"`
-			LogoPath        string `json:"logo_path"`
-			ProviderID      int64  `json:"provider_id"`
-			ProviderName    string `json:"provider_name"`
-		} `json:"rent,omitempty"`
-		Buy []struct {
-			DisplayPriority int64  `json:"display_priority"`
-			LogoPath        string `json:"logo_path"`
-			ProviderID      int64  `json:"provider_id"`
-			ProviderName    string `json:"provider_name"`
-		} `json:"buy,omitempty"`
-	} `json:"results"`
+type WatchProviderResult struct {
+	Link     string           `json:"link"`
+	Flatrate *[]WatchProvider `json:"flatrate"`
+	Rent     *[]WatchProvider `json:"rent"`
+	Buy      *[]WatchProvider `json:"buy"`
+}
+
+type WatchProviderResults struct {
+	ID      int64                          `json:"id"`
+	Results map[string]WatchProviderResult `json:"results"`
 }
 
 // MovieRecommendationsResults Result Types
