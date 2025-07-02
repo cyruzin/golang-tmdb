@@ -415,15 +415,6 @@ type MoviePopularResults struct {
 	} `json:"results"`
 }
 
-// TVAlternativeTitlesResults Result Types
-type TVAlternativeTitlesResults struct {
-	Results []struct {
-		Iso3166_1 string `json:"iso_3166_1"`
-		Title     string `json:"title"`
-		Type      string `json:"type"`
-	} `json:"results"`
-}
-
 // TVContentRatingsResults Result Types
 type TVContentRatingsResults struct {
 	Results []struct {

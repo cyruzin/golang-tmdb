@@ -191,12 +191,8 @@ func (c *Client) GetMovieAccountStates(
 
 // MovieAlternativeTitles type is a struct for alternative titles JSON response.
 type MovieAlternativeTitles struct {
-	ID     int `json:"id,omitempty"`
-	Titles []struct {
-		Iso3166_1 string `json:"iso_3166_1"`
-		Title     string `json:"title"`
-		Type      string `json:"type"`
-	} `json:"titles"`
+	ID     int                `json:"id"`
+	Titles []AlternativeTitle `json:"titles"`
 }
 
 // GetMovieAlternativeTitles get all of the alternative titles for a movie.

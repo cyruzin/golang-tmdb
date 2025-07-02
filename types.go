@@ -150,3 +150,9 @@ type WatchProvider struct {
 	ProviderName    string `json:"provider_name"`
 	DisplayPriority int    `json:"display_priority"`
 }
+
+type AlternativeTitle struct {
+	Iso3166_1 string `json:"iso_3166_1"`
+	Title     string `json:"title"`
+	Type      string `json:"type"`
+}
