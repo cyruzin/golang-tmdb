@@ -1,6 +1,6 @@
 // Copyright (c) 2019 Cyro Dubeux. License MIT.
 
-// Package tmdb is a wrapper for working with TMDb API.
+// Package tmdb is a Golang wrapper around the TMDb API
 package tmdb
 
 import (
