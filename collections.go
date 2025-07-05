@@ -4,27 +4,12 @@ import "fmt"
 
 // CollectionDetails type is a struct for details JSON response.
 type CollectionDetails struct {
-	ID           int64  `json:"id"`
-	Name         string `json:"name"`
-	Overview     string `json:"overview"`
-	PosterPath   string `json:"poster_path"`
-	BackdropPath string `json:"backdrop_path"`
-	Parts        []struct {
-		Adult            bool    `json:"adult"`
-		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
-		MediaType        string  `json:"media_type"`
-		OriginalLanguage string  `json:"original_language"`
-		OriginalTitle    string  `json:"original_title"`
-		Overview         string  `json:"overview"`
-		PosterPath       string  `json:"poster_path"`
-		ReleaseDate      string  `json:"release_date"`
-		Title            string  `json:"title"`
-		Video            bool    `json:"video"`
-		Popularity       float32 `json:"popularity"`
-		VoteMetrics
-	} `json:"parts"`
+	ID           int64        `json:"id"`
+	Name         string       `json:"name"`
+	Overview     string       `json:"overview"`
+	PosterPath   string       `json:"poster_path"`
+	BackdropPath string       `json:"backdrop_path"`
+	Parts        []MovieMedia `json:"parts"`
 }
 
 // GetCollectionDetails get collection details by id.

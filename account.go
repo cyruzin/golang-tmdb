@@ -134,9 +134,9 @@ func (c *Client) GetFavoriteTVShows(
 // AccountFavorite type is a struct for movies or TV shows
 // favorite JSON request.
 type AccountFavorite struct {
-	MediaType string `json:"media_type"`
-	MediaID   int64  `json:"media_id"`
-	Favorite  bool   `json:"favorite"`
+	MediaType MediaType `json:"media_type"`
+	MediaID   int64     `json:"media_id"`
+	Favorite  bool      `json:"favorite"`
 }
 
 // MarkAsFavorite this method allows you to mark a movie
@@ -316,9 +316,9 @@ func (c *Client) GetTVShowsWatchlist(
 // AccountWatchlist type is a struct for movies or TV shows
 // watchlist JSON request.
 type AccountWatchlist struct {
-	MediaType string `json:"media_type"`
-	MediaID   int64  `json:"media_id"`
-	Watchlist bool   `json:"watchlist"`
+	MediaType MediaType `json:"media_type"`
+	MediaID   int64     `json:"media_id"`
+	Watchlist bool      `json:"watchlist"`
 }
 
 // AddToWatchlist add a movie or TV show to your watchlist.

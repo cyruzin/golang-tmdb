@@ -6,7 +6,7 @@ import (
 
 // Trending type is a struct for trending JSON response.
 type Trending struct {
-	*TrendingResults
+	Results []Media `json:"results"`
 	PaginatedResultsMeta
 }
 

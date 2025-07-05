@@ -4,12 +4,9 @@ import "fmt"
 
 // NetworkDetails type is a struct for details JSON response.
 type NetworkDetails struct {
-	Headquarters  string `json:"headquarters"`
-	Homepage      string `json:"homepage"`
-	ID            int64  `json:"id"`
-	LogoPath      string `json:"logo_path"`
-	Name          string `json:"name"`
-	OriginCountry string `json:"origin_country"`
+	Network
+	Headquarters string `json:"headquarters"`
+	Homepage     string `json:"homepage"`
 }
 
 // GetNetworkDetails get the details of a network.
