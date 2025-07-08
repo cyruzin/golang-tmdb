@@ -30,6 +30,11 @@ func (suite *TMBDTestSuite) TestGetTVSeasonChange() {
 	suite.NotNil(got.Changes[0].Items[0].ID)
 }
 
+func (suite *TMBDTestSuite) TestGetTVSeasonChangeFail() {
+	_, err := suite.client.GetTVSeasonChanges(0, nil)
+	suite.Error(err)
+}
+
 func (suite *TMBDTestSuite) TestGetTVSeasonCredits() {
 	tv, err := suite.client.GetTVSeasonCredits(gotID, 7, nil)
 	suite.Nil(err)

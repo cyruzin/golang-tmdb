@@ -117,6 +117,14 @@ func (suite *TMBDTestSuite) TestRequestFail() {
 	)
 }
 
+func (suite *TMBDTestSuite) TestEncodeBodyError() {
+	body := struct {
+		Fn func()
+	}{Fn: func() {}}
+	err := suite.client.request("http://www.testfakewebsite.org", body, "POST", nil)
+	suite.Error(err)
+}
+
 func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 	err := suite.client.request("http://[::1]:namedport", nil, "GET", nil)
 	suite.Error(err)
@@ -189,7 +197,8 @@ func (suite *TMBDTestSuite) TestDecodeErrorEmptyBody() {
 func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
 	r, err := http.Get("https://go.dev/")
 	suite.Nil(err)
-	r.Body.Close()
+	err = r.Body.Close()
+	suite.Nil(err)
 	err = suite.client.decodeError(r)
 	suite.Contains(err.Error(), "could not read body response")
 }

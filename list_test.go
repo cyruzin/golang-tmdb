@@ -66,8 +66,9 @@ func (suite *TMBDTestSuite) TestCreateListFail() {
 }
 
 func (suite *TMBDTestSuite) TestClearList() {
-	suite.client.SetSessionID(sessionID)
-	_, err := suite.client.ClearList(128331, true)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
+	_, err = suite.client.ClearList(128331, true)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
@@ -78,8 +79,9 @@ func (suite *TMBDTestSuite) TestClearListFail() {
 }
 
 func (suite *TMBDTestSuite) TestDeleteList() {
-	suite.client.SetSessionID(sessionID)
-	_, err := suite.client.DeleteList(128331)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
+	_, err = suite.client.DeleteList(128331)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
@@ -95,9 +97,10 @@ func (suite *TMBDTestSuite) TestDeleteListFail() {
 }
 
 func (suite *TMBDTestSuite) TestAddMovie() {
-	suite.client.SetSessionID(sessionID)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
 	mediaID := ListMedia{MediaID: 500}
-	_, err := suite.client.AddMovie(128331, &mediaID)
+	_, err = suite.client.AddMovie(128331, &mediaID)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
@@ -109,9 +112,10 @@ func (suite *TMBDTestSuite) TestAddMovieFail() {
 }
 
 func (suite *TMBDTestSuite) TestRemoveMovie() {
-	suite.client.SetSessionID(sessionID)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
 	mediaID := ListMedia{MediaID: 500}
-	_, err := suite.client.RemoveMovie(128331, &mediaID)
+	_, err = suite.client.RemoveMovie(128331, &mediaID)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 

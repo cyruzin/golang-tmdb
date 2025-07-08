@@ -145,12 +145,14 @@ func (suite *TMBDTestSuite) TestGetMovieReleaseDatesFail() {
 	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
-func (suite *TMBDTestSuite) TestGetMovieAccountStatesFail() {
-	_, err := suite.client.GetMovieAccountStates(0, nil)
-	suite.Equal("code: 3 | success: false | message: Authentication failed: You do not have permissions to access the service.", err.Error())
+func (suite *TMBDTestSuite) TestGetMovieAccountStates() {
+	options := make(map[string]string)
+	options["session_id"] = sessionID
+	_, err := suite.client.GetMovieAccountStates(jackReacherID, options)
+	suite.Nil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetMovieAccountStatesWithOptions() {
+func (suite *TMBDTestSuite) TestGetMovieAccountStatesFail() {
 	suite.client.apiKey = ""
 	options := make(map[string]string)
 	options["session_id"] = "koQubnkaZ"
@@ -384,7 +386,8 @@ func (suite *TMBDTestSuite) TestGetMovieUpcomingWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestPostMovieRating() {
-	suite.client.SetSessionID(sessionID)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
 	response, err := suite.client.PostMovieRating(aquamanID, 10, nil)
 	suite.Nil(err)
 	suite.NotNil(response.StatusCode)
@@ -397,7 +400,8 @@ func (suite *TMBDTestSuite) TestPostMovieRatingFail() {
 }
 
 func (suite *TMBDTestSuite) TestDeleteMovieRating() {
-	suite.client.SetSessionID(sessionID)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
 	response, err := suite.client.DeleteMovieRating(aquamanID, nil)
 	suite.Nil(err)
 	suite.Equal(13, response.StatusCode)

@@ -36,7 +36,7 @@ func main() {
 	}
 
 	// Credits - Iterate cast from append to response.
-	for _, v := range movie.MovieCreditsAppend.Credits.Cast {
+	for _, v := range movie.Credits.Cast {
 		fmt.Println(v.Name)
 	}
 }

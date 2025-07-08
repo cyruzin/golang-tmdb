@@ -24,7 +24,7 @@ func main() {
 		fmt.Println(err)
 	}
 
-	for _, v := range movie.MovieWatchProvidersAppend.WatchProviders.Results {
+	for _, v := range movie.WatchProviders.Results {
 		fmt.Println(v.Flatrate)
 	}
 }

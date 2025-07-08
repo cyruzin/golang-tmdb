@@ -30,12 +30,14 @@ func (suite *TMBDTestSuite) TestGetTVDetailsWithOptions() {
 	suite.Equal("Vikings", vikings.Name)
 }
 
-func (suite *TMBDTestSuite) TestGetTVAccountStatesFail() {
-	_, err := suite.client.GetTVAccountStates(0, nil)
-	suite.Equal("code: 3 | success: false | message: Authentication failed: You do not have permissions to access the service.", err.Error())
+func (suite *TMBDTestSuite) TestGetTVAccountStates() {
+	options := make(map[string]string)
+	options["session_id"] = sessionID
+	_, err := suite.client.GetTVAccountStates(vikingsID, options)
+	suite.Nil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetTVAccountStatesWithOptions() {
+func (suite *TMBDTestSuite) TestGetTVAccountStatesFail() {
 	suite.client.apiKey = ""
 	options := make(map[string]string)
 	options["session_id"] = "koQubnkaZ"
@@ -410,20 +412,21 @@ func (suite *TMBDTestSuite) TestGetTVTopRatedWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestPostTVShowRating() {
-	suite.client.SetSessionID(sessionID)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
 	response, err := suite.client.PostTVShowRating(vikingsID, 10, nil)
 	suite.Nil(err)
 	suite.NotNil(response.StatusCode)
 }
 
 func (suite *TMBDTestSuite) TestPostTVShowRatingFail() {
-	suite.client.sessionID = ""
-	_, err := suite.client.PostMovieRating(vikingsID, 10, nil)
-	suite.NotNil(err)
+	_, err := suite.client.PostTVShowRating(0, 10, nil)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestDeleteTVShowRating() {
-	suite.client.SetSessionID(sessionID)
+	err := suite.client.SetSessionID(sessionID)
+	suite.Nil(err)
 	response, err := suite.client.DeleteTVShowRating(vikingsID, nil)
 	suite.Nil(err)
 	suite.Equal(13, response.StatusCode)

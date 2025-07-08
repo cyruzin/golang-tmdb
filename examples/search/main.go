@@ -26,11 +26,12 @@ func main() {
 
 	// Iterate
 	for _, v := range search.Results {
-		if v.MediaType == "movie" {
+		switch v.MediaType {
+		case "movie":
 			fmt.Println("Movie Title: ", v.Title)
-		} else if v.MediaType == "tv" {
+		case "tv":
 			fmt.Println("TV Show: ", v.Name)
-		} else if v.MediaType == "person" {
+		case "person":
 			fmt.Println("Person: ", v.Name)
 		}
 	}
