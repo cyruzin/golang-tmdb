@@ -2,76 +2,7 @@ package tmdb
 
 import (
 	"fmt"
-
-	json "github.com/goccy/go-json"
 )
-
-// TVEpisodeDetails type is a struct for details JSON response.
-type TVEpisodeDetails struct {
-	AirDate string `json:"air_date"`
-	Crew    []struct {
-		ID          int64  `json:"id"`
-		CreditID    string `json:"credit_id"`
-		Name        string `json:"name"`
-		Department  string `json:"department"`
-		Job         string `json:"job"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
-	} `json:"crew"`
-	EpisodeNumber int `json:"episode_number"`
-	GuestStars    []struct {
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		CreditID    string `json:"credit_id"`
-		Character   string `json:"character"`
-		Order       int    `json:"order"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
-	} `json:"guest_stars"`
-	Name           string `json:"name"`
-	Overview       string `json:"overview"`
-	ID             int64  `json:"id"`
-	ProductionCode string `json:"production_code"`
-	Runtime        int    `json:"runtime"`
-	SeasonNumber   int    `json:"season_number"`
-	StillPath      string `json:"still_path"`
-	VoteMetrics
-	*TVEpisodeCreditsAppend
-	*TVEpisodeExternalIDsAppend
-	*TVEpisodeImagesAppend
-	*TVEpisodeTranslationsAppend
-	*TVEpisodeVideosAppend
-}
-
-// TVEpisodeCreditsAppend type is a struct
-// for credits in append to response.
-type TVEpisodeCreditsAppend struct {
-	Credits *TVEpisodeCredits `json:"credits,omitempty"`
-}
-
-// TVEpisodeExternalIDsAppend type is a struct
-// for external ids in append to response.
-type TVEpisodeExternalIDsAppend struct {
-	ExternalIDs *TVEpisodeExternalIDs `json:"external_ids,omitempty"`
-}
-
-// TVEpisodeImagesAppend type is a struct
-// for images in append to response.
-type TVEpisodeImagesAppend struct {
-	Images *TVEpisodeImages `json:"images,omitempty"`
-}
-
-// TVEpisodeTranslationsAppend type is a struct
-// for translations in append to response.
-type TVEpisodeTranslationsAppend struct {
-	Translations *TVEpisodeTranslations `json:"translations,omitempty"`
-}
-
-// TVEpisodeVideosAppend type is a struct
-// for videos in append to response.
-type TVEpisodeVideosAppend struct {
-	Videos *VideoResults `json:"videos"`
-}
 
 // GetTVEpisodeDetails get the TV episode details by id.
 //
@@ -104,27 +35,6 @@ func (c *Client) GetTVEpisodeDetails(
 	return &tvEpisodeDetails, nil
 }
 
-// TVEpisodeChanges type is a struct for changes JSON response.
-type TVEpisodeChanges struct {
-	Changes []struct {
-		Key   string `json:"key"`
-		Items []struct {
-			ID            string `json:"id"`
-			Action        string `json:"action"`
-			Time          string `json:"time"`
-			Iso639_1      string `json:"iso_639_1"`
-			Iso3166_1     string `json:"iso_3166_1"`
-			OriginalValue struct {
-				PersonID  int64  `json:"person_id"`
-				Character string `json:"character"`
-				Order     int64  `json:"order"`
-				CreditID  string `json:"credit_id"`
-			} `json:"original_values,omitempty"`
-			Value json.RawMessage `json:"value,omitempty"`
-		} `json:"items"`
-	} `json:"changes"`
-}
-
 // GetTVEpisodeChanges get the changes for a TV episode.
 // By default only the last 24 hours are returned.
 //
@@ -135,7 +45,7 @@ type TVEpisodeChanges struct {
 func (c *Client) GetTVEpisodeChanges(
 	id int,
 	urlOptions map[string]string,
-) (*TVEpisodeChanges, error) {
+) (*Changes, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sepisode/%d/changes?api_key=%s%s",
@@ -145,43 +55,11 @@ func (c *Client) GetTVEpisodeChanges(
 		c.apiKey,
 		options,
 	)
-	tvEpisodeChanges := TVEpisodeChanges{}
+	tvEpisodeChanges := Changes{}
 	if err := c.get(tmdbURL, &tvEpisodeChanges); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeChanges, nil
-}
-
-// TVEpisodeCredits type is a struct for credits JSON response.
-type TVEpisodeCredits struct {
-	Cast []struct {
-		Character   string `json:"character"`
-		CreditID    string `json:"credit_id"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		Order       int    `json:"order"`
-		ProfilePath string `json:"profile_path"`
-	} `json:"cast"`
-	Crew []struct {
-		ID          int64  `json:"id"`
-		CreditID    string `json:"credit_id"`
-		Name        string `json:"name"`
-		Department  string `json:"department"`
-		Job         string `json:"job"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
-	} `json:"crew"`
-	GuestStars []struct {
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		CreditID    string `json:"credit_id"`
-		Character   string `json:"character"`
-		Order       int    `json:"order"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
-	} `json:"guest_stars"`
-	ID int64 `json:"id,omitempty"`
 }
 
 // GetTVEpisodeCredits get the credits (cast, crew and guest stars) for a TV episode.
@@ -208,16 +86,6 @@ func (c *Client) GetTVEpisodeCredits(
 		return nil, err
 	}
 	return &tvEpisodeCredits, nil
-}
-
-// TVEpisodeExternalIDs type is a struct for external ids JSON response.
-type TVEpisodeExternalIDs struct {
-	ID          int64  `json:"id,omitempty"`
-	IMDbID      string `json:"imdb_id"`
-	FreebaseMID string `json:"freebase_mid"`
-	FreebaseID  string `json:"freebase_id"`
-	TVDBID      int64  `json:"tvdb_id"`
-	TVRageID    int64  `json:"tvrage_id"`
 }
 
 // GetTVEpisodeExternalIDs get the external ids for a TV episode.
@@ -251,18 +119,6 @@ func (c *Client) GetTVEpisodeExternalIDs(
 	return &tvEpisodeExternalIDs, nil
 }
 
-// TVEpisodeImage type is a struct for a single image.
-type TVEpisodeImage struct {
-	ImageBase
-	Iso6391 any `json:"iso_639_1"`
-}
-
-// TVEpisodeImages type is a struct for images JSON response.
-type TVEpisodeImages struct {
-	ID     int64            `json:"id,omitempty"`
-	Stills []TVEpisodeImage `json:"stills"`
-}
-
 // GetTVEpisodeImages get the images that belong to a TV episode.
 //
 // Querying images with a language parameter will filter the results.
@@ -294,12 +150,6 @@ func (c *Client) GetTVEpisodeImages(
 	return &tvEpisodeImages, nil
 }
 
-// TVEpisodeTranslations type is a struct for translations JSON response.
-type TVEpisodeTranslations struct {
-	ID           int64         `json:"id,omitempty"`
-	Translations []Translation `json:"translations"`
-}
-
 // GetTVEpisodeTranslations get the translation data for an episode.
 //
 // https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-translations
@@ -324,12 +174,6 @@ func (c *Client) GetTVEpisodeTranslations(
 		return nil, err
 	}
 	return &tvEpisodeTranslations, nil
-}
-
-// TVEpisodeRate type is a struct for rate JSON response.
-type TVEpisodeRate struct {
-	StatusCode    int    `json:"status_code"`
-	StatusMessage string `json:"status_message"`
 }
 
 // GetTVEpisodeVideos get the videos that have been added to a TV episode.

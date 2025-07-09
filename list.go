@@ -7,34 +7,28 @@ import (
 
 // ListDetails type is a struct for details JSON response.
 type ListDetails struct {
-	CreatedBy     string `json:"created_by"`
-	Description   string `json:"description"`
-	FavoriteCount int64  `json:"favorite_count"`
-	ID            int64  `json:"id"`
-	Items         []struct {
-		Adult            bool     `json:"adult,omitempty"` // Movie
-		BackdropPath     string   `json:"backdrop_path"`
-		FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
-		GenreIDs         []int64  `json:"genre_ids"`
-		ID               int64    `json:"id"`
-		MediaType        string   `json:"media_type"`
-		Name             string   `json:"name,omitempty"` // TV
-		OriginalLanguage string   `json:"original_language"`
-		OriginalName     string   `json:"original_name,omitempty"`  // TV
-		OriginalTitle    string   `json:"original_title,omitempty"` // Movie
-		OriginCountry    []string `json:"origin_country,omitempty"` // TV
-		Overview         string   `json:"overview"`
-		Popularity       float32  `json:"popularity"`
-		PosterPath       string   `json:"poster_path"`
-		ReleaseDate      string   `json:"release_date,omitempty"` // Movie
-		Title            string   `json:"title,omitempty"`        // Movie
-		Video            bool     `json:"video,omitempty"`        // Movie
+	List
+	CreatedBy string `json:"created_by"`
+	Items     []struct {
+		Adult            bool      `json:"adult,omitempty"` // Movie
+		BackdropPath     string    `json:"backdrop_path"`
+		FirstAirDate     string    `json:"first_air_date,omitempty"` // TV
+		GenreIDs         []int64   `json:"genre_ids"`
+		ID               int64     `json:"id"`
+		MediaType        MediaType `json:"media_type"`
+		Name             string    `json:"name,omitempty"` // TV
+		OriginalLanguage string    `json:"original_language"`
+		OriginalName     string    `json:"original_name,omitempty"`  // TV
+		OriginalTitle    string    `json:"original_title,omitempty"` // Movie
+		OriginCountry    []string  `json:"origin_country,omitempty"` // TV
+		Overview         string    `json:"overview"`
+		Popularity       float32   `json:"popularity"`
+		PosterPath       string    `json:"poster_path"`
+		ReleaseDate      string    `json:"release_date,omitempty"` // Movie
+		Title            string    `json:"title,omitempty"`        // Movie
+		Video            bool      `json:"video,omitempty"`        // Movie
 		VoteMetrics
 	} `json:"items"`
-	ItemCount  int64  `json:"item_count"`
-	Iso639_1   string `json:"iso_639_1"`
-	Name       string `json:"name"`
-	PosterPath string `json:"poster_path"`
 }
 
 // GetListDetails get the details of a list.

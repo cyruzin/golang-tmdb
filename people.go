@@ -67,13 +67,18 @@ type PersonImagesAppend struct {
 // PersonTaggedImagesAppend type is a struct
 // for tagged images in append to response.
 type PersonTaggedImagesAppend struct {
-	TaggedImages *PersonTaggedImages `json:"tagged_images,omitempty"`
+	TaggedImages *PaginatedPersonTaggedImagesResults `json:"tagged_images"`
 }
 
 // PersonTranslationsAppend type is a struct
 // for translations in append to response.
 type PersonTranslationsAppend struct {
 	Translations *PersonTranslations `json:"translations,omitempty"`
+}
+
+type IDPaginatedPersonTaggedImagesResults struct {
+	ID int64 `json:"id"`
+	PaginatedPersonTaggedImagesResults
 }
 
 // GetPersonDetails get the primary person details by id.
@@ -146,43 +151,9 @@ func (c *Client) GetPersonChanges(
 
 // PersonMovieCredits type is a struct for movie credits JSON response.
 type PersonMovieCredits struct {
-	Cast []struct {
-		Character        string  `json:"character"`
-		CreditID         string  `json:"credit_id"`
-		PosterPath       string  `json:"poster_path"`
-		ID               int64   `json:"id"`
-		Order            int     `json:"order"`
-		Video            bool    `json:"video"`
-		Adult            bool    `json:"adult"`
-		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		OriginalLanguage string  `json:"original_language"`
-		OriginalTitle    string  `json:"original_title"`
-		Popularity       float32 `json:"popularity"`
-		Title            string  `json:"title"`
-		Overview         string  `json:"overview"`
-		ReleaseDate      string  `json:"release_date"`
-		VoteMetrics
-	} `json:"cast"`
-	Crew []struct {
-		ID               int64   `json:"id"`
-		Department       string  `json:"department"`
-		OriginalLanguage string  `json:"original_language"`
-		OriginalTitle    string  `json:"original_title"`
-		Job              string  `json:"job"`
-		Overview         string  `json:"overview"`
-		Video            bool    `json:"video"`
-		ReleaseDate      string  `json:"release_date"`
-		Title            string  `json:"title"`
-		Popularity       float32 `json:"popularity"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		BackdropPath     string  `json:"backdrop_path"`
-		Adult            bool    `json:"adult"`
-		PosterPath       string  `json:"poster_path"`
-		CreditID         string  `json:"credit_id"`
-		VoteMetrics
-	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	Cast []PeopleMovieCreditCast `json:"cast"`
+	Crew []PeopleMovieCreditCrew `json:"crew"`
+	ID   int64                   `json:"id"`
 }
 
 // GetPersonMovieCredits get the movie credits for a person.
@@ -210,42 +181,9 @@ func (c *Client) GetPersonMovieCredits(
 
 // PersonTVCredits type is a struct for tv credits JSON response.
 type PersonTVCredits struct {
-	Cast []struct {
-		CreditID         string   `json:"credit_id"`
-		OriginalName     string   `json:"original_name"`
-		ID               int64    `json:"id"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		Character        string   `json:"character"`
-		Name             string   `json:"name"`
-		PosterPath       string   `json:"poster_path"`
-		Popularity       float32  `json:"popularity"`
-		EpisodeCount     int      `json:"episode_count"`
-		OriginalLanguage string   `json:"original_language"`
-		FirstAirDate     string   `json:"first_air_date"`
-		BackdropPath     string   `json:"backdrop_path"`
-		Overview         string   `json:"overview"`
-		OriginCountry    []string `json:"origin_country"`
-		VoteMetrics
-	} `json:"cast"`
-	Crew []struct {
-		ID               int64    `json:"id"`
-		Department       string   `json:"department"`
-		OriginalLanguage string   `json:"original_language"`
-		EpisodeCount     int      `json:"episode_count"`
-		Job              string   `json:"job"`
-		Overview         string   `json:"overview"`
-		OriginCountry    []string `json:"origin_country"`
-		OriginalName     string   `json:"original_name"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		Name             string   `json:"name"`
-		FirstAirDate     string   `json:"first_air_date"`
-		BackdropPath     string   `json:"backdrop_path"`
-		Popularity       float32  `json:"popularity"`
-		PosterPath       string   `json:"poster_path"`
-		CreditID         string   `json:"credit_id"`
-		VoteMetrics
-	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	Cast []PeopleTVCreditCast `json:"cast"`
+	Crew []PeopleTVCreditCrew `json:"crew"`
+	ID   int64                `json:"id,omitempty"`
 }
 
 // GetPersonTVCredits get the TV show credits for a person.
@@ -274,45 +212,45 @@ func (c *Client) GetPersonTVCredits(
 // PersonCombinedCredits type is a struct for combined credits JSON response.
 type PersonCombinedCredits struct {
 	Cast []struct {
-		ID               int64    `json:"id"`
-		Character        string   `json:"character"`
-		OriginalTitle    string   `json:"original_title"`
-		Overview         string   `json:"overview"`
-		Video            bool     `json:"video"`
-		MediaType        string   `json:"media_type"`
-		ReleaseDate      string   `json:"release_date"`
-		Title            string   `json:"title"`
-		Popularity       float32  `json:"popularity"`
-		OriginalLanguage string   `json:"original_language"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		BackdropPath     string   `json:"backdrop_path"`
-		Adult            bool     `json:"adult"`
-		PosterPath       string   `json:"poster_path"`
-		CreditID         string   `json:"credit_id"`
-		EpisodeCount     int      `json:"episode_count"`
-		OriginCountry    []string `json:"origin_country"`
-		OriginalName     string   `json:"original_name"`
-		Name             string   `json:"name"`
-		FirstAirDate     string   `json:"first_air_date"`
+		ID               int64     `json:"id"`
+		Character        string    `json:"character"`
+		OriginalTitle    string    `json:"original_title"`
+		Overview         string    `json:"overview"`
+		Video            bool      `json:"video"`
+		MediaType        MediaType `json:"media_type"`
+		ReleaseDate      string    `json:"release_date"`
+		Title            string    `json:"title"`
+		Popularity       float32   `json:"popularity"`
+		OriginalLanguage string    `json:"original_language"`
+		GenreIDs         []int64   `json:"genre_ids"`
+		BackdropPath     string    `json:"backdrop_path"`
+		Adult            bool      `json:"adult"`
+		PosterPath       string    `json:"poster_path"`
+		CreditID         string    `json:"credit_id"`
+		EpisodeCount     int       `json:"episode_count"`
+		OriginCountry    []string  `json:"origin_country"`
+		OriginalName     string    `json:"original_name"`
+		Name             string    `json:"name"`
+		FirstAirDate     string    `json:"first_air_date"`
 		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
-		ID               int64   `json:"id"`
-		Department       string  `json:"department"`
-		OriginalLanguage string  `json:"original_language"`
-		OriginalTitle    string  `json:"original_title"`
-		Job              string  `json:"job"`
-		Overview         string  `json:"overview"`
-		Video            bool    `json:"video"`
-		MediaType        string  `json:"media_type"`
-		PosterPath       string  `json:"poster_path"`
-		BackdropPath     string  `json:"backdrop_path"`
-		Title            string  `json:"title"`
-		Popularity       float32 `json:"popularity"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		Adult            bool    `json:"adult"`
-		ReleaseDate      string  `json:"release_date"`
-		CreditID         string  `json:"credit_id"`
+		ID               int64     `json:"id"`
+		Department       string    `json:"department"`
+		OriginalLanguage string    `json:"original_language"`
+		OriginalTitle    string    `json:"original_title"`
+		Job              string    `json:"job"`
+		Overview         string    `json:"overview"`
+		Video            bool      `json:"video"`
+		MediaType        MediaType `json:"media_type"`
+		PosterPath       string    `json:"poster_path"`
+		BackdropPath     string    `json:"backdrop_path"`
+		Title            string    `json:"title"`
+		Popularity       float32   `json:"popularity"`
+		GenreIDs         []int64   `json:"genre_ids"`
+		Adult            bool      `json:"adult"`
+		ReleaseDate      string    `json:"release_date"`
+		CreditID         string    `json:"credit_id"`
 		VoteMetrics
 	} `json:"crew"`
 	ID int64 `json:"id,omitempty"`
@@ -380,21 +318,15 @@ func (c *Client) GetPersonExternalIDs(
 	return &personExternalIDS, nil
 }
 
-// PersonImage type is a struct for a single image.
-type PersonImage struct {
-	ImageBase
-	Iso639_1 string `json:"iso_639_1"`
-}
-
 // PersonImages type is a struct for images JSON response.
 type PersonImages struct {
-	Profiles []PersonImage `json:"profiles"`
-	ID       int           `json:"id,omitempty"`
+	Profiles []ImageIso `json:"profiles"`
+	ID       int        `json:"id"`
 }
 
 // GetPersonImages get the images for a person.
 //
-// https://developers.themoviedb.org/3/people/get-person-images
+// https://developer.themoviedb.org/reference/person-images
 func (c *Client) GetPersonImages(
 	id int,
 ) (*PersonImages, error) {
@@ -412,39 +344,17 @@ func (c *Client) GetPersonImages(
 	return &personImages, nil
 }
 
-// PersonTaggedImages type is a struct for tagged images JSON response.
-type PersonTaggedImages struct {
-	ID int64 `json:"id"`
-	PaginatedResultsMeta
-	Results []struct {
-		ImageBase
-		Iso639_1  string `json:"iso_639_1"`
-		MediaType string `json:"media_type"`
-		Media     struct {
-			Popularity       float32 `json:"popularity"`
-			Video            bool    `json:"video"`
-			PosterPath       string  `json:"poster_path"`
-			ID               int64   `json:"id"`
-			Adult            bool    `json:"adult"`
-			BackdropPath     string  `json:"backdrop_path"`
-			OriginalLanguage string  `json:"original_language"`
-			OriginalTitle    string  `json:"original_title"`
-			GenreIDs         []int64 `json:"genre_ids"`
-			Title            string  `json:"title"`
-			Overview         string  `json:"overview"`
-			ReleaseDate      string  `json:"release_date"`
-			VoteMetrics
-		} `json:"media"`
-	} `json:"results"`
-}
-
+// Deprecated: Use GetPersonImages instead.
+//
 // GetPersonTaggedImages get the images that this person has been tagged in.
 //
-// https://developers.themoviedb.org/3/people/get-tagged-images
+// This endpoint is deprecated in the TMDB API.
+//
+// https://developer.themoviedb.org/reference/person-tagged-images
 func (c *Client) GetPersonTaggedImages(
 	id int,
 	urlOptions map[string]string,
-) (*PersonTaggedImages, error) {
+) (*IDPaginatedPersonTaggedImagesResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/tagged_images?api_key=%s%s",
@@ -454,7 +364,7 @@ func (c *Client) GetPersonTaggedImages(
 		c.apiKey,
 		options,
 	)
-	personTaggedImages := PersonTaggedImages{}
+	personTaggedImages := IDPaginatedPersonTaggedImagesResults{}
 	if err := c.get(tmdbURL, &personTaggedImages); err != nil {
 		return nil, err
 	}
@@ -463,13 +373,24 @@ func (c *Client) GetPersonTaggedImages(
 
 // PersonTranslations type is a struct for translations JSON response.
 type PersonTranslations struct {
-	Translations []Translation `json:"translations"`
-	ID           int64         `json:"id,omitempty"`
+	ID           int64               `json:"id"`
+	Translations []PersonTranslation `json:"translations"`
+}
+
+type PersonTranslation struct {
+	TranslationBase
+	Data PersonDataTranslation `json:"data"`
+}
+
+type PersonDataTranslation struct {
+	Biography string `json:"biography"`
+	Name      string `json:"name"`
+	Primary   bool   `json:"primary"`
 }
 
 // GetPersonTranslations get a list of translations that have been created for a person.
 //
-// https://developers.themoviedb.org/3/people/get-person-translations
+// https://developer.themoviedb.org/reference/translations
 func (c *Client) GetPersonTranslations(
 	id int,
 	urlOptions map[string]string,
@@ -529,43 +450,13 @@ func (c *Client) GetPersonLatest(
 	return &personLatest, nil
 }
 
-// PersonPopular type is a struct for popular JSON response.
-type PersonPopular struct {
-	PaginatedResultsMeta
-	Results []struct {
-		Popularity  float32 `json:"popularity"`
-		ID          int64   `json:"id"`
-		ProfilePath string  `json:"profile_path"`
-		Name        string  `json:"name"`
-		KnownFor    []struct {
-			OriginalTitle    string   `json:"original_title,omitempty"`
-			OriginalName     string   `json:"original_name,omitempty"`
-			ID               int64    `json:"id"`
-			MediaType        string   `json:"media_type"`
-			Name             string   `json:"name,omitempty"`
-			Title            string   `json:"title,omitempty"`
-			PosterPath       string   `json:"poster_path"`
-			FirstAirDate     string   `json:"first_air_date,omitempty"`
-			ReleaseDate      string   `json:"release_date,omitempty"`
-			Popularity       float32  `json:"popularity"`
-			GenreIDs         []int64  `json:"genre_ids"`
-			OriginalLanguage string   `json:"original_language"`
-			BackdropPath     string   `json:"backdrop_path"`
-			Overview         string   `json:"overview"`
-			OriginCountry    []string `json:"origin_country,omitempty"`
-			VoteMetrics
-		} `json:"known_for"`
-		Adult bool `json:"adult"`
-	} `json:"results"`
-}
-
 // GetPersonPopular get the list of popular people on TMDb.
 // This list updates daily.
 //
 // https://developers.themoviedb.org/3/people/get-popular-people
 func (c *Client) GetPersonPopular(
 	urlOptions map[string]string,
-) (*PersonPopular, error) {
+) (*PaginatedPersonMediaResults, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
@@ -574,7 +465,7 @@ func (c *Client) GetPersonPopular(
 		c.apiKey,
 		options,
 	)
-	personPopular := PersonPopular{}
+	personPopular := PaginatedPersonMediaResults{}
 	if err := c.get(tmdbURL, &personPopular); err != nil {
 		return nil, err
 	}

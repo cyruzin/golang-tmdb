@@ -6,18 +6,11 @@ import (
 
 // CompanyDetails type is a struct for details JSON response.
 type CompanyDetails struct {
-	Description   string `json:"description"`
-	Headquarters  string `json:"headquarters"`
-	Homepage      string `json:"homepage"`
-	ID            int64  `json:"id"`
-	LogoPath      string `json:"logo_path"`
-	Name          string `json:"name"`
-	OriginCountry string `json:"origin_country"`
-	ParentCompany struct {
-		Name     string `json:"name"`
-		ID       int64  `json:"id"`
-		LogoPath string `json:"logo_path"`
-	} `json:"parent_company"`
+	CompanyInfo
+	Description   string       `json:"description"`
+	Headquarters  string       `json:"headquarters"`
+	Homepage      string       `json:"homepage"`
+	ParentCompany *CompanyInfo `json:"parent_company"`
 }
 
 // GetCompanyDetails get a companies details by id.
@@ -40,19 +33,12 @@ func (c *Client) GetCompanyDetails(
 	return &companyDetails, nil
 }
 
-// CompanyAlternativeNames type is a struct for alternative
-// names JSON response.
-type CompanyAlternativeNames struct {
-	ID int64 `json:"id"`
-	*CompanyAlternativeNamesResult
-}
-
 // GetCompanyAlternativeNames get the alternative names of a company.
 //
-// https://developers.themoviedb.org/3/companies/get-company-alternative-names
+// https://developer.themoviedb.org/reference/company-alternative-names
 func (c *Client) GetCompanyAlternativeNames(
 	id int,
-) (*CompanyAlternativeNames, error) {
+) (*IDAlternativeNameResults, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_names?api_key=%s",
 		baseURL,
@@ -60,7 +46,7 @@ func (c *Client) GetCompanyAlternativeNames(
 		id,
 		c.apiKey,
 	)
-	companyAlternativeNames := CompanyAlternativeNames{}
+	companyAlternativeNames := IDAlternativeNameResults{}
 	if err := c.get(tmdbURL, &companyAlternativeNames); err != nil {
 		return nil, err
 	}
