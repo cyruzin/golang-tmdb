@@ -69,6 +69,7 @@ type TVShowResult struct {
 	Popularity       float32  `json:"popularity"`
 	GenreIDs         []int64  `json:"genre_ids"`
 	OriginCountry    []string `json:"origin_country"`
+	Adult            bool     `json:"adult"`
 	VoteMetrics
 }
 
