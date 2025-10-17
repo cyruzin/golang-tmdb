@@ -147,26 +147,6 @@ func (suite *TMBDTestSuite) TestGetPersonImagesFail() {
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestGetPersonTaggedImages() {
-	tomCruise, err := suite.client.GetPersonTaggedImages(tomCruiseID, nil)
-	suite.Nil(err)
-	suite.NotNil(tomCruise.ID)
-}
-
-func (suite *TMBDTestSuite) TestGetPersonTaggedImagesFail() {
-	suite.client.apiKey = ""
-	_, err := suite.client.GetPersonTaggedImages(0, nil)
-	suite.NotNil(err)
-}
-
-func (suite *TMBDTestSuite) TestGetPersonTaggedImagesWithOptions() {
-	options := make(map[string]string)
-	options["language"] = "en-US"
-	tomCruise, err := suite.client.GetPersonTaggedImages(tomCruiseID, options)
-	suite.Nil(err)
-	suite.NotNil(tomCruise.ID)
-}
-
 func (suite *TMBDTestSuite) TestGetPersonTranslations() {
 	tomCruise, err := suite.client.GetPersonTranslations(tomCruiseID, nil)
 	suite.Nil(err)

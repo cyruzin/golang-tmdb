@@ -24,7 +24,6 @@ type PersonDetails struct {
 	*PersonCombinedCreditsAppend
 	*PersonExternalIDsAppend
 	*PersonImagesAppend
-	*PersonTaggedImagesAppend
 	*PersonTranslationsAppend
 }
 
@@ -62,12 +61,6 @@ type PersonExternalIDsAppend struct {
 // for images in append to response.
 type PersonImagesAppend struct {
 	Images *PersonImages `json:"images,omitempty"`
-}
-
-// PersonTaggedImagesAppend type is a struct
-// for tagged images in append to response.
-type PersonTaggedImagesAppend struct {
-	TaggedImages *PersonTaggedImages `json:"tagged_images,omitempty"`
 }
 
 // PersonTranslationsAppend type is a struct
@@ -410,55 +403,6 @@ func (c *Client) GetPersonImages(
 		return nil, err
 	}
 	return &personImages, nil
-}
-
-// PersonTaggedImages type is a struct for tagged images JSON response.
-type PersonTaggedImages struct {
-	ID int64 `json:"id"`
-	PaginatedResultsMeta
-	Results []struct {
-		ImageBase
-		Iso639_1  string `json:"iso_639_1"`
-		MediaType string `json:"media_type"`
-		Media     struct {
-			Popularity       float32 `json:"popularity"`
-			Video            bool    `json:"video"`
-			PosterPath       string  `json:"poster_path"`
-			ID               int64   `json:"id"`
-			Adult            bool    `json:"adult"`
-			BackdropPath     string  `json:"backdrop_path"`
-			OriginalLanguage string  `json:"original_language"`
-			OriginalTitle    string  `json:"original_title"`
-			GenreIDs         []int64 `json:"genre_ids"`
-			Title            string  `json:"title"`
-			Overview         string  `json:"overview"`
-			ReleaseDate      string  `json:"release_date"`
-			VoteMetrics
-		} `json:"media"`
-	} `json:"results"`
-}
-
-// GetPersonTaggedImages get the images that this person has been tagged in.
-//
-// https://developers.themoviedb.org/3/people/get-tagged-images
-func (c *Client) GetPersonTaggedImages(
-	id int,
-	urlOptions map[string]string,
-) (*PersonTaggedImages, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/tagged_images?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personTaggedImages := PersonTaggedImages{}
-	if err := c.get(tmdbURL, &personTaggedImages); err != nil {
-		return nil, err
-	}
-	return &personTaggedImages, nil
 }
 
 // PersonTranslations type is a struct for translations JSON response.
