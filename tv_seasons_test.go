@@ -17,7 +17,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonDetailsWithOptions() {
 	options["language"] = "pt-BR"
 	got, err := suite.client.GetTVSeasonDetails(gotID, 1, options)
 	suite.Nil(err)
-	suite.Equal("1ª Temporada", got.Name)
+	suite.Equal("Temporada 1", got.Name)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonChange() {
