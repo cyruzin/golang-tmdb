@@ -404,7 +404,7 @@ type MoviePopularResults struct {
 		Adult            bool    `json:"adult"`
 		Overview         string  `json:"overview"`
 		ReleaseDate      string  `json:"release_date"`
-		Genres           []Genre `json:"genres"`
+		GenreIDs         []int64 `json:"genre_ids"`
 		ID               int64   `json:"id"`
 		OriginalTitle    string  `json:"original_title"`
 		OriginalLanguage string  `json:"original_language"`
