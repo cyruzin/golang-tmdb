@@ -3,160 +3,13 @@ package tmdb
 import (
 	"fmt"
 	"net/http"
-
-	json "github.com/goccy/go-json"
 )
-
-// TVDetails type is a struct for details JSON response.
-type TVDetails struct {
-	BackdropPath        string              `json:"backdrop_path"`
-	CreatedBy           []CreatedBy         `json:"created_by"`
-	EpisodeRunTime      []int               `json:"episode_run_time"`
-	FirstAirDate        string              `json:"first_air_date"`
-	Genres              []Genre             `json:"genres"`
-	Homepage            string              `json:"homepage"`
-	ID                  int64               `json:"id"`
-	InProduction        bool                `json:"in_production"`
-	Languages           []string            `json:"languages"`
-	LastAirDate         string              `json:"last_air_date"`
-	Name                string              `json:"name"`
-	LastEpisodeToAir    LastEpisodeToAir    `json:"last_episode_to_air"`
-	NextEpisodeToAir    NextEpisodeToAir    `json:"next_episode_to_air"`
-	Networks            []Network           `json:"networks"`
-	NumberOfEpisodes    int                 `json:"number_of_episodes"`
-	NumberOfSeasons     int                 `json:"number_of_seasons"`
-	OriginCountry       []string            `json:"origin_country"`
-	OriginalLanguage    string              `json:"original_language"`
-	OriginalName        string              `json:"original_name"`
-	Overview            string              `json:"overview"`
-	Popularity          float32             `json:"popularity"`
-	PosterPath          string              `json:"poster_path"`
-	ProductionCompanies []ProductionCompany `json:"production_companies"`
-	ProductionCountries []ProductionCountry `json:"production_countries"`
-	Seasons             []Season            `json:"seasons"`
-	Status              string              `json:"status"`
-	Tagline             string              `json:"tagline"`
-	Type                string              `json:"type"`
-	VoteMetrics
-	*TVAggregateCreditsAppend
-	*TVAlternativeTitlesAppend
-	*TVChangesAppend
-	*TVContentRatingsAppend
-	*TVCreditsAppend
-	*TVEpisodeGroupsAppend
-	*TVExternalIDsAppend
-	*TVImagesAppend
-	*TVKeywordsAppend
-	*TVRecommendationsAppend
-	*TVReviewsAppend
-	*TVScreenedTheatricallyAppend
-	*TVSimilarAppend
-	*TVTranslationsAppend
-	*TVVideosAppend
-	*TVWatchProvidersAppend
-}
-
-// TVAggregateCreditsAppend type is a struct
-// for aggregate credits in append to response.
-type TVAggregateCreditsAppend struct {
-	AggregateCredits *TVAggregateCredits `json:"aggregate_credits,omitempty"`
-}
-
-// TVAlternativeTitlesAppend type is a struct
-// for alternative titles in append to response.
-type TVAlternativeTitlesAppend struct {
-	AlternativeTitles *TVAlternativeTitles `json:"alternative_titles,omitempty"`
-}
-
-// TVChangesAppend type is a struct for changes in append to response.
-type TVChangesAppend struct {
-	Changes *TVChanges `json:"changes,omitempty"`
-}
-
-// TVContentRatingsAppend type is a struct for
-// content ratings in append to response.
-type TVContentRatingsAppend struct {
-	ContentRatings *TVContentRatings `json:"content_ratings,omitempty"`
-}
-
-// TVCreditsAppend type is a struct for credits in append to response.
-type TVCreditsAppend struct {
-	Credits struct {
-		*TVCredits
-	} `json:"credits,omitempty"`
-}
-
-// TVEpisodeGroupsAppend type is a struct for
-// episode groups in append to response.
-type TVEpisodeGroupsAppend struct {
-	EpisodeGroups *TVEpisodeGroups `json:"episode_groups,omitempty"`
-}
-
-// TVExternalIDsAppend type is a short for
-// external ids in append to response.
-type TVExternalIDsAppend struct {
-	*TVExternalIDs `json:"external_ids,omitempty"`
-}
-
-// TVImagesAppend type is a struct for images in append to response.
-type TVImagesAppend struct {
-	Images *TVImages `json:"images,omitempty"`
-}
-
-// TVKeywordsAppend type is a struct for keywords in append to response.
-type TVKeywordsAppend struct {
-	Keywords struct {
-		*TVKeywords
-	} `json:"keywords,omitempty"`
-}
-
-// TVRecommendationsAppend type is a struct
-// for recommendations in append to response.
-type TVRecommendationsAppend struct {
-	Recommendations *TVRecommendations `json:"recommendations,omitempty"`
-}
-
-// TVReviewsAppend type is a struct for reviews in append to response.
-type TVReviewsAppend struct {
-	Reviews struct {
-		*TVReviews
-	} `json:"reviews,omitempty"`
-}
-
-// TVScreenedTheatricallyAppend type is a struct
-// for screened theatrically in append to response.
-type TVScreenedTheatricallyAppend struct {
-	ScreenedTheatrically *TVScreenedTheatrically `json:"screened_theatrically,omitempty"`
-}
-
-// TVSimilarAppend type is a struct for
-// similar tv shows in append to response.
-type TVSimilarAppend struct {
-	Similar *TVSimilar `json:"similar,omitempty"`
-}
-
-// TVTranslationsAppend type is a struct
-// for translations in append to response.
-type TVTranslationsAppend struct {
-	Translations *TVTranslations `json:"translations,omitempty"`
-}
-
-// TVVideosAppend type is a struct for videos in append to response.
-type TVVideosAppend struct {
-	Videos *VideoResults `json:"videos"`
-}
-
-// TVWatchProvidersAppend type is a struct for
-// watch/providers in append to response.
-type TVWatchProvidersAppend struct {
-	WatchProviders *WatchProviderResults `json:"watch/providers"`
-}
 
 // GetTVDetails get the primary TV show details by id.
 //
 // Supports append_to_response.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-details
+// https://developer.themoviedb.org/reference/tv-series-details
 func (c *Client) GetTVDetails(
 	id int,
 	urlOptions map[string]string,
@@ -177,14 +30,6 @@ func (c *Client) GetTVDetails(
 	return &tvDetails, nil
 }
 
-// TVAccountStates type is a struct for account states JSON response.
-type TVAccountStates struct {
-	ID        int64           `json:"id"`
-	Favorite  bool            `json:"favorite"`
-	Rated     json.RawMessage `json:"rated"`
-	Watchlist bool            `json:"watchlist"`
-}
-
 // GetTVAccountStates grab the following account states for a session:
 //
 // TV show rating.
@@ -193,7 +38,7 @@ type TVAccountStates struct {
 //
 // If it belongs to your favourite list.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-account-states
+// https://developer.themoviedb.org/reference/tv-series-account-states
 func (c *Client) GetTVAccountStates(
 	id int,
 	urlOptions map[string]string,
@@ -214,48 +59,9 @@ func (c *Client) GetTVAccountStates(
 	return &tvAccountStates, nil
 }
 
-// TVAggregateCredits type is a struct for aggregate credits JSON response.
-type TVAggregateCredits struct {
-	ID   int64 `json:"id,omitempty"`
-	Cast []struct {
-		ID                 int64   `json:"id"`
-		Adult              bool    `json:"adult"`
-		Gender             int     `json:"gender"`
-		KnownForDepartment string  `json:"known_for_department"`
-		Name               string  `json:"name"`
-		Order              int     `json:"order"`
-		OriginalName       string  `json:"original_name"`
-		Popularity         float64 `json:"popularity"`
-		ProfilePath        string  `json:"profile_path"`
-		Roles              []struct {
-			Character    string `json:"character"`
-			CreditID     string `json:"credit_id"`
-			EpisodeCount int    `json:"episode_count"`
-		} `json:"roles"`
-		TotalEpisodeCount int `json:"total_episode_count"`
-	} `json:"cast"`
-	Crew []struct {
-		ID         int64  `json:"id"`
-		Adult      bool   `json:"adult"`
-		Department string `json:"department"`
-		Gender     int    `json:"gender"`
-		Jobs       []struct {
-			CreditID     string `json:"credit_id"`
-			EpisodeCount int    `json:"episode_count"`
-			Job          string `json:"job"`
-		} `json:"jobs"`
-		TotalEpisodeCount  int     `json:"total_episode_count"`
-		KnownForDepartment string  `json:"known_for_department"`
-		Name               string  `json:"name"`
-		OriginalName       string  `json:"original_name"`
-		Popularity         float64 `json:"popularity"`
-		ProfilePath        string  `json:"profile_path"`
-	} `json:"crew"`
-}
-
 // GetTVAggregateCredits get the aggregate credits (cast and crew) that have been added to a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-aggregate-credits
+// https://developer.themoviedb.org/reference/tv-series-aggregate-credits
 func (c *Client) GetTVAggregateCredits(
 	id int,
 	urlOptions map[string]string,
@@ -276,15 +82,9 @@ func (c *Client) GetTVAggregateCredits(
 	return &tvAggregateCredits, nil
 }
 
-// TVAlternativeTitles type is a struct for alternative titles JSON response.
-type TVAlternativeTitles struct {
-	ID      int                `json:"id"`
-	Results []AlternativeTitle `json:"results"`
-}
-
 // GetTVAlternativeTitles get all of the alternative titles for a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-alternative-titles
+// https://developer.themoviedb.org/reference/tv-series-alternative-titles
 func (c *Client) GetTVAlternativeTitles(
 	id int,
 	urlOptions map[string]string,
@@ -305,22 +105,6 @@ func (c *Client) GetTVAlternativeTitles(
 	return &tvAlternativeTitles, nil
 }
 
-// TVChanges type is a struct for changes JSON response.
-type TVChanges struct {
-	Changes []struct {
-		Key   string `json:"key"`
-		Items []struct {
-			ID            string          `json:"id"`
-			Action        string          `json:"action"`
-			Time          string          `json:"time"`
-			Iso639_1      string          `json:"iso_639_1"`
-			Iso3166_1     string          `json:"iso_3166_1"`
-			Value         json.RawMessage `json:"value"`
-			OriginalValue json.RawMessage `json:"original_value"`
-		} `json:"items"`
-	} `json:"changes"`
-}
-
 // GetTVChanges get the changes for a TV show.
 //
 // By default only the last 24 hours are returned.
@@ -333,7 +117,7 @@ type TVChanges struct {
 // and episode keys. These keys will contain a series_id and episode_id.
 // You can use the and methods to look these up individually.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-changes
+// https://developer.themoviedb.org/reference/tv-series-changes
 func (c *Client) GetTVChanges(
 	id int,
 	urlOptions map[string]string,
@@ -354,15 +138,9 @@ func (c *Client) GetTVChanges(
 	return &tVChanges, nil
 }
 
-// TVContentRatings type is a struct for content ratings JSON response.
-type TVContentRatings struct {
-	*TVContentRatingsResults
-	ID int64 `json:"id,omitempty"`
-}
-
 // GetTVContentRatings get the list of content ratings (certifications) that have been added to a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-content-ratings
+// https://developer.themoviedb.org/reference/tv-series-content-ratings
 func (c *Client) GetTVContentRatings(
 	id int,
 	urlOptions map[string]string,
@@ -383,38 +161,9 @@ func (c *Client) GetTVContentRatings(
 	return &tvContentRatings, nil
 }
 
-// TVCredits type is a struct for credits JSON response.
-type TVCredits struct {
-	ID   int64 `json:"id,omitempty"`
-	Cast []struct {
-		Character          string  `json:"character"`
-		CreditID           string  `json:"credit_id"`
-		Gender             int     `json:"gender"`
-		ID                 int64   `json:"id"`
-		KnownForDepartment string  `json:"known_for_department"`
-		Name               string  `json:"name"`
-		Order              int     `json:"order"`
-		OriginalName       string  `json:"original_name"`
-		Popularity         float32 `json:"popularity"`
-		ProfilePath        string  `json:"profile_path"`
-	} `json:"cast"`
-	Crew []struct {
-		CreditID           string  `json:"credit_id"`
-		Department         string  `json:"department"`
-		Gender             int     `json:"gender"`
-		ID                 int64   `json:"id"`
-		Job                string  `json:"job"`
-		KnownForDepartment string  `json:"known_for_department"`
-		Name               string  `json:"name"`
-		OriginalName       string  `json:"original_name"`
-		Popularity         float32 `json:"popularity"`
-		ProfilePath        string  `json:"profile_path"`
-	} `json:"crew"`
-}
-
 // GetTVCredits get the credits (cast and crew) that have been added to a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-credits
+// https://developer.themoviedb.org/reference/tv-series-credits
 func (c *Client) GetTVCredits(
 	id int,
 	urlOptions map[string]string,
@@ -435,17 +184,11 @@ func (c *Client) GetTVCredits(
 	return &tvCredits, nil
 }
 
-// TVEpisodeGroups type is a struct for episode groups JSON response.
-type TVEpisodeGroups struct {
-	*TVEpisodeGroupsResults
-	ID int64 `json:"id,omitempty"`
-}
-
 // GetTVEpisodeGroups get all of the episode groups that have been created for a TV show.
 //
 // With a group ID you can call the get TV episode group details method.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-episode-groups
+// https://developer.themoviedb.org/reference/tv-series-episode-groups
 func (c *Client) GetTVEpisodeGroups(
 	id int,
 	urlOptions map[string]string,
@@ -466,20 +209,6 @@ func (c *Client) GetTVEpisodeGroups(
 	return &tVEpisodeGroups, nil
 }
 
-// TVExternalIDs type is a struct for external ids JSON response.
-type TVExternalIDs struct {
-	IMDbID      string `json:"imdb_id"`
-	FreebaseMID string `json:"freebase_mid"`
-	FreebaseID  string `json:"freebase_id"`
-	TVDBID      int64  `json:"tvdb_id"`
-	TVRageID    int64  `json:"tvrage_id"`
-	FacebookID  string `json:"facebook_id"`
-	InstagramID string `json:"instagram_id"`
-	TwitterID   string `json:"twitter_id"`
-	WikiDataID  string `json:"wikidata_id,omitempty"`
-	ID          int64  `json:"id,omitempty"`
-}
-
 // GetTVExternalIDs get the external ids for a TV show.
 //
 // We currently support the following external sources.
@@ -490,7 +219,7 @@ type TVExternalIDs struct {
 //
 // *Defunct or no longer available as a service.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-external-ids
+// https://developer.themoviedb.org/reference/tv-series-external-ids
 func (c *Client) GetTVExternalIDs(
 	id int,
 	urlOptions map[string]string,
@@ -511,20 +240,6 @@ func (c *Client) GetTVExternalIDs(
 	return &tvExternalIDs, nil
 }
 
-// TVImage type is a struct for a single image.
-type TVImage struct {
-	ImageBase
-	Iso639_1 string `json:"iso_639_1"`
-}
-
-// TVImages type is a struct for images JSON response.
-type TVImages struct {
-	ID        int64     `json:"id,omitempty"`
-	Backdrops []TVImage `json:"backdrops"`
-	Logos     []TVImage `json:"logos"`
-	Posters   []TVImage `json:"posters"`
-}
-
 // GetTVImages get the images that belong to a TV show.
 //
 // Querying images with a language parameter will filter the results.
@@ -532,7 +247,7 @@ type TVImages struct {
 // you can use the include_image_language parameter. This should be a comma
 // separated value like so: include_image_language=en,null.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-images
+// https://developer.themoviedb.org/reference/tv-series-images
 func (c *Client) GetTVImages(
 	id int,
 	urlOptions map[string]string,
@@ -553,15 +268,9 @@ func (c *Client) GetTVImages(
 	return &tvImages, nil
 }
 
-// TVKeywords type is a struct for keywords JSON response.
-type TVKeywords struct {
-	ID int64 `json:"id,omitempty"`
-	*TVKeywordsResults
-}
-
 // GetTVKeywords get the keywords that have been added to a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-keywords
+// https://developer.themoviedb.org/reference/tv-series-keywords
 func (c *Client) GetTVKeywords(
 	id int,
 ) (*TVKeywords, error) {
@@ -579,15 +288,9 @@ func (c *Client) GetTVKeywords(
 	return &tvKeywords, nil
 }
 
-// TVRecommendations type is a struct for recommendations JSON response.
-type TVRecommendations struct {
-	*TVRecommendationsResults
-	PaginatedResultsMeta
-}
-
 // GetTVRecommendations get the list of TV show recommendations for this item.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-recommendations
+// https://developer.themoviedb.org/reference/tv-series-recommendations
 func (c *Client) GetTVRecommendations(
 	id int,
 	urlOptions map[string]string,
@@ -608,16 +311,9 @@ func (c *Client) GetTVRecommendations(
 	return &tvRecommendations, nil
 }
 
-// TVReviews type is a struct for reviews JSON response.
-type TVReviews struct {
-	ID int64 `json:"id,omitempty"`
-	*TVReviewsResults
-	PaginatedResultsMeta
-}
-
 // GetTVReviews get the reviews for a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-reviews
+// https://developer.themoviedb.org/reference/tv-series-reviews
 func (c *Client) GetTVReviews(
 	id int,
 	urlOptions map[string]string,
@@ -638,16 +334,10 @@ func (c *Client) GetTVReviews(
 	return &tvReviews, nil
 }
 
-// TVScreenedTheatrically type is a struct for screened theatrically JSON response.
-type TVScreenedTheatrically struct {
-	ID int64 `json:"id,omitempty"`
-	*TVScreenedTheatricallyResults
-}
-
 // GetTVScreenedTheatrically get a list of seasons or episodes that
 // have been screened in a film festival or theatre.
 //
-// https://developers.themoviedb.org/3/tv/get-screened-theatrically
+// https://developer.themoviedb.org/reference/tv-series-screened-theatrically
 func (c *Client) GetTVScreenedTheatrically(
 	id int,
 ) (*TVScreenedTheatrically, error) {
@@ -665,15 +355,10 @@ func (c *Client) GetTVScreenedTheatrically(
 	return &tvScreenedTheatrically, nil
 }
 
-// TVSimilar type is a struct for similar tv shows JSON response.
-type TVSimilar struct {
-	*TVRecommendations
-}
-
 // GetTVSimilar a list of similar TV shows.
 // These items are assembled by looking at keywords and genres.
 //
-// https://developers.themoviedb.org/3/tv/get-similar-tv-shows
+// https://developer.themoviedb.org/reference/tv-series-similar
 func (c *Client) GetTVSimilar(
 	id int,
 	urlOptions map[string]string,
@@ -696,7 +381,7 @@ func (c *Client) GetTVSimilar(
 
 // GetTVWatchProviders get a list of the availabilities per country by provider for a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-watch-providers
+// https://developer.themoviedb.org/reference/tv-series-watch-providers
 func (c *Client) GetTVWatchProviders(
 	id int,
 	urlOptions map[string]string,
@@ -717,15 +402,9 @@ func (c *Client) GetTVWatchProviders(
 	return &tvWatchProviders, nil
 }
 
-// TVTranslations type is a struct for translations JSON response.
-type TVTranslations struct {
-	ID           int64         `json:"id,omitempty"`
-	Translations []Translation `json:"translations"`
-}
-
 // GetTVTranslations get a list fo translations that have been created for a TV Show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-translations
+// https://developer.themoviedb.org/reference/tv-series-translations
 func (c *Client) GetTVTranslations(
 	id int,
 	urlOptions map[string]string,
@@ -748,7 +427,7 @@ func (c *Client) GetTVTranslations(
 
 // GetTVVideos get the videos that have been added to a TV show.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-videos
+// https://developer.themoviedb.org/reference/tv-series-videos
 func (c *Client) GetTVVideos(
 	id int,
 	urlOptions map[string]string,
@@ -769,16 +448,11 @@ func (c *Client) GetTVVideos(
 	return &tvVideos, nil
 }
 
-// TVLatest type is a struct for latest JSON response.
-type TVLatest struct {
-	*TVDetails
-}
-
 // GetTVLatest get the most newly created TV show.
 //
 // This is a live response and will continuously change.
 //
-// https://developers.themoviedb.org/3/tv/get-latest-tv
+// https://developer.themoviedb.org/reference/tv-series-latest-id
 func (c *Client) GetTVLatest(
 	urlOptions map[string]string,
 ) (*TVLatest, error) {
@@ -797,12 +471,6 @@ func (c *Client) GetTVLatest(
 	return &tvLatest, nil
 }
 
-// TVAiringToday type is a struct for airing today JSON response.
-type TVAiringToday struct {
-	PaginatedResultsMeta
-	*TVAiringTodayResults
-}
-
 // GetTVAiringToday get a list of TV shows that are airing today.
 // This query is purely day based as we do not currently support
 // airing times.
@@ -811,7 +479,7 @@ type TVAiringToday struct {
 // Without a specified timezone, this query defaults
 // to EST (Eastern Time UTC-05:00).
 //
-// https://developers.themoviedb.org/3/tv/get-tv-airing-today
+// https://developer.themoviedb.org/reference/tv-series-airing-today-list
 func (c *Client) GetTVAiringToday(
 	urlOptions map[string]string,
 ) (*TVAiringToday, error) {
@@ -830,17 +498,12 @@ func (c *Client) GetTVAiringToday(
 	return &tvAiringToday, nil
 }
 
-// TVOnTheAir type is a struct for on the air JSON response.
-type TVOnTheAir struct {
-	*TVAiringToday
-}
-
 // GetTVOnTheAir get a list of shows that are currently on the air.
 //
 // This query looks for any TV show that has an episode with an
 // air date in the next 7 days.
 //
-// https://developers.themoviedb.org/3/tv/get-tv-on-the-air
+// https://developer.themoviedb.org/reference/tv-series-on-the-air-list
 func (c *Client) GetTVOnTheAir(
 	urlOptions map[string]string,
 ) (*TVOnTheAir, error) {
@@ -859,15 +522,10 @@ func (c *Client) GetTVOnTheAir(
 	return &tvOnTheAir, nil
 }
 
-// TVPopular type is a struct for popular JSON response.
-type TVPopular struct {
-	*TVAiringToday
-}
-
 // GetTVPopular get a list of the current popular TV shows on TMDb.
 // This list updates daily.
 //
-// https://developers.themoviedb.org/3/tv/get-popular-tv-shows
+// https://developer.themoviedb.org/reference/tv-series-popular-list
 func (c *Client) GetTVPopular(
 	urlOptions map[string]string,
 ) (*TVPopular, error) {
@@ -886,14 +544,9 @@ func (c *Client) GetTVPopular(
 	return &tvPopular, nil
 }
 
-// TVTopRated type is a struct for top rated JSON response.
-type TVTopRated struct {
-	*TVAiringToday
-}
-
 // GetTVTopRated get a list of the top rated TV shows on TMDb.
 //
-// https://developers.themoviedb.org/3/tv/get-top-rated-tv
+// https://developer.themoviedb.org/reference/tv-series-top-rated-list
 func (c *Client) GetTVTopRated(
 	urlOptions map[string]string,
 ) (*TVTopRated, error) {
@@ -917,9 +570,9 @@ func (c *Client) GetTVTopRated(
 // A valid session or guest session ID is required.
 //
 // You can read more about how this works:
-// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
+// https://developer.themoviedb.org/reference/authentication-how-do-i-generate-a-session-id
 //
-// https://developers.themoviedb.org/3/tv/rate-tv-show
+// https://developer.themoviedb.org/reference/tv-series-add-rating
 func (c *Client) PostTVShowRating(
 	id int,
 	rating float32,
@@ -955,9 +608,9 @@ func (c *Client) PostTVShowRating(
 // A valid session or guest session ID is required.
 //
 // You can read more about how this works:
-// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
+// https://developer.themoviedb.org/reference/authentication-how-do-i-generate-a-session-id
 //
-// https://developers.themoviedb.org/3/tv/delete-tv-show-rating
+// https://developer.themoviedb.org/reference/tv-series-delete-rating
 func (c *Client) DeleteTVShowRating(
 	id int,
 	urlOptions map[string]string,

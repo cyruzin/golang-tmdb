@@ -97,7 +97,7 @@ func (suite *TMBDTestSuite) TestMarkAsFavorite() {
 		MediaID:   500,
 		Favorite:  true,
 	}
-	response, err := suite.client.MarkAsFavorite(0, &markAsFavorite)
+	response, err := suite.client.MarkAsFavorite(0, markAsFavorite)
 	suite.Nil(err)
 	suite.NotNil(response.StatusMessage)
 }
@@ -109,7 +109,7 @@ func (suite *TMBDTestSuite) TestMarkAsFavoriteFail() {
 		MediaID:   500,
 		Favorite:  true,
 	}
-	_, err := suite.client.MarkAsFavorite(0, &markAsFavorite)
+	_, err := suite.client.MarkAsFavorite(0, markAsFavorite)
 	suite.NotNil(err)
 }
 
@@ -246,7 +246,7 @@ func (suite *TMBDTestSuite) TestAddToWatchlist() {
 		MediaID:   82856,
 		Watchlist: true,
 	}
-	response, err := suite.client.AddToWatchlist(0, &addToWatchlist)
+	response, err := suite.client.AddToWatchlist(0, addToWatchlist)
 	suite.Nil(err)
 	suite.NotNil(response.StatusMessage)
 }
@@ -258,6 +258,6 @@ func (suite *TMBDTestSuite) TestAddToWatchlistFail() {
 		MediaID:   82856,
 		Watchlist: true,
 	}
-	_, err := suite.client.AddToWatchlist(0, &addToWatchlist)
+	_, err := suite.client.AddToWatchlist(0, addToWatchlist)
 	suite.NotNil(err)
 }
