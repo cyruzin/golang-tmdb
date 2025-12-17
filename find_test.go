@@ -1,9 +1,11 @@
 package tmdb
 
 const (
-	theWalkingDeadID = "tt1520211"
-	interstellarID   = "tt0816692"
-	alPacinoID       = "nm0000199"
+	theWalkingDeadID        = "tt1520211"
+	theWalkingDeadEpisodeID = "tt9729152"
+	theWalkingDeadSeasonID  = "Q1028589"
+	interstellarID          = "tt0816692"
+	alPacinoID              = "nm0000169"
 )
 
 var options = map[string]string{
@@ -19,6 +21,19 @@ func (suite *TMBDTestSuite) TestGetFindMovieByID() {
 
 func (suite *TMBDTestSuite) TestGetFindTVByID() {
 	results, err := suite.client.GetFindByID(theWalkingDeadID, options)
+	suite.Nil(err)
+	suite.NotNil(results)
+}
+
+func (suite *TMBDTestSuite) TestGetFindTVEpisodeByID() {
+	results, err := suite.client.GetFindByID(theWalkingDeadEpisodeID, options)
+	suite.Nil(err)
+	suite.NotNil(results)
+}
+
+func (suite *TMBDTestSuite) TestGetFindTVSeasonByID() {
+	options["external_source"] = "wikidata_id"
+	results, err := suite.client.GetFindByID(theWalkingDeadSeasonID, options)
 	suite.Nil(err)
 	suite.NotNil(results)
 }

@@ -6,63 +6,73 @@ type CreditsDetails struct {
 	Department string `json:"department"`
 	Job        string `json:"job"`
 	Media      struct {
-		Adult            bool     `json:"adult,omitempty"`          // Movie
-		OriginalName     string   `json:"original_name,omitempty"`  // TV
-		OriginalTitle    string   `json:"original_title,omitempty"` // Movie
-		ID               int64    `json:"id"`
-		Name             string   `json:"name,omitempty"`           // TV
-		FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
-		PosterPath       string   `json:"poster_path"`
-		ReleaseDate      string   `json:"release_date,omitempty"` // Movie
-		Title            string   `json:"title,omitempty"`        // Movie
-		Video            bool     `json:"video,omitempty"`        // Movie
-		GenreIDs         []int64  `json:"genre_ids"`
-		OriginalLanguage string   `json:"original_language"`
-		BackdropPath     string   `json:"backdrop_path"`
-		Overview         string   `json:"overview"`
-		OriginCountry    []string `json:"origin_country,omitempty"` // TV
-		Popularity       float32  `json:"popularity"`
-		Character        string   `json:"character"`
-		Episodes         []struct {
-			AirDate       string `json:"air_date"`
-			EpisodeNumber int64  `json:"episode_number"`
-			Name          string `json:"name"`
-			Overview      string `json:"overview"`
-			SeasonNumber  int    `json:"season_number"`
-			StillPath     string `json:"still_path"`
+		Adult            bool    `json:"adult,omitempty"` // Movie
+		BackdropPath     string  `json:"backdrop_path"`
+		ID               int64   `json:"id"`
+		Title            string  `json:"title,omitempty"`          // Movie
+		OriginalTitle    string  `json:"original_title,omitempty"` // Movie
+		Name             string  `json:"name,omitempty"`           // TV
+		OriginalName     string  `json:"original_name,omitempty"`  // TV
+		Overview         string  `json:"overview"`
+		PosterPath       string  `json:"poster_path"`
+		MediaType        string  `json:"media_type"`
+		OriginalLanguage string  `json:"original_language"`
+		GenreIDs         []int64 `json:"genre_ids"`
+		Popularity       float32 `json:"popularity"`
+		ReleaseDate      string  `json:"release_date,omitempty"`   // Movie
+		Video            bool    `json:"video,omitempty"`          // Movie
+		FirstAirDate     string  `json:"first_air_date,omitempty"` // TV
+		VoteMetrics
+		OriginCountry []string `json:"origin_country,omitempty"` // TV
+		Character     string   `json:"character"`
+		Episodes      []struct {
+			ID        int64  `json:"id"`
+			Name      string `json:"name"` // TV
+			Overview  string `json:"overview"`
+			MediaType string `json:"media_type"`
+			VoteMetrics
+			AirDate        string `json:"air_date"`
+			EpisodeNumber  int64  `json:"episode_number"`
+			EpisodeType    string `json:"episode_type"`
+			ProductionCode string `json:"production_code"`
+			Runtime        int    `json:"runtime"`
+			SeasonNumber   int    `json:"season_number"`
+			ShowID         int    `json:"show_id"`
+			StillPath      string `json:"still_path"`
 		} `json:"episodes,omitempty"` // TV
 		Seasons []Season `json:"seasons,omitempty"` // TV
-		VoteMetrics
 	} `json:"media"`
 	MediaType string `json:"media_type"`
 	ID        string `json:"id"`
 	Person    struct {
-		Adult    bool   `json:"adult"`
-		Gender   int    `json:"gender"`
-		Name     string `json:"name"`
-		ID       int64  `json:"id"`
-		KnownFor []struct {
-			Adult        bool   `json:"adult,omitempty"`
-			BackdropPath string `json:"backdrop_path"`
-			// GenreIDs         []int64  `json:"genre_ids"` // FIXME: -> []float32
-			// ID               int64    `json:"id"` // FIXME: -> float32
-			OriginalLanguage string   `json:"original_language"`
-			OriginalTitle    string   `json:"original_title,omitempty"`
-			Overview         string   `json:"overview"`
-			PosterPath       string   `json:"poster_path"`
-			ReleaseDate      string   `json:"release_date,omitempty"`
-			Title            string   `json:"title,omitempty"`
-			Video            bool     `json:"video,omitempty"`
-			Popularity       float32  `json:"popularity"`
-			MediaType        string   `json:"media_type"`
-			OriginalName     string   `json:"original_name,omitempty"`
-			Name             string   `json:"name,omitempty"`
-			FirstAirDate     string   `json:"first_air_date,omitempty"`
-			OriginCountry    []string `json:"origin_country,omitempty"`
-			VoteMetrics
-		} `json:"known_for"`
+		Adult              bool    `json:"adult"`
+		ID                 int64   `json:"id"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name,omitempty"`
+		MediaType          string  `json:"media_type"`
+		Popularity         float32 `json:"popularity"`
+		Gender             int     `json:"gender"`
 		KnownForDepartment string  `json:"known_for_department"`
 		ProfilePath        string  `json:"profile_path"`
-		Popularity         float32 `json:"popularity"`
+		// KnownFor           []struct {
+		// 	Adult        bool   `json:"adult,omitempty"`
+		// 	BackdropPath string `json:"backdrop_path"`
+		// 	// GenreIDs         []int64  `json:"genre_ids"` // FIXME: -> []float32
+		// 	// ID               int64    `json:"id"` // FIXME: -> float32
+		// 	OriginalLanguage string   `json:"original_language"`
+		// 	OriginalTitle    string   `json:"original_title,omitempty"`
+		// 	Overview         string   `json:"overview"`
+		// 	PosterPath       string   `json:"poster_path"`
+		// 	ReleaseDate      string   `json:"release_date,omitempty"`
+		// 	Title            string   `json:"title,omitempty"`
+		// 	Video            bool     `json:"video,omitempty"`
+		// 	Popularity       float32  `json:"popularity"`
+		// 	MediaType        string   `json:"media_type"`
+		// 	OriginalName     string   `json:"original_name,omitempty"`
+		// 	Name             string   `json:"name,omitempty"`
+		// 	FirstAirDate     string   `json:"first_air_date,omitempty"`
+		// 	OriginCountry    []string `json:"origin_country,omitempty"`
+		// 	VoteMetrics
+		// } `json:"known_for"`
 	} `json:"person"`
 }

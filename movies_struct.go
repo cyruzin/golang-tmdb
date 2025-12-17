@@ -147,6 +147,7 @@ type MovieChanges struct {
 			Action        json.RawMessage `json:"action"`
 			Time          json.RawMessage `json:"time"`
 			Iso639_1      json.RawMessage `json:"iso_639_1"`
+			Iso3166_1     json.RawMessage `json:"iso_3166_1"`
 			Value         json.RawMessage `json:"value"`
 			OriginalValue json.RawMessage `json:"original_value"`
 		} `json:"items"`
@@ -198,13 +199,14 @@ type MovieExternalIDs struct {
 // MovieImage type is a struct for a single image.
 type MovieImage struct {
 	ImageBase
-	Iso639_1 string `json:"iso_639_1"`
+	Iso639_1  string `json:"iso_639_1"`
+	Iso3166_1 string `json:"iso_3166_1"`
 }
 
 // MovieImages type is a struct for images JSON response.
 type MovieImages struct {
-	ID        int64        `json:"id,omitempty"`
 	Backdrops []MovieImage `json:"backdrops"`
+	ID        int64        `json:"id"`
 	Logos     []MovieImage `json:"logos"`
 	Posters   []MovieImage `json:"posters"`
 }
@@ -243,7 +245,7 @@ type MovieSimilar struct {
 
 // MovieReviews type is a struct for reviews JSON response.
 type MovieReviews struct {
-	ID int64 `json:"id,omitempty"`
+	ID int64 `json:"id"`
 	*MovieReviewsResults
 	PaginatedResultsMeta
 }

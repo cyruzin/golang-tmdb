@@ -6,30 +6,31 @@ type ListDetails struct {
 	Description   string `json:"description"`
 	FavoriteCount int64  `json:"favorite_count"`
 	ID            int64  `json:"id"`
+	Iso639_1      string `json:"iso_639_1"`
+	ItemCount     int64  `json:"item_count"`
 	Items         []struct {
-		Adult            bool     `json:"adult,omitempty"` // Movie
-		BackdropPath     string   `json:"backdrop_path"`
-		FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
-		GenreIDs         []int64  `json:"genre_ids"`
-		ID               int64    `json:"id"`
-		MediaType        string   `json:"media_type"`
-		Name             string   `json:"name,omitempty"` // TV
-		OriginalLanguage string   `json:"original_language"`
-		OriginalName     string   `json:"original_name,omitempty"`  // TV
-		OriginalTitle    string   `json:"original_title,omitempty"` // Movie
-		OriginCountry    []string `json:"origin_country,omitempty"` // TV
-		Overview         string   `json:"overview"`
-		Popularity       float32  `json:"popularity"`
-		PosterPath       string   `json:"poster_path"`
-		ReleaseDate      string   `json:"release_date,omitempty"` // Movie
-		Title            string   `json:"title,omitempty"`        // Movie
-		Video            bool     `json:"video,omitempty"`        // Movie
+		Adult            bool    `json:"adult"`
+		BackdropPath     string  `json:"backdrop_path"`
+		ID               int64   `json:"id"`
+		Name             string  `json:"name"`
+		OriginalName     string  `json:"original_name"`
+		Title            string  `json:"title"`
+		OriginalTitle    string  `json:"original_title"`
+		Overview         string  `json:"overview"`
+		PosterPath       string  `json:"poster_path"`
+		MediaType        string  `json:"media_type"`
+		OriginalLanguage string  `json:"original_language"`
+		GenreIDs         []int   `json:"genre_ids"`
+		Popularity       float32 `json:"popularity"`
+		FirstAirDate     string  `json:"first_air_date"`
+		ReleaseDate      string  `json:"release_date"`
+		Video            bool    `json:"video"`
 		VoteMetrics
+		OriginCountry []string `json:"origin_country"`
 	} `json:"items"`
-	ItemCount  int64  `json:"item_count"`
-	Iso639_1   string `json:"iso_639_1"`
 	Name       string `json:"name"`
 	PosterPath string `json:"poster_path"`
+	PaginatedResultsMeta
 }
 
 // ListItemStatus type is a struct for item status JSON response.

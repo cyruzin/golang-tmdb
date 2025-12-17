@@ -6,23 +6,32 @@ import json "github.com/goccy/go-json"
 type TVEpisodeDetails struct {
 	AirDate string `json:"air_date"`
 	Crew    []struct {
-		ID          int64  `json:"id"`
-		CreditID    string `json:"credit_id"`
-		Name        string `json:"name"`
-		Department  string `json:"department"`
-		Job         string `json:"job"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
+		Department         string  `json:"department"`
+		Job                string  `json:"job"`
+		CreditID           string  `json:"credit_id"`
+		Adult              bool    `json:"adult"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"crew"`
-	EpisodeNumber int `json:"episode_number"`
+	EpisodeNumber int    `json:"episode_number"`
+	EpisodeType   string `json:"episode_type"`
 	GuestStars    []struct {
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		CreditID    string `json:"credit_id"`
-		Character   string `json:"character"`
-		Order       int    `json:"order"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
+		Character          string  `json:"character"`
+		CreditID           string  `json:"credit_id"`
+		Order              int     `json:"order"`
+		Adult              bool    `json:"adult"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"guest_stars"`
 	Name           string `json:"name"`
 	Overview       string `json:"overview"`
@@ -93,33 +102,45 @@ type TVEpisodeChanges struct {
 // TVEpisodeCredits type is a struct for credits JSON response.
 type TVEpisodeCredits struct {
 	Cast []struct {
-		Character   string `json:"character"`
-		CreditID    string `json:"credit_id"`
-		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		Order       int    `json:"order"`
-		ProfilePath string `json:"profile_path"`
+		Adult              bool    `json:"adult"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
+		Character          string  `json:"character"`
+		CreditID           string  `json:"credit_id"`
+		Order              int     `json:"order"`
 	} `json:"cast"`
 	Crew []struct {
-		ID          int64  `json:"id"`
-		CreditID    string `json:"credit_id"`
-		Name        string `json:"name"`
-		Department  string `json:"department"`
-		Job         string `json:"job"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
+		Department         string  `json:"department"`
+		Job                string  `json:"job"`
+		CreditID           string  `json:"credit_id"`
+		Adult              bool    `json:"adult"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"crew"`
 	GuestStars []struct {
-		ID          int64  `json:"id"`
-		Name        string `json:"name"`
-		CreditID    string `json:"credit_id"`
-		Character   string `json:"character"`
-		Order       int    `json:"order"`
-		Gender      int    `json:"gender"`
-		ProfilePath string `json:"profile_path"`
+		Character          string  `json:"character"`
+		CreditID           string  `json:"credit_id"`
+		Order              int     `json:"order"`
+		Adult              bool    `json:"adult"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 	} `json:"guest_stars"`
-	ID int64 `json:"id,omitempty"`
+	ID int64 `json:"id"`
 }
 
 // TVEpisodeExternalIDs type is a struct for external ids JSON response.
@@ -130,12 +151,14 @@ type TVEpisodeExternalIDs struct {
 	FreebaseID  string `json:"freebase_id"`
 	TVDBID      int64  `json:"tvdb_id"`
 	TVRageID    int64  `json:"tvrage_id"`
+	WikidataID  string `json:"wikidata_id"`
 }
 
 // TVEpisodeImage type is a struct for a single image.
 type TVEpisodeImage struct {
 	ImageBase
-	Iso6391 any `json:"iso_639_1"`
+	Iso3166_1 string `json:"iso_3166_1"`
+	Iso639_1  string `json:"iso_639_1"`
 }
 
 // TVEpisodeImages type is a struct for images JSON response.

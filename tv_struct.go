@@ -4,6 +4,7 @@ import json "github.com/goccy/go-json"
 
 // TVDetails type is a struct for details JSON response.
 type TVDetails struct {
+	Adult               bool                `json:"adult"`
 	BackdropPath        string              `json:"backdrop_path"`
 	CreatedBy           []CreatedBy         `json:"created_by"`
 	EpisodeRunTime      []int               `json:"episode_run_time"`
@@ -14,8 +15,8 @@ type TVDetails struct {
 	InProduction        bool                `json:"in_production"`
 	Languages           []string            `json:"languages"`
 	LastAirDate         string              `json:"last_air_date"`
-	Name                string              `json:"name"`
 	LastEpisodeToAir    LastEpisodeToAir    `json:"last_episode_to_air"`
+	Name                string              `json:"name"`
 	NextEpisodeToAir    NextEpisodeToAir    `json:"next_episode_to_air"`
 	Networks            []Network           `json:"networks"`
 	NumberOfEpisodes    int                 `json:"number_of_episodes"`
@@ -29,6 +30,7 @@ type TVDetails struct {
 	ProductionCompanies []ProductionCompany `json:"production_companies"`
 	ProductionCountries []ProductionCountry `json:"production_countries"`
 	Seasons             []Season            `json:"seasons"`
+	SpokenLanguage      []SpokenLanguage    `json:"spoken_languages"`
 	Status              string              `json:"status"`
 	Tagline             string              `json:"tagline"`
 	Type                string              `json:"type"`
@@ -226,28 +228,30 @@ type TVContentRatings struct {
 type TVCredits struct {
 	ID   int64 `json:"id,omitempty"`
 	Cast []struct {
+		Adult              bool    `json:"adult"`
+		Gender             int     `json:"gender"`
+		ID                 int64   `json:"id"`
+		KnownForDepartment string  `json:"known_for_department"`
+		Name               string  `json:"name"`
+		OriginalName       string  `json:"original_name"`
+		Popularity         float32 `json:"popularity"`
+		ProfilePath        string  `json:"profile_path"`
 		Character          string  `json:"character"`
 		CreditID           string  `json:"credit_id"`
-		Gender             int     `json:"gender"`
-		ID                 int64   `json:"id"`
-		KnownForDepartment string  `json:"known_for_department"`
-		Name               string  `json:"name"`
 		Order              int     `json:"order"`
-		OriginalName       string  `json:"original_name"`
-		Popularity         float32 `json:"popularity"`
-		ProfilePath        string  `json:"profile_path"`
 	} `json:"cast"`
 	Crew []struct {
-		CreditID           string  `json:"credit_id"`
-		Department         string  `json:"department"`
+		Adult              bool    `json:"adult"`
 		Gender             int     `json:"gender"`
 		ID                 int64   `json:"id"`
-		Job                string  `json:"job"`
 		KnownForDepartment string  `json:"known_for_department"`
 		Name               string  `json:"name"`
 		OriginalName       string  `json:"original_name"`
 		Popularity         float32 `json:"popularity"`
 		ProfilePath        string  `json:"profile_path"`
+		CreditID           string  `json:"credit_id"`
+		Department         string  `json:"department"`
+		Job                string  `json:"job"`
 	} `json:"crew"`
 }
 
@@ -274,13 +278,14 @@ type TVExternalIDs struct {
 // TVImage type is a struct for a single image.
 type TVImage struct {
 	ImageBase
-	Iso639_1 string `json:"iso_639_1"`
+	Iso3166_1 string `json:"iso_3166_1"`
+	Iso639_1  string `json:"iso_639_1"`
 }
 
 // TVImages type is a struct for images JSON response.
 type TVImages struct {
-	ID        int64     `json:"id,omitempty"`
 	Backdrops []TVImage `json:"backdrops"`
+	ID        int64     `json:"id,omitempty"`
 	Logos     []TVImage `json:"logos"`
 	Posters   []TVImage `json:"posters"`
 }

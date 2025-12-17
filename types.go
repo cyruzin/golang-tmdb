@@ -33,20 +33,23 @@ type ProductionCountry struct {
 
 // SpokenLanguage represents a language spoken in a media item, including its ISO 639-1 code and name.
 type SpokenLanguage struct {
-	Iso639_1 string `json:"iso_639_1"`
-	Name     string `json:"name"`
+	EnglishName string `json:"english_name"`
+	Iso639_1    string `json:"iso_639_1"`
+	Name        string `json:"name"`
 }
 
 // TranslationData represents the translated information for a media item,
 // including its title, name, overview, homepage, runtime, and tagline.
 // Fields are mapped to their respective JSON keys and may be omitted if empty.
 type TranslationData struct {
-	Title    string `json:"title,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Overview string `json:"overview,omitempty"`
-	Homepage string `json:"homepage,omitempty"`
-	Runtime  *int   `json:"runtime,omitempty"`
-	Tagline  string `json:"tagline,omitempty"`
+	Biography string `json:"biography"`
+	Title     string `json:"title,omitempty"`
+	Name      string `json:"name,omitempty"`
+	Overview  string `json:"overview,omitempty"`
+	Homepage  string `json:"homepage,omitempty"`
+	Runtime   *int   `json:"runtime,omitempty"`
+	Tagline   string `json:"tagline,omitempty"`
+	Primary   bool   `json:"primary"`
 }
 
 // Translation represents a translation entry with language and country codes,
@@ -69,47 +72,52 @@ type PaginatedResultsMeta struct {
 
 // Season represents a TV show season with details such as air date, episode count, name, overview, poster path, season number, vote average, and associated show ID.
 type Season struct {
-	AirDate      string  `json:"air_date"`
-	EpisodeCount int     `json:"episode_count"`
 	ID           int64   `json:"id"`
 	Name         string  `json:"name"`
 	Overview     string  `json:"overview"`
 	PosterPath   string  `json:"poster_path"`
-	SeasonNumber int     `json:"season_number"`
+	MediaType    string  `json:"media_type"`
 	VoteAverage  float32 `json:"vote_average,omitempty"`
+	AirDate      string  `json:"air_date"`
+	SeasonNumber int     `json:"season_number"`
 	ShowID       int64   `json:"show_id,omitempty"`
+	EpisodeCount int     `json:"episode_count"`
 }
 
 // LastEpisodeToAir represents the details of the most recently aired episode of a TV show.
 // It includes information such as air date, episode and season numbers, production code,
 // episode overview, voting statistics, and related media paths.
 type LastEpisodeToAir struct {
+	ID       int64  `json:"id"`
+	Name     string `json:"name"`
+	Overview string `json:"overview"`
+	VoteMetrics
 	AirDate        string `json:"air_date"`
 	EpisodeNumber  int    `json:"episode_number"`
-	ID             int64  `json:"id"`
-	Name           string `json:"name"`
-	Overview       string `json:"overview"`
+	EpisodeType    string `json:"episode_type"`
 	ProductionCode string `json:"production_code"`
+	Runtime        int    `json:"runtime"`
 	SeasonNumber   int    `json:"season_number"`
 	ShowID         int64  `json:"show_id"`
 	StillPath      string `json:"still_path"`
-	VoteMetrics
 }
 
 // NextEpisodeToAir represents the details of the next episode scheduled to air for a TV show.
 // It includes information such as air date, episode and season numbers, show and episode IDs,
 // episode name and overview, production code, still image path, and voting statistics.
 type NextEpisodeToAir struct {
+	ID       int64  `json:"id"`
+	Name     string `json:"name"`
+	Overview string `json:"overview"`
+	VoteMetrics
 	AirDate        string `json:"air_date"`
 	EpisodeNumber  int    `json:"episode_number"`
-	ID             int64  `json:"id"`
-	Name           string `json:"name"`
-	Overview       string `json:"overview"`
+	EpisodeType    string `json:"episode_type"`
 	ProductionCode string `json:"production_code"`
+	Runtime        int    `json:"runtime"`
 	SeasonNumber   int    `json:"season_number"`
 	ShowID         int64  `json:"show_id"`
 	StillPath      string `json:"still_path"`
-	VoteMetrics
 }
 
 // Network represents a television network with its identifying information,
@@ -124,11 +132,12 @@ type Network struct {
 // CreatedBy represents a person who created a particular media item, such as a TV show or movie.
 // It includes identifying information such as ID, credit ID, name, gender, and profile image path.
 type CreatedBy struct {
-	ID          int64  `json:"id"`
-	CreditID    string `json:"credit_id"`
-	Name        string `json:"name"`
-	Gender      int    `json:"gender"`
-	ProfilePath string `json:"profile_path"`
+	ID           int64  `json:"id"`
+	CreditID     string `json:"credit_id"`
+	Name         string `json:"name"`
+	OriginalName string `json:"original_name"`
+	Gender       int    `json:"gender"`
+	ProfilePath  string `json:"profile_path"`
 }
 
 type VoteMetrics struct {
@@ -138,10 +147,10 @@ type VoteMetrics struct {
 
 type ImageBase struct {
 	AspectRatio float64 `json:"aspect_ratio"`
-	FilePath    string  `json:"file_path"`
 	Height      int     `json:"height"`
-	Width       int     `json:"width"`
+	FilePath    string  `json:"file_path"`
 	VoteMetrics
+	Width int `json:"width"`
 }
 
 type WatchProvider struct {
