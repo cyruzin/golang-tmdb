@@ -4,18 +4,10 @@ import (
 	"fmt"
 )
 
-// RequestToken type is a struct for request token JSON response.
-type RequestToken struct {
-	Success        bool   `json:"success"`
-	ExpiresAt      string `json:"expires_at"`
-	GuestSessionID string `json:"guest_session_id,omitempty"`
-	RequestToken   string `json:"request_token,omitempty"`
-}
-
 // CreateGuestSession creates a temporary request token
 // that can be used to validate a TMDb user login.
 //
-// https://developers.themoviedb.org/3/authentication/create-guest-session
+// https://developer.themoviedb.org/reference/authentication-create-guest-session
 func (c *Client) CreateGuestSession() (*RequestToken, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sguest_session/new?api_key=%s",
@@ -33,7 +25,7 @@ func (c *Client) CreateGuestSession() (*RequestToken, error) {
 // CreateRequestToken creates a temporary request token
 // that can be used to validate a TMDb user login.
 //
-// https://developers.themoviedb.org/3/authentication/create-request-token
+// https://developer.themoviedb.org/reference/authentication-create-request-token
 func (c *Client) CreateRequestToken() (*RequestToken, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%stoken/new?api_key=%s",
@@ -46,24 +38,6 @@ func (c *Client) CreateRequestToken() (*RequestToken, error) {
 		return nil, err
 	}
 	return &requestToken, nil
-}
-
-// AccessToken type is a struct for access token JSON request.
-type AccessToken struct {
-	AccessToken string `json:"access_token"`
-}
-
-// Session type is a struct for session JSON response.
-type Session struct {
-	Success   bool   `json:"success"`
-	SessionID string `json:"session_id"`
-}
-
-// SessionWithLogin type is a struct for session with login JSON response.
-type SessionWithLogin struct {
-	Username     string `json:"username"`
-	Password     string `json:"password"`
-	RequestToken string `json:"request_token"`
 }
 
 // CreateSession creates a new session id.

@@ -5,15 +5,9 @@ import (
 	"net/url"
 )
 
-// SearchCompanies type is a struct for companies JSON response.
-type SearchCompanies struct {
-	*SearchCompaniesResults
-	PaginatedResultsMeta
-}
-
 // GetSearchCompanies search for companies.
 //
-// https://developers.themoviedb.org/3/search/search-companies
+// https://developer.themoviedb.org/reference/search-company
 func (c *Client) GetSearchCompanies(
 	query string,
 	urlOptions map[string]string,
@@ -34,15 +28,9 @@ func (c *Client) GetSearchCompanies(
 	return &SearchCompanies, nil
 }
 
-// SearchCollections type is a strcut for collections JSON response.
-type SearchCollections struct {
-	*SearchCollectionsResults
-	PaginatedResultsMeta
-}
-
 // GetSearchCollections search for collections.
 //
-// https://developers.themoviedb.org/3/search/search-collections
+// https://developer.themoviedb.org/reference/search-collection
 func (c *Client) GetSearchCollections(
 	query string,
 	urlOptions map[string]string,
@@ -63,15 +51,9 @@ func (c *Client) GetSearchCollections(
 	return &searchCollections, nil
 }
 
-// SearchKeywords type is a struct for keywords JSON response.
-type SearchKeywords struct {
-	*SearchKeywordsResults
-	PaginatedResultsMeta
-}
-
 // GetSearchKeywords search for keywords.
 //
-// https://developers.themoviedb.org/3/search/search-keywords
+// https://developer.themoviedb.org/reference/search-keyword
 func (c *Client) GetSearchKeywords(
 	query string,
 	urlOptions map[string]string,
@@ -92,15 +74,9 @@ func (c *Client) GetSearchKeywords(
 	return &searchKeywords, nil
 }
 
-// SearchMovies type is a struct for movies JSON response.
-type SearchMovies struct {
-	PaginatedResultsMeta
-	*SearchMoviesResults
-}
-
 // GetSearchMovies search for keywords.
 //
-// https://developers.themoviedb.org/3/search/search-movies
+// https://developer.themoviedb.org/reference/search-movie
 func (c *Client) GetSearchMovies(
 	query string,
 	urlOptions map[string]string,
@@ -121,17 +97,11 @@ func (c *Client) GetSearchMovies(
 	return &searchMovies, nil
 }
 
-// SearchMulti type is a struct for multi JSON response.
-type SearchMulti struct {
-	*SearchMultiResults
-	PaginatedResultsMeta
-}
-
 // GetSearchMulti search multiple models in a single request.
 // Multi search currently supports searching for movies,
 // tv shows and people in a single request.
 //
-// https://developers.themoviedb.org/3/search/multi-search
+// https://developer.themoviedb.org/reference/search-multi
 func (c *Client) GetSearchMulti(
 	query string,
 	urlOptions map[string]string,
@@ -152,15 +122,9 @@ func (c *Client) GetSearchMulti(
 	return &searchMulti, nil
 }
 
-// SearchPeople type is a struct for people JSON response.
-type SearchPeople struct {
-	PaginatedResultsMeta
-	*SearchPeopleResults
-}
-
 // GetSearchPeople search for people.
 //
-// https://developers.themoviedb.org/3/search/search-people
+// https://developer.themoviedb.org/reference/search-person
 func (c *Client) GetSearchPeople(
 	query string,
 	urlOptions map[string]string,
@@ -181,15 +145,9 @@ func (c *Client) GetSearchPeople(
 	return &searchPeople, nil
 }
 
-// SearchTVShows type is a struct for tv show JSON response.
-type SearchTVShows struct {
-	PaginatedResultsMeta
-	*SearchTVShowsResults
-}
-
 // GetSearchTVShow search for a TV Show.
 //
-// https://developers.themoviedb.org/3/search/search-tv-shows
+// https://developer.themoviedb.org/reference/search-tv
 func (c *Client) GetSearchTVShow(
 	query string,
 	urlOptions map[string]string,
