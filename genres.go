@@ -2,14 +2,9 @@ package tmdb
 
 import "fmt"
 
-// GenreMovieList type is a struct for genres movie list JSON response.
-type GenreMovieList struct {
-	Genres []Genre `json:"genres"`
-}
-
 // GetGenreMovieList get the list of official genres for movies.
 //
-// https://developers.themoviedb.org/3/genres/get-movie-list
+// https://developer.themoviedb.org/reference/genre-movie-list
 func (c *Client) GetGenreMovieList(
 	urlOptions map[string]string,
 ) (*GenreMovieList, error) {
@@ -30,7 +25,7 @@ func (c *Client) GetGenreMovieList(
 
 // GetGenreTVList get the list of official genres for TV shows.
 //
-// https://developers.themoviedb.org/3/genres/get-tv-list
+// https://developer.themoviedb.org/reference/genre-tv-list
 func (c *Client) GetGenreTVList(
 	urlOptions map[string]string,
 ) (*GenreMovieList, error) {

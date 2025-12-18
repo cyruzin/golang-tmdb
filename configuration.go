@@ -2,20 +2,6 @@ package tmdb
 
 import "fmt"
 
-// ConfigurationAPI type is a struct for api configuration JSON response.
-type ConfigurationAPI struct {
-	Images struct {
-		BaseURL       string   `json:"base_url"`
-		SecureBaseURL string   `json:"secure_base_url"`
-		BackdropSizes []string `json:"backdrop_sizes"`
-		LogoSizes     []string `json:"logo_sizes"`
-		PosterSizes   []string `json:"poster_sizes"`
-		ProfileSizes  []string `json:"profile_sizes"`
-		StillSizes    []string `json:"still_sizes"`
-	} `json:"images"`
-	ChangeKeys []string `json:"change_keys"`
-}
-
 // GetConfigurationAPI get the system wide configuration information.
 //
 // Some elements of the API require some knowledge of
@@ -37,7 +23,7 @@ type ConfigurationAPI struct {
 // can be useful if you are building an app that consumes data from the
 // change feed.
 //
-// https://developers.themoviedb.org/3/configuration/get-api-configuration
+// https://developer.themoviedb.org/reference/configuration-details
 func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/configuration?api_key=%s",
@@ -51,17 +37,10 @@ func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
 	return &configurationAPI, nil
 }
 
-// ConfigurationCountries type is a struct for countries configuration JSON response.
-type ConfigurationCountries []struct {
-	Iso3166_1   string `json:"iso_3166_1"`
-	EnglishName string `json:"english_name"`
-	NativeName  string `json:"native_name"`
-}
-
 // GetConfigurationCountries get the list of countries
 // (ISO 3166-1 tags) used throughout TMDb.
 //
-// https://developers.themoviedb.org/3/configuration/get-countries
+// https://developer.themoviedb.org/reference/configuration-countries
 func (c *Client) GetConfigurationCountries() (
 	*ConfigurationCountries,
 	error,
@@ -79,15 +58,9 @@ func (c *Client) GetConfigurationCountries() (
 	return &configurationCountries, nil
 }
 
-// ConfigurationJobs type is a struct for jobs configuration JSON response.
-type ConfigurationJobs []struct {
-	Department string   `json:"department"`
-	Jobs       []string `json:"jobs"`
-}
-
 // GetConfigurationJobs get a list of the jobs and departments we use on TMDb.
 //
-// https://developers.themoviedb.org/3/configuration/get-jobs
+// https://developer.themoviedb.org/reference/configuration-jobs
 func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%sjobs?api_key=%s",
@@ -102,17 +75,10 @@ func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
 	return &configurationJobs, nil
 }
 
-// ConfigurationLanguages type is a struct for languages configuration JSON response.
-type ConfigurationLanguages []struct {
-	Iso639_1    string `json:"iso_639_1"`
-	EnglishName string `json:"english_name"`
-	Name        string `json:"name"`
-}
-
 // GetConfigurationLanguages get the list of languages
 // (ISO 639-1 tags) used throughout TMDb.
 //
-// https://developers.themoviedb.org/3/configuration/get-languages
+// https://developer.themoviedb.org/reference/configuration-languages
 func (c *Client) GetConfigurationLanguages() (
 	*ConfigurationLanguages,
 	error,
@@ -129,10 +95,6 @@ func (c *Client) GetConfigurationLanguages() (
 	}
 	return &configurationLanguages, nil
 }
-
-// ConfigurationPrimaryTranslations type is a struct for
-// primary translations configuration JSON response.
-type ConfigurationPrimaryTranslations []string
 
 // GetConfigurationPrimaryTranslations get a list of the officially
 // supported translations on TMDb.
@@ -155,7 +117,7 @@ type ConfigurationPrimaryTranslations []string
 // One more thing to mention, these are the translations that map to
 // our website translation project.
 //
-// https://developers.themoviedb.org/3/configuration/get-primary-translations
+// https://developer.themoviedb.org/reference/configuration-primary-translations
 func (c *Client) GetConfigurationPrimaryTranslations() (
 	*ConfigurationPrimaryTranslations,
 	error,
@@ -171,17 +133,10 @@ func (c *Client) GetConfigurationPrimaryTranslations() (
 	return &configurationPrimaryTranslations, nil
 }
 
-// ConfigurationTimezones type is a struct for timezones
-// configuration JSON response.
-type ConfigurationTimezones []struct {
-	Iso3166_1 string   `json:"iso_3166_1"`
-	Zones     []string `json:"zones"`
-}
-
 // GetConfigurationTimezones get the list of timezones
 // used throughout TMDb.
 //
-// https://developers.themoviedb.org/3/configuration/get-timezones
+// https://developer.themoviedb.org/reference/configuration-timezones
 func (c *Client) GetConfigurationTimezones() (
 	*ConfigurationTimezones,
 	error,

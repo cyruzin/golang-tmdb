@@ -4,12 +4,6 @@ import (
 	"fmt"
 )
 
-// Trending type is a struct for trending JSON response.
-type Trending struct {
-	*TrendingResults
-	PaginatedResultsMeta
-}
-
 // GetTrending get the daily or weekly trending items.
 //
 // The daily trending list tracks items over the period of
@@ -34,7 +28,7 @@ type Trending struct {
 //
 // week - View the trending list for the week.
 //
-// https://developers.themoviedb.org/3/trending/get-trending
+// https://developer.themoviedb.org/reference/trending-all
 func (c *Client) GetTrending(
 	mediaType string,
 	timeWindow string,
