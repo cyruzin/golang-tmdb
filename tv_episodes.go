@@ -6,6 +6,10 @@ import (
 	json "github.com/goccy/go-json"
 )
 
+func tvEpisodePath(id, seasonNumber, episodeNumber int) string {
+	return fmt.Sprintf("%d/season/%d/episode/%d", id, seasonNumber, episodeNumber)
+}
+
 // TVEpisodeDetails type is a struct for details JSON response.
 type TVEpisodeDetails struct {
 	AirDate string `json:"air_date"`
@@ -84,21 +88,9 @@ func (c *Client) GetTVEpisodeDetails(
 	episodeNumber int,
 	urlOptions map[string]string,
 ) (*TVEpisodeDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d%s%d?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		tvEpisodeURL,
-		episodeNumber,
-		c.apiKey,
-		options,
-	)
-	tvEpisodeDetails := TVEpisodeDetails{}
-	if err := c.get(tmdbURL, &tvEpisodeDetails); err != nil {
+	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber))
+	var tvEpisodeDetails TVEpisodeDetails
+	if err := c.get(url, urlOptions, &tvEpisodeDetails); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeDetails, nil
@@ -136,17 +128,9 @@ func (c *Client) GetTVEpisodeChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*TVEpisodeChanges, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%sepisode/%d/changes?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvEpisodeChanges := TVEpisodeChanges{}
-	if err := c.get(tmdbURL, &tvEpisodeChanges); err != nil {
+	url := c.baseURL.JoinPath(tvURL, "episode", fmt.Sprintf("%d", id), "changes")
+	var tvEpisodeChanges TVEpisodeChanges
+	if err := c.get(url, urlOptions, &tvEpisodeChanges); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeChanges, nil
@@ -192,19 +176,9 @@ func (c *Client) GetTVEpisodeCredits(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeCredits, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d%s%d/credits?api_key=%s",
-		c.baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		tvEpisodeURL,
-		episodeNumber,
-		c.apiKey,
-	)
-	tvEpisodeCredits := TVEpisodeCredits{}
-	if err := c.get(tmdbURL, &tvEpisodeCredits); err != nil {
+	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "credits")
+	var tvEpisodeCredits TVEpisodeCredits
+	if err := c.get(url, nil, &tvEpisodeCredits); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeCredits, nil
@@ -233,19 +207,9 @@ func (c *Client) GetTVEpisodeExternalIDs(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeExternalIDs, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d%s%d/external_ids?api_key=%s",
-		c.baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		tvEpisodeURL,
-		episodeNumber,
-		c.apiKey,
-	)
-	tvEpisodeExternalIDs := TVEpisodeExternalIDs{}
-	if err := c.get(tmdbURL, &tvEpisodeExternalIDs); err != nil {
+	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "external_ids")
+	var tvEpisodeExternalIDs TVEpisodeExternalIDs
+	if err := c.get(url, nil, &tvEpisodeExternalIDs); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeExternalIDs, nil
@@ -276,19 +240,9 @@ func (c *Client) GetTVEpisodeImages(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeImages, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d%s%d/images?api_key=%s",
-		c.baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		tvEpisodeURL,
-		episodeNumber,
-		c.apiKey,
-	)
-	tvEpisodeImages := TVEpisodeImages{}
-	if err := c.get(tmdbURL, &tvEpisodeImages); err != nil {
+	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "images")
+	var tvEpisodeImages TVEpisodeImages
+	if err := c.get(url, nil, &tvEpisodeImages); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeImages, nil
@@ -308,19 +262,9 @@ func (c *Client) GetTVEpisodeTranslations(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeTranslations, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d%s%d/translations?api_key=%s",
-		c.baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		tvEpisodeURL,
-		episodeNumber,
-		c.apiKey,
-	)
-	tvEpisodeTranslations := TVEpisodeTranslations{}
-	if err := c.get(tmdbURL, &tvEpisodeTranslations); err != nil {
+	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "translations")
+	var tvEpisodeTranslations TVEpisodeTranslations
+	if err := c.get(url, nil, &tvEpisodeTranslations); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeTranslations, nil
@@ -341,21 +285,9 @@ func (c *Client) GetTVEpisodeVideos(
 	episodeNumber int,
 	urlOptions map[string]string,
 ) (*VideoResults, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d%s%d/videos?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		tvEpisodeURL,
-		episodeNumber,
-		c.apiKey,
-		options,
-	)
-	tvEpisodeVideos := VideoResults{}
-	if err := c.get(tmdbURL, &tvEpisodeVideos); err != nil {
+	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "videos")
+	var tvEpisodeVideos VideoResults
+	if err := c.get(url, urlOptions, &tvEpisodeVideos); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeVideos, nil

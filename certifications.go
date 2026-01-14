@@ -1,7 +1,5 @@
 package tmdb
 
-import "fmt"
-
 // Certification type is a struct for a single certification JSON response.
 type Certification struct {
 	Certification string `json:"certification"`
@@ -18,18 +16,10 @@ type Certifications struct {
 // officially supported movie certifications on TMDb.
 //
 // https://developer.themoviedb.org/reference/certification-movie-list
-func (c *Client) GetCertificationMovie() (
-	*Certifications,
-	error,
-) {
-	tmdbURL := fmt.Sprintf(
-		"%s/certification%slist?api_key=%s",
-		c.baseURL,
-		movieURL,
-		c.apiKey,
-	)
-	certificationMovie := Certifications{}
-	if err := c.get(tmdbURL, &certificationMovie); err != nil {
+func (c *Client) GetCertificationMovie() (*Certifications, error) {
+	url := c.baseURL.JoinPath("certification", movieURL, "list")
+	var certificationMovie Certifications
+	if err := c.get(url, nil, &certificationMovie); err != nil {
 		return nil, err
 	}
 	return &certificationMovie, nil
@@ -39,18 +29,10 @@ func (c *Client) GetCertificationMovie() (
 // officially supported TV show certifications on TMDb.
 //
 // https://developer.themoviedb.org/reference/certifications-tv-list
-func (c *Client) GetCertificationTV() (
-	*Certifications,
-	error,
-) {
-	tmdbURL := fmt.Sprintf(
-		"%s/certification%slist?api_key=%s",
-		c.baseURL,
-		tvURL,
-		c.apiKey,
-	)
-	certificationTV := Certifications{}
-	if err := c.get(tmdbURL, &certificationTV); err != nil {
+func (c *Client) GetCertificationTV() (*Certifications, error) {
+	url := c.baseURL.JoinPath("certification", tvURL, "list")
+	var certificationTV Certifications
+	if err := c.get(url, nil, &certificationTV); err != nil {
 		return nil, err
 	}
 	return &certificationTV, nil

@@ -1,7 +1,5 @@
 package tmdb
 
-import "fmt"
-
 // DiscoverMovie type is a struct for movie JSON response.
 type DiscoverMovie struct {
 	PaginatedResultsMeta
@@ -32,19 +30,10 @@ type DiscoverMovie struct {
 // are an OR.
 //
 // https://developers.themoviedb.org/3/discover/movie-discover
-func (c *Client) GetDiscoverMovie(
-	urlOptions map[string]string,
-) (*DiscoverMovie, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%smovie?api_key=%s%s",
-		c.baseURL,
-		discoverURL,
-		c.apiKey,
-		options,
-	)
-	discoverMovie := DiscoverMovie{}
-	if err := c.get(tmdbURL, &discoverMovie); err != nil {
+func (c *Client) GetDiscoverMovie(urlOptions map[string]string) (*DiscoverMovie, error) {
+	url := c.baseURL.JoinPath(discoverURL, "movie")
+	var discoverMovie DiscoverMovie
+	if err := c.get(url, urlOptions, &discoverMovie); err != nil {
 		return nil, err
 	}
 	return &discoverMovie, nil
@@ -66,19 +55,10 @@ type DiscoverTV struct {
 // separated. Comma's are treated like an AND and query while pipe's are an OR.
 //
 // https://developers.themoviedb.org/3/discover/tv-discover
-func (c *Client) GetDiscoverTV(
-	urlOptions map[string]string,
-) (*DiscoverTV, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%stv?api_key=%s%s",
-		c.baseURL,
-		discoverURL,
-		c.apiKey,
-		options,
-	)
-	discoverTV := DiscoverTV{}
-	if err := c.get(tmdbURL, &discoverTV); err != nil {
+func (c *Client) GetDiscoverTV(urlOptions map[string]string) (*DiscoverTV, error) {
+	url := c.baseURL.JoinPath(discoverURL, "tv")
+	var discoverTV DiscoverTV
+	if err := c.get(url, urlOptions, &discoverTV); err != nil {
 		return nil, err
 	}
 	return &discoverTV, nil

@@ -1,7 +1,5 @@
 package tmdb
 
-import "fmt"
-
 // ConfigurationAPI type is a struct for api configuration JSON response.
 type ConfigurationAPI struct {
 	Images struct {
@@ -39,13 +37,9 @@ type ConfigurationAPI struct {
 //
 // https://developers.themoviedb.org/3/configuration/get-api-configuration
 func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s/configuration?api_key=%s",
-		c.baseURL,
-		c.apiKey,
-	)
-	configurationAPI := ConfigurationAPI{}
-	if err := c.get(tmdbURL, &configurationAPI); err != nil {
+	url := c.baseURL.JoinPath(configurationURL)
+	var configurationAPI ConfigurationAPI
+	if err := c.get(url, nil, &configurationAPI); err != nil {
 		return nil, err
 	}
 	return &configurationAPI, nil
@@ -62,18 +56,10 @@ type ConfigurationCountries []struct {
 // (ISO 3166-1 tags) used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-countries
-func (c *Client) GetConfigurationCountries() (
-	*ConfigurationCountries,
-	error,
-) {
-	tmdbURL := fmt.Sprintf(
-		"%s%scountries?api_key=%s",
-		c.baseURL,
-		configurationURL,
-		c.apiKey,
-	)
-	configurationCountries := ConfigurationCountries{}
-	if err := c.get(tmdbURL, &configurationCountries); err != nil {
+func (c *Client) GetConfigurationCountries() (*ConfigurationCountries, error) {
+	url := c.baseURL.JoinPath(configurationURL, "countries")
+	var configurationCountries ConfigurationCountries
+	if err := c.get(url, nil, &configurationCountries); err != nil {
 		return nil, err
 	}
 	return &configurationCountries, nil
@@ -89,14 +75,9 @@ type ConfigurationJobs []struct {
 //
 // https://developers.themoviedb.org/3/configuration/get-jobs
 func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%sjobs?api_key=%s",
-		c.baseURL,
-		configurationURL,
-		c.apiKey,
-	)
-	configurationJobs := ConfigurationJobs{}
-	if err := c.get(tmdbURL, &configurationJobs); err != nil {
+	url := c.baseURL.JoinPath(configurationURL, "jobs")
+	var configurationJobs ConfigurationJobs
+	if err := c.get(url, nil, &configurationJobs); err != nil {
 		return nil, err
 	}
 	return &configurationJobs, nil
@@ -113,18 +94,10 @@ type ConfigurationLanguages []struct {
 // (ISO 639-1 tags) used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-languages
-func (c *Client) GetConfigurationLanguages() (
-	*ConfigurationLanguages,
-	error,
-) {
-	tmdbURL := fmt.Sprintf(
-		"%s%slanguages?api_key=%s",
-		c.baseURL,
-		configurationURL,
-		c.apiKey,
-	)
+func (c *Client) GetConfigurationLanguages() (*ConfigurationLanguages, error) {
+	url := c.baseURL.JoinPath(configurationURL, "languages")
 	configurationLanguages := ConfigurationLanguages{}
-	if err := c.get(tmdbURL, &configurationLanguages); err != nil {
+	if err := c.get(url, nil, &configurationLanguages); err != nil {
 		return nil, err
 	}
 	return &configurationLanguages, nil
@@ -156,16 +129,10 @@ type ConfigurationPrimaryTranslations []string
 // our website translation project.
 //
 // https://developers.themoviedb.org/3/configuration/get-primary-translations
-func (c *Client) GetConfigurationPrimaryTranslations() (
-	*ConfigurationPrimaryTranslations,
-	error,
-) {
-	tmdbURL := fmt.Sprintf(
-		"%s%sprimary_translations?api_key=%s",
-		c.baseURL, configurationURL, c.apiKey,
-	)
+func (c *Client) GetConfigurationPrimaryTranslations() (*ConfigurationPrimaryTranslations, error) {
+	url := c.baseURL.JoinPath(configurationURL, "primary_translations")
 	configurationPrimaryTranslations := ConfigurationPrimaryTranslations{}
-	if err := c.get(tmdbURL, &configurationPrimaryTranslations); err != nil {
+	if err := c.get(url, nil, &configurationPrimaryTranslations); err != nil {
 		return nil, err
 	}
 	return &configurationPrimaryTranslations, nil
@@ -182,18 +149,10 @@ type ConfigurationTimezones []struct {
 // used throughout TMDb.
 //
 // https://developers.themoviedb.org/3/configuration/get-timezones
-func (c *Client) GetConfigurationTimezones() (
-	*ConfigurationTimezones,
-	error,
-) {
-	tmdbURL := fmt.Sprintf(
-		"%s%stimezones?api_key=%s",
-		c.baseURL,
-		configurationURL,
-		c.apiKey,
-	)
+func (c *Client) GetConfigurationTimezones() (*ConfigurationTimezones, error) {
+	url := c.baseURL.JoinPath(configurationURL, "timezones")
 	configurationTimeZones := ConfigurationTimezones{}
-	if err := c.get(tmdbURL, &configurationTimeZones); err != nil {
+	if err := c.get(url, nil, &configurationTimeZones); err != nil {
 		return nil, err
 	}
 	return &configurationTimeZones, nil

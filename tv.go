@@ -161,17 +161,9 @@ func (c *Client) GetTVDetails(
 	id int,
 	urlOptions map[string]string,
 ) (*TVDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvDetails := TVDetails{}
-	if err := c.get(tmdbURL, &tvDetails); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id))
+	var tvDetails TVDetails
+	if err := c.get(url, urlOptions, &tvDetails); err != nil {
 		return nil, err
 	}
 	return &tvDetails, nil
@@ -198,17 +190,9 @@ func (c *Client) GetTVAccountStates(
 	id int,
 	urlOptions map[string]string,
 ) (*TVAccountStates, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/account_states?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvAccountStates := TVAccountStates{}
-	if err := c.get(tmdbURL, &tvAccountStates); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "account_states")
+	var tvAccountStates TVAccountStates
+	if err := c.get(url, urlOptions, &tvAccountStates); err != nil {
 		return nil, err
 	}
 	return &tvAccountStates, nil
@@ -260,17 +244,9 @@ func (c *Client) GetTVAggregateCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*TVAggregateCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/aggregate_credits?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvAggregateCredits := TVAggregateCredits{}
-	if err := c.get(tmdbURL, &tvAggregateCredits); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "aggregate_credits")
+	var tvAggregateCredits TVAggregateCredits
+	if err := c.get(url, urlOptions, &tvAggregateCredits); err != nil {
 		return nil, err
 	}
 	return &tvAggregateCredits, nil
@@ -289,17 +265,9 @@ func (c *Client) GetTVAlternativeTitles(
 	id int,
 	urlOptions map[string]string,
 ) (*TVAlternativeTitles, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_titles?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvAlternativeTitles := TVAlternativeTitles{}
-	if err := c.get(tmdbURL, &tvAlternativeTitles); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "alternative_titles")
+	var tvAlternativeTitles TVAlternativeTitles
+	if err := c.get(url, urlOptions, &tvAlternativeTitles); err != nil {
 		return nil, err
 	}
 	return &tvAlternativeTitles, nil
@@ -338,20 +306,12 @@ func (c *Client) GetTVChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*TVChanges, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/changes?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tVChanges := TVChanges{}
-	if err := c.get(tmdbURL, &tVChanges); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "changes")
+	var tvChanges TVChanges
+	if err := c.get(url, urlOptions, &tvChanges); err != nil {
 		return nil, err
 	}
-	return &tVChanges, nil
+	return &tvChanges, nil
 }
 
 // TVContentRatings type is a struct for content ratings JSON response.
@@ -367,17 +327,9 @@ func (c *Client) GetTVContentRatings(
 	id int,
 	urlOptions map[string]string,
 ) (*TVContentRatings, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/content_ratings?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvContentRatings := TVContentRatings{}
-	if err := c.get(tmdbURL, &tvContentRatings); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "content_ratings")
+	var tvContentRatings TVContentRatings
+	if err := c.get(url, urlOptions, &tvContentRatings); err != nil {
 		return nil, err
 	}
 	return &tvContentRatings, nil
@@ -419,17 +371,9 @@ func (c *Client) GetTVCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*TVCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/credits?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvCredits := TVCredits{}
-	if err := c.get(tmdbURL, &tvCredits); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "credits")
+	var tvCredits TVCredits
+	if err := c.get(url, urlOptions, &tvCredits); err != nil {
 		return nil, err
 	}
 	return &tvCredits, nil
@@ -450,20 +394,12 @@ func (c *Client) GetTVEpisodeGroups(
 	id int,
 	urlOptions map[string]string,
 ) (*TVEpisodeGroups, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/episode_groups?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tVEpisodeGroups := TVEpisodeGroups{}
-	if err := c.get(tmdbURL, &tVEpisodeGroups); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "episode_groups")
+	var tvEpisodeGroups TVEpisodeGroups
+	if err := c.get(url, urlOptions, &tvEpisodeGroups); err != nil {
 		return nil, err
 	}
-	return &tVEpisodeGroups, nil
+	return &tvEpisodeGroups, nil
 }
 
 // TVExternalIDs type is a struct for external ids JSON response.
@@ -495,17 +431,9 @@ func (c *Client) GetTVExternalIDs(
 	id int,
 	urlOptions map[string]string,
 ) (*TVExternalIDs, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/external_ids?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvExternalIDs := TVExternalIDs{}
-	if err := c.get(tmdbURL, &tvExternalIDs); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "external_ids")
+	var tvExternalIDs TVExternalIDs
+	if err := c.get(url, urlOptions, &tvExternalIDs); err != nil {
 		return nil, err
 	}
 	return &tvExternalIDs, nil
@@ -537,17 +465,9 @@ func (c *Client) GetTVImages(
 	id int,
 	urlOptions map[string]string,
 ) (*TVImages, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvImages := TVImages{}
-	if err := c.get(tmdbURL, &tvImages); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "images")
+	var tvImages TVImages
+	if err := c.get(url, urlOptions, &tvImages); err != nil {
 		return nil, err
 	}
 	return &tvImages, nil
@@ -565,15 +485,9 @@ type TVKeywords struct {
 func (c *Client) GetTVKeywords(
 	id int,
 ) (*TVKeywords, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/keywords?api_key=%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-	)
-	tvKeywords := TVKeywords{}
-	if err := c.get(tmdbURL, &tvKeywords); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "keywords")
+	var tvKeywords TVKeywords
+	if err := c.get(url, nil, &tvKeywords); err != nil {
 		return nil, err
 	}
 	return &tvKeywords, nil
@@ -592,17 +506,9 @@ func (c *Client) GetTVRecommendations(
 	id int,
 	urlOptions map[string]string,
 ) (*TVRecommendations, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/recommendations?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvRecommendations := TVRecommendations{}
-	if err := c.get(tmdbURL, &tvRecommendations); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "recommendations")
+	var tvRecommendations TVRecommendations
+	if err := c.get(url, urlOptions, &tvRecommendations); err != nil {
 		return nil, err
 	}
 	return &tvRecommendations, nil
@@ -622,17 +528,9 @@ func (c *Client) GetTVReviews(
 	id int,
 	urlOptions map[string]string,
 ) (*TVReviews, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/reviews?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvReviews := TVReviews{}
-	if err := c.get(tmdbURL, &tvReviews); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "reviews")
+	var tvReviews TVReviews
+	if err := c.get(url, urlOptions, &tvReviews); err != nil {
 		return nil, err
 	}
 	return &tvReviews, nil
@@ -651,15 +549,9 @@ type TVScreenedTheatrically struct {
 func (c *Client) GetTVScreenedTheatrically(
 	id int,
 ) (*TVScreenedTheatrically, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/screened_theatrically?api_key=%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-	)
-	tvScreenedTheatrically := TVScreenedTheatrically{}
-	if err := c.get(tmdbURL, &tvScreenedTheatrically); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "screened_theatrically")
+	var tvScreenedTheatrically TVScreenedTheatrically
+	if err := c.get(url, nil, &tvScreenedTheatrically); err != nil {
 		return nil, err
 	}
 	return &tvScreenedTheatrically, nil
@@ -678,20 +570,12 @@ func (c *Client) GetTVSimilar(
 	id int,
 	urlOptions map[string]string,
 ) (*TVSimilar, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/similar?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tVSimilar := TVSimilar{}
-	if err := c.get(tmdbURL, &tVSimilar); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "similar")
+	var tvSimilar TVSimilar
+	if err := c.get(url, urlOptions, &tvSimilar); err != nil {
 		return nil, err
 	}
-	return &tVSimilar, nil
+	return &tvSimilar, nil
 }
 
 // GetTVWatchProviders get a list of the availabilities per country by provider for a TV show.
@@ -701,17 +585,9 @@ func (c *Client) GetTVWatchProviders(
 	id int,
 	urlOptions map[string]string,
 ) (*WatchProviderResults, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/watch/providers?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvWatchProviders := WatchProviderResults{}
-	if err := c.get(tmdbURL, &tvWatchProviders); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "watch", "providers")
+	var tvWatchProviders WatchProviderResults
+	if err := c.get(url, urlOptions, &tvWatchProviders); err != nil {
 		return nil, err
 	}
 	return &tvWatchProviders, nil
@@ -730,17 +606,9 @@ func (c *Client) GetTVTranslations(
 	id int,
 	urlOptions map[string]string,
 ) (*TVTranslations, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/translations?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvTranslations := TVTranslations{}
-	if err := c.get(tmdbURL, &tvTranslations); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "translations")
+	var tvTranslations TVTranslations
+	if err := c.get(url, urlOptions, &tvTranslations); err != nil {
 		return nil, err
 	}
 	return &tvTranslations, nil
@@ -753,17 +621,9 @@ func (c *Client) GetTVVideos(
 	id int,
 	urlOptions map[string]string,
 ) (*VideoResults, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/videos?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvVideos := VideoResults{}
-	if err := c.get(tmdbURL, &tvVideos); err != nil {
+	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "videos")
+	var tvVideos VideoResults
+	if err := c.get(url, urlOptions, &tvVideos); err != nil {
 		return nil, err
 	}
 	return &tvVideos, nil
@@ -782,16 +642,9 @@ type TVLatest struct {
 func (c *Client) GetTVLatest(
 	urlOptions map[string]string,
 ) (*TVLatest, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%slatest?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		c.apiKey,
-		options,
-	)
-	tvLatest := TVLatest{}
-	if err := c.get(tmdbURL, &tvLatest); err != nil {
+	url := c.baseURL.JoinPath(tvURL, "latest")
+	var tvLatest TVLatest
+	if err := c.get(url, urlOptions, &tvLatest); err != nil {
 		return nil, err
 	}
 	return &tvLatest, nil
@@ -815,16 +668,9 @@ type TVAiringToday struct {
 func (c *Client) GetTVAiringToday(
 	urlOptions map[string]string,
 ) (*TVAiringToday, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%sairing_today?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		c.apiKey,
-		options,
-	)
-	tvAiringToday := TVAiringToday{}
-	if err := c.get(tmdbURL, &tvAiringToday); err != nil {
+	url := c.baseURL.JoinPath(tvURL, "airing_today")
+	var tvAiringToday TVAiringToday
+	if err := c.get(url, urlOptions, &tvAiringToday); err != nil {
 		return nil, err
 	}
 	return &tvAiringToday, nil
@@ -844,16 +690,9 @@ type TVOnTheAir struct {
 func (c *Client) GetTVOnTheAir(
 	urlOptions map[string]string,
 ) (*TVOnTheAir, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%son_the_air?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		c.apiKey,
-		options,
-	)
-	tvOnTheAir := TVOnTheAir{}
-	if err := c.get(tmdbURL, &tvOnTheAir); err != nil {
+	url := c.baseURL.JoinPath(tvURL, "on_the_air")
+	var tvOnTheAir TVOnTheAir
+	if err := c.get(url, urlOptions, &tvOnTheAir); err != nil {
 		return nil, err
 	}
 	return &tvOnTheAir, nil
@@ -871,16 +710,9 @@ type TVPopular struct {
 func (c *Client) GetTVPopular(
 	urlOptions map[string]string,
 ) (*TVPopular, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%spopular?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		c.apiKey,
-		options,
-	)
-	tvPopular := TVPopular{}
-	if err := c.get(tmdbURL, &tvPopular); err != nil {
+	url := c.baseURL.JoinPath(tvURL, "popular")
+	var tvPopular TVPopular
+	if err := c.get(url, urlOptions, &tvPopular); err != nil {
 		return nil, err
 	}
 	return &tvPopular, nil
@@ -897,16 +729,9 @@ type TVTopRated struct {
 func (c *Client) GetTVTopRated(
 	urlOptions map[string]string,
 ) (*TVTopRated, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%stop_rated?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		c.apiKey,
-		options,
-	)
-	tvTopRated := TVTopRated{}
-	if err := c.get(tmdbURL, &tvTopRated); err != nil {
+	url := c.baseURL.JoinPath(tvURL, "top_rated")
+	var tvTopRated TVTopRated
+	if err := c.get(url, urlOptions, &tvTopRated); err != nil {
 		return nil, err
 	}
 	return &tvTopRated, nil
@@ -925,22 +750,19 @@ func (c *Client) PostTVShowRating(
 	rating float32,
 	urlOptions map[string]string,
 ) (*Response, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/rating?api_key=%s&session_id=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		c.sessionID,
-		options,
-	)
+	u := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "rating")
+	q := u.Query()
+	q.Add("session_id", c.sessionID)
+	for key, value := range urlOptions {
+		q.Add(key, value)
+	}
+	u.RawQuery = q.Encode()
 	body := struct {
 		Value float32 `json:"value"`
 	}{Value: rating}
 	tvShowRating := Response{}
 	if err := c.request(
-		tmdbURL,
+		u.String(),
 		body,
 		http.MethodPost,
 		&tvShowRating,
@@ -962,19 +784,16 @@ func (c *Client) DeleteTVShowRating(
 	id int,
 	urlOptions map[string]string,
 ) (*Response, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/rating?api_key=%s&session_id=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		c.sessionID,
-		options,
-	)
+	u := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), "rating")
+	q := u.Query()
+	q.Add("session_id", c.sessionID)
+	for key, value := range urlOptions {
+		q.Add(key, value)
+	}
+	u.RawQuery = q.Encode()
 	tvShowRating := Response{}
 	if err := c.request(
-		tmdbURL,
+		u.String(),
 		[]byte{},
 		http.MethodDelete,
 		&tvShowRating,

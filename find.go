@@ -1,7 +1,5 @@
 package tmdb
 
-import "fmt"
-
 // FindByID type is a struct for find JSON response.
 type FindByID struct {
 	MovieResults []struct {
@@ -90,17 +88,10 @@ type FindByID struct {
 // and return the results in a single response.
 //
 // https://developers.themoviedb.org/3/find/find-by-id
-func (c *Client) GetFindByID(
-	id string,
-	urlOptions map[string]string,
-) (*FindByID, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s/find/%s?api_key=%s%s",
-		c.baseURL, id, c.apiKey, options,
-	)
-	findByID := FindByID{}
-	if err := c.get(tmdbURL, &findByID); err != nil {
+func (c *Client) GetFindByID(id string, urlOptions map[string]string) (*FindByID, error) {
+	url := c.baseURL.JoinPath("find", id)
+	var findByID FindByID
+	if err := c.get(url, urlOptions, &findByID); err != nil {
 		return nil, err
 	}
 	return &findByID, nil

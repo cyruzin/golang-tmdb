@@ -78,17 +78,9 @@ func (c *Client) GetPersonDetails(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personDetails := PersonDetails{}
-	if err := c.get(tmdbURL, &personDetails); err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id))
+	var personDetails PersonDetails
+	if err := c.get(url, urlOptions, &personDetails); err != nil {
 		return nil, err
 	}
 	return &personDetails, nil
@@ -120,18 +112,9 @@ func (c *Client) GetPersonChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonChanges, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/changes?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personChanges := PersonChanges{}
-	err := c.get(tmdbURL, &personChanges)
-	if err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "changes")
+	var personChanges PersonChanges
+	if err := c.get(url, urlOptions, &personChanges); err != nil {
 		return nil, err
 	}
 	return &personChanges, nil
@@ -185,17 +168,9 @@ func (c *Client) GetPersonMovieCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonMovieCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/movie_credits?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personMovieCredits := PersonMovieCredits{}
-	if err := c.get(tmdbURL, &personMovieCredits); err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "movie_credits")
+	var personMovieCredits PersonMovieCredits
+	if err := c.get(url, urlOptions, &personMovieCredits); err != nil {
 		return nil, err
 	}
 	return &personMovieCredits, nil
@@ -248,17 +223,9 @@ func (c *Client) GetPersonTVCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonTVCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/tv_credits?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personTVCredits := PersonTVCredits{}
-	if err := c.get(tmdbURL, &personTVCredits); err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "tv_credits")
+	var personTVCredits PersonTVCredits
+	if err := c.get(url, urlOptions, &personTVCredits); err != nil {
 		return nil, err
 	}
 	return &personTVCredits, nil
@@ -318,17 +285,9 @@ func (c *Client) GetPersonCombinedCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonCombinedCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/combined_credits?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personCombinedCredits := PersonCombinedCredits{}
-	if err := c.get(tmdbURL, &personCombinedCredits); err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "combined_credits")
+	var personCombinedCredits PersonCombinedCredits
+	if err := c.get(url, urlOptions, &personCombinedCredits); err != nil {
 		return nil, err
 	}
 	return &personCombinedCredits, nil
@@ -357,20 +316,12 @@ func (c *Client) GetPersonExternalIDs(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonExternalIDs, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/external_ids?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personExternalIDS := PersonExternalIDs{}
-	if err := c.get(tmdbURL, &personExternalIDS); err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "external_ids")
+	var personExternalIDs PersonExternalIDs
+	if err := c.get(url, urlOptions, &personExternalIDs); err != nil {
 		return nil, err
 	}
-	return &personExternalIDS, nil
+	return &personExternalIDs, nil
 }
 
 // PersonImage type is a struct for a single image.
@@ -391,15 +342,9 @@ type PersonImages struct {
 func (c *Client) GetPersonImages(
 	id int,
 ) (*PersonImages, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-	)
-	personImages := PersonImages{}
-	if err := c.get(tmdbURL, &personImages); err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "images")
+	var personImages PersonImages
+	if err := c.get(url, nil, &personImages); err != nil {
 		return nil, err
 	}
 	return &personImages, nil
@@ -418,17 +363,9 @@ func (c *Client) GetPersonTranslations(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonTranslations, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/translations?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personTranslations := PersonTranslations{}
-	if err := c.get(tmdbURL, &personTranslations); err != nil {
+	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "translations")
+	var personTranslations PersonTranslations
+	if err := c.get(url, urlOptions, &personTranslations); err != nil {
 		return nil, err
 	}
 	return &personTranslations, nil
@@ -458,16 +395,9 @@ type PersonLatest struct {
 func (c *Client) GetPersonLatest(
 	urlOptions map[string]string,
 ) (*PersonLatest, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%slatest?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		c.apiKey,
-		options,
-	)
-	personLatest := PersonLatest{}
-	if err := c.get(tmdbURL, &personLatest); err != nil {
+	url := c.baseURL.JoinPath(personURL, "latest")
+	var personLatest PersonLatest
+	if err := c.get(url, urlOptions, &personLatest); err != nil {
 		return nil, err
 	}
 	return &personLatest, nil
@@ -510,16 +440,9 @@ type PersonPopular struct {
 func (c *Client) GetPersonPopular(
 	urlOptions map[string]string,
 ) (*PersonPopular, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%spopular?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		c.apiKey,
-		options,
-	)
-	personPopular := PersonPopular{}
-	if err := c.get(tmdbURL, &personPopular); err != nil {
+	url := c.baseURL.JoinPath(personURL, "popular")
+	var personPopular PersonPopular
+	if err := c.get(url, urlOptions, &personPopular); err != nil {
 		return nil, err
 	}
 	return &personPopular, nil

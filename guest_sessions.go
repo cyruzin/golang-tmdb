@@ -1,7 +1,5 @@
 package tmdb
 
-import "fmt"
-
 // GuestSessionRatedMovies type is a struct for rated movies JSON response.
 type GuestSessionRatedMovies struct {
 	Results []struct {
@@ -26,21 +24,10 @@ type GuestSessionRatedMovies struct {
 // GetGuestSessionRatedMovies get the rated movies for a guest session.
 //
 // https://developers.themoviedb.org/3/guest-sessions/get-guest-session-rated-movies
-func (c *Client) GetGuestSessionRatedMovies(
-	id string,
-	urlOptions map[string]string,
-) (*GuestSessionRatedMovies, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%s/rated/movies?api_key=%s%s",
-		c.baseURL,
-		guestSessionURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	guestSessionRatedMovies := GuestSessionRatedMovies{}
-	if err := c.get(tmdbURL, &guestSessionRatedMovies); err != nil {
+func (c *Client) GetGuestSessionRatedMovies(id string, urlOptions map[string]string) (*GuestSessionRatedMovies, error) {
+	url := c.baseURL.JoinPath(guestSessionURL, id, "rated", "movies")
+	var guestSessionRatedMovies GuestSessionRatedMovies
+	if err := c.get(url, urlOptions, &guestSessionRatedMovies); err != nil {
 		return nil, err
 	}
 	return &guestSessionRatedMovies, nil
@@ -69,21 +56,10 @@ type GuestSessionRatedTVShows struct {
 // GetGuestSessionRatedTVShows get the rated TV shows for a guest session.
 //
 // https://developers.themoviedb.org/3/guest-sessions/get-guest-session-rated-tv-shows
-func (c *Client) GetGuestSessionRatedTVShows(
-	id string,
-	urlOptions map[string]string,
-) (*GuestSessionRatedTVShows, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%s/rated/tv?api_key=%s%s",
-		c.baseURL,
-		guestSessionURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	guestSessionRatedTVShows := GuestSessionRatedTVShows{}
-	if err := c.get(tmdbURL, &guestSessionRatedTVShows); err != nil {
+func (c *Client) GetGuestSessionRatedTVShows(id string, urlOptions map[string]string) (*GuestSessionRatedTVShows, error) {
+	url := c.baseURL.JoinPath(guestSessionURL, id, "rated", "tv")
+	var guestSessionRatedTVShows GuestSessionRatedTVShows
+	if err := c.get(url, urlOptions, &guestSessionRatedTVShows); err != nil {
 		return nil, err
 	}
 	return &guestSessionRatedTVShows, nil
@@ -110,21 +86,10 @@ type GuestSessionRatedTVEpisodes struct {
 // GetGuestSessionRatedTVEpisodes get the rated TV episodes for a guest session.
 //
 // https://developers.themoviedb.org/3/guest-sessions/get-gest-session-rated-tv-episodes
-func (c *Client) GetGuestSessionRatedTVEpisodes(
-	id string,
-	urlOptions map[string]string,
-) (*GuestSessionRatedTVEpisodes, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%s/rated/tv/episodes?api_key=%s%s",
-		c.baseURL,
-		guestSessionURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	guestSessionRatedTVEpisodes := GuestSessionRatedTVEpisodes{}
-	if err := c.get(tmdbURL, &guestSessionRatedTVEpisodes); err != nil {
+func (c *Client) GetGuestSessionRatedTVEpisodes(id string, urlOptions map[string]string) (*GuestSessionRatedTVEpisodes, error) {
+	url := c.baseURL.JoinPath(guestSessionURL, id, "rated", "tv", "episodes")
+	var guestSessionRatedTVEpisodes GuestSessionRatedTVEpisodes
+	if err := c.get(url, urlOptions, &guestSessionRatedTVEpisodes); err != nil {
 		return nil, err
 	}
 	return &guestSessionRatedTVEpisodes, nil

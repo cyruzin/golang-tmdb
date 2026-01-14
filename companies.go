@@ -23,18 +23,10 @@ type CompanyDetails struct {
 // GetCompanyDetails get a companies details by id.
 //
 // https://developers.themoviedb.org/3/companies/get-company-details
-func (c *Client) GetCompanyDetails(
-	id int,
-) (*CompanyDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s",
-		c.baseURL,
-		companyURL,
-		id,
-		c.apiKey,
-	)
-	companyDetails := CompanyDetails{}
-	if err := c.get(tmdbURL, &companyDetails); err != nil {
+func (c *Client) GetCompanyDetails(id int) (*CompanyDetails, error) {
+	url := c.baseURL.JoinPath(companyURL, fmt.Sprintf("%d", id))
+	var companyDetails CompanyDetails
+	if err := c.get(url, nil, &companyDetails); err != nil {
 		return nil, err
 	}
 	return &companyDetails, nil
@@ -50,18 +42,10 @@ type CompanyAlternativeNames struct {
 // GetCompanyAlternativeNames get the alternative names of a company.
 //
 // https://developers.themoviedb.org/3/companies/get-company-alternative-names
-func (c *Client) GetCompanyAlternativeNames(
-	id int,
-) (*CompanyAlternativeNames, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_names?api_key=%s",
-		c.baseURL,
-		companyURL,
-		id,
-		c.apiKey,
-	)
-	companyAlternativeNames := CompanyAlternativeNames{}
-	if err := c.get(tmdbURL, &companyAlternativeNames); err != nil {
+func (c *Client) GetCompanyAlternativeNames(id int) (*CompanyAlternativeNames, error) {
+	url := c.baseURL.JoinPath(companyURL, fmt.Sprintf("%d", id), "alternative_names")
+	var companyAlternativeNames CompanyAlternativeNames
+	if err := c.get(url, nil, &companyAlternativeNames); err != nil {
 		return nil, err
 	}
 	return &companyAlternativeNames, nil
@@ -91,18 +75,10 @@ type CompanyImages struct {
 // call them as a PNG.
 //
 // https://developers.themoviedb.org/3/companies/get-company-images
-func (c *Client) GetCompanyImages(
-	id int,
-) (*CompanyImages, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s",
-		c.baseURL,
-		companyURL,
-		id,
-		c.apiKey,
-	)
-	companyImages := CompanyImages{}
-	if err := c.get(tmdbURL, &companyImages); err != nil {
+func (c *Client) GetCompanyImages(id int) (*CompanyImages, error) {
+	url := c.baseURL.JoinPath(companyURL, fmt.Sprintf("%d", id), "images")
+	var companyImages CompanyImages
+	if err := c.get(url, nil, &companyImages); err != nil {
 		return nil, err
 	}
 	return &companyImages, nil

@@ -1,9 +1,5 @@
 package tmdb
 
-import (
-	"fmt"
-)
-
 // CreditsDetails type is a struct for credits JSON response.
 type CreditsDetails struct {
 	CreditType string `json:"credit_type"`
@@ -74,18 +70,10 @@ type CreditsDetails struct {
 // GetCreditDetails get a movie or TV credit details by id.
 //
 // https://developers.themoviedb.org/3/credits/get-credit-details
-func (c *Client) GetCreditDetails(
-	id string,
-) (*CreditsDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%s?api_key=%s",
-		c.baseURL,
-		creditURL,
-		id,
-		c.apiKey,
-	)
-	creditsDetails := CreditsDetails{}
-	if err := c.get(tmdbURL, &creditsDetails); err != nil {
+func (c *Client) GetCreditDetails(id string) (*CreditsDetails, error) {
+	url := c.baseURL.JoinPath(creditURL, id)
+	var creditsDetails CreditsDetails
+	if err := c.get(url, nil, &creditsDetails); err != nil {
 		return nil, err
 	}
 	return &creditsDetails, nil

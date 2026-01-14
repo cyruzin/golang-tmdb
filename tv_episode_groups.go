@@ -1,8 +1,6 @@
 package tmdb
 
 import (
-	"fmt"
-
 	json "github.com/goccy/go-json"
 )
 
@@ -53,21 +51,10 @@ type TVEpisodeGroupsDetails struct {
 // 7. TV
 //
 // https://developers.themoviedb.org/3/tv-episode-groups/get-tv-episode-group-details
-func (c *Client) GetTVEpisodeGroupsDetails(
-	id string,
-	urlOptions map[string]string,
-) (*TVEpisodeGroupsDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%sepisode_group/%s?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvEpisodeGroupDetails := TVEpisodeGroupsDetails{}
-	if err := c.get(tmdbURL, &tvEpisodeGroupDetails); err != nil {
+func (c *Client) GetTVEpisodeGroupsDetails(id string, urlOptions map[string]string) (*TVEpisodeGroupsDetails, error) {
+	url := c.baseURL.JoinPath(tvURL, "episode_group", id)
+	var tvEpisodeGroupDetails TVEpisodeGroupsDetails
+	if err := c.get(url, urlOptions, &tvEpisodeGroupDetails); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeGroupDetails, nil

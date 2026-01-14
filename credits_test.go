@@ -7,12 +7,12 @@ const (
 
 func (suite *TMBDTestSuite) TestGetCreditDetails() {
 	credit, err := suite.client.GetCreditDetails(oliverQueenID)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(credit)
 }
 
 func (suite *TMBDTestSuite) TestGetCreditDetailsFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetCreditDetails(tyrionLannisterID)
-	suite.NotNil(err)
+	suite.Error(err)
 }

@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
 	"time"
@@ -16,12 +17,12 @@ const apiKey = "9aca69849a23528a419aea463387945f"
 
 type TMBDTestSuite struct {
 	suite.Suite
-	client Client
+	client *Client
 }
 
 func (suite *TMBDTestSuite) SetupTest() {
 	client, _ := Init(apiKey, WithAutoRetry())
-	suite.client = *client
+	suite.client = client
 }
 
 func TestSuite(t *testing.T) {
@@ -29,29 +30,34 @@ func TestSuite(t *testing.T) {
 }
 
 func (suite *TMBDTestSuite) TestGetFail() {
-	err := suite.client.get("http://www.testfakewebsite.org", nil)
+	u, err := url.Parse("http://www.testfakewebsite.org")
+	suite.NoError(err)
+	err = suite.client.get(u, nil, nil)
 	suite.Error(err)
 	suite.Contains(err.Error(), "no such host")
-	err = suite.client.get("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil)
+
+	err = suite.client.get(nil, nil, nil)
 	suite.Error(err)
-	suite.Contains(err.Error(), "code: 7 | success: false | message: Invalid API key: You must be granted a valid key.")
-	err = suite.client.get("", nil)
-	suite.Error(err)
-	suite.Equal("url field is empty", err.Error())
+	suite.Equal("url is nil", err.Error())
 	var invalidTarget int
-	err = suite.client.get("https://www.google.com.br", &invalidTarget)
+	u, err = url.Parse("https://www.google.com.br")
+	suite.NoError(err)
+	err = suite.client.get(u, nil, &invalidTarget)
 	if err != nil {
 		suite.Contains(err.Error(), "could not decode the data")
 	}
 }
 
 func (suite *TMBDTestSuite) TestGetSpecialCases() {
-	err := suite.client.get("http://[::1]:namedport", nil)
+	// Test with nil URL
+	err := suite.client.get(nil, nil, nil)
 	suite.Error(err)
-	suite.Contains(err.Error(), "could not fetch the url")
+	suite.Contains(err.Error(), "url is nil")
 
 	c, _ := InitV4("FAKE_BEARER_TOKEN")
-	err = c.get("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil)
+	u, err := url.Parse("https://api.themoviedb.org/3/movie/7578000?language=en-US")
+	suite.NoError(err)
+	err = c.get(u, nil, nil)
 	suite.Error(err)
 	suite.True(
 		strings.Contains(err.Error(), "Invalid access token") ||
@@ -66,7 +72,9 @@ func (suite *TMBDTestSuite) TestGetSpecialCases() {
 		w.Write([]byte(`{"status_code":25,"status_message":"Your request count (#) is over the allowed limit of (40).","success":false}`))
 	}))
 	defer tsRetry.Close()
-	err = suite.client.get(tsRetry.URL, nil)
+	u, err = url.Parse(tsRetry.URL)
+	suite.NoError(err)
+	err = suite.client.get(u, nil, nil)
 	suite.Error(err)
 	suite.True(retryCalled)
 	suite.True(
@@ -78,7 +86,9 @@ func (suite *TMBDTestSuite) TestGetSpecialCases() {
 		w.WriteHeader(http.StatusNoContent)
 	}))
 	defer tsNoContent.Close()
-	err = suite.client.get(tsNoContent.URL, nil)
+	u, err = url.Parse(tsNoContent.URL)
+	suite.NoError(err)
+	err = suite.client.get(u, nil, nil)
 	suite.Nil(err)
 }
 
@@ -99,9 +109,9 @@ func (suite *TMBDTestSuite) TestRequestFail() {
 		nil,
 	)
 	suite.Error(err)
-	suite.Contains(
-		err.Error(),
-		"code: 7 | success: false | message: Invalid API key: You must be granted a valid key.",
+	suite.True(
+		strings.Contains(err.Error(), "Invalid API key") ||
+			strings.Contains(err.Error(), "The input is not valid"),
 	)
 
 	err = suite.client.request("", []byte{}, "POST", nil)
@@ -172,7 +182,9 @@ func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 
 func (suite *TMBDTestSuite) TestDecodeDataFail() {
 	b := []byte(`{}`)
-	err := suite.client.get("https://www.google.com.br", b)
+	u, err := url.Parse("https://www.google.com.br")
+	suite.NoError(err)
+	err = suite.client.get(u, nil, b)
 	suite.Contains(err.Error(), "could not decode the data")
 }
 

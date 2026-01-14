@@ -15,18 +15,10 @@ type NetworkDetails struct {
 // GetNetworkDetails get the details of a network.
 //
 // https://developers.themoviedb.org/3/networks/get-network-details
-func (c *Client) GetNetworkDetails(
-	id int,
-) (*NetworkDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s",
-		c.baseURL,
-		networkURL,
-		id,
-		c.apiKey,
-	)
-	networkDetails := NetworkDetails{}
-	if err := c.get(tmdbURL, &networkDetails); err != nil {
+func (c *Client) GetNetworkDetails(id int) (*NetworkDetails, error) {
+	url := c.baseURL.JoinPath(networkURL, fmt.Sprintf("%d", id))
+	var networkDetails NetworkDetails
+	if err := c.get(url, nil, &networkDetails); err != nil {
 		return nil, err
 	}
 	return &networkDetails, nil
@@ -44,18 +36,10 @@ type NetworkAlternativeNames struct {
 // GetNetworkAlternativeNames get the alternative names of a network.
 //
 // https://developers.themoviedb.org/3/networks/get-network-alternative-names
-func (c *Client) GetNetworkAlternativeNames(
-	id int,
-) (*NetworkAlternativeNames, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_names?api_key=%s",
-		c.baseURL,
-		networkURL,
-		id,
-		c.apiKey,
-	)
-	networkAltenativeNames := NetworkAlternativeNames{}
-	if err := c.get(tmdbURL, &networkAltenativeNames); err != nil {
+func (c *Client) GetNetworkAlternativeNames(id int) (*NetworkAlternativeNames, error) {
+	url := c.baseURL.JoinPath(networkURL, fmt.Sprintf("%d", id), "alternative_names")
+	var networkAltenativeNames NetworkAlternativeNames
+	if err := c.get(url, nil, &networkAltenativeNames); err != nil {
 		return nil, err
 	}
 	return &networkAltenativeNames, nil
@@ -85,18 +69,10 @@ type NetworkImages struct {
 // call them as a PNG.
 //
 // https://developers.themoviedb.org/3/networks/get-network-images
-func (c *Client) GetNetworkImages(
-	id int,
-) (*NetworkImages, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s",
-		c.baseURL,
-		networkURL,
-		id,
-		c.apiKey,
-	)
+func (c *Client) GetNetworkImages(id int) (*NetworkImages, error) {
+	url := c.baseURL.JoinPath(networkURL, fmt.Sprintf("%d", id), "images")
 	networkImages := NetworkImages{}
-	if err := c.get(tmdbURL, &networkImages); err != nil {
+	if err := c.get(url, nil, &networkImages); err != nil {
 		return nil, err
 	}
 	return &networkImages, nil

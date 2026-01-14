@@ -2,25 +2,27 @@ package tmdb
 
 func (suite *TMBDTestSuite) TestCreateGuestSession() {
 	rt, err := suite.client.CreateGuestSession()
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal(true, rt.Success)
 }
 
 func (suite *TMBDTestSuite) TestCreateGuestSessionFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.CreateGuestSession()
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestCreateRequestToken() {
 	rt, err := suite.client.CreateRequestToken()
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal(true, rt.Success)
 }
 
 func (suite *TMBDTestSuite) TestCreateRequestTokenFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.CreateRequestToken()
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -35,7 +37,7 @@ func (suite *TMBDTestSuite) TestCreateRequestTokenFail() {
 // }
 
 // func (suite *TMBDTestSuite) TestCreateSessionFail() {
-// 	suite.client.apiKey = ""
+// 	suite.client.apiKey = "badkey"
 // 	_, err := suite.CreateRequestToken()
 // 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 // }

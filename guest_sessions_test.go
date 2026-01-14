@@ -5,7 +5,7 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedMovies() {
 	o["language"] = "en-US"
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
-	suite.Nil(err)
+	suite.NoError(err)
 	_, err = suite.client.GetGuestSessionRatedMovies(gs.GuestSessionID, o)
 	suite.NotNil(err)
 }
@@ -15,10 +15,10 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedMoviesFail() {
 	o["language"] = "en-US"
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
-	suite.Nil(err)
-	suite.client.apiKey = ""
+	suite.NoError(err)
+	suite.client.apiKey = "badkey"
 	_, err = suite.client.GetGuestSessionRatedMovies(gs.GuestSessionID, o)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVShows() {
@@ -26,7 +26,7 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVShows() {
 	o["language"] = "en-US"
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
-	suite.Nil(err)
+	suite.NoError(err)
 	_, err = suite.client.GetGuestSessionRatedTVShows(gs.GuestSessionID, o)
 	suite.NotNil(err)
 }
@@ -36,10 +36,10 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVShowsFail() {
 	o["language"] = "en-US"
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
-	suite.Nil(err)
-	suite.client.apiKey = ""
+	suite.NoError(err)
+	suite.client.apiKey = "badkey"
 	_, err = suite.client.GetGuestSessionRatedTVShows(gs.GuestSessionID, o)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVEpisodes() {
@@ -47,7 +47,7 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVEpisodes() {
 	o["language"] = "en-US"
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
-	suite.Nil(err)
+	suite.NoError(err)
 	_, err = suite.client.GetGuestSessionRatedTVEpisodes(gs.GuestSessionID, o)
 	suite.NotNil(err)
 }
@@ -57,8 +57,8 @@ func (suite *TMBDTestSuite) TestGetGuestSessionRatedTVEpisodesFail() {
 	o["language"] = "en-US"
 	o["sort_by"] = "created_at.asc"
 	gs, err := suite.client.CreateGuestSession()
-	suite.Nil(err)
-	suite.client.apiKey = ""
+	suite.NoError(err)
+	suite.client.apiKey = "badkey"
 	_, err = suite.client.GetGuestSessionRatedTVEpisodes(gs.GuestSessionID, o)
-	suite.NotNil(err)
+	suite.Error(err)
 }

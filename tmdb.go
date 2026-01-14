@@ -17,30 +17,73 @@ import (
 	json "github.com/goccy/go-json"
 )
 
-// TMDb constants
-const (
-	defaultBaseURL    = "https://api.themoviedb.org/3"
-	alternateBaseURL  = "https://api.tmdb.org/3"
-	authenticationURL = "/authentication/"
-	movieURL          = "/movie/"
-	tvURL             = "/tv/"
-	tvSeasonURL       = "/season/"
-	tvEpisodeURL      = "/episode/"
-	personURL         = "/person/"
-	searchURL         = "/search/"
-	collectionURL     = "/collection/"
-	companyURL        = "/company/"
-	configurationURL  = "/configuration/"
-	creditURL         = "/credit/"
-	discoverURL       = "/discover/"
-	networkURL        = "/network/"
-	keywordURL        = "/keyword/"
-	genreURL          = "/genre/"
-	guestSessionURL   = "/guest_session/"
-	listURL           = "/list/"
-	accountURL        = "/account/"
-	watchProvidersURL = "/watch/providers/"
+var (
+	defaultBaseURL   *url.URL
+	alternateBaseURL *url.URL
 )
+
+const (
+	authenticationURL = "/authentication"
+	movieURL          = "/movie"
+	tvURL             = "/tv"
+	tvSeasonURL       = "/season"
+	tvEpisodeURL      = "/episode"
+	personURL         = "/person"
+	searchURL         = "/search"
+	collectionURL     = "/collection"
+	companyURL        = "/company"
+	configurationURL  = "/configuration"
+	creditURL         = "/credit"
+	discoverURL       = "/discover"
+	networkURL        = "/network"
+	keywordURL        = "/keyword"
+	genreURL          = "/genre"
+	guestSessionURL   = "/guest_session"
+	listURL           = "/list"
+	accountURL        = "/account"
+	watchProvidersURL = "/watch/providers"
+)
+
+func init() {
+	var err error
+	defaultBaseURL, err = url.Parse("https://api.themoviedb.org/3")
+	if err != nil {
+		panic(fmt.Errorf("defaultBaseURL failed to parse: %w", err))
+	}
+	alternateBaseURL, err = url.Parse("https://api.tmdb.org/3")
+	if err != nil {
+		panic(fmt.Errorf("alternateBaseURL failed to parse: %w", err))
+	}
+}
+
+// customTransport wraps the base transport to modify requests.
+type customTransport struct {
+	base http.RoundTripper
+	// client reference to read apiKey/bearerToken dynamically
+	client *Client
+}
+
+func (t *customTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	if t.client.apiKey == "" && t.client.bearerToken == "" {
+		return nil, fmt.Errorf("apiKey and bearerToken is empty")
+	}
+	req.Header.Add("content-type", "application/json;charset=utf-8")
+	if t.client.apiKey != "" {
+		q := req.URL.Query()
+		q.Add("api_key", t.client.apiKey)
+		req.URL.RawQuery = q.Encode()
+	}
+
+	if t.client.bearerToken != "" {
+		req.Header.Add("Authorization", "Bearer "+t.client.bearerToken)
+	}
+
+	base := t.base
+	if base == nil {
+		base = http.DefaultTransport
+	}
+	return base.RoundTrip(req)
+}
 
 // Client type is a struct to instantiate this pkg.
 type Client struct {
@@ -56,7 +99,7 @@ type Client struct {
 	// http.Client for custom configuration.
 	http http.Client
 	// baseURL for API requests.
-	baseURL string
+	baseURL *url.URL
 }
 
 // Response type is a struct for http responses.
@@ -104,9 +147,14 @@ func WithAlternateBaseURL() ClientOption {
 }
 
 // WithCustomBaseURL sets a custom base URL.
-func WithCustomBaseURL(url string) ClientOption {
+func WithCustomBaseURL(customURL string) ClientOption {
 	return func(c *Client) error {
-		c.baseURL = url
+		u, err := url.Parse(customURL)
+		if err != nil {
+			return err
+		}
+
+		c.baseURL = u
 		return nil
 	}
 }
@@ -122,6 +170,7 @@ func Init(apiKey string, options ...ClientOption) (*Client, error) {
 			return nil, err
 		}
 	}
+	c.http.Transport = &customTransport{base: c.http.Transport, client: c}
 	return c, nil
 }
 
@@ -136,6 +185,7 @@ func InitV4(bearerToken string, options ...ClientOption) (*Client, error) {
 			return nil, err
 		}
 	}
+	c.http.Transport = &customTransport{base: c.http.Transport, client: c}
 	return c, nil
 }
 
@@ -161,22 +211,25 @@ func shouldRetry(status int) bool {
 	return status == http.StatusAccepted || status == http.StatusTooManyRequests
 }
 
-func (c *Client) get(url string, data any) error {
-	if url == "" {
-		return errors.New("url field is empty")
+func (c *Client) get(u *url.URL, opts map[string]string, dst any) error {
+	if u == nil {
+		return fmt.Errorf("url is nil")
 	}
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
+	if len(opts) > 0 {
+		q := u.Query()
+		for key, value := range opts {
+			q.Add(key, url.QueryEscape(value))
+		}
+		u.RawQuery = q.Encode()
+	}
 	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
 	defer cancel()
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
-	}
-	req.Header.Add("content-type", "application/json;charset=utf-8")
-	if c.bearerToken != "" {
-		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
 	}
 	for {
 		res, err := c.http.Do(req)
@@ -194,7 +247,7 @@ func (c *Client) get(url string, data any) error {
 		if res.StatusCode != http.StatusOK {
 			return c.decodeError(res)
 		}
-		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
+		if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
 			return fmt.Errorf("could not decode the data: %s", err)
 		}
 		break
@@ -229,10 +282,6 @@ func (c *Client) request(
 	)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
-	}
-	req.Header.Add("content-type", "application/json;charset=utf-8")
-	if c.bearerToken != "" {
-		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
 	}
 	for {
 		res, err := c.http.Do(req)
@@ -277,7 +326,7 @@ func (c *Client) fmtOptions(
 
 // GetBaseURL gets the current base url.
 func (c *Client) GetBaseURL() string {
-	return c.baseURL
+	return c.baseURL.String()
 }
 
 // Error type represents an error returned by the TMDB API.

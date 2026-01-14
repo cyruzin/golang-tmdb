@@ -1,7 +1,5 @@
 package tmdb
 
-import "fmt"
-
 // ChangesMovie type is a struct for movie changes JSON response.
 type ChangesMovie struct {
 	*ChangesMovieResults
@@ -16,19 +14,10 @@ type ChangesMovie struct {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-movie-change-list
-func (c *Client) GetChangesMovie(
-	urlOptions map[string]string,
-) (*ChangesMovie, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%schanges?api_key=%s%s",
-		c.baseURL,
-		movieURL,
-		c.apiKey,
-		options,
-	)
-	changesMovies := ChangesMovie{}
-	if err := c.get(tmdbURL, &changesMovies); err != nil {
+func (c *Client) GetChangesMovie(urlOptions map[string]string) (*ChangesMovie, error) {
+	url := c.baseURL.JoinPath(movieURL, "changes")
+	var changesMovies ChangesMovie
+	if err := c.get(url, urlOptions, &changesMovies); err != nil {
 		return nil, err
 	}
 	return &changesMovies, nil
@@ -47,19 +36,10 @@ type ChangesTV struct {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-tv-change-list
-func (c *Client) GetChangesTV(
-	urlOptions map[string]string,
-) (*ChangesTV, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%schanges?api_key=%s%s",
-		c.baseURL,
-		tvURL,
-		c.apiKey,
-		options,
-	)
-	changesTV := ChangesTV{}
-	if err := c.get(tmdbURL, &changesTV); err != nil {
+func (c *Client) GetChangesTV(urlOptions map[string]string) (*ChangesTV, error) {
+	url := c.baseURL.JoinPath(tvURL, "changes")
+	var changesTV ChangesTV
+	if err := c.get(url, urlOptions, &changesTV); err != nil {
 		return nil, err
 	}
 	return &changesTV, nil
@@ -78,19 +58,10 @@ type ChangesPerson struct {
 // 100 items are returned per page.
 //
 // https://developers.themoviedb.org/3/changes/get-person-change-list
-func (c *Client) GetChangesPerson(
-	urlOptions map[string]string,
-) (*ChangesPerson, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%schanges?api_key=%s%s",
-		c.baseURL,
-		personURL,
-		c.apiKey,
-		options,
-	)
-	changesPerson := ChangesPerson{}
-	if err := c.get(tmdbURL, &changesPerson); err != nil {
+func (c *Client) GetChangesPerson(urlOptions map[string]string) (*ChangesPerson, error) {
+	url := c.baseURL.JoinPath(personURL, "changes")
+	var changesPerson ChangesPerson
+	if err := c.get(url, urlOptions, &changesPerson); err != nil {
 		return nil, err
 	}
 	return &changesPerson, nil

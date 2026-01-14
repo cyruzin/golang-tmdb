@@ -2,7 +2,7 @@ package tmdb
 
 func (suite *TMBDTestSuite) TestGetTVSeasonDetails() {
 	got, err := suite.client.GetTVSeasonDetails(gotID, 1, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal("Season 1", got.Name)
 	suite.True(got.VoteAverage > 0)
 }
@@ -16,7 +16,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonDetailsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	got, err := suite.client.GetTVSeasonDetails(gotID, 1, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal("Temporada 1", got.Name)
 }
 
@@ -26,7 +26,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonChange() {
 	options["end_date"] = "2019-01-25"
 	options["page"] = "1"
 	got, err := suite.client.GetTVSeasonChanges(gotSeasonID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(got.Changes[0].Items[0].ID)
 }
 
@@ -37,13 +37,14 @@ func (suite *TMBDTestSuite) TestGetTVSeasonChangeFail() {
 
 func (suite *TMBDTestSuite) TestGetTVSeasonCredits() {
 	tv, err := suite.client.GetTVSeasonCredits(gotID, 7, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonCreditsFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetTVSeasonCredits(0, 7, nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -51,19 +52,20 @@ func (suite *TMBDTestSuite) TestGetTVSeasonCreditsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	tv, err := suite.client.GetTVSeasonCredits(gotID, 7, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonExternalIDs() {
 	tv, err := suite.client.GetTVSeasonExternalIDs(gotID, 7, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonExternalIDsFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetTVSeasonExternalIDs(0, 7, nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -71,19 +73,20 @@ func (suite *TMBDTestSuite) TestGetTVSeasonExternalIDsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	tv, err := suite.client.GetTVSeasonExternalIDs(gotID, 7, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonImages() {
 	tv, err := suite.client.GetTVSeasonImages(gotID, 7, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonImagesFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetTVSeasonImages(0, 7, nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -91,19 +94,20 @@ func (suite *TMBDTestSuite) TestGetTVSeasonImagesWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	tv, err := suite.client.GetTVSeasonImages(gotID, 7, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonVideos() {
 	tv, err := suite.client.GetTVSeasonVideos(gotID, 7, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonVideosFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetTVSeasonVideos(0, 7, nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -111,13 +115,13 @@ func (suite *TMBDTestSuite) TestGetTVSeasonVideosWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	tv, err := suite.client.GetTVSeasonVideos(gotID, 7, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(tv.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonTranslations() {
 	got, err := suite.client.GetTVSeasonTranslations(gotID, 1)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal(int64(gotSeasonID), got.ID)
 }
 

@@ -5,21 +5,21 @@ const listID = 1
 
 func (suite *TMBDTestSuite) TestGetListDetails() {
 	list, err := suite.client.GetListDetails(listID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(list.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetListDetailsFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "bad"
 	_, err := suite.client.GetListDetails(listID, nil)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestGetListDetailsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	list, err := suite.client.GetListDetails(listID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(list.ID)
 }
 
@@ -27,16 +27,16 @@ func (suite *TMBDTestSuite) TestGetListItemStatus() {
 	options := make(map[string]string)
 	options["movie_id"] = "10658"
 	list, err := suite.client.GetListItemStatus(listID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(list.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetListItemStatusFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	options := make(map[string]string)
 	options["movie_id"] = "10658"
 	_, err := suite.client.GetListItemStatus(listID, options)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 // Commented because this test creates a lots of repeated lists
@@ -50,7 +50,7 @@ func (suite *TMBDTestSuite) TestGetListItemStatusFail() {
 // 		Language:    "en",
 // 	}
 // 	response, err := suite.client.CreateList(&createList)
-// 	suite.Nil(err)
+// 	suite.NoError(err)
 // 	suite.NotNil(response.StatusMessage)
 // }
 

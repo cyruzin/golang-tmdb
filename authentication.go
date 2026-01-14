@@ -1,9 +1,5 @@
 package tmdb
 
-import (
-	"fmt"
-)
-
 // RequestToken type is a struct for request token JSON response.
 type RequestToken struct {
 	Success        bool   `json:"success"`
@@ -17,14 +13,9 @@ type RequestToken struct {
 //
 // https://developers.themoviedb.org/3/authentication/create-guest-session
 func (c *Client) CreateGuestSession() (*RequestToken, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%sguest_session/new?api_key=%s",
-		c.baseURL,
-		authenticationURL,
-		c.apiKey,
-	)
-	requestToken := RequestToken{}
-	if err := c.get(tmdbURL, &requestToken); err != nil {
+	url := c.baseURL.JoinPath(authenticationURL, "guest_session", "new")
+	var requestToken RequestToken
+	if err := c.get(url, nil, &requestToken); err != nil {
 		return nil, err
 	}
 	return &requestToken, nil
@@ -35,14 +26,9 @@ func (c *Client) CreateGuestSession() (*RequestToken, error) {
 //
 // https://developers.themoviedb.org/3/authentication/create-request-token
 func (c *Client) CreateRequestToken() (*RequestToken, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%stoken/new?api_key=%s",
-		c.baseURL,
-		authenticationURL,
-		c.apiKey,
-	)
-	requestToken := RequestToken{}
-	if err := c.get(tmdbURL, &requestToken); err != nil {
+	url := c.baseURL.JoinPath(authenticationURL, "token", "new")
+	var requestToken RequestToken
+	if err := c.get(url, nil, &requestToken); err != nil {
 		return nil, err
 	}
 	return &requestToken, nil
