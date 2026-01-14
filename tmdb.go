@@ -21,7 +21,6 @@ import (
 const (
 	defaultBaseURL    = "https://api.themoviedb.org/3"
 	alternateBaseURL  = "https://api.tmdb.org/3"
-	permissionURL     = "https://www.themoviedb.org/authenticate/"
 	authenticationURL = "/authentication/"
 	movieURL          = "/movie/"
 	tvURL             = "/tv/"
