@@ -47,7 +47,7 @@ func (c *Client) GetListDetails(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		listURL,
 		id,
 		c.apiKey,
@@ -76,7 +76,7 @@ func (c *Client) GetListItemStatus(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/item_status?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		listURL,
 		id,
 		c.apiKey,
@@ -111,7 +111,7 @@ func (c *Client) CreateList(
 ) (*ListResponse, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list?api_key=%s&session_id=%s",
-		baseURL,
+		c.baseURL,
 		c.apiKey,
 		c.sessionID,
 	)
@@ -141,7 +141,7 @@ func (c *Client) AddMovie(
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/add_item?api_key=%s&session_id=%s",
-		baseURL,
+		c.baseURL,
 		listID,
 		c.apiKey,
 		c.sessionID,
@@ -167,7 +167,7 @@ func (c *Client) RemoveMovie(
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/remove_item?api_key=%s&session_id=%s",
-		baseURL,
+		c.baseURL,
 		listID,
 		c.apiKey,
 		c.sessionID,
@@ -193,7 +193,7 @@ func (c *Client) ClearList(
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d/clear?api_key=%s&session_id=%s&confirm=%t",
-		baseURL,
+		c.baseURL,
 		listID,
 		c.apiKey,
 		c.sessionID,
@@ -219,7 +219,7 @@ func (c *Client) DeleteList(
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/list/%d?api_key=%s&session_id=%s",
-		baseURL,
+		c.baseURL,
 		listID,
 		c.apiKey,
 		c.sessionID,

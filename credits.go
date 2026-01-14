@@ -79,7 +79,7 @@ func (c *Client) GetCreditDetails(
 ) (*CreditsDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%s?api_key=%s",
-		baseURL,
+		c.baseURL,
 		creditURL,
 		id,
 		c.apiKey,

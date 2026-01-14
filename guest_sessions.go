@@ -33,7 +33,7 @@ func (c *Client) GetGuestSessionRatedMovies(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%s/rated/movies?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		guestSessionURL,
 		id,
 		c.apiKey,
@@ -76,7 +76,7 @@ func (c *Client) GetGuestSessionRatedTVShows(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%s/rated/tv?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		guestSessionURL,
 		id,
 		c.apiKey,
@@ -117,7 +117,7 @@ func (c *Client) GetGuestSessionRatedTVEpisodes(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%s/rated/tv/episodes?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		guestSessionURL,
 		id,
 		c.apiKey,

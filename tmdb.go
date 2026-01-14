@@ -42,8 +42,6 @@ const (
 	watchProvidersURL = "/watch/providers/"
 )
 
-var baseURL = defaultBaseURL
-
 // Client type is a struct to instantiate this pkg.
 type Client struct {
 	// TMDb apiKey to use the client.
@@ -57,6 +55,8 @@ type Client struct {
 	autoRetry bool
 	// http.Client for custom configuration.
 	http http.Client
+	// baseURL for API requests.
+	baseURL string
 }
 
 // Response type is a struct for http responses.
@@ -65,39 +65,78 @@ type Response struct {
 	StatusMessage string `json:"status_message"`
 }
 
+// ClientOption configures a Client.
+type ClientOption func(*Client) error
+
+// WithSessionID sets the session ID for authenticated requests.
+func WithSessionID(sid string) ClientOption {
+	return func(c *Client) error {
+		if sid == "" {
+			return errors.New("the session id is empty")
+		}
+		c.sessionID = sid
+		return nil
+	}
+}
+
+// WithHTTPClient sets a custom http.Client configuration.
+func WithHTTPClient(httpClient http.Client) ClientOption {
+	return func(c *Client) error {
+		c.http = httpClient
+		return nil
+	}
+}
+
+// WithAutoRetry enables automatic retry on rate limit errors.
+func WithAutoRetry() ClientOption {
+	return func(c *Client) error {
+		c.autoRetry = true
+		return nil
+	}
+}
+
+// WithAlternateBaseURL sets the alternate base URL.
+func WithAlternateBaseURL() ClientOption {
+	return func(c *Client) error {
+		c.baseURL = alternateBaseURL
+		return nil
+	}
+}
+
+// WithCustomBaseURL sets a custom base URL.
+func WithCustomBaseURL(url string) ClientOption {
+	return func(c *Client) error {
+		c.baseURL = url
+		return nil
+	}
+}
+
 // Init setups the Client with an apiKey.
-func Init(apiKey string) (*Client, error) {
+func Init(apiKey string, options ...ClientOption) (*Client, error) {
 	if apiKey == "" {
 		return nil, errors.New("api key is empty")
 	}
-	return &Client{apiKey: apiKey}, nil
+	c := &Client{apiKey: apiKey, baseURL: defaultBaseURL}
+	for _, opt := range options {
+		if err := opt(c); err != nil {
+			return nil, err
+		}
+	}
+	return c, nil
 }
 
 // InitV4 setups the Client with an bearer token.
-func InitV4(bearerToken string) (*Client, error) {
+func InitV4(bearerToken string, options ...ClientOption) (*Client, error) {
 	if bearerToken == "" {
 		return nil, errors.New("bearer token is empty")
 	}
-	return &Client{bearerToken: bearerToken}, nil
-}
-
-// SetSessionID will set the session id.
-func (c *Client) SetSessionID(sid string) error {
-	if sid == "" {
-		return errors.New("the session id is empty")
+	c := &Client{bearerToken: bearerToken, baseURL: defaultBaseURL}
+	for _, opt := range options {
+		if err := opt(c); err != nil {
+			return nil, err
+		}
 	}
-	c.sessionID = sid
-	return nil
-}
-
-// SetClientConfig sets a custom configuration for the http.Client.
-func (c *Client) SetClientConfig(httpClient http.Client) {
-	c.http = httpClient
-}
-
-// SetClientAutoRetry sets autoRetry flag to true.
-func (c *Client) SetClientAutoRetry() {
-	c.autoRetry = true
+	return c, nil
 }
 
 // Auto retry default duration.
@@ -236,19 +275,9 @@ func (c *Client) fmtOptions(
 	return options
 }
 
-// SetAlternateBaseURL sets an alternate base url.
-func (c *Client) SetAlternateBaseURL() {
-	baseURL = alternateBaseURL
-}
-
-// SetCustomBaseURL sets an custom base url.
-func (c *Client) SetCustomBaseURL(url string) {
-	baseURL = url
-}
-
 // GetBaseURL gets the current base url.
 func (c *Client) GetBaseURL() string {
-	return baseURL
+	return c.baseURL
 }
 
 // Error type represents an error returned by the TMDB API.

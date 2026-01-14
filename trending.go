@@ -43,7 +43,7 @@ func (c *Client) GetTrending(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s/trending/%s/%s?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		mediaType,
 		timeWindow,
 		c.apiKey,

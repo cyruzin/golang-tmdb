@@ -8,12 +8,11 @@ import (
 )
 
 func main() {
-
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
-
-	// Enabling auto retry functionality.
-	tmdbClient.SetClientAutoRetry()
-
+	// Enabling auto retry functionality using functional options.
+	tmdbClient, err := tmdb.Init(
+		os.Getenv("APIKey"),
+		tmdb.WithAutoRetry(),
+	)
 	if err != nil {
 		fmt.Println(err)
 	}

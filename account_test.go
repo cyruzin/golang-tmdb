@@ -1,8 +1,7 @@
 package tmdb
 
 func (suite *TMBDTestSuite) TestGetAccountDetails() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetAccountDetails()
 	suite.Nil(err)
 	suite.NotNil(response.ID)
@@ -15,16 +14,14 @@ func (suite *TMBDTestSuite) TestGetAccountDetailsFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountCreatedLists() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetCreatedLists(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountCreatedListsWithOptions() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -40,16 +37,14 @@ func (suite *TMBDTestSuite) TestAccountCreatedListsFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountFavoriteMovies() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetFavoriteMovies(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountFavoriteMoviesWithOptions() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -65,16 +60,14 @@ func (suite *TMBDTestSuite) TestAccountFavoriteMovieFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountFavoriteTVShows() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetFavoriteTVShows(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountFavoriteWithOptionsTVShows() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -90,8 +83,7 @@ func (suite *TMBDTestSuite) TestAccountFavoriteFailTVShows() {
 }
 
 func (suite *TMBDTestSuite) TestMarkAsFavorite() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	markAsFavorite := AccountFavorite{
 		MediaType: "movie",
 		MediaID:   500,
@@ -114,16 +106,14 @@ func (suite *TMBDTestSuite) TestMarkAsFavoriteFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountRatedMovies() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetRatedMovies(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountRatedMoviesWithOptions() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -139,16 +129,14 @@ func (suite *TMBDTestSuite) TestAccountRatedMoviesFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountRatedTVShows() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetRatedTVShows(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountRatedTVShowsWithOptions() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -164,16 +152,14 @@ func (suite *TMBDTestSuite) TestAccountRatedTVShowsFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountRatedTVEpisodes() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetRatedTVEpisodes(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountRatedTVEpisodesWithOptions() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -189,16 +175,14 @@ func (suite *TMBDTestSuite) TestAccountRatedTVEpisodesFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountMovieWatchlist() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetMovieWatchlist(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountMovieWatchlistWithOptions() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -214,16 +198,14 @@ func (suite *TMBDTestSuite) TestAccountMovieWatchlistFail() {
 }
 
 func (suite *TMBDTestSuite) TestAccountTVShowsWatchlist() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.GetTVShowsWatchlist(0, nil)
 	suite.Nil(err)
 	suite.NotNil(response.Page)
 }
 
 func (suite *TMBDTestSuite) TestAccountTVShowsWatchlistWithOptions() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	options["page"] = "1"
@@ -239,8 +221,7 @@ func (suite *TMBDTestSuite) TestAccountTVShowsWatchlistFail() {
 }
 
 func (suite *TMBDTestSuite) TestAddToWatchlist() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	addToWatchlist := AccountWatchlist{
 		MediaType: "tv",
 		MediaID:   82856,

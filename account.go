@@ -29,7 +29,7 @@ type AccountDetails struct {
 func (c *Client) GetAccountDetails() (*AccountDetails, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s/account?api_key=%s&session_id=%s",
-		baseURL,
+		c.baseURL,
 		c.apiKey,
 		c.sessionID,
 	)
@@ -57,7 +57,7 @@ func (c *Client) GetCreatedLists(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -87,7 +87,7 @@ func (c *Client) GetFavoriteMovies(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/movies?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -117,7 +117,7 @@ func (c *Client) GetFavoriteTVShows(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite/tv?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -149,7 +149,7 @@ func (c *Client) MarkAsFavorite(
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/favorite?api_key=%s&session_id=%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -182,7 +182,7 @@ func (c *Client) GetRatedMovies(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/movies?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -211,7 +211,7 @@ func (c *Client) GetRatedTVShows(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/tv?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -241,7 +241,7 @@ func (c *Client) GetRatedTVEpisodes(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rated/tv/episodes?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -270,7 +270,7 @@ func (c *Client) GetMovieWatchlist(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist/movies?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -299,7 +299,7 @@ func (c *Client) GetTVShowsWatchlist(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist/tv?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,
@@ -330,7 +330,7 @@ func (c *Client) AddToWatchlist(
 ) (*Response, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watchlist?api_key=%s&session_id=%s",
-		baseURL,
+		c.baseURL,
 		accountURL,
 		id,
 		c.apiKey,

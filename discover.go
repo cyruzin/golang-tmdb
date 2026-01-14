@@ -38,7 +38,7 @@ func (c *Client) GetDiscoverMovie(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		discoverURL,
 		c.apiKey,
 		options,
@@ -72,7 +72,7 @@ func (c *Client) GetDiscoverTV(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		discoverURL,
 		c.apiKey,
 		options,

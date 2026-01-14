@@ -164,7 +164,7 @@ func (c *Client) GetTVDetails(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -201,7 +201,7 @@ func (c *Client) GetTVAccountStates(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/account_states?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -263,7 +263,7 @@ func (c *Client) GetTVAggregateCredits(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/aggregate_credits?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -292,7 +292,7 @@ func (c *Client) GetTVAlternativeTitles(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_titles?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -341,7 +341,7 @@ func (c *Client) GetTVChanges(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -370,7 +370,7 @@ func (c *Client) GetTVContentRatings(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/content_ratings?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -422,7 +422,7 @@ func (c *Client) GetTVCredits(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/credits?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -453,7 +453,7 @@ func (c *Client) GetTVEpisodeGroups(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/episode_groups?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -498,7 +498,7 @@ func (c *Client) GetTVExternalIDs(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -540,7 +540,7 @@ func (c *Client) GetTVImages(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -567,7 +567,7 @@ func (c *Client) GetTVKeywords(
 ) (*TVKeywords, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/keywords?api_key=%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -595,7 +595,7 @@ func (c *Client) GetTVRecommendations(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/recommendations?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -625,7 +625,7 @@ func (c *Client) GetTVReviews(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/reviews?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -653,7 +653,7 @@ func (c *Client) GetTVScreenedTheatrically(
 ) (*TVScreenedTheatrically, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/screened_theatrically?api_key=%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -681,7 +681,7 @@ func (c *Client) GetTVSimilar(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/similar?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -704,7 +704,7 @@ func (c *Client) GetTVWatchProviders(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watch/providers?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -733,7 +733,7 @@ func (c *Client) GetTVTranslations(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -756,7 +756,7 @@ func (c *Client) GetTVVideos(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -785,7 +785,7 @@ func (c *Client) GetTVLatest(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		c.apiKey,
 		options,
@@ -818,7 +818,7 @@ func (c *Client) GetTVAiringToday(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sairing_today?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		c.apiKey,
 		options,
@@ -847,7 +847,7 @@ func (c *Client) GetTVOnTheAir(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%son_the_air?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		c.apiKey,
 		options,
@@ -874,7 +874,7 @@ func (c *Client) GetTVPopular(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		c.apiKey,
 		options,
@@ -900,7 +900,7 @@ func (c *Client) GetTVTopRated(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stop_rated?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		c.apiKey,
 		options,
@@ -928,7 +928,7 @@ func (c *Client) PostTVShowRating(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,
@@ -965,7 +965,7 @@ func (c *Client) DeleteTVShowRating(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,

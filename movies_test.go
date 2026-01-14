@@ -386,8 +386,7 @@ func (suite *TMBDTestSuite) TestGetMovieUpcomingWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestPostMovieRating() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.PostMovieRating(aquamanID, 10, nil)
 	suite.Nil(err)
 	suite.NotNil(response.StatusCode)
@@ -400,8 +399,7 @@ func (suite *TMBDTestSuite) TestPostMovieRatingFail() {
 }
 
 func (suite *TMBDTestSuite) TestDeleteMovieRating() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.DeleteMovieRating(aquamanID, nil)
 	suite.Nil(err)
 	suite.Equal(13, response.StatusCode)

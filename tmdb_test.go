@@ -20,8 +20,8 @@ type TMBDTestSuite struct {
 }
 
 func (suite *TMBDTestSuite) SetupTest() {
-	suite.client.apiKey = apiKey
-	suite.client.SetClientAutoRetry()
+	client, _ := Init(apiKey, WithAutoRetry())
+	suite.client = *client
 }
 
 func TestSuite(t *testing.T) {
@@ -50,7 +50,7 @@ func (suite *TMBDTestSuite) TestGetSpecialCases() {
 	suite.Error(err)
 	suite.Contains(err.Error(), "could not fetch the url")
 
-	c := Client{bearerToken: "FAKE_BEARER_TOKEN"}
+	c, _ := InitV4("FAKE_BEARER_TOKEN")
 	err = c.get("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil)
 	suite.Error(err)
 	suite.True(
@@ -130,7 +130,7 @@ func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 	suite.Error(err)
 	suite.Contains(err.Error(), "could not fetch the url")
 
-	c := Client{bearerToken: "FAKE_BEARER_TOKEN"}
+	c, _ := InitV4("FAKE_BEARER_TOKEN")
 	err = c.request("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil, "GET", nil)
 	suite.Error(err)
 	suite.True(
@@ -213,23 +213,26 @@ func (suite *TMBDTestSuite) TestInitFail() {
 	suite.NotNil(err)
 }
 
-func (suite *TMBDTestSuite) TestSetClientConfig() {
-	suite.client.SetClientConfig(http.Client{Timeout: time.Second * 10})
-	suite.Equal(time.Second*10, suite.client.http.Timeout)
+func (suite *TMBDTestSuite) TestWithHTTPClient() {
+	client, err := Init(apiKey, WithHTTPClient(http.Client{Timeout: time.Second * 10}))
+	suite.Nil(err)
+	suite.Equal(time.Second*10, client.http.Timeout)
 }
 
-func (suite *TMBDTestSuite) TestSetClientConfigNoTimeout() {
-	suite.client.SetClientConfig(http.Client{Timeout: 0})
-	suite.Equal(time.Second*0, suite.client.http.Timeout)
+func (suite *TMBDTestSuite) TestWithHTTPClientNoTimeout() {
+	client, err := Init(apiKey, WithHTTPClient(http.Client{Timeout: 0}))
+	suite.Nil(err)
+	suite.Equal(time.Second*0, client.http.Timeout)
 }
 
-func (suite *TMBDTestSuite) TestSetAutoRetry() {
-	suite.client.SetClientAutoRetry()
-	suite.Equal(true, suite.client.autoRetry)
+func (suite *TMBDTestSuite) TestWithAutoRetry() {
+	client, err := Init(apiKey, WithAutoRetry())
+	suite.Nil(err)
+	suite.Equal(true, client.autoRetry)
 }
 
-func (suite *TMBDTestSuite) TestSetSessionIDFail() {
-	err := suite.client.SetSessionID("")
+func (suite *TMBDTestSuite) TestWithSessionIDFail() {
+	_, err := Init(apiKey, WithSessionID(""))
 	suite.Equal("the session id is empty", err.Error())
 }
 
@@ -276,14 +279,14 @@ func (suite *TMBDTestSuite) TestClientV4Fail() {
 	suite.EqualError(err, "bearer token is empty")
 }
 
-func (suite *TMBDTestSuite) TestAlternateBaseURL() {
-	suite.client.SetAlternateBaseURL()
-
-	suite.Equal(suite.client.GetBaseURL(), "https://api.tmdb.org/3")
+func (suite *TMBDTestSuite) TestWithAlternateBaseURL() {
+	client, err := Init(apiKey, WithAlternateBaseURL())
+	suite.Nil(err)
+	suite.Equal("https://api.tmdb.org/3", client.GetBaseURL())
 }
 
-func (suite *TMBDTestSuite) TestCustomBaseURL() {
-	suite.client.SetCustomBaseURL("https://api.themoviedb.org/3")
-
-	suite.Equal(suite.client.GetBaseURL(), "https://api.themoviedb.org/3")
+func (suite *TMBDTestSuite) TestWithCustomBaseURL() {
+	client, err := Init(apiKey, WithCustomBaseURL("https://custom.api.org/3"))
+	suite.Nil(err)
+	suite.Equal("https://custom.api.org/3", client.GetBaseURL())
 }

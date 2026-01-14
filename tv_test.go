@@ -412,8 +412,7 @@ func (suite *TMBDTestSuite) TestGetTVTopRatedWithOptions() {
 }
 
 func (suite *TMBDTestSuite) TestPostTVShowRating() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.PostTVShowRating(vikingsID, 10, nil)
 	suite.Nil(err)
 	suite.NotNil(response.StatusCode)
@@ -425,8 +424,7 @@ func (suite *TMBDTestSuite) TestPostTVShowRatingFail() {
 }
 
 func (suite *TMBDTestSuite) TestDeleteTVShowRating() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.DeleteTVShowRating(vikingsID, nil)
 	suite.Nil(err)
 	suite.Equal(13, response.StatusCode)

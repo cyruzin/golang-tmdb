@@ -139,7 +139,7 @@ func (c *Client) GetMovieDetails(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -176,7 +176,7 @@ func (c *Client) GetMovieAccountStates(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/account_states?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -205,7 +205,7 @@ func (c *Client) GetMovieAlternativeTitles(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/alternative_titles?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -247,7 +247,7 @@ func (c *Client) GetMovieChanges(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/changes?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -301,7 +301,7 @@ func (c *Client) GetMovieCredits(
 ) (*MovieCredits, error) {
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf("%s%s%d/credits?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -340,7 +340,7 @@ func (c *Client) GetMovieExternalIDs(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/external_ids?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -382,7 +382,7 @@ func (c *Client) GetMovieImages(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/images?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -410,7 +410,7 @@ type MovieKeywords struct {
 func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/keywords?api_key=%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -436,7 +436,7 @@ func (c *Client) GetMovieReleaseDates(
 ) (*MovieReleaseDates, error) {
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/release_dates?api_key=%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -458,7 +458,7 @@ func (c *Client) GetMovieVideos(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/videos?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -481,7 +481,7 @@ func (c *Client) GetMovieWatchProviders(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/watch/providers?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -510,7 +510,7 @@ func (c *Client) GetMovieTranslations(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/translations?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -539,7 +539,7 @@ func (c *Client) GetMovieRecommendations(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/recommendations?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -570,7 +570,7 @@ func (c *Client) GetMovieSimilar(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/similar?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -600,7 +600,7 @@ func (c *Client) GetMovieReviews(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/reviews?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -630,7 +630,7 @@ func (c *Client) GetMovieLists(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/lists?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -659,7 +659,7 @@ func (c *Client) GetMovieLatest(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%slatest?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		c.apiKey,
 		options,
@@ -697,7 +697,7 @@ func (c *Client) GetMovieNowPlaying(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%snow_playing?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		c.apiKey,
 		options,
@@ -726,7 +726,7 @@ func (c *Client) GetMoviePopular(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%spopular?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		c.apiKey,
 		options,
@@ -752,7 +752,7 @@ func (c *Client) GetMovieTopRated(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stop_rated?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		c.apiKey,
 		options,
@@ -785,7 +785,7 @@ func (c *Client) GetMovieUpcoming(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%supcoming?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		c.apiKey,
 		options,
@@ -813,7 +813,7 @@ func (c *Client) PostMovieRating(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,
@@ -850,7 +850,7 @@ func (c *Client) DeleteMovieRating(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%s%d/rating?api_key=%s&session_id=%s%s",
-		baseURL,
+		c.baseURL,
 		movieURL,
 		id,
 		c.apiKey,

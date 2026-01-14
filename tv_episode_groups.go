@@ -60,7 +60,7 @@ func (c *Client) GetTVEpisodeGroupsDetails(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sepisode_group/%s?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		tvURL,
 		id,
 		c.apiKey,

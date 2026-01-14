@@ -33,7 +33,7 @@ func (c *Client) GetAvailableWatchProviderRegions(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%sregions?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		watchProvidersURL,
 		c.apiKey,
 		options,
@@ -55,7 +55,7 @@ func (c *Client) GetWatchProvidersMovie(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%smovie?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		watchProvidersURL,
 		c.apiKey,
 		options,
@@ -77,7 +77,7 @@ func (c *Client) GetWatchProvidersTv(
 	options := c.fmtOptions(urlOptions)
 	tmdbURL := fmt.Sprintf(
 		"%s%stv?api_key=%s%s",
-		baseURL,
+		c.baseURL,
 		watchProvidersURL,
 		c.apiKey,
 		options,
