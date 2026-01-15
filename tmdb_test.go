@@ -304,11 +304,11 @@ func (suite *TMBDTestSuite) TestClientV4Fail() {
 func (suite *TMBDTestSuite) TestWithAlternateBaseURL() {
 	client, err := Init(apiKey, WithAlternateBaseURL())
 	suite.Nil(err)
-	suite.Equal("https://api.tmdb.org/3", client.GetBaseURL())
+	suite.Equal("https://api.tmdb.org/3", client.baseURL)
 }
 
 func (suite *TMBDTestSuite) TestWithCustomBaseURL() {
 	client, err := Init(apiKey, WithCustomBaseURL("https://custom.api.org/3"))
 	suite.Nil(err)
-	suite.Equal("https://custom.api.org/3", client.GetBaseURL())
+	suite.Equal("https://custom.api.org/3", client.baseURL)
 }

@@ -310,11 +310,6 @@ func (c *Client) request(u *url.URL, method string, opts map[string]string, body
 	return nil
 }
 
-// GetBaseURL gets the current base url.
-func (c *Client) GetBaseURL() string {
-	return c.baseURL.String()
-}
-
 // Error type represents an error returned by the TMDB API.
 type Error struct {
 	StatusMessage string `json:"status_message,omitempty"`
