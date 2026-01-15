@@ -21,7 +21,7 @@ type TMBDTestSuite struct {
 }
 
 func (suite *TMBDTestSuite) SetupTest() {
-	client, _ := Init(apiKey, WithAutoRetry())
+	client, _ := New(WithAPIKey(apiKey), WithAutoRetry())
 	suite.client = client
 }
 
@@ -54,7 +54,7 @@ func (suite *TMBDTestSuite) TestGetSpecialCases() {
 	suite.Error(err)
 	suite.Contains(err.Error(), "url is nil")
 
-	c, _ := InitV4("FAKE_BEARER_TOKEN")
+	c, _ := New(WithBearerToken("FAKE_BEARER_TOKEN"))
 	u, err := url.Parse("https://api.themoviedb.org/3/movie/7578000?language=en-US")
 	suite.NoError(err)
 	err = c.get(u, nil, nil)
@@ -144,7 +144,7 @@ func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 	suite.Error(err)
 	suite.Contains(err.Error(), "url is nil")
 
-	c, _ := InitV4("FAKE_BEARER_TOKEN")
+	c, _ := New(WithBearerToken("FAKE_BEARER_TOKEN"))
 	u, err := url.Parse("https://api.themoviedb.org/3/movie/7578000?language=en-US")
 	suite.NoError(err)
 	err = c.request(u, "GET", nil, nil, nil)
@@ -225,36 +225,43 @@ func (suite *TMBDTestSuite) TestDecodeErrorReadBodyFail() {
 	suite.Contains(err.Error(), "could not read body response")
 }
 
-func (suite *TMBDTestSuite) TestInit() {
-	_, err := Init(apiKey)
+func (suite *TMBDTestSuite) TestNew() {
+	_, err := New(WithAPIKey(apiKey))
 	suite.Nil(err)
 }
 
-func (suite *TMBDTestSuite) TestInitFail() {
-	_, err := Init("")
+func (suite *TMBDTestSuite) TestNewFailNoAuth() {
+	_, err := New()
 	suite.NotNil(err)
+	suite.Contains(err.Error(), "either API key or bearer token is required")
+}
+
+func (suite *TMBDTestSuite) TestNewFailEmptyAPIKey() {
+	_, err := New(WithAPIKey(""))
+	suite.NotNil(err)
+	suite.Contains(err.Error(), "api key is empty")
 }
 
 func (suite *TMBDTestSuite) TestWithHTTPClient() {
-	client, err := Init(apiKey, WithHTTPClient(http.Client{Timeout: time.Second * 10}))
+	client, err := New(WithAPIKey(apiKey), WithHTTPClient(http.Client{Timeout: time.Second * 10}))
 	suite.Nil(err)
 	suite.Equal(time.Second*10, client.http.Timeout)
 }
 
 func (suite *TMBDTestSuite) TestWithHTTPClientDefaultTimeout() {
-	client, err := Init(apiKey, WithHTTPClient(http.Client{}))
+	client, err := New(WithAPIKey(apiKey), WithHTTPClient(http.Client{}))
 	suite.Nil(err)
 	suite.Equal(time.Second*10, client.http.Timeout)
 }
 
 func (suite *TMBDTestSuite) TestWithAutoRetry() {
-	client, err := Init(apiKey, WithAutoRetry())
+	client, err := New(WithAPIKey(apiKey), WithAutoRetry())
 	suite.Nil(err)
 	suite.Equal(true, client.autoRetry)
 }
 
 func (suite *TMBDTestSuite) TestWithSessionIDFail() {
-	_, err := Init(apiKey, WithSessionID(""))
+	_, err := New(WithAPIKey(apiKey), WithSessionID(""))
 	suite.Equal("the session id is empty", err.Error())
 }
 
@@ -289,26 +296,24 @@ func (suite *TMBDTestSuite) TestRetryDurationEmpty() {
 	suite.Equal(defaultRetryDuration, duration)
 }
 
-func (suite *TMBDTestSuite) TestClientV4() {
-	_, err := InitV4("FAKE_BEARER_TOKEN")
-
+func (suite *TMBDTestSuite) TestWithBearerToken() {
+	_, err := New(WithBearerToken("FAKE_BEARER_TOKEN"))
 	suite.Nil(err)
 }
 
-func (suite *TMBDTestSuite) TestClientV4Fail() {
-	_, err := InitV4("")
-
+func (suite *TMBDTestSuite) TestWithBearerTokenFail() {
+	_, err := New(WithBearerToken(""))
 	suite.EqualError(err, "bearer token is empty")
 }
 
 func (suite *TMBDTestSuite) TestWithAlternateBaseURL() {
-	client, err := Init(apiKey, WithAlternateBaseURL())
+	client, err := New(WithAPIKey(apiKey), WithAlternateBaseURL())
 	suite.Nil(err)
-	suite.Equal("https://api.tmdb.org/3", client.baseURL)
+	suite.Equal("https://api.tmdb.org/3", client.baseURL.String())
 }
 
 func (suite *TMBDTestSuite) TestWithCustomBaseURL() {
-	client, err := Init(apiKey, WithCustomBaseURL("https://custom.api.org/3"))
+	client, err := New(WithAPIKey(apiKey), WithCustomBaseURL("https://custom.api.org/3"))
 	suite.Nil(err)
-	suite.Equal("https://custom.api.org/3", client.baseURL)
+	suite.Equal("https://custom.api.org/3", client.baseURL.String())
 }

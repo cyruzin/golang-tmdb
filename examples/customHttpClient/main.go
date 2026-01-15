@@ -11,8 +11,8 @@ import (
 
 func main() {
 	// Setting a custom config for http.Client using functional options.
-	tmdbClient, err := tmdb.Init(
-		os.Getenv("APIKey"),
+	tmdbClient, err := tmdb.New(
+		tmdb.WithAPIKey(os.Getenv("APIKey")),
 		tmdb.WithHTTPClient(http.Client{Timeout: time.Second * 5}),
 	)
 	if err != nil {

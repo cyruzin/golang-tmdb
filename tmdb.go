@@ -177,34 +177,39 @@ func WithCustomBaseURL(customURL string) ClientOption {
 	}
 }
 
-// Init setups the Client with an apiKey.
-func Init(apiKey string, options ...ClientOption) (*Client, error) {
-	if apiKey == "" {
-		return nil, fmt.Errorf("api key is empty")
-	}
-	c := &Client{apiKey: apiKey, baseURL: defaultBaseURL}
-	for _, opt := range options {
-		if err := opt(c); err != nil {
-			return nil, err
+// WithAPIKey sets the API key for v3 authentication.
+func WithAPIKey(apiKey string) ClientOption {
+	return func(c *Client) error {
+		if apiKey == "" {
+			return fmt.Errorf("api key is empty")
 		}
+		c.apiKey = apiKey
+		return nil
 	}
-	if c.http.Timeout == 0 {
-		c.http.Timeout = time.Second * 10
-	}
-	c.http.Transport = &customTransport{base: c.http.Transport, client: c}
-	return c, nil
 }
 
-// InitV4 setups the Client with an bearer token.
-func InitV4(bearerToken string, options ...ClientOption) (*Client, error) {
-	if bearerToken == "" {
-		return nil, fmt.Errorf("bearer token is empty")
+// WithBearerToken sets the bearer token for v4 authentication.
+func WithBearerToken(bearerToken string) ClientOption {
+	return func(c *Client) error {
+		if bearerToken == "" {
+			return fmt.Errorf("bearer token is empty")
+		}
+		c.bearerToken = bearerToken
+		return nil
 	}
-	c := &Client{bearerToken: bearerToken, baseURL: defaultBaseURL}
+}
+
+// New creates a new Client with the given options.
+// At least one of WithAPIKey or WithBearerToken must be provided.
+func New(options ...ClientOption) (*Client, error) {
+	c := &Client{baseURL: defaultBaseURL}
 	for _, opt := range options {
 		if err := opt(c); err != nil {
 			return nil, err
 		}
+	}
+	if c.apiKey == "" && c.bearerToken == "" {
+		return nil, fmt.Errorf("either API key or bearer token is required")
 	}
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10

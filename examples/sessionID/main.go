@@ -14,8 +14,8 @@ func main() {
 	// https://developers.themoviedb.org/3/authentication/how-do-i-generate-a-session-id
 	//
 	// Once you have the SessionID, you can load it from a ENV variable or a database.
-	tmdbClient, err := tmdb.Init(
-		os.Getenv("APIKey"),
+	tmdbClient, err := tmdb.New(
+		tmdb.WithAPIKey(os.Getenv("APIKey")),
 		tmdb.WithSessionID(os.Getenv("SessionID")),
 	)
 	if err != nil {
