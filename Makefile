@@ -1,2 +1,19 @@
+tool_modfile = "go.tool.mod"
+
 test: 
 	go test -race -v
+
+.PHONY: check
+check:
+	go vet ./...
+	go tool -modfile=$(tool_modfile) golangci-lint run --new-from-rev=HEAD~ ./...
+
+.PHONY: check-all
+check-all:
+	go vet ./...
+	go tool -modfile=$(tool_modfile) golangci-lint run ./...
+
+.PHONY: check-fix
+check-fix:
+	go vet ./...
+	go tool -modfile=$(tool_modfile) golangci-lint run --fix ./...

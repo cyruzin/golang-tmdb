@@ -1,0 +1,20 @@
+#:schema https://golangci-lint.run/jsonschema/golangci.jsonschema.json
+version = "2"
+
+[linters]
+enable = ["bodyclose", "gosec", "nilnil", "sloglint","unused","unconvert","whitespace","misspell","sloglint", "godoclint"]
+
+[linters.settings.sloglint]
+no-mixed-args = true
+[linters.settings.godoclint]
+enable = ["single-pkg-doc", "require-doc", "deprecated", "no-unused-link", "require-pkg-doc"]
+
+[[linters.exclusions.rules]]
+linters = ["errcheck"]
+source = "^\\s*defer\\s+"
+paths = [".*_test\\.go$", ".*_templ\\.go$"]
+
+
+[[linters.exclusions.rules]]
+path = ".*_test\\.go$"
+linters = ["godoclint", "errcheck"]
