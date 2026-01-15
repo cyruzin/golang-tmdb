@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB account API usage.
 package main
 
 import (

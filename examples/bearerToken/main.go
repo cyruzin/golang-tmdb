@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB bearer token authentication.
 package main
 
 import (

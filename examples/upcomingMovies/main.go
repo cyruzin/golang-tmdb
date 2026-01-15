@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB upcoming movies API usage.
 package main
 
 import (
@@ -26,5 +27,4 @@ func main() {
 
 	fmt.Println(movie.Results[0].Title)
 	fmt.Println(movie.Results[0].GenreIDs)
-
 }

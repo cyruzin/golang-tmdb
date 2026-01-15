@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB trending API usage.
 package main
 
 import (

@@ -323,6 +323,7 @@ type MovieVideosResults struct {
 	} `json:"results"`
 }
 
+// WatchProviderResult represents watch provider options for a single region.
 type WatchProviderResult struct {
 	Link     string           `json:"link"`
 	Flatrate *[]WatchProvider `json:"flatrate"`
@@ -330,6 +331,7 @@ type WatchProviderResult struct {
 	Buy      *[]WatchProvider `json:"buy"`
 }
 
+// WatchProviderResults represents watch provider options across multiple regions.
 type WatchProviderResults struct {
 	ID      int64                          `json:"id"`
 	Results map[string]WatchProviderResult `json:"results"`
@@ -530,6 +532,7 @@ type TVAiringTodayResults struct {
 	} `json:"results"`
 }
 
+// VideoResult represents a single video (trailer, teaser, etc.) for a movie or TV show.
 type VideoResult struct {
 	ID          string `json:"id"`
 	Iso639_1    string `json:"iso_639_1"`
@@ -543,6 +546,7 @@ type VideoResult struct {
 	Type        string `json:"type"`
 }
 
+// VideoResults represents a collection of videos for a movie or TV show.
 type VideoResults struct {
 	ID      int64         `json:"id"`
 	Results []VideoResult `json:"results"`

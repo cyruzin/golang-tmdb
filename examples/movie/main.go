@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB movie API usage.
 package main
 
 import (

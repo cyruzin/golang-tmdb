@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB people API usage.
 package main
 
 import (

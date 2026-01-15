@@ -69,7 +69,7 @@ func (suite *TMBDTestSuite) TestGetSpecialCases() {
 		retryCalled = true
 		w.Header().Set("Retry-After", "1")
 		w.WriteHeader(429)
-		w.Write([]byte(`{"status_code":25,"status_message":"Your request count (#) is over the allowed limit of (40).","success":false}`))
+		_, _ = w.Write([]byte(`{"status_code":25,"status_message":"Your request count (#) is over the allowed limit of (40).","success":false}`))
 	}))
 	defer tsRetry.Close()
 	u, err = url.Parse(tsRetry.URL)
@@ -135,7 +135,7 @@ func (suite *TMBDTestSuite) TestEncodeBodyError() {
 
 func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 	// Test that invalid URL parsing fails
-	_, err := url.Parse("http://[::1]:namedport")
+	_, err := url.Parse("http://[::1]:namedport") //nolint:staticcheck // intentionally testing invalid URL
 	suite.Error(err)
 	suite.Contains(err.Error(), "invalid port")
 
@@ -162,7 +162,7 @@ func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 		retryCalled = true
 		w.Header().Set("Retry-After", "1")
 		w.WriteHeader(429)
-		w.Write([]byte(`{"status_code":25,"status_message":"Your request count (#) is over the allowed limit of (40).","success":false}`))
+		_, _ = w.Write([]byte(`{"status_code":25,"status_message":"Your request count (#) is over the allowed limit of (40).","success":false}`))
 	}))
 	defer tsRetry.Close()
 	c.http.Timeout = time.Second * 10
@@ -180,7 +180,7 @@ func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 	tsDecode := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(200)
-		w.Write([]byte(`{"foo": "bar"}`))
+		_, _ = w.Write([]byte(`{"foo": "bar"}`))
 	}))
 	defer tsDecode.Close()
 	u, err = url.Parse(tsDecode.URL)

@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB TV API usage.
 package main
 
 import (

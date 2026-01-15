@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB client with custom HTTP client configuration.
 package main
 
 import (

@@ -131,11 +131,13 @@ type CreatedBy struct {
 	ProfilePath string `json:"profile_path"`
 }
 
+// VoteMetrics contains voting statistics for a media item.
 type VoteMetrics struct {
 	VoteCount   int64   `json:"vote_count"`
 	VoteAverage float32 `json:"vote_average"`
 }
 
+// ImageBase contains common fields for image resources.
 type ImageBase struct {
 	AspectRatio float64 `json:"aspect_ratio"`
 	FilePath    string  `json:"file_path"`
@@ -144,6 +146,7 @@ type ImageBase struct {
 	VoteMetrics
 }
 
+// WatchProvider represents a streaming or rental service.
 type WatchProvider struct {
 	LogoPath        string `json:"logo_path"`
 	ProviderID      int    `json:"provider_id"`
@@ -151,6 +154,7 @@ type WatchProvider struct {
 	DisplayPriority int    `json:"display_priority"`
 }
 
+// AlternativeTitle represents an alternative title for a movie or TV show.
 type AlternativeTitle struct {
 	Iso3166_1 string `json:"iso_3166_1"`
 	Title     string `json:"title"`

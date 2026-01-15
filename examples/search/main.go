@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB search API usage.
 package main
 
 import (

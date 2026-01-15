@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB helper functions usage.
 package main
 
 import (
@@ -32,5 +33,4 @@ func main() {
 			fmt.Println(tmdb.GetVideoURL(video.Key))
 		}
 	}
-
 }

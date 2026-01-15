@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB append_to_response feature usage.
 package main
 
 import (

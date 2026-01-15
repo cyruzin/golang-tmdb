@@ -61,6 +61,7 @@ type customTransport struct {
 	client *Client
 }
 
+// RoundTrip implements http.RoundTripper, adding authentication and headers to requests.
 func (t *customTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if t.client.apiKey == "" && t.client.bearerToken == "" {
 		return nil, fmt.Errorf("apiKey and bearerToken is empty")
@@ -87,7 +88,9 @@ func (t *customTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 			return nil, err
 		}
 		if t.client.autoRetry && shouldRetry(resp.StatusCode) {
-			resp.Body.Close()
+			if err := resp.Body.Close(); err != nil {
+				return nil, err
+			}
 			time.Sleep(retryDuration(resp))
 			continue
 		}
@@ -321,6 +324,7 @@ type Error struct {
 	StatusCode    int    `json:"status_code,omitempty"`
 }
 
+// Error implements the error interface for API errors.
 func (e Error) Error() string {
 	return fmt.Sprintf(
 		"code: %d | success: %t | message: %s",

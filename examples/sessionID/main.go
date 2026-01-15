@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB session ID authentication.
 package main
 
 import (

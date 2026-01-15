@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB client with automatic retry configuration.
 package main
 
 import (
