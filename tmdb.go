@@ -6,7 +6,6 @@ package tmdb
 import (
 	"bytes"
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -126,7 +125,7 @@ type ClientOption func(*Client) error
 func WithSessionID(sid string) ClientOption {
 	return func(c *Client) error {
 		if sid == "" {
-			return errors.New("the session id is empty")
+			return fmt.Errorf("the session id is empty")
 		}
 		c.sessionID = sid
 		return nil
@@ -181,7 +180,7 @@ func WithCustomBaseURL(customURL string) ClientOption {
 // Init setups the Client with an apiKey.
 func Init(apiKey string, options ...ClientOption) (*Client, error) {
 	if apiKey == "" {
-		return nil, errors.New("api key is empty")
+		return nil, fmt.Errorf("api key is empty")
 	}
 	c := &Client{apiKey: apiKey, baseURL: defaultBaseURL}
 	for _, opt := range options {
@@ -199,7 +198,7 @@ func Init(apiKey string, options ...ClientOption) (*Client, error) {
 // InitV4 setups the Client with an bearer token.
 func InitV4(bearerToken string, options ...ClientOption) (*Client, error) {
 	if bearerToken == "" {
-		return nil, errors.New("bearer token is empty")
+		return nil, fmt.Errorf("bearer token is empty")
 	}
 	c := &Client{bearerToken: bearerToken, baseURL: defaultBaseURL}
 	for _, opt := range options {
@@ -294,7 +293,7 @@ func (c *Client) request(u *url.URL, method string, opts map[string]string, body
 	}
 	res, err := c.http.Do(req)
 	if err != nil {
-		return errors.New(err.Error())
+		return err
 	}
 	defer res.Body.Close()
 	// Checking if the response is greater or equal
