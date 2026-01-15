@@ -1,9 +1,8 @@
 package tmdb
 
 import (
+	"encoding/json"
 	"fmt"
-
-	json "github.com/goccy/go-json"
 )
 
 func tvEpisodePath(id, seasonNumber, episodeNumber int) string {

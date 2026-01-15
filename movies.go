@@ -1,10 +1,9 @@
 package tmdb
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-
-	json "github.com/goccy/go-json"
 )
 
 // MovieDetails type is a struct for movie details JSON response.

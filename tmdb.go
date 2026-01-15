@@ -6,14 +6,13 @@ package tmdb
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
-
-	json "github.com/goccy/go-json"
 )
 
 var (

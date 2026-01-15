@@ -1,8 +1,6 @@
 package tmdb
 
-import (
-	json "github.com/goccy/go-json"
-)
+import "encoding/json"
 
 // TVEpisodeGroupsDetails type is a struct for details JSON response.
 type TVEpisodeGroupsDetails struct {
