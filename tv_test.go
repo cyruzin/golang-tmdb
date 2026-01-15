@@ -49,7 +49,7 @@ func (suite *TMBDTestSuite) TestGetTVAccountStatesFail() {
 func (suite *TMBDTestSuite) TestGetTVAggregateCredits() {
 	vikings, err := suite.client.GetTVAggregateCredits(vikingsID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(vikingsID), vikings.ID)
+	suite.Equal((vikingsID), vikings.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVAggregateFail() {
@@ -127,7 +127,7 @@ func (suite *TMBDTestSuite) TestGetTVContentRatingsWithOptions() {
 func (suite *TMBDTestSuite) TestGetTVCredits() {
 	vikings, err := suite.client.GetTVCredits(vikingsID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(vikingsID), vikings.ID)
+	suite.Equal(vikingsID, vikings.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVCreditsFail() {
@@ -138,7 +138,7 @@ func (suite *TMBDTestSuite) TestGetTVCreditsFail() {
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroups() {
 	vikings, err := suite.client.GetTVEpisodeGroups(vikingsID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(vikingsID), vikings.ID)
+	suite.Equal(vikingsID, vikings.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsFail() {
@@ -151,7 +151,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeGroupsWithOptions() {
 	options["language"] = "en-US"
 	vikings, err := suite.client.GetTVEpisodeGroups(vikingsID, options)
 	suite.NoError(err)
-	suite.Equal(int64(vikingsID), vikings.ID)
+	suite.Equal(vikingsID, vikings.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVExternalIDs() {
@@ -181,7 +181,7 @@ func (suite *TMBDTestSuite) TestGetTVImagesWithOptions() {
 	options["language"] = "pt-BR"
 	flash, err := suite.client.GetTVImages(flashID, options)
 	suite.NoError(err)
-	suite.Equal(int64(flashID), flash.ID)
+	suite.Equal(flashID, flash.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVKeywords() {
@@ -198,7 +198,7 @@ func (suite *TMBDTestSuite) TestGetTVKeywordsFail() {
 func (suite *TMBDTestSuite) TestGetTVRecommendations() {
 	flash, err := suite.client.GetTVRecommendations(flashID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), flash.Page)
+	suite.Equal(1, flash.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetTVRecommendationsFail() {
@@ -211,13 +211,13 @@ func (suite *TMBDTestSuite) TestGetTVRecommendationsWithOptions() {
 	options["language"] = "pt-BR"
 	flash, err := suite.client.GetTVRecommendations(flashID, options)
 	suite.NoError(err)
-	suite.Equal(int64(1), flash.Page)
+	suite.Equal(1, flash.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetTVScreenedTheatrically() {
 	flash, err := suite.client.GetTVScreenedTheatrically(flashID)
 	suite.NoError(err)
-	suite.Equal(int64(flashID), flash.ID)
+	suite.Equal(flashID, flash.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVScreenedTheatricallyFail() {
@@ -228,7 +228,7 @@ func (suite *TMBDTestSuite) TestGetTVScreenedTheatricallyFail() {
 func (suite *TMBDTestSuite) TestGetTVReviews() {
 	flash, err := suite.client.GetTVReviews(flashID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), flash.Page)
+	suite.Equal(1, flash.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetTVReviewsFail() {
@@ -241,7 +241,7 @@ func (suite *TMBDTestSuite) TestGetTVReviewsWithOptions() {
 	options["language"] = "pt-BR"
 	flash, err := suite.client.GetTVReviews(flashID, options)
 	suite.NoError(err)
-	suite.Equal(int64(1), flash.Page)
+	suite.Equal(1, flash.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetTVWatchProviders() {
@@ -258,7 +258,7 @@ func (suite *TMBDTestSuite) TestGetTVWatchProvidersFail() {
 func (suite *TMBDTestSuite) TestGetTVSimilar() {
 	flashID, err := suite.client.GetTVSimilar(flashID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), flashID.Page)
+	suite.Equal(1, flashID.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSimilarFail() {
@@ -271,7 +271,7 @@ func (suite *TMBDTestSuite) TestGetTVSimilarWithOptions() {
 	options["language"] = "pt-BR"
 	flash, err := suite.client.GetTVSimilar(flashID, options)
 	suite.NoError(err)
-	suite.Equal(int64(1), flash.Page)
+	suite.Equal(1, flash.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetTVTranslations() {
@@ -290,7 +290,7 @@ func (suite *TMBDTestSuite) TestGetTVTranslationsWithOptions() {
 	options["language"] = "pt-BR"
 	flash, err := suite.client.GetTVTranslations(flashID, options)
 	suite.NoError(err)
-	suite.Equal(int64(flashID), flash.ID)
+	suite.Equal(flashID, flash.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVVideos() {

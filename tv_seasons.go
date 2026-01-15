@@ -11,17 +11,17 @@ type TVSeasonDetails struct {
 	Episodes []struct {
 		AirDate        string `json:"air_date"`
 		EpisodeNumber  int    `json:"episode_number"`
-		ID             int64  `json:"id"`
+		ID             int    `json:"id"`
 		Name           string `json:"name"`
 		Overview       string `json:"overview"`
 		ProductionCode string `json:"production_code"`
 		Runtime        int    `json:"runtime"`
 		SeasonNumber   int    `json:"season_number"`
-		ShowID         int64  `json:"show_id"`
+		ShowID         int    `json:"show_id"`
 		StillPath      string `json:"still_path"`
 		VoteMetrics
 		Crew []struct {
-			ID          int64  `json:"id"`
+			ID          int    `json:"id"`
 			CreditID    string `json:"credit_id"`
 			Name        string `json:"name"`
 			Department  string `json:"department"`
@@ -30,7 +30,7 @@ type TVSeasonDetails struct {
 			ProfilePath string `json:"profile_path"`
 		} `json:"crew"`
 		GuestStars []struct {
-			ID          int64  `json:"id"`
+			ID          int    `json:"id"`
 			Name        string `json:"name"`
 			CreditID    string `json:"credit_id"`
 			Character   string `json:"character"`
@@ -41,7 +41,7 @@ type TVSeasonDetails struct {
 	} `json:"episodes"`
 	Name         string  `json:"name"`
 	Overview     string  `json:"overview"`
-	ID           int64   `json:"id"`
+	ID           int     `json:"id"`
 	PosterPath   string  `json:"poster_path"`
 	SeasonNumber int     `json:"season_number"`
 	VoteAverage  float32 `json:"vote_average"`
@@ -79,7 +79,7 @@ type TVSeasonTranslationsAppend struct {
 
 // TVSeasonTranslations type is a struct
 type TVSeasonTranslations struct {
-	ID           int64         `json:"id,omitempty"`
+	ID           int           `json:"id,omitempty"`
 	Translations []Translation `json:"translations"`
 }
 
@@ -117,8 +117,8 @@ type TVSeasonChanges struct {
 			Iso639_1  string `json:"iso_639_1"`
 			Iso3166_1 string `json:"iso_3166_1"`
 			Value     struct {
-				EpisodeID     int64 `json:"episode_id"`
-				EpisodeNumber int   `json:"episode_number"`
+				EpisodeID     int `json:"episode_id"`
+				EpisodeNumber int `json:"episode_number"`
 			} `json:"value"`
 		} `json:"items"`
 		Key string `json:"key"`
@@ -150,7 +150,7 @@ type TVSeasonCredits struct {
 		Character   string `json:"character"`
 		CreditID    string `json:"credit_id"`
 		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
+		ID          int    `json:"id"`
 		Name        string `json:"name"`
 		Order       int    `json:"order"`
 		ProfilePath string `json:"profile_path"`
@@ -159,7 +159,7 @@ type TVSeasonCredits struct {
 		CreditID    string `json:"credit_id"`
 		Department  string `json:"department"`
 		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
+		ID          int    `json:"id"`
 		Job         string `json:"job"`
 		Name        string `json:"name"`
 		ProfilePath string `json:"profile_path"`
@@ -187,9 +187,9 @@ func (c *Client) GetTVSeasonCredits(
 type TVSeasonExternalIDs struct {
 	FreebaseMID string `json:"freebase_mid"`
 	FreebaseID  string `json:"freebase_id"`
-	TVDBID      int64  `json:"tvdb_id"`
-	TVRageID    int64  `json:"tvrage_id"`
-	ID          int64  `json:"id,omitempty"`
+	TVDBID      int    `json:"tvdb_id"`
+	TVRageID    int    `json:"tvrage_id"`
+	ID          int    `json:"id,omitempty"`
 }
 
 // GetTVSeasonExternalIDs get the external ids for a TV season.
@@ -221,7 +221,7 @@ type TVSeasonImage struct {
 
 // TVSeasonImages type is a struct for images JSON response.
 type TVSeasonImages struct {
-	ID      int64           `json:"id,omitempty"`
+	ID      int             `json:"id,omitempty"`
 	Posters []TVSeasonImage `json:"posters"`
 }
 

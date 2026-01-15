@@ -5,8 +5,8 @@ type GuestSessionRatedMovies struct {
 	Results []struct {
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
 		Overview         string  `json:"overview"`
@@ -38,8 +38,8 @@ type GuestSessionRatedTVShows struct {
 	Results []struct {
 		BackdropPath     string   `json:"backdrop_path"`
 		FirstAirDate     string   `json:"first_air_date"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		ID               int64    `json:"id"`
+		GenreIDs         []int    `json:"genre_ids"`
+		ID               int      `json:"id"`
 		OriginalLanguage string   `json:"original_language"`
 		OriginalName     string   `json:"original_name"`
 		Overview         string   `json:"overview"`
@@ -70,12 +70,12 @@ type GuestSessionRatedTVEpisodes struct {
 	Results []struct {
 		AirDate        string  `json:"air_date"`
 		EpisodeNumber  int     `json:"episode_number"`
-		ID             int64   `json:"id"`
+		ID             int     `json:"id"`
 		Name           string  `json:"name"`
 		Overview       string  `json:"overview"`
 		ProductionCode string  `json:"production_code"`
 		SeasonNumber   int     `json:"season_number"`
-		ShowID         int64   `json:"show_id"`
+		ShowID         int     `json:"show_id"`
 		StillPath      string  `json:"still_path"`
 		Rating         float32 `json:"rating"`
 		VoteMetrics

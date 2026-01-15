@@ -6,7 +6,7 @@ import "fmt"
 type NetworkDetails struct {
 	Headquarters  string `json:"headquarters"`
 	Homepage      string `json:"homepage"`
-	ID            int64  `json:"id"`
+	ID            int    `json:"id"`
 	LogoPath      string `json:"logo_path"`
 	Name          string `json:"name"`
 	OriginCountry string `json:"origin_country"`
@@ -26,7 +26,7 @@ func (c *Client) GetNetworkDetails(id int) (*NetworkDetails, error) {
 
 // NetworkAlternativeNames type is a struct for alternative names JSON response.
 type NetworkAlternativeNames struct {
-	ID      int64 `json:"id"`
+	ID      int `json:"id"`
 	Results []struct {
 		Name string `json:"name"`
 		Type string `json:"type"`
@@ -54,7 +54,7 @@ type NetworkImage struct {
 
 // NetworkImages type is a struct for images JSON response.
 type NetworkImages struct {
-	ID    int64          `json:"id"`
+	ID    int            `json:"id"`
 	Logos []NetworkImage `json:"logos"`
 }
 

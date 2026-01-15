@@ -85,7 +85,7 @@ func (suite *TMBDTestSuite) TestGetMovieChangesWithOptions() {
 func (suite *TMBDTestSuite) TestGetMovieCredits() {
 	bumblebee, err := suite.client.GetMovieCredits(bumblebeeID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+	suite.Equal(bumblebeeID, bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieCreditsFail() {
@@ -120,7 +120,7 @@ func (suite *TMBDTestSuite) TestGetMovieImagesWithOptions() {
 	options["language"] = "pt-BR"
 	bumblebee, err := suite.client.GetMovieImages(bumblebeeID, options)
 	suite.NoError(err)
-	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+	suite.Equal(bumblebeeID, bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieKeywords() {
@@ -198,13 +198,13 @@ func (suite *TMBDTestSuite) TestGetMovieTranslationsWithOptions() {
 	options["language"] = "pt-BR"
 	bumblebee, err := suite.client.GetMovieTranslations(bumblebeeID, options)
 	suite.NoError(err)
-	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+	suite.Equal(bumblebeeID, bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendations() {
 	bumblebee, err := suite.client.GetMovieRecommendations(bumblebeeID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), bumblebee.Page)
+	suite.Equal(1, bumblebee.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendationsFail() {
@@ -218,7 +218,7 @@ func (suite *TMBDTestSuite) TestGetMovieRecommendationsWithOptions() {
 	options["language"] = "pt-BR"
 	jackreacher, err := suite.client.GetMovieRecommendations(jackReacherID, options)
 	suite.NoError(err)
-	suite.Equal(int64(1), jackreacher.Page)
+	suite.Equal(1, jackreacher.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieWatchProviders() {
@@ -236,7 +236,7 @@ func (suite *TMBDTestSuite) TestGetMovieWatchProvidersFail() {
 func (suite *TMBDTestSuite) TestGetMovieSimilar() {
 	bumblebee, err := suite.client.GetMovieSimilar(bumblebeeID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), bumblebee.Page)
+	suite.Equal(1, bumblebee.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieSimilarFail() {
@@ -250,13 +250,13 @@ func (suite *TMBDTestSuite) TestGetMovieSimilarWithOptions() {
 	options["language"] = "pt-BR"
 	jackreacher, err := suite.client.GetMovieSimilar(jackReacherID, options)
 	suite.NoError(err)
-	suite.Equal(int64(1), jackreacher.Page)
+	suite.Equal(1, jackreacher.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReviews() {
 	aquaman, err := suite.client.GetMovieReviews(aquamanID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReviewsFail() {
@@ -270,13 +270,13 @@ func (suite *TMBDTestSuite) TestGetMovieReviewsWithOptions() {
 	options["language"] = "pt-BR"
 	aquaman, err := suite.client.GetMovieReviews(aquamanID, options)
 	suite.NoError(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLists() {
 	aquaman, err := suite.client.GetMovieLists(aquamanID, nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieListsFail() {
@@ -290,7 +290,7 @@ func (suite *TMBDTestSuite) TestGetMovieListsWithOptions() {
 	options["language"] = "pt-BR"
 	aquaman, err := suite.client.GetMovieLists(aquamanID, options)
 	suite.NoError(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLatest() {
@@ -317,7 +317,7 @@ func (suite *TMBDTestSuite) TestGetMovieLatestWithOptions() {
 func (suite *TMBDTestSuite) TestGetMovieNowPlaying() {
 	movies, err := suite.client.GetMovieNowPlaying(nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieNowPlayingFail() {
@@ -332,13 +332,13 @@ func (suite *TMBDTestSuite) TestGetMovieNowPlayingWithOptions() {
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMovieNowPlaying(options)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMoviePopular() {
 	movies, err := suite.client.GetMoviePopular(nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMoviePopularFail() {
@@ -353,13 +353,13 @@ func (suite *TMBDTestSuite) TestGetMoviePopularWithOptions() {
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMoviePopular(options)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTopRated() {
 	movies, err := suite.client.GetMovieTopRated(nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTopRatedFail() {
@@ -374,13 +374,13 @@ func (suite *TMBDTestSuite) TestGetMovieTopRatedWithOptions() {
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMovieTopRated(options)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieUpcoming() {
 	movies, err := suite.client.GetMovieUpcoming(nil)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieUpcomingFail() {
@@ -395,7 +395,7 @@ func (suite *TMBDTestSuite) TestGetMovieUpcomingWithOptions() {
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMovieUpcoming(options)
 	suite.NoError(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestPostMovieRating() {

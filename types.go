@@ -3,7 +3,7 @@ package tmdb
 // BelongsToCollection represents information about a collection to which a movie belongs,
 // including its unique identifier, name, poster image path, and backdrop image path.
 type BelongsToCollection struct {
-	ID           int64  `json:"id"`
+	ID           int    `json:"id"`
 	Name         string `json:"name"`
 	PosterPath   string `json:"poster_path"`
 	BackdropPath string `json:"backdrop_path"`
@@ -13,14 +13,14 @@ type BelongsToCollection struct {
 // It includes the company's name, unique identifier, logo path, and country of origin.
 type ProductionCompany struct {
 	Name          string `json:"name"`
-	ID            int64  `json:"id"`
+	ID            int    `json:"id"`
 	LogoPath      string `json:"logo_path"`
 	OriginCountry string `json:"origin_country"`
 }
 
 // Genre represents a movie or TV show genre with its unique identifier and name.
 type Genre struct {
-	ID   int64  `json:"id"`
+	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
@@ -62,22 +62,22 @@ type Translation struct {
 // PaginatedResultsMeta represents metadata for paginated API responses,
 // including the current page, total number of results, and total number of pages.
 type PaginatedResultsMeta struct {
-	Page         int64 `json:"page"`
-	TotalResults int64 `json:"total_results"`
-	TotalPages   int64 `json:"total_pages"`
+	Page         int `json:"page"`
+	TotalResults int `json:"total_results"`
+	TotalPages   int `json:"total_pages"`
 }
 
 // Season represents a TV show season with details such as air date, episode count, name, overview, poster path, season number, vote average, and associated show ID.
 type Season struct {
 	AirDate      string  `json:"air_date"`
 	EpisodeCount int     `json:"episode_count"`
-	ID           int64   `json:"id"`
+	ID           int     `json:"id"`
 	Name         string  `json:"name"`
 	Overview     string  `json:"overview"`
 	PosterPath   string  `json:"poster_path"`
 	SeasonNumber int     `json:"season_number"`
 	VoteAverage  float32 `json:"vote_average,omitempty"`
-	ShowID       int64   `json:"show_id,omitempty"`
+	ShowID       int     `json:"show_id,omitempty"`
 }
 
 // LastEpisodeToAir represents the details of the most recently aired episode of a TV show.
@@ -86,12 +86,12 @@ type Season struct {
 type LastEpisodeToAir struct {
 	AirDate        string `json:"air_date"`
 	EpisodeNumber  int    `json:"episode_number"`
-	ID             int64  `json:"id"`
+	ID             int    `json:"id"`
 	Name           string `json:"name"`
 	Overview       string `json:"overview"`
 	ProductionCode string `json:"production_code"`
 	SeasonNumber   int    `json:"season_number"`
-	ShowID         int64  `json:"show_id"`
+	ShowID         int    `json:"show_id"`
 	StillPath      string `json:"still_path"`
 	VoteMetrics
 }
@@ -102,12 +102,12 @@ type LastEpisodeToAir struct {
 type NextEpisodeToAir struct {
 	AirDate        string `json:"air_date"`
 	EpisodeNumber  int    `json:"episode_number"`
-	ID             int64  `json:"id"`
+	ID             int    `json:"id"`
 	Name           string `json:"name"`
 	Overview       string `json:"overview"`
 	ProductionCode string `json:"production_code"`
 	SeasonNumber   int    `json:"season_number"`
-	ShowID         int64  `json:"show_id"`
+	ShowID         int    `json:"show_id"`
 	StillPath      string `json:"still_path"`
 	VoteMetrics
 }
@@ -116,7 +116,7 @@ type NextEpisodeToAir struct {
 // including name, unique ID, logo path, and country of origin.
 type Network struct {
 	Name          string `json:"name"`
-	ID            int64  `json:"id"`
+	ID            int    `json:"id"`
 	LogoPath      string `json:"logo_path"`
 	OriginCountry string `json:"origin_country"`
 }
@@ -124,7 +124,7 @@ type Network struct {
 // CreatedBy represents a person who created a particular media item, such as a TV show or movie.
 // It includes identifying information such as ID, credit ID, name, gender, and profile image path.
 type CreatedBy struct {
-	ID          int64  `json:"id"`
+	ID          int    `json:"id"`
 	CreditID    string `json:"credit_id"`
 	Name        string `json:"name"`
 	Gender      int    `json:"gender"`
@@ -133,7 +133,7 @@ type CreatedBy struct {
 
 // VoteMetrics contains voting statistics for a media item.
 type VoteMetrics struct {
-	VoteCount   int64   `json:"vote_count"`
+	VoteCount   int     `json:"vote_count"`
 	VoteAverage float32 `json:"vote_average"`
 }
 

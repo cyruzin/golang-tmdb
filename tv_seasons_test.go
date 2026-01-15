@@ -122,7 +122,7 @@ func (suite *TMBDTestSuite) TestGetTVSeasonVideosWithOptions() {
 func (suite *TMBDTestSuite) TestGetTVSeasonTranslations() {
 	got, err := suite.client.GetTVSeasonTranslations(gotID, 1)
 	suite.NoError(err)
-	suite.Equal(int64(gotSeasonID), got.ID)
+	suite.Equal(gotSeasonID, got.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVSeasonTranslationsFail() {

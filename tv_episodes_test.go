@@ -47,7 +47,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeChangesWithOptions() {
 func (suite *TMBDTestSuite) TestGetTVEpisodeCredits() {
 	got, err := suite.client.GetTVEpisodeCredits(gotID, 1, 1)
 	suite.Nil(err)
-	suite.Equal(int64(gotEpisodeID), got.ID)
+	suite.Equal(gotEpisodeID, got.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeCreditsFail() {
@@ -58,7 +58,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeCreditsFail() {
 func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDs() {
 	got, err := suite.client.GetTVEpisodeExternalIDs(gotID, 1, 1)
 	suite.Nil(err)
-	suite.Equal(int64(gotEpisodeID), got.ID)
+	suite.Equal(gotEpisodeID, got.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDsFail() {
@@ -69,7 +69,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeExternalIDsFail() {
 func (suite *TMBDTestSuite) TestGetTVEpisodeImages() {
 	got, err := suite.client.GetTVEpisodeImages(gotID, 1, 1)
 	suite.Nil(err)
-	suite.Equal(int64(gotEpisodeID), got.ID)
+	suite.Equal(gotEpisodeID, got.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeImagesFail() {
@@ -80,7 +80,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeImagesFail() {
 func (suite *TMBDTestSuite) TestGetTVEpisodeTranslations() {
 	got, err := suite.client.GetTVEpisodeTranslations(gotID, 1, 1)
 	suite.Nil(err)
-	suite.Equal(int64(gotEpisodeID), got.ID)
+	suite.Equal(gotEpisodeID, got.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeTranslationsFail() {
@@ -91,7 +91,7 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeTranslationsFail() {
 func (suite *TMBDTestSuite) TestGetTVEpisodeVideos() {
 	got, err := suite.client.GetTVEpisodeVideos(gotID, 1, 1, nil)
 	suite.Nil(err)
-	suite.Equal(int64(gotEpisodeID), got.ID)
+	suite.Equal(gotEpisodeID, got.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetTVEpisodeVideosFail() {
@@ -104,5 +104,5 @@ func (suite *TMBDTestSuite) TestGetTVEpisodeVideosWithOptions() {
 	options["language"] = "en-US"
 	got, err := suite.client.GetTVEpisodeVideos(gotID, 1, 2, options)
 	suite.Nil(err)
-	suite.Equal(int64(63057), got.ID)
+	suite.Equal(63057, got.ID)
 }

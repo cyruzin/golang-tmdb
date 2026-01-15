@@ -14,12 +14,12 @@ type TVEpisodeGroupsDetails struct {
 		Episodes []struct {
 			AirDate        string          `json:"air_date"`
 			EpisodeNumber  int             `json:"episode_number"`
-			ID             int64           `json:"id"`
+			ID             int             `json:"id"`
 			Name           string          `json:"name"`
 			Overview       string          `json:"overview"`
 			ProductionCode json.RawMessage `json:"production_code"`
 			SeasonNumber   int             `json:"season_number"`
-			ShowID         int64           `json:"show_id"`
+			ShowID         int             `json:"show_id"`
 			StillPath      string          `json:"still_path"`
 			Order          int             `json:"order"`
 			VoteMetrics
@@ -29,7 +29,7 @@ type TVEpisodeGroupsDetails struct {
 	ID      string `json:"id"`
 	Name    string `json:"name"`
 	Network struct {
-		ID            int64  `json:"id"`
+		ID            int    `json:"id"`
 		LogoPath      string `json:"logo_path"`
 		Name          string `json:"name"`
 		OriginCountry string `json:"origin_country"`

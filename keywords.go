@@ -4,7 +4,7 @@ import "fmt"
 
 // KeywordDetails type is a struct for keyword JSON response.
 type KeywordDetails struct {
-	ID   int64  `json:"id"`
+	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
@@ -22,12 +22,12 @@ func (c *Client) GetKeywordDetails(id int) (*KeywordDetails, error) {
 
 // KeywordMovies type is a struct for movies that belong to a keyword JSON response.
 type KeywordMovies struct {
-	ID      int64 `json:"id"`
+	ID      int `json:"id"`
 	Results []struct {
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
 		Overview         string  `json:"overview"`

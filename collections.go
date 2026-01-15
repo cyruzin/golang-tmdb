@@ -4,7 +4,7 @@ import "fmt"
 
 // CollectionDetails type is a struct for details JSON response.
 type CollectionDetails struct {
-	ID           int64  `json:"id"`
+	ID           int    `json:"id"`
 	Name         string `json:"name"`
 	Overview     string `json:"overview"`
 	PosterPath   string `json:"poster_path"`
@@ -12,8 +12,8 @@ type CollectionDetails struct {
 	Parts        []struct {
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
 		MediaType        string  `json:"media_type"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
@@ -47,7 +47,7 @@ type CollectionImage struct {
 
 // CollectionImages type is a struct for images JSON response.
 type CollectionImages struct {
-	ID        int64             `json:"id"`
+	ID        int               `json:"id"`
 	Backdrops []CollectionImage `json:"backdrops"`
 	Posters   []CollectionImage `json:"posters"`
 }
@@ -66,7 +66,7 @@ func (c *Client) GetCollectionImages(id int, urlOptions map[string]string) (*Col
 
 // CollectionTranslations type is a struct for translations JSON response.
 type CollectionTranslations struct {
-	ID           int64         `json:"id"`
+	ID           int           `json:"id"`
 	Translations []Translation `json:"translations"`
 }
 

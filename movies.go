@@ -11,10 +11,10 @@ type MovieDetails struct {
 	Adult               bool                `json:"adult"`
 	BackdropPath        string              `json:"backdrop_path"`
 	BelongsToCollection BelongsToCollection `json:"belongs_to_collection"`
-	Budget              int64               `json:"budget"`
+	Budget              int                 `json:"budget"`
 	Genres              []Genre             `json:"genres"`
 	Homepage            string              `json:"homepage"`
-	ID                  int64               `json:"id"`
+	ID                  int                 `json:"id"`
 	IMDbID              string              `json:"imdb_id"`
 	OriginalLanguage    string              `json:"original_language"`
 	OriginalTitle       string              `json:"original_title"`
@@ -25,7 +25,7 @@ type MovieDetails struct {
 	ProductionCompanies []ProductionCompany `json:"production_companies"`
 	ProductionCountries []ProductionCountry `json:"production_countries"`
 	ReleaseDate         string              `json:"release_date"`
-	Revenue             int64               `json:"revenue"`
+	Revenue             int                 `json:"revenue"`
 	Runtime             int                 `json:"runtime"`
 	SpokenLanguages     []SpokenLanguage    `json:"spoken_languages"`
 	Status              string              `json:"status"`
@@ -142,7 +142,7 @@ func (c *Client) GetMovieDetails(id int, urlOptions map[string]string) (*MovieDe
 
 // MovieAccountStates type is a struct for account states JSON response.
 type MovieAccountStates struct {
-	ID        int64           `json:"id"`
+	ID        int             `json:"id"`
 	Favorite  bool            `json:"favorite"`
 	Rated     json.RawMessage `json:"rated"`
 	Watchlist bool            `json:"watchlist"`
@@ -217,14 +217,14 @@ func (c *Client) GetMovieChanges(id int, urlOptions map[string]string) (*MovieCh
 
 // MovieCredits type is a struct for credits JSON response.
 type MovieCredits struct {
-	ID   int64 `json:"id,omitempty"`
+	ID   int `json:"id,omitempty"`
 	Cast []struct {
 		Adult              bool    `json:"adult"`
-		CastID             int64   `json:"cast_id"`
+		CastID             int     `json:"cast_id"`
 		Character          string  `json:"character"`
 		CreditID           string  `json:"credit_id"`
 		Gender             int     `json:"gender"`
-		ID                 int64   `json:"id"`
+		ID                 int     `json:"id"`
 		KnownForDepartment string  `json:"known_for_department"`
 		Name               string  `json:"name"`
 		Order              int     `json:"order"`
@@ -237,7 +237,7 @@ type MovieCredits struct {
 		CreditID           string  `json:"credit_id"`
 		Department         string  `json:"department"`
 		Gender             int     `json:"gender"`
-		ID                 int64   `json:"id"`
+		ID                 int     `json:"id"`
 		Job                string  `json:"job"`
 		KnownForDepartment string  `json:"known_for_department"`
 		Name               string  `json:"name"`
@@ -266,7 +266,7 @@ type MovieExternalIDs struct {
 	InstagramID string `json:"instagram_id"`
 	TwitterID   string `json:"twitter_id"`
 	WikiDataID  string `json:"wikidata_id,omitempty"`
-	ID          int64  `json:"id,omitempty"`
+	ID          int    `json:"id,omitempty"`
 }
 
 // GetMovieExternalIDs get the external ids for a movie.
@@ -295,7 +295,7 @@ type MovieImage struct {
 
 // MovieImages type is a struct for images JSON response.
 type MovieImages struct {
-	ID        int64        `json:"id,omitempty"`
+	ID        int          `json:"id,omitempty"`
 	Backdrops []MovieImage `json:"backdrops"`
 	Logos     []MovieImage `json:"logos"`
 	Posters   []MovieImage `json:"posters"`
@@ -320,9 +320,9 @@ func (c *Client) GetMovieImages(id int, urlOptions map[string]string) (*MovieIma
 
 // MovieKeywords type is a struct for keywords JSON response.
 type MovieKeywords struct {
-	ID       int64 `json:"id,omitempty"`
+	ID       int `json:"id,omitempty"`
 	Keywords []struct {
-		ID   int64  `json:"id"`
+		ID   int    `json:"id"`
 		Name string `json:"name"`
 	} `json:"keywords"`
 }
@@ -341,7 +341,7 @@ func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
 
 // MovieReleaseDates type is a struct for release dates JSON response.
 type MovieReleaseDates struct {
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 	*MovieReleaseDatesResults
 }
 
@@ -383,7 +383,7 @@ func (c *Client) GetMovieWatchProviders(id int, urlOptions map[string]string) (*
 
 // MovieTranslations type is a struct for translations JSON response.
 type MovieTranslations struct {
-	ID           int64         `json:"id,omitempty"`
+	ID           int           `json:"id,omitempty"`
 	Translations []Translation `json:"translations"`
 }
 
@@ -439,7 +439,7 @@ func (c *Client) GetMovieSimilar(id int, urlOptions map[string]string) (*MovieSi
 
 // MovieReviews type is a struct for reviews JSON response.
 type MovieReviews struct {
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 	*MovieReviewsResults
 	PaginatedResultsMeta
 }
@@ -458,7 +458,7 @@ func (c *Client) GetMovieReviews(id int, urlOptions map[string]string) (*MovieRe
 
 // MovieLists type is a struct for lists JSON response.
 type MovieLists struct {
-	ID int64 `json:"id"`
+	ID int `json:"id"`
 	*MovieListsResults
 	PaginatedResultsMeta
 }

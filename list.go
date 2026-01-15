@@ -9,14 +9,14 @@ import (
 type ListDetails struct {
 	CreatedBy     string `json:"created_by"`
 	Description   string `json:"description"`
-	FavoriteCount int64  `json:"favorite_count"`
-	ID            int64  `json:"id"`
+	FavoriteCount int    `json:"favorite_count"`
+	ID            int    `json:"id"`
 	Items         []struct {
 		Adult            bool     `json:"adult,omitempty"` // Movie
 		BackdropPath     string   `json:"backdrop_path"`
 		FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
-		GenreIDs         []int64  `json:"genre_ids"`
-		ID               int64    `json:"id"`
+		GenreIDs         []int    `json:"genre_ids"`
+		ID               int      `json:"id"`
 		MediaType        string   `json:"media_type"`
 		Name             string   `json:"name,omitempty"` // TV
 		OriginalLanguage string   `json:"original_language"`
@@ -31,7 +31,7 @@ type ListDetails struct {
 		Video            bool     `json:"video,omitempty"`        // Movie
 		VoteMetrics
 	} `json:"items"`
-	ItemCount  int64  `json:"item_count"`
+	ItemCount  int    `json:"item_count"`
 	Iso639_1   string `json:"iso_639_1"`
 	Name       string `json:"name"`
 	PosterPath string `json:"poster_path"`
@@ -40,7 +40,7 @@ type ListDetails struct {
 // GetListDetails get the details of a list.
 //
 // https://developers.themoviedb.org/3/lists/get-list-details
-func (c *Client) GetListDetails(id int64, urlOptions map[string]string) (*ListDetails, error) {
+func (c *Client) GetListDetails(id int, urlOptions map[string]string) (*ListDetails, error) {
 	url := c.baseURL.JoinPath(listPath, fmt.Sprintf("%d", id))
 	var ListDetails ListDetails
 	if err := c.get(url, urlOptions, &ListDetails); err != nil {
@@ -58,7 +58,7 @@ type ListItemStatus struct {
 // GetListItemStatus check if a movie has already been added to the list.
 //
 // https://developers.themoviedb.org/3/lists/check-item-status
-func (c *Client) GetListItemStatus(id int64, urlOptions map[string]string) (*ListItemStatus, error) {
+func (c *Client) GetListItemStatus(id int, urlOptions map[string]string) (*ListItemStatus, error) {
 	url := c.baseURL.JoinPath(listPath, fmt.Sprintf("%d", id), "item_status")
 	var listItemStatus ListItemStatus
 	if err := c.get(url, urlOptions, &listItemStatus); err != nil {
@@ -70,8 +70,8 @@ func (c *Client) GetListItemStatus(id int64, urlOptions map[string]string) (*Lis
 // ListResponse type is a struct for list creation JSON response.
 type ListResponse struct {
 	*Response
-	Success bool  `json:"success"`
-	ListID  int64 `json:"list_id"`
+	Success bool `json:"success"`
+	ListID  int  `json:"list_id"`
 }
 
 // ListCreate type is a struct for list creation JSON request.
@@ -97,7 +97,7 @@ func (c *Client) CreateList(list *ListCreate) (*ListResponse, error) {
 
 // ListMedia type is a struct for list media JSON request.
 type ListMedia struct {
-	MediaID int64 `json:"media_id"`
+	MediaID int `json:"media_id"`
 }
 
 // AddMovie add a movie to a list.

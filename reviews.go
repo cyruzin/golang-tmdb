@@ -14,7 +14,7 @@ type ReviewDetails struct {
 	CreatedAt  string `json:"created_at"`
 	UpdatedAt  string `json:"updated_at"`
 	Iso639_1   string `json:"iso_639_1"`
-	MediaID    int64  `json:"media_id"`
+	MediaID    int    `json:"media_id"`
 	MediaTitle string `json:"media_title"`
 	MediaType  string `json:"media_type"`
 	URL        string `json:"url"`

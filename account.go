@@ -15,7 +15,7 @@ type AccountDetails struct {
 			AvatarPath string `json:"avatar_path"`
 		} `json:"tmdb"`
 	} `json:"avatar"`
-	ID           int64  `json:"id"`
+	ID           int    `json:"id"`
 	Iso639_1     string `json:"iso_639_1"`
 	Iso3166_1    string `json:"iso_3166_1"`
 	Name         string `json:"name"`
@@ -106,7 +106,7 @@ func (c *Client) GetFavoriteTVShows(id int, urlOptions map[string]string) (*Acco
 // favorite JSON request.
 type AccountFavorite struct {
 	MediaType string `json:"media_type"`
-	MediaID   int64  `json:"media_id"`
+	MediaID   int    `json:"media_id"`
 	Favorite  bool   `json:"favorite"`
 }
 
@@ -235,7 +235,7 @@ func (c *Client) GetTVShowsWatchlist(id int, urlOptions map[string]string) (*Acc
 // watchlist JSON request.
 type AccountWatchlist struct {
 	MediaType string `json:"media_type"`
-	MediaID   int64  `json:"media_id"`
+	MediaID   int    `json:"media_id"`
 	Watchlist bool   `json:"watchlist"`
 }
 

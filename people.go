@@ -7,7 +7,7 @@ type PersonDetails struct {
 	Birthday           string   `json:"birthday"`
 	KnownForDepartment string   `json:"known_for_department"`
 	Deathday           string   `json:"deathday"`
-	ID                 int64    `json:"id"`
+	ID                 int      `json:"id"`
 	Name               string   `json:"name"`
 	AlsoKnownAs        []string `json:"also_known_as"`
 	Gender             int      `json:"gender"`
@@ -126,12 +126,12 @@ type PersonMovieCredits struct {
 		Character        string  `json:"character"`
 		CreditID         string  `json:"credit_id"`
 		PosterPath       string  `json:"poster_path"`
-		ID               int64   `json:"id"`
+		ID               int     `json:"id"`
 		Order            int     `json:"order"`
 		Video            bool    `json:"video"`
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
+		GenreIDs         []int   `json:"genre_ids"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
 		Popularity       float32 `json:"popularity"`
@@ -141,7 +141,7 @@ type PersonMovieCredits struct {
 		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
-		ID               int64   `json:"id"`
+		ID               int     `json:"id"`
 		Department       string  `json:"department"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
@@ -151,14 +151,14 @@ type PersonMovieCredits struct {
 		ReleaseDate      string  `json:"release_date"`
 		Title            string  `json:"title"`
 		Popularity       float32 `json:"popularity"`
-		GenreIDs         []int64 `json:"genre_ids"`
+		GenreIDs         []int   `json:"genre_ids"`
 		BackdropPath     string  `json:"backdrop_path"`
 		Adult            bool    `json:"adult"`
 		PosterPath       string  `json:"poster_path"`
 		CreditID         string  `json:"credit_id"`
 		VoteMetrics
 	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 }
 
 // GetPersonMovieCredits get the movie credits for a person.
@@ -181,8 +181,8 @@ type PersonTVCredits struct {
 	Cast []struct {
 		CreditID         string   `json:"credit_id"`
 		OriginalName     string   `json:"original_name"`
-		ID               int64    `json:"id"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		ID               int      `json:"id"`
+		GenreIDs         []int    `json:"genre_ids"`
 		Character        string   `json:"character"`
 		Name             string   `json:"name"`
 		PosterPath       string   `json:"poster_path"`
@@ -196,7 +196,7 @@ type PersonTVCredits struct {
 		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		Department       string   `json:"department"`
 		OriginalLanguage string   `json:"original_language"`
 		EpisodeCount     int      `json:"episode_count"`
@@ -204,7 +204,7 @@ type PersonTVCredits struct {
 		Overview         string   `json:"overview"`
 		OriginCountry    []string `json:"origin_country"`
 		OriginalName     string   `json:"original_name"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		GenreIDs         []int    `json:"genre_ids"`
 		Name             string   `json:"name"`
 		FirstAirDate     string   `json:"first_air_date"`
 		BackdropPath     string   `json:"backdrop_path"`
@@ -213,7 +213,7 @@ type PersonTVCredits struct {
 		CreditID         string   `json:"credit_id"`
 		VoteMetrics
 	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 }
 
 // GetPersonTVCredits get the TV show credits for a person.
@@ -234,7 +234,7 @@ func (c *Client) GetPersonTVCredits(
 // PersonCombinedCredits type is a struct for combined credits JSON response.
 type PersonCombinedCredits struct {
 	Cast []struct {
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		Character        string   `json:"character"`
 		OriginalTitle    string   `json:"original_title"`
 		Overview         string   `json:"overview"`
@@ -244,7 +244,7 @@ type PersonCombinedCredits struct {
 		Title            string   `json:"title"`
 		Popularity       float32  `json:"popularity"`
 		OriginalLanguage string   `json:"original_language"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		GenreIDs         []int    `json:"genre_ids"`
 		BackdropPath     string   `json:"backdrop_path"`
 		Adult            bool     `json:"adult"`
 		PosterPath       string   `json:"poster_path"`
@@ -257,7 +257,7 @@ type PersonCombinedCredits struct {
 		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
-		ID               int64   `json:"id"`
+		ID               int     `json:"id"`
 		Department       string  `json:"department"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
@@ -269,13 +269,13 @@ type PersonCombinedCredits struct {
 		BackdropPath     string  `json:"backdrop_path"`
 		Title            string  `json:"title"`
 		Popularity       float32 `json:"popularity"`
-		GenreIDs         []int64 `json:"genre_ids"`
+		GenreIDs         []int   `json:"genre_ids"`
 		Adult            bool    `json:"adult"`
 		ReleaseDate      string  `json:"release_date"`
 		CreditID         string  `json:"credit_id"`
 		VoteMetrics
 	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 }
 
 // GetPersonCombinedCredits get the movie and TV credits together in a single response.
@@ -295,10 +295,10 @@ func (c *Client) GetPersonCombinedCredits(
 
 // PersonExternalIDs type is a struct for external ids JSON response.
 type PersonExternalIDs struct {
-	ID          int64  `json:"id,omitempty"`
+	ID          int    `json:"id,omitempty"`
 	TwitterID   string `json:"twitter_id"`
 	FacebookID  string `json:"facebook_id"`
-	TvrageID    int64  `json:"tvrage_id"`
+	TvrageID    int    `json:"tvrage_id"`
 	InstagramID string `json:"instagram_id"`
 	FreebaseMid string `json:"freebase_mid"`
 	IMDbID      string `json:"imdb_id"`
@@ -353,7 +353,7 @@ func (c *Client) GetPersonImages(
 // PersonTranslations type is a struct for translations JSON response.
 type PersonTranslations struct {
 	Translations []Translation `json:"translations"`
-	ID           int64         `json:"id,omitempty"`
+	ID           int           `json:"id,omitempty"`
 }
 
 // GetPersonTranslations get a list of translations that have been created for a person.
@@ -375,7 +375,7 @@ func (c *Client) GetPersonTranslations(
 type PersonLatest struct {
 	Birthday     string   `json:"birthday"`
 	Deathday     string   `json:"deathday"`
-	ID           int64    `json:"id"`
+	ID           int      `json:"id"`
 	Name         string   `json:"name"`
 	AlsoKnownAs  []string `json:"also_known_as"`
 	Gender       int      `json:"gender"`
@@ -408,13 +408,13 @@ type PersonPopular struct {
 	PaginatedResultsMeta
 	Results []struct {
 		Popularity  float32 `json:"popularity"`
-		ID          int64   `json:"id"`
+		ID          int     `json:"id"`
 		ProfilePath string  `json:"profile_path"`
 		Name        string  `json:"name"`
 		KnownFor    []struct {
 			OriginalTitle    string   `json:"original_title,omitempty"`
 			OriginalName     string   `json:"original_name,omitempty"`
-			ID               int64    `json:"id"`
+			ID               int      `json:"id"`
 			MediaType        string   `json:"media_type"`
 			Name             string   `json:"name,omitempty"`
 			Title            string   `json:"title,omitempty"`
@@ -422,7 +422,7 @@ type PersonPopular struct {
 			FirstAirDate     string   `json:"first_air_date,omitempty"`
 			ReleaseDate      string   `json:"release_date,omitempty"`
 			Popularity       float32  `json:"popularity"`
-			GenreIDs         []int64  `json:"genre_ids"`
+			GenreIDs         []int    `json:"genre_ids"`
 			OriginalLanguage string   `json:"original_language"`
 			BackdropPath     string   `json:"backdrop_path"`
 			Overview         string   `json:"overview"`
