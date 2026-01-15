@@ -241,10 +241,10 @@ func (suite *TMBDTestSuite) TestWithHTTPClient() {
 	suite.Equal(time.Second*10, client.http.Timeout)
 }
 
-func (suite *TMBDTestSuite) TestWithHTTPClientNoTimeout() {
-	client, err := Init(apiKey, WithHTTPClient(http.Client{Timeout: 0}))
+func (suite *TMBDTestSuite) TestWithHTTPClientDefaultTimeout() {
+	client, err := Init(apiKey, WithHTTPClient(http.Client{}))
 	suite.Nil(err)
-	suite.Equal(time.Second*0, client.http.Timeout)
+	suite.Equal(time.Second*10, client.http.Timeout)
 }
 
 func (suite *TMBDTestSuite) TestWithAutoRetry() {

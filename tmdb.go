@@ -81,7 +81,19 @@ func (t *customTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	if base == nil {
 		base = http.DefaultTransport
 	}
-	return base.RoundTrip(req)
+
+	for {
+		resp, err := base.RoundTrip(req)
+		if err != nil {
+			return nil, err
+		}
+		if t.client.autoRetry && shouldRetry(resp.StatusCode) {
+			resp.Body.Close()
+			time.Sleep(retryDuration(resp))
+			continue
+		}
+		return resp, nil
+	}
 }
 
 // Client type is a struct to instantiate this pkg.
@@ -137,6 +149,14 @@ func WithAutoRetry() ClientOption {
 	}
 }
 
+// WithTimeout sets the request timeout. Default is 10 seconds.
+func WithTimeout(d time.Duration) ClientOption {
+	return func(c *Client) error {
+		c.http.Timeout = d
+		return nil
+	}
+}
+
 // WithAlternateBaseURL sets the alternate base URL.
 func WithAlternateBaseURL() ClientOption {
 	return func(c *Client) error {
@@ -169,6 +189,9 @@ func Init(apiKey string, options ...ClientOption) (*Client, error) {
 			return nil, err
 		}
 	}
+	if c.http.Timeout == 0 {
+		c.http.Timeout = time.Second * 10
+	}
 	c.http.Transport = &customTransport{base: c.http.Transport, client: c}
 	return c, nil
 }
@@ -183,6 +206,9 @@ func InitV4(bearerToken string, options ...ClientOption) (*Client, error) {
 		if err := opt(c); err != nil {
 			return nil, err
 		}
+	}
+	if c.http.Timeout == 0 {
+		c.http.Timeout = time.Second * 10
 	}
 	c.http.Transport = &customTransport{base: c.http.Transport, client: c}
 	return c, nil
@@ -214,9 +240,6 @@ func (c *Client) get(u *url.URL, opts map[string]string, dst any) error {
 	if u == nil {
 		return fmt.Errorf("url is nil")
 	}
-	if c.http.Timeout == 0 {
-		c.http.Timeout = time.Second * 10
-	}
 	if len(opts) > 0 {
 		q := u.Query()
 		for key, value := range opts {
@@ -224,32 +247,23 @@ func (c *Client) get(u *url.URL, opts map[string]string, dst any) error {
 		}
 		u.RawQuery = q.Encode()
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
-	defer cancel()
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, u.String(), nil)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-	for {
-		res, err := c.http.Do(req)
-		if err != nil {
-			return err
-		}
-		defer res.Body.Close()
-		if res.StatusCode == http.StatusTooManyRequests && c.autoRetry {
-			time.Sleep(retryDuration(res))
-			continue
-		}
-		if res.StatusCode == http.StatusNoContent {
-			return nil
-		}
-		if res.StatusCode != http.StatusOK {
-			return c.decodeError(res)
-		}
-		if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
-			return fmt.Errorf("could not decode the data: %s", err)
-		}
-		break
+	res, err := c.http.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if res.StatusCode == http.StatusNoContent {
+		return nil
+	}
+	if res.StatusCode != http.StatusOK {
+		return c.decodeError(res)
+	}
+	if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
 	}
 	return nil
 }
@@ -258,9 +272,6 @@ func (c *Client) request(u *url.URL, method string, opts map[string]string, body
 	if u == nil {
 		return fmt.Errorf("url is nil")
 	}
-	if c.http.Timeout == 0 {
-		c.http.Timeout = time.Second * 10
-	}
 	if len(opts) > 0 {
 		q := u.Query()
 		for key, value := range opts {
@@ -268,15 +279,12 @@ func (c *Client) request(u *url.URL, method string, opts map[string]string, body
 		}
 		u.RawQuery = q.Encode()
 	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
-	defer cancel()
 	bodyBytes := new(bytes.Buffer)
 	if err := json.NewEncoder(bodyBytes).Encode(body); err != nil {
 		return fmt.Errorf("failed to encode request body to JSON: %w", err)
 	}
 	req, err := http.NewRequestWithContext(
-		ctx,
+		context.Background(),
 		method,
 		u.String(),
 		bytes.NewBuffer(bodyBytes.Bytes()),
@@ -284,27 +292,20 @@ func (c *Client) request(u *url.URL, method string, opts map[string]string, body
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %w", err)
 	}
-	for {
-		res, err := c.http.Do(req)
-		if err != nil {
-			return errors.New(err.Error())
-		}
-		defer res.Body.Close()
-		if c.autoRetry && shouldRetry(res.StatusCode) {
-			time.Sleep(retryDuration(res))
-			continue
-		}
-		// Checking if the response is greater or equal
-		// to 300 or less than 200.
-		if res.StatusCode >= http.StatusMultipleChoices ||
-			res.StatusCode < http.StatusOK ||
-			res.StatusCode == http.StatusNoContent {
-			return c.decodeError(res)
-		}
-		if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
-			return fmt.Errorf("could not decode the data: %s", err)
-		}
-		break
+	res, err := c.http.Do(req)
+	if err != nil {
+		return errors.New(err.Error())
+	}
+	defer res.Body.Close()
+	// Checking if the response is greater or equal
+	// to 300 or less than 200.
+	if res.StatusCode >= http.StatusMultipleChoices ||
+		res.StatusCode < http.StatusOK ||
+		res.StatusCode == http.StatusNoContent {
+		return c.decodeError(res)
+	}
+	if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
 	}
 	return nil
 }
