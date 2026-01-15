@@ -99,7 +99,7 @@ func (c *Client) GetTVSeasonDetails(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonDetails, error) {
-	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), tvSeasonURL, fmt.Sprintf("%d", seasonNumber))
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber))
 	var tvSeasonDetails TVSeasonDetails
 	if err := c.get(url, urlOptions, &tvSeasonDetails); err != nil {
 		return nil, err
@@ -136,7 +136,7 @@ func (c *Client) GetTVSeasonChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*TVSeasonChanges, error) {
-	url := c.baseURL.JoinPath(tvURL, "season", fmt.Sprintf("%d", id), "changes")
+	url := c.baseURL.JoinPath(tvPath, "season", fmt.Sprintf("%d", id), "changes")
 	var tvSeasonChanges TVSeasonChanges
 	if err := c.get(url, urlOptions, &tvSeasonChanges); err != nil {
 		return nil, err
@@ -175,7 +175,7 @@ func (c *Client) GetTVSeasonCredits(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonCredits, error) {
-	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), tvSeasonURL, fmt.Sprintf("%d", seasonNumber), "credits")
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "credits")
 	var tvSeasonCredits TVSeasonCredits
 	if err := c.get(url, urlOptions, &tvSeasonCredits); err != nil {
 		return nil, err
@@ -205,7 +205,7 @@ func (c *Client) GetTVSeasonExternalIDs(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonExternalIDs, error) {
-	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), tvSeasonURL, fmt.Sprintf("%d", seasonNumber), "external_ids")
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "external_ids")
 	var tvSeasonExternalIDs TVSeasonExternalIDs
 	if err := c.get(url, urlOptions, &tvSeasonExternalIDs); err != nil {
 		return nil, err
@@ -238,7 +238,7 @@ func (c *Client) GetTVSeasonImages(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonImages, error) {
-	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), tvSeasonURL, fmt.Sprintf("%d", seasonNumber), "images")
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "images")
 	var tvSeasonImages TVSeasonImages
 	if err := c.get(url, urlOptions, &tvSeasonImages); err != nil {
 		return nil, err
@@ -254,7 +254,7 @@ func (c *Client) GetTVSeasonVideos(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*VideoResults, error) {
-	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), tvSeasonURL, fmt.Sprintf("%d", seasonNumber), "videos")
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "videos")
 	var tvSeasonVideos VideoResults
 	if err := c.get(url, urlOptions, &tvSeasonVideos); err != nil {
 		return nil, err
@@ -269,7 +269,7 @@ func (c *Client) GetTVSeasonTranslations(
 	id int,
 	seasonNumber int,
 ) (*TVSeasonTranslations, error) {
-	url := c.baseURL.JoinPath(tvURL, fmt.Sprintf("%d", id), tvSeasonURL, fmt.Sprintf("%d", seasonNumber), "translations")
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "translations")
 	var tvSeasonTranslations TVSeasonTranslations
 	if err := c.get(url, nil, &tvSeasonTranslations); err != nil {
 		return nil, err

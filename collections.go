@@ -31,7 +31,7 @@ type CollectionDetails struct {
 //
 // https://developers.themoviedb.org/3/collections/get-collection-details
 func (c *Client) GetCollectionDetails(id int, urlOptions map[string]string) (*CollectionDetails, error) {
-	url := c.baseURL.JoinPath(collectionURL, fmt.Sprintf("%d", id))
+	url := c.baseURL.JoinPath(collectionPath, fmt.Sprintf("%d", id))
 	var collectionDetails CollectionDetails
 	if err := c.get(url, urlOptions, &collectionDetails); err != nil {
 		return nil, err
@@ -56,7 +56,7 @@ type CollectionImages struct {
 //
 // https://developers.themoviedb.org/3/collections/get-collection-images
 func (c *Client) GetCollectionImages(id int, urlOptions map[string]string) (*CollectionImages, error) {
-	url := c.baseURL.JoinPath(collectionURL, fmt.Sprintf("%d", id), "images")
+	url := c.baseURL.JoinPath(collectionPath, fmt.Sprintf("%d", id), "images")
 	var collectionImages CollectionImages
 	if err := c.get(url, urlOptions, &collectionImages); err != nil {
 		return nil, err
@@ -74,7 +74,7 @@ type CollectionTranslations struct {
 //
 // https://developers.themoviedb.org/3/collections/get-collection-translations
 func (c *Client) GetCollectionTranslations(id int, urlOptions map[string]string) (*CollectionTranslations, error) {
-	url := c.baseURL.JoinPath(collectionURL, fmt.Sprintf("%d", id), "translations")
+	url := c.baseURL.JoinPath(collectionPath, fmt.Sprintf("%d", id), "translations")
 	var collectionTranslations CollectionTranslations
 	if err := c.get(url, urlOptions, &collectionTranslations); err != nil {
 		return nil, err

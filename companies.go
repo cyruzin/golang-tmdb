@@ -24,7 +24,7 @@ type CompanyDetails struct {
 //
 // https://developers.themoviedb.org/3/companies/get-company-details
 func (c *Client) GetCompanyDetails(id int) (*CompanyDetails, error) {
-	url := c.baseURL.JoinPath(companyURL, fmt.Sprintf("%d", id))
+	url := c.baseURL.JoinPath(companyPath, fmt.Sprintf("%d", id))
 	var companyDetails CompanyDetails
 	if err := c.get(url, nil, &companyDetails); err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ type CompanyAlternativeNames struct {
 //
 // https://developers.themoviedb.org/3/companies/get-company-alternative-names
 func (c *Client) GetCompanyAlternativeNames(id int) (*CompanyAlternativeNames, error) {
-	url := c.baseURL.JoinPath(companyURL, fmt.Sprintf("%d", id), "alternative_names")
+	url := c.baseURL.JoinPath(companyPath, fmt.Sprintf("%d", id), "alternative_names")
 	var companyAlternativeNames CompanyAlternativeNames
 	if err := c.get(url, nil, &companyAlternativeNames); err != nil {
 		return nil, err
@@ -76,7 +76,7 @@ type CompanyImages struct {
 //
 // https://developers.themoviedb.org/3/companies/get-company-images
 func (c *Client) GetCompanyImages(id int) (*CompanyImages, error) {
-	url := c.baseURL.JoinPath(companyURL, fmt.Sprintf("%d", id), "images")
+	url := c.baseURL.JoinPath(companyPath, fmt.Sprintf("%d", id), "images")
 	var companyImages CompanyImages
 	if err := c.get(url, nil, &companyImages); err != nil {
 		return nil, err

@@ -88,7 +88,7 @@ func (c *Client) GetTVEpisodeDetails(
 	episodeNumber int,
 	urlOptions map[string]string,
 ) (*TVEpisodeDetails, error) {
-	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber))
+	url := c.baseURL.JoinPath(tvPath, tvEpisodePath(id, seasonNumber, episodeNumber))
 	var tvEpisodeDetails TVEpisodeDetails
 	if err := c.get(url, urlOptions, &tvEpisodeDetails); err != nil {
 		return nil, err
@@ -128,7 +128,7 @@ func (c *Client) GetTVEpisodeChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*TVEpisodeChanges, error) {
-	url := c.baseURL.JoinPath(tvURL, "episode", fmt.Sprintf("%d", id), "changes")
+	url := c.baseURL.JoinPath(tvPath, "episode", fmt.Sprintf("%d", id), "changes")
 	var tvEpisodeChanges TVEpisodeChanges
 	if err := c.get(url, urlOptions, &tvEpisodeChanges); err != nil {
 		return nil, err
@@ -176,7 +176,7 @@ func (c *Client) GetTVEpisodeCredits(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeCredits, error) {
-	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "credits")
+	url := c.baseURL.JoinPath(tvPath, tvEpisodePath(id, seasonNumber, episodeNumber), "credits")
 	var tvEpisodeCredits TVEpisodeCredits
 	if err := c.get(url, nil, &tvEpisodeCredits); err != nil {
 		return nil, err
@@ -207,7 +207,7 @@ func (c *Client) GetTVEpisodeExternalIDs(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeExternalIDs, error) {
-	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "external_ids")
+	url := c.baseURL.JoinPath(tvPath, tvEpisodePath(id, seasonNumber, episodeNumber), "external_ids")
 	var tvEpisodeExternalIDs TVEpisodeExternalIDs
 	if err := c.get(url, nil, &tvEpisodeExternalIDs); err != nil {
 		return nil, err
@@ -240,7 +240,7 @@ func (c *Client) GetTVEpisodeImages(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeImages, error) {
-	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "images")
+	url := c.baseURL.JoinPath(tvPath, tvEpisodePath(id, seasonNumber, episodeNumber), "images")
 	var tvEpisodeImages TVEpisodeImages
 	if err := c.get(url, nil, &tvEpisodeImages); err != nil {
 		return nil, err
@@ -262,7 +262,7 @@ func (c *Client) GetTVEpisodeTranslations(
 	seasonNumber int,
 	episodeNumber int,
 ) (*TVEpisodeTranslations, error) {
-	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "translations")
+	url := c.baseURL.JoinPath(tvPath, tvEpisodePath(id, seasonNumber, episodeNumber), "translations")
 	var tvEpisodeTranslations TVEpisodeTranslations
 	if err := c.get(url, nil, &tvEpisodeTranslations); err != nil {
 		return nil, err
@@ -285,7 +285,7 @@ func (c *Client) GetTVEpisodeVideos(
 	episodeNumber int,
 	urlOptions map[string]string,
 ) (*VideoResults, error) {
-	url := c.baseURL.JoinPath(tvURL, tvEpisodePath(id, seasonNumber, episodeNumber), "videos")
+	url := c.baseURL.JoinPath(tvPath, tvEpisodePath(id, seasonNumber, episodeNumber), "videos")
 	var tvEpisodeVideos VideoResults
 	if err := c.get(url, urlOptions, &tvEpisodeVideos); err != nil {
 		return nil, err

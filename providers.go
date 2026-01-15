@@ -26,7 +26,7 @@ type WatchProviderList struct {
 //
 // https://developers.themoviedb.org/3/watch-providers/get-available-regions
 func (c *Client) GetAvailableWatchProviderRegions(urlOptions map[string]string) (*WatchRegionList, error) {
-	url := c.baseURL.JoinPath(watchProvidersURL, "regions")
+	url := c.baseURL.JoinPath(watchProvidersPath, "regions")
 	var watchRegionList WatchRegionList
 	if err := c.get(url, urlOptions, &watchRegionList); err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (c *Client) GetAvailableWatchProviderRegions(urlOptions map[string]string) 
 //
 // https://developers.themoviedb.org/3/watch-providers/get-movie-providers
 func (c *Client) GetWatchProvidersMovie(urlOptions map[string]string) (*WatchProviderList, error) {
-	url := c.baseURL.JoinPath(watchProvidersURL, "movie")
+	url := c.baseURL.JoinPath(watchProvidersPath, "movie")
 	var watchProvider WatchProviderList
 	if err := c.get(url, urlOptions, &watchProvider); err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func (c *Client) GetWatchProvidersMovie(urlOptions map[string]string) (*WatchPro
 //
 // https://developers.themoviedb.org/3/watch-providers/get-tv-providers
 func (c *Client) GetWatchProvidersTv(urlOptions map[string]string) (*WatchProviderList, error) {
-	url := c.baseURL.JoinPath(watchProvidersURL, "tv")
+	url := c.baseURL.JoinPath(watchProvidersPath, "tv")
 	var watchProvider WatchProviderList
 	if err := c.get(url, urlOptions, &watchProvider); err != nil {
 		return nil, err

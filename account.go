@@ -27,7 +27,7 @@ type AccountDetails struct {
 //
 // https://developers.themoviedb.org/3/account/get-account-details
 func (c *Client) GetAccountDetails() (*AccountDetails, error) {
-	url := c.baseURL.JoinPath(accountURL)
+	url := c.baseURL.JoinPath(accountPath)
 	var details AccountDetails
 	if err := c.get(url, map[string]string{"session_id": c.sessionID}, &details); err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ type AccountCreatedLists struct {
 //
 // https://developers.themoviedb.org/3/account/get-created-lists
 func (c *Client) GetCreatedLists(id int, urlOptions map[string]string) (*AccountCreatedLists, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "lists")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "lists")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -68,7 +68,7 @@ type AccountFavoriteMovies struct {
 //
 // https://developers.themoviedb.org/3/account/get-favorite-movies
 func (c *Client) GetFavoriteMovies(id int, urlOptions map[string]string) (*AccountFavoriteMovies, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "favorite", "movies")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "favorite", "movies")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -90,7 +90,7 @@ type AccountFavoriteTVShows struct {
 //
 // https://developers.themoviedb.org/3/account/get-favorite-tv-shows
 func (c *Client) GetFavoriteTVShows(id int, urlOptions map[string]string) (*AccountFavoriteTVShows, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "favorite", "tv")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "favorite", "tv")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -115,17 +115,11 @@ type AccountFavorite struct {
 //
 // https://developers.themoviedb.org/3/account/mark-as-favorite
 func (c *Client) MarkAsFavorite(id int, title *AccountFavorite) (*Response, error) {
-	u := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "favorite")
-	q := u.Query()
-	q.Add("session_id", c.sessionID)
-	u.RawQuery = q.Encode()
-	markAsFavorite := Response{}
-	if err := c.request(
-		u.String(),
-		title,
-		http.MethodPost,
-		&markAsFavorite,
-	); err != nil {
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "favorite")
+	urlOptions := map[string]string{}
+	urlOptions["session_id"] = c.sessionID
+	var markAsFavorite Response
+	if err := c.request(url, http.MethodPost, urlOptions, title, &markAsFavorite); err != nil {
 		return nil, err
 	}
 	return &markAsFavorite, nil
@@ -140,7 +134,7 @@ type AccountRatedMovies struct {
 //
 // https://developers.themoviedb.org/3/account/get-rated-movies
 func (c *Client) GetRatedMovies(id int, urlOptions map[string]string) (*AccountRatedMovies, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "rated", "movies")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "rated", "movies")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -161,7 +155,7 @@ type AccountRatedTVShows struct {
 //
 // https://developers.themoviedb.org/3/account/get-rated-tv-shows
 func (c *Client) GetRatedTVShows(id int, urlOptions map[string]string) (*AccountRatedTVShows, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "rated", "tv")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "rated", "tv")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -183,7 +177,7 @@ type AccountRatedTVEpisodes struct {
 //
 // https://developers.themoviedb.org/3/account/get-rated-tv-episodes
 func (c *Client) GetRatedTVEpisodes(id int, urlOptions map[string]string) (*AccountRatedTVEpisodes, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "rated", "tv", "episodes")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "rated", "tv", "episodes")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -204,7 +198,7 @@ type AccountMovieWatchlist struct {
 //
 // https://developers.themoviedb.org/3/account/get-movie-watchlist
 func (c *Client) GetMovieWatchlist(id int, urlOptions map[string]string) (*AccountMovieWatchlist, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "watchlist", "movies")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "watchlist", "movies")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -225,7 +219,7 @@ type AccountTVShowsWatchlist struct {
 //
 // https://developers.themoviedb.org/3/account/get-tv-show-watchlist
 func (c *Client) GetTVShowsWatchlist(id int, urlOptions map[string]string) (*AccountTVShowsWatchlist, error) {
-	url := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "watchlist", "tv")
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "watchlist", "tv")
 	if urlOptions == nil {
 		urlOptions = map[string]string{}
 	}
@@ -249,17 +243,11 @@ type AccountWatchlist struct {
 //
 // https://developers.themoviedb.org/3/account/add-to-watchlist
 func (c *Client) AddToWatchlist(id int, title *AccountWatchlist) (*Response, error) {
-	u := c.baseURL.JoinPath(accountURL, fmt.Sprintf("%d", id), "watchlist")
-	q := u.Query()
-	q.Add("session_id", c.sessionID)
-	u.RawQuery = q.Encode()
-	addToWatchlist := Response{}
-	if err := c.request(
-		u.String(),
-		title,
-		http.MethodPost,
-		&addToWatchlist,
-	); err != nil {
+	url := c.baseURL.JoinPath(accountPath, fmt.Sprintf("%d", id), "watchlist")
+	urlOptions := map[string]string{}
+	urlOptions["session_id"] = c.sessionID
+	var addToWatchlist Response
+	if err := c.request(url, http.MethodPost, urlOptions, title, &addToWatchlist); err != nil {
 		return nil, err
 	}
 	return &addToWatchlist, nil

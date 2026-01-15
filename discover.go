@@ -31,7 +31,7 @@ type DiscoverMovie struct {
 //
 // https://developers.themoviedb.org/3/discover/movie-discover
 func (c *Client) GetDiscoverMovie(urlOptions map[string]string) (*DiscoverMovie, error) {
-	url := c.baseURL.JoinPath(discoverURL, "movie")
+	url := c.baseURL.JoinPath(discoverPath, "movie")
 	var discoverMovie DiscoverMovie
 	if err := c.get(url, urlOptions, &discoverMovie); err != nil {
 		return nil, err
@@ -56,7 +56,7 @@ type DiscoverTV struct {
 //
 // https://developers.themoviedb.org/3/discover/tv-discover
 func (c *Client) GetDiscoverTV(urlOptions map[string]string) (*DiscoverTV, error) {
-	url := c.baseURL.JoinPath(discoverURL, "tv")
+	url := c.baseURL.JoinPath(discoverPath, "tv")
 	var discoverTV DiscoverTV
 	if err := c.get(url, urlOptions, &discoverTV); err != nil {
 		return nil, err

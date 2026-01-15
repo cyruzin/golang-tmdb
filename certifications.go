@@ -17,7 +17,7 @@ type Certifications struct {
 //
 // https://developer.themoviedb.org/reference/certification-movie-list
 func (c *Client) GetCertificationMovie() (*Certifications, error) {
-	url := c.baseURL.JoinPath("certification", movieURL, "list")
+	url := c.baseURL.JoinPath("certification", moviePath, "list")
 	var certificationMovie Certifications
 	if err := c.get(url, nil, &certificationMovie); err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (c *Client) GetCertificationMovie() (*Certifications, error) {
 //
 // https://developer.themoviedb.org/reference/certifications-tv-list
 func (c *Client) GetCertificationTV() (*Certifications, error) {
-	url := c.baseURL.JoinPath("certification", tvURL, "list")
+	url := c.baseURL.JoinPath("certification", tvPath, "list")
 	var certificationTV Certifications
 	if err := c.get(url, nil, &certificationTV); err != nil {
 		return nil, err

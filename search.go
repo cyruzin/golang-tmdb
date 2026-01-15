@@ -18,7 +18,7 @@ func (c *Client) GetSearchCompanies(query string, urlOptions map[string]string) 
 		urlOptions = make(map[string]string)
 	}
 	urlOptions["query"] = url.QueryEscape(query)
-	url := c.baseURL.JoinPath(searchURL, "company")
+	url := c.baseURL.JoinPath(searchPath, "company")
 	var SearchCompanies SearchCompanies
 	if err := c.get(url, urlOptions, &SearchCompanies); err != nil {
 		return nil, err
@@ -40,7 +40,7 @@ func (c *Client) GetSearchCollections(query string, urlOptions map[string]string
 		urlOptions = make(map[string]string)
 	}
 	urlOptions["query"] = url.QueryEscape(query)
-	url := c.baseURL.JoinPath(searchURL, "collection")
+	url := c.baseURL.JoinPath(searchPath, "collection")
 	var searchCollections SearchCollections
 	if err := c.get(url, urlOptions, &searchCollections); err != nil {
 		return nil, err
@@ -62,7 +62,7 @@ func (c *Client) GetSearchKeywords(query string, urlOptions map[string]string) (
 		urlOptions = make(map[string]string)
 	}
 	urlOptions["query"] = url.QueryEscape(query)
-	url := c.baseURL.JoinPath(searchURL, "keyword")
+	url := c.baseURL.JoinPath(searchPath, "keyword")
 	var searchKeywords SearchKeywords
 	if err := c.get(url, urlOptions, &searchKeywords); err != nil {
 		return nil, err
@@ -84,7 +84,7 @@ func (c *Client) GetSearchMovies(query string, urlOptions map[string]string) (*S
 		urlOptions = make(map[string]string)
 	}
 	urlOptions["query"] = url.QueryEscape(query)
-	url := c.baseURL.JoinPath(searchURL, "movie")
+	url := c.baseURL.JoinPath(searchPath, "movie")
 	var searchMovies SearchMovies
 	if err := c.get(url, urlOptions, &searchMovies); err != nil {
 		return nil, err
@@ -108,7 +108,7 @@ func (c *Client) GetSearchMulti(query string, urlOptions map[string]string) (*Se
 		urlOptions = make(map[string]string)
 	}
 	urlOptions["query"] = url.QueryEscape(query)
-	url := c.baseURL.JoinPath(searchURL, "multi")
+	url := c.baseURL.JoinPath(searchPath, "multi")
 	var searchMulti SearchMulti
 	if err := c.get(url, urlOptions, &searchMulti); err != nil {
 		return nil, err
@@ -130,7 +130,7 @@ func (c *Client) GetSearchPeople(query string, urlOptions map[string]string) (*S
 		urlOptions = make(map[string]string)
 	}
 	urlOptions["query"] = url.QueryEscape(query)
-	url := c.baseURL.JoinPath(searchURL, "person")
+	url := c.baseURL.JoinPath(searchPath, "person")
 	var searchPeople SearchPeople
 	if err := c.get(url, urlOptions, &searchPeople); err != nil {
 		return nil, err
@@ -152,7 +152,7 @@ func (c *Client) GetSearchTVShow(query string, urlOptions map[string]string) (*S
 		urlOptions = make(map[string]string)
 	}
 	urlOptions["query"] = url.QueryEscape(query)
-	url := c.baseURL.JoinPath(searchURL, "person")
+	url := c.baseURL.JoinPath(searchPath, "person")
 	var searchTVShows SearchTVShows
 	if err := c.get(url, urlOptions, &searchTVShows); err != nil {
 		return nil, err

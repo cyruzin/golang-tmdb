@@ -23,25 +23,24 @@ var (
 )
 
 const (
-	authenticationURL = "/authentication"
-	movieURL          = "/movie"
-	tvURL             = "/tv"
-	tvSeasonURL       = "/season"
-	tvEpisodeURL      = "/episode"
-	personURL         = "/person"
-	searchURL         = "/search"
-	collectionURL     = "/collection"
-	companyURL        = "/company"
-	configurationURL  = "/configuration"
-	creditURL         = "/credit"
-	discoverURL       = "/discover"
-	networkURL        = "/network"
-	keywordURL        = "/keyword"
-	genreURL          = "/genre"
-	guestSessionURL   = "/guest_session"
-	listURL           = "/list"
-	accountURL        = "/account"
-	watchProvidersURL = "/watch/providers"
+	authenticationPath = "/authentication"
+	moviePath          = "/movie"
+	tvPath             = "/tv"
+	tvSeasonPath       = "/season"
+	personPath         = "/person"
+	searchPath         = "/search"
+	collectionPath     = "/collection"
+	companyPath        = "/company"
+	configurationPath  = "/configuration"
+	creditPath         = "/credit"
+	discoverPath       = "/discover"
+	networkPath        = "/network"
+	keywordPath        = "/keyword"
+	genrePath          = "/genre"
+	guestSessionPath   = "/guest_session"
+	listPath           = "/list"
+	accountPath        = "/account"
+	watchProvidersPath = "/watch/providers"
 )
 
 func init() {
@@ -255,33 +254,35 @@ func (c *Client) get(u *url.URL, opts map[string]string, dst any) error {
 	return nil
 }
 
-func (c *Client) request(
-	url string,
-	body any,
-	method string,
-	data any,
-) error {
-	if url == "" {
-		return errors.New("url field is empty")
+func (c *Client) request(u *url.URL, method string, opts map[string]string, body any, dst any) error {
+	if u == nil {
+		return fmt.Errorf("url is nil")
 	}
 	if c.http.Timeout == 0 {
 		c.http.Timeout = time.Second * 10
 	}
+	if len(opts) > 0 {
+		q := u.Query()
+		for key, value := range opts {
+			q.Add(key, url.QueryEscape(value))
+		}
+		u.RawQuery = q.Encode()
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
 	defer cancel()
 	bodyBytes := new(bytes.Buffer)
-	err := json.NewEncoder(bodyBytes).Encode(body)
-	if err != nil {
-		return fmt.Errorf("failed to encode request body to JSON: %s", err)
+	if err := json.NewEncoder(bodyBytes).Encode(body); err != nil {
+		return fmt.Errorf("failed to encode request body to JSON: %w", err)
 	}
 	req, err := http.NewRequestWithContext(
 		ctx,
 		method,
-		url,
+		u.String(),
 		bytes.NewBuffer(bodyBytes.Bytes()),
 	)
 	if err != nil {
-		return fmt.Errorf("could not fetch the url: %s", err)
+		return fmt.Errorf("could not fetch the url: %w", err)
 	}
 	for {
 		res, err := c.http.Do(req)
@@ -300,28 +301,12 @@ func (c *Client) request(
 			res.StatusCode == http.StatusNoContent {
 			return c.decodeError(res)
 		}
-		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
+		if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
 			return fmt.Errorf("could not decode the data: %s", err)
 		}
 		break
 	}
 	return nil
-}
-
-func (c *Client) fmtOptions(
-	urlOptions map[string]string,
-) string {
-	options := ""
-	if len(urlOptions) > 0 {
-		for key, value := range urlOptions {
-			options += fmt.Sprintf(
-				"&%s=%s",
-				key,
-				url.QueryEscape(value),
-			)
-		}
-	}
-	return options
 }
 
 // GetBaseURL gets the current base url.

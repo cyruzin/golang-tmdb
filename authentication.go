@@ -13,7 +13,7 @@ type RequestToken struct {
 //
 // https://developers.themoviedb.org/3/authentication/create-guest-session
 func (c *Client) CreateGuestSession() (*RequestToken, error) {
-	url := c.baseURL.JoinPath(authenticationURL, "guest_session", "new")
+	url := c.baseURL.JoinPath(authenticationPath, "guest_session", "new")
 	var requestToken RequestToken
 	if err := c.get(url, nil, &requestToken); err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func (c *Client) CreateGuestSession() (*RequestToken, error) {
 //
 // https://developers.themoviedb.org/3/authentication/create-request-token
 func (c *Client) CreateRequestToken() (*RequestToken, error) {
-	url := c.baseURL.JoinPath(authenticationURL, "token", "new")
+	url := c.baseURL.JoinPath(authenticationPath, "token", "new")
 	var requestToken RequestToken
 	if err := c.get(url, nil, &requestToken); err != nil {
 		return nil, err

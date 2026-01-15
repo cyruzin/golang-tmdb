@@ -12,7 +12,7 @@ type KeywordDetails struct {
 //
 // https://developers.themoviedb.org/3/keywords/get-keyword-details
 func (c *Client) GetKeywordDetails(id int) (*KeywordDetails, error) {
-	url := c.baseURL.JoinPath(keywordURL, fmt.Sprintf("%d", id))
+	url := c.baseURL.JoinPath(keywordPath, fmt.Sprintf("%d", id))
 	var keywordDetails KeywordDetails
 	if err := c.get(url, nil, &keywordDetails); err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ type KeywordMovies struct {
 //
 // https://developers.themoviedb.org/3/keywords/get-movies-by-keyword
 func (c *Client) GetKeywordMovies(id int, urlOptions map[string]string) (*KeywordMovies, error) {
-	url := c.baseURL.JoinPath(keywordURL, fmt.Sprintf("%d", id), "movies")
+	url := c.baseURL.JoinPath(keywordPath, fmt.Sprintf("%d", id), "movies")
 	var keywordMovies KeywordMovies
 	if err := c.get(url, urlOptions, &keywordMovies); err != nil {
 		return nil, err

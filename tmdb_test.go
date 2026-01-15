@@ -93,33 +93,29 @@ func (suite *TMBDTestSuite) TestGetSpecialCases() {
 }
 
 func (suite *TMBDTestSuite) TestRequestFail() {
-	err := suite.client.request(
-		"http://www.testfakewebsite.org",
-		[]byte{},
-		"POST",
-		nil,
-	)
+	u, err := url.Parse("http://www.testfakewebsite.org")
+	suite.NoError(err)
+	err = suite.client.request(u, "POST", nil, nil, nil)
 	suite.Error(err)
 	suite.Contains(err.Error(), "no such host")
 
-	err = suite.client.request(
-		"https://api.themoviedb.org/3/authentication/session/new",
-		[]byte{},
-		"POST",
-		nil,
-	)
+	u, err = url.Parse("https://api.themoviedb.org/3/authentication/session/new")
+	suite.NoError(err)
+	err = suite.client.request(u, "POST", nil, nil, nil)
 	suite.Error(err)
 	suite.True(
 		strings.Contains(err.Error(), "Invalid API key") ||
 			strings.Contains(err.Error(), "The input is not valid"),
 	)
 
-	err = suite.client.request("", []byte{}, "POST", nil)
+	err = suite.client.request(nil, "POST", nil, nil, nil)
 	suite.Error(err)
-	suite.Equal("url field is empty", err.Error())
+	suite.Equal("url is nil", err.Error())
 
 	var invalidTarget int
-	err = suite.client.request("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil, "GET", &invalidTarget)
+	u, err = url.Parse("https://api.themoviedb.org/3/movie/7578000?language=en-US")
+	suite.NoError(err)
+	err = suite.client.request(u, "GET", nil, nil, &invalidTarget)
 	suite.Error(err)
 	suite.True(
 		strings.Contains(err.Error(), "could not decode the data") ||
@@ -131,17 +127,27 @@ func (suite *TMBDTestSuite) TestEncodeBodyError() {
 	body := struct {
 		Fn func()
 	}{Fn: func() {}}
-	err := suite.client.request("http://www.testfakewebsite.org", body, "POST", nil)
+	u, err := url.Parse("http://www.testfakewebsite.org")
+	suite.NoError(err)
+	err = suite.client.request(u, "POST", nil, body, nil)
 	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestRequestSpecialCases() {
-	err := suite.client.request("http://[::1]:namedport", nil, "GET", nil)
+	// Test that invalid URL parsing fails
+	_, err := url.Parse("http://[::1]:namedport")
 	suite.Error(err)
-	suite.Contains(err.Error(), "could not fetch the url")
+	suite.Contains(err.Error(), "invalid port")
+
+	// Test nil URL
+	err = suite.client.request(nil, "GET", nil, nil, nil)
+	suite.Error(err)
+	suite.Contains(err.Error(), "url is nil")
 
 	c, _ := InitV4("FAKE_BEARER_TOKEN")
-	err = c.request("https://api.themoviedb.org/3/movie/7578000?language=en-US", nil, "GET", nil)
+	u, err := url.Parse("https://api.themoviedb.org/3/movie/7578000?language=en-US")
+	suite.NoError(err)
+	err = c.request(u, "GET", nil, nil, nil)
 	suite.Error(err)
 	suite.True(
 		strings.Contains(err.Error(), "Invalid") ||
@@ -160,7 +166,9 @@ func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 	}))
 	defer tsRetry.Close()
 	c.http.Timeout = time.Second * 10
-	err = c.request(tsRetry.URL, nil, "GET", nil)
+	u, err = url.Parse(tsRetry.URL)
+	suite.NoError(err)
+	err = c.request(u, "GET", nil, nil, nil)
 	suite.Error(err)
 	suite.True(retryCalled)
 	suite.True(
@@ -175,7 +183,9 @@ func (suite *TMBDTestSuite) TestRequestSpecialCases() {
 		w.Write([]byte(`{"foo": "bar"}`))
 	}))
 	defer tsDecode.Close()
-	err = suite.client.request(tsDecode.URL, nil, "GET", &invalidTarget)
+	u, err = url.Parse(tsDecode.URL)
+	suite.NoError(err)
+	err = suite.client.request(u, "GET", nil, nil, &invalidTarget)
 	suite.Error(err)
 	suite.Contains(err.Error(), "could not decode the data")
 }

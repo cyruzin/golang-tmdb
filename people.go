@@ -78,7 +78,7 @@ func (c *Client) GetPersonDetails(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonDetails, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id))
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id))
 	var personDetails PersonDetails
 	if err := c.get(url, urlOptions, &personDetails); err != nil {
 		return nil, err
@@ -112,7 +112,7 @@ func (c *Client) GetPersonChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonChanges, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "changes")
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "changes")
 	var personChanges PersonChanges
 	if err := c.get(url, urlOptions, &personChanges); err != nil {
 		return nil, err
@@ -168,7 +168,7 @@ func (c *Client) GetPersonMovieCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonMovieCredits, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "movie_credits")
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "movie_credits")
 	var personMovieCredits PersonMovieCredits
 	if err := c.get(url, urlOptions, &personMovieCredits); err != nil {
 		return nil, err
@@ -223,7 +223,7 @@ func (c *Client) GetPersonTVCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonTVCredits, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "tv_credits")
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "tv_credits")
 	var personTVCredits PersonTVCredits
 	if err := c.get(url, urlOptions, &personTVCredits); err != nil {
 		return nil, err
@@ -285,7 +285,7 @@ func (c *Client) GetPersonCombinedCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonCombinedCredits, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "combined_credits")
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "combined_credits")
 	var personCombinedCredits PersonCombinedCredits
 	if err := c.get(url, urlOptions, &personCombinedCredits); err != nil {
 		return nil, err
@@ -316,7 +316,7 @@ func (c *Client) GetPersonExternalIDs(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonExternalIDs, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "external_ids")
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "external_ids")
 	var personExternalIDs PersonExternalIDs
 	if err := c.get(url, urlOptions, &personExternalIDs); err != nil {
 		return nil, err
@@ -342,7 +342,7 @@ type PersonImages struct {
 func (c *Client) GetPersonImages(
 	id int,
 ) (*PersonImages, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "images")
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "images")
 	var personImages PersonImages
 	if err := c.get(url, nil, &personImages); err != nil {
 		return nil, err
@@ -363,7 +363,7 @@ func (c *Client) GetPersonTranslations(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonTranslations, error) {
-	url := c.baseURL.JoinPath(personURL, fmt.Sprintf("%d", id), "translations")
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "translations")
 	var personTranslations PersonTranslations
 	if err := c.get(url, urlOptions, &personTranslations); err != nil {
 		return nil, err
@@ -395,7 +395,7 @@ type PersonLatest struct {
 func (c *Client) GetPersonLatest(
 	urlOptions map[string]string,
 ) (*PersonLatest, error) {
-	url := c.baseURL.JoinPath(personURL, "latest")
+	url := c.baseURL.JoinPath(personPath, "latest")
 	var personLatest PersonLatest
 	if err := c.get(url, urlOptions, &personLatest); err != nil {
 		return nil, err
@@ -440,7 +440,7 @@ type PersonPopular struct {
 func (c *Client) GetPersonPopular(
 	urlOptions map[string]string,
 ) (*PersonPopular, error) {
-	url := c.baseURL.JoinPath(personURL, "popular")
+	url := c.baseURL.JoinPath(personPath, "popular")
 	var personPopular PersonPopular
 	if err := c.get(url, urlOptions, &personPopular); err != nil {
 		return nil, err

@@ -9,7 +9,7 @@ type GenreMovieList struct {
 //
 // https://developers.themoviedb.org/3/genres/get-movie-list
 func (c *Client) GetGenreMovieList(urlOptions map[string]string) (*GenreMovieList, error) {
-	url := c.baseURL.JoinPath(genreURL, "movie", "list")
+	url := c.baseURL.JoinPath(genrePath, "movie", "list")
 	var genreMovieList GenreMovieList
 	if err := c.get(url, urlOptions, &genreMovieList); err != nil {
 		return nil, err
@@ -21,7 +21,7 @@ func (c *Client) GetGenreMovieList(urlOptions map[string]string) (*GenreMovieLis
 //
 // https://developers.themoviedb.org/3/genres/get-tv-list
 func (c *Client) GetGenreTVList(urlOptions map[string]string) (*GenreMovieList, error) {
-	url := c.baseURL.JoinPath(genreURL, "tv", "list")
+	url := c.baseURL.JoinPath(genrePath, "tv", "list")
 	var genreTVList GenreMovieList
 	if err := c.get(url, urlOptions, &genreTVList); err != nil {
 		return nil, err

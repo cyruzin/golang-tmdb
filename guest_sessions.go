@@ -25,7 +25,7 @@ type GuestSessionRatedMovies struct {
 //
 // https://developers.themoviedb.org/3/guest-sessions/get-guest-session-rated-movies
 func (c *Client) GetGuestSessionRatedMovies(id string, urlOptions map[string]string) (*GuestSessionRatedMovies, error) {
-	url := c.baseURL.JoinPath(guestSessionURL, id, "rated", "movies")
+	url := c.baseURL.JoinPath(guestSessionPath, id, "rated", "movies")
 	var guestSessionRatedMovies GuestSessionRatedMovies
 	if err := c.get(url, urlOptions, &guestSessionRatedMovies); err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ type GuestSessionRatedTVShows struct {
 //
 // https://developers.themoviedb.org/3/guest-sessions/get-guest-session-rated-tv-shows
 func (c *Client) GetGuestSessionRatedTVShows(id string, urlOptions map[string]string) (*GuestSessionRatedTVShows, error) {
-	url := c.baseURL.JoinPath(guestSessionURL, id, "rated", "tv")
+	url := c.baseURL.JoinPath(guestSessionPath, id, "rated", "tv")
 	var guestSessionRatedTVShows GuestSessionRatedTVShows
 	if err := c.get(url, urlOptions, &guestSessionRatedTVShows); err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ type GuestSessionRatedTVEpisodes struct {
 //
 // https://developers.themoviedb.org/3/guest-sessions/get-gest-session-rated-tv-episodes
 func (c *Client) GetGuestSessionRatedTVEpisodes(id string, urlOptions map[string]string) (*GuestSessionRatedTVEpisodes, error) {
-	url := c.baseURL.JoinPath(guestSessionURL, id, "rated", "tv", "episodes")
+	url := c.baseURL.JoinPath(guestSessionPath, id, "rated", "tv", "episodes")
 	var guestSessionRatedTVEpisodes GuestSessionRatedTVEpisodes
 	if err := c.get(url, urlOptions, &guestSessionRatedTVEpisodes); err != nil {
 		return nil, err

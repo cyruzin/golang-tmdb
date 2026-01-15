@@ -37,7 +37,7 @@ type ConfigurationAPI struct {
 //
 // https://developers.themoviedb.org/3/configuration/get-api-configuration
 func (c *Client) GetConfigurationAPI() (*ConfigurationAPI, error) {
-	url := c.baseURL.JoinPath(configurationURL)
+	url := c.baseURL.JoinPath(configurationPath)
 	var configurationAPI ConfigurationAPI
 	if err := c.get(url, nil, &configurationAPI); err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ type ConfigurationCountries []struct {
 //
 // https://developers.themoviedb.org/3/configuration/get-countries
 func (c *Client) GetConfigurationCountries() (*ConfigurationCountries, error) {
-	url := c.baseURL.JoinPath(configurationURL, "countries")
+	url := c.baseURL.JoinPath(configurationPath, "countries")
 	var configurationCountries ConfigurationCountries
 	if err := c.get(url, nil, &configurationCountries); err != nil {
 		return nil, err
@@ -75,7 +75,7 @@ type ConfigurationJobs []struct {
 //
 // https://developers.themoviedb.org/3/configuration/get-jobs
 func (c *Client) GetConfigurationJobs() (*ConfigurationJobs, error) {
-	url := c.baseURL.JoinPath(configurationURL, "jobs")
+	url := c.baseURL.JoinPath(configurationPath, "jobs")
 	var configurationJobs ConfigurationJobs
 	if err := c.get(url, nil, &configurationJobs); err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ type ConfigurationLanguages []struct {
 //
 // https://developers.themoviedb.org/3/configuration/get-languages
 func (c *Client) GetConfigurationLanguages() (*ConfigurationLanguages, error) {
-	url := c.baseURL.JoinPath(configurationURL, "languages")
+	url := c.baseURL.JoinPath(configurationPath, "languages")
 	configurationLanguages := ConfigurationLanguages{}
 	if err := c.get(url, nil, &configurationLanguages); err != nil {
 		return nil, err
@@ -130,7 +130,7 @@ type ConfigurationPrimaryTranslations []string
 //
 // https://developers.themoviedb.org/3/configuration/get-primary-translations
 func (c *Client) GetConfigurationPrimaryTranslations() (*ConfigurationPrimaryTranslations, error) {
-	url := c.baseURL.JoinPath(configurationURL, "primary_translations")
+	url := c.baseURL.JoinPath(configurationPath, "primary_translations")
 	configurationPrimaryTranslations := ConfigurationPrimaryTranslations{}
 	if err := c.get(url, nil, &configurationPrimaryTranslations); err != nil {
 		return nil, err
@@ -150,7 +150,7 @@ type ConfigurationTimezones []struct {
 //
 // https://developers.themoviedb.org/3/configuration/get-timezones
 func (c *Client) GetConfigurationTimezones() (*ConfigurationTimezones, error) {
-	url := c.baseURL.JoinPath(configurationURL, "timezones")
+	url := c.baseURL.JoinPath(configurationPath, "timezones")
 	configurationTimeZones := ConfigurationTimezones{}
 	if err := c.get(url, nil, &configurationTimeZones); err != nil {
 		return nil, err

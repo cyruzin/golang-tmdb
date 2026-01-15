@@ -52,7 +52,7 @@ type TVEpisodeGroupsDetails struct {
 //
 // https://developers.themoviedb.org/3/tv-episode-groups/get-tv-episode-group-details
 func (c *Client) GetTVEpisodeGroupsDetails(id string, urlOptions map[string]string) (*TVEpisodeGroupsDetails, error) {
-	url := c.baseURL.JoinPath(tvURL, "episode_group", id)
+	url := c.baseURL.JoinPath(tvPath, "episode_group", id)
 	var tvEpisodeGroupDetails TVEpisodeGroupsDetails
 	if err := c.get(url, urlOptions, &tvEpisodeGroupDetails); err != nil {
 		return nil, err

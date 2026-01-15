@@ -71,7 +71,7 @@ type CreditsDetails struct {
 //
 // https://developers.themoviedb.org/3/credits/get-credit-details
 func (c *Client) GetCreditDetails(id string) (*CreditsDetails, error) {
-	url := c.baseURL.JoinPath(creditURL, id)
+	url := c.baseURL.JoinPath(creditPath, id)
 	var creditsDetails CreditsDetails
 	if err := c.get(url, nil, &creditsDetails); err != nil {
 		return nil, err

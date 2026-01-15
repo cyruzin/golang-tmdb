@@ -16,7 +16,7 @@ type NetworkDetails struct {
 //
 // https://developers.themoviedb.org/3/networks/get-network-details
 func (c *Client) GetNetworkDetails(id int) (*NetworkDetails, error) {
-	url := c.baseURL.JoinPath(networkURL, fmt.Sprintf("%d", id))
+	url := c.baseURL.JoinPath(networkPath, fmt.Sprintf("%d", id))
 	var networkDetails NetworkDetails
 	if err := c.get(url, nil, &networkDetails); err != nil {
 		return nil, err
@@ -37,7 +37,7 @@ type NetworkAlternativeNames struct {
 //
 // https://developers.themoviedb.org/3/networks/get-network-alternative-names
 func (c *Client) GetNetworkAlternativeNames(id int) (*NetworkAlternativeNames, error) {
-	url := c.baseURL.JoinPath(networkURL, fmt.Sprintf("%d", id), "alternative_names")
+	url := c.baseURL.JoinPath(networkPath, fmt.Sprintf("%d", id), "alternative_names")
 	var networkAltenativeNames NetworkAlternativeNames
 	if err := c.get(url, nil, &networkAltenativeNames); err != nil {
 		return nil, err
@@ -70,7 +70,7 @@ type NetworkImages struct {
 //
 // https://developers.themoviedb.org/3/networks/get-network-images
 func (c *Client) GetNetworkImages(id int) (*NetworkImages, error) {
-	url := c.baseURL.JoinPath(networkURL, fmt.Sprintf("%d", id), "images")
+	url := c.baseURL.JoinPath(networkPath, fmt.Sprintf("%d", id), "images")
 	networkImages := NetworkImages{}
 	if err := c.get(url, nil, &networkImages); err != nil {
 		return nil, err

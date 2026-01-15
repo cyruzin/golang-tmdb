@@ -133,7 +133,7 @@ type MovieWatchProvidersAppend struct {
 //
 // https://developers.themoviedb.org/3/movies
 func (c *Client) GetMovieDetails(id int, urlOptions map[string]string) (*MovieDetails, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id))
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id))
 	var movieDetails MovieDetails
 	if err := c.get(url, urlOptions, &movieDetails); err != nil {
 		return nil, err
@@ -159,7 +159,7 @@ type MovieAccountStates struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-account-states
 func (c *Client) GetMovieAccountStates(id int, urlOptions map[string]string) (*MovieAccountStates, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "account_states")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "account_states")
 	var movieAccountStates MovieAccountStates
 	if err := c.get(url, urlOptions, &movieAccountStates); err != nil {
 		return nil, err
@@ -177,7 +177,7 @@ type MovieAlternativeTitles struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-alternative-titles
 func (c *Client) GetMovieAlternativeTitles(id int, urlOptions map[string]string) (*MovieAlternativeTitles, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "alternative_titles")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "alternative_titles")
 	var movieAlternativeTitles MovieAlternativeTitles
 	if err := c.get(url, urlOptions, &movieAlternativeTitles); err != nil {
 		return nil, err
@@ -208,7 +208,7 @@ type MovieChanges struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-changes
 func (c *Client) GetMovieChanges(id int, urlOptions map[string]string) (*MovieChanges, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "changes")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "changes")
 	var movieChanges MovieChanges
 	if err := c.get(url, urlOptions, &movieChanges); err != nil {
 		return nil, err
@@ -252,7 +252,7 @@ type MovieCredits struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-credits
 func (c *Client) GetMovieCredits(id int, urlOptions map[string]string) (*MovieCredits, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "credits")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "credits")
 	var movieCredits MovieCredits
 	if err := c.get(url, urlOptions, &movieCredits); err != nil {
 		return nil, err
@@ -280,7 +280,7 @@ type MovieExternalIDs struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-external-ids
 func (c *Client) GetMovieExternalIDs(id int, urlOptions map[string]string) (*MovieExternalIDs, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "external_ids")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "external_ids")
 	var movieExternalIDs MovieExternalIDs
 	if err := c.get(url, urlOptions, &movieExternalIDs); err != nil {
 		return nil, err
@@ -311,7 +311,7 @@ type MovieImages struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-images
 func (c *Client) GetMovieImages(id int, urlOptions map[string]string) (*MovieImages, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "images")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "images")
 	var movieImages MovieImages
 	if err := c.get(url, urlOptions, &movieImages); err != nil {
 		return nil, err
@@ -332,7 +332,7 @@ type MovieKeywords struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-keywords
 func (c *Client) GetMovieKeywords(id int) (*MovieKeywords, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "keywords")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "keywords")
 	var movieKeywords MovieKeywords
 	if err := c.get(url, nil, &movieKeywords); err != nil {
 		return nil, err
@@ -350,7 +350,7 @@ type MovieReleaseDates struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-release-dates
 func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "release_dates")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "release_dates")
 	var movieReleaseDates MovieReleaseDates
 	if err := c.get(url, nil, &movieReleaseDates); err != nil {
 		return nil, err
@@ -362,7 +362,7 @@ func (c *Client) GetMovieReleaseDates(id int) (*MovieReleaseDates, error) {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-videos
 func (c *Client) GetMovieVideos(id int, urlOptions map[string]string) (*VideoResults, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "videos")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "videos")
 	var movieVideos VideoResults
 	if err := c.get(url, urlOptions, &movieVideos); err != nil {
 		return nil, err
@@ -374,7 +374,7 @@ func (c *Client) GetMovieVideos(id int, urlOptions map[string]string) (*VideoRes
 //
 // https://developers.themoviedb.org/3/movies/get-movie-watch-providers
 func (c *Client) GetMovieWatchProviders(id int, urlOptions map[string]string) (*WatchProviderResults, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "watch", "providers")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "watch", "providers")
 	var movieWatchProviders WatchProviderResults
 	if err := c.get(url, urlOptions, &movieWatchProviders); err != nil {
 		return nil, err
@@ -392,7 +392,7 @@ type MovieTranslations struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-translations
 func (c *Client) GetMovieTranslations(id int, urlOptions map[string]string) (*MovieTranslations, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "translations")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "translations")
 	var movieTranslations MovieTranslations
 	if err := c.get(url, urlOptions, &movieTranslations); err != nil {
 		return nil, err
@@ -410,7 +410,7 @@ type MovieRecommendations struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-recommendations
 func (c *Client) GetMovieRecommendations(id int, urlOptions map[string]string) (*MovieRecommendations, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "recommendations")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "recommendations")
 	var movieRecommendations MovieRecommendations
 	if err := c.get(url, urlOptions, &movieRecommendations); err != nil {
 		return nil, err
@@ -430,7 +430,7 @@ type MovieSimilar struct {
 //
 // https://developers.themoviedb.org/3/movies/get-similar-movies
 func (c *Client) GetMovieSimilar(id int, urlOptions map[string]string) (*MovieSimilar, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "similar")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "similar")
 	var movieSimilar MovieSimilar
 	if err := c.get(url, urlOptions, &movieSimilar); err != nil {
 		return nil, err
@@ -449,7 +449,7 @@ type MovieReviews struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-reviews
 func (c *Client) GetMovieReviews(id int, urlOptions map[string]string) (*MovieReviews, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "reviews")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "reviews")
 	var movieReviews MovieReviews
 	if err := c.get(url, urlOptions, &movieReviews); err != nil {
 		return nil, err
@@ -468,7 +468,7 @@ type MovieLists struct {
 //
 // https://developers.themoviedb.org/3/movies/get-movie-lists
 func (c *Client) GetMovieLists(id int, urlOptions map[string]string) (*MovieLists, error) {
-	url := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "lists")
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "lists")
 	var movieLists MovieLists
 	if err := c.get(url, urlOptions, &movieLists); err != nil {
 		return nil, err
@@ -487,7 +487,7 @@ type MovieLatest struct {
 //
 // https://developers.themoviedb.org/3/movies/get-latest-movie
 func (c *Client) GetMovieLatest(urlOptions map[string]string) (*MovieLatest, error) {
-	url := c.baseURL.JoinPath(movieURL, "latest")
+	url := c.baseURL.JoinPath(moviePath, "latest")
 	var movieLatest MovieLatest
 	if err := c.get(url, urlOptions, &movieLatest); err != nil {
 		return nil, err
@@ -516,7 +516,7 @@ type MovieNowPlaying struct {
 //
 // https://developers.themoviedb.org/3/movies/get-now-playing
 func (c *Client) GetMovieNowPlaying(urlOptions map[string]string) (*MovieNowPlaying, error) {
-	url := c.baseURL.JoinPath(movieURL, "now_playing")
+	url := c.baseURL.JoinPath(moviePath, "now_playing")
 	var movieNowPlaying MovieNowPlaying
 	if err := c.get(url, urlOptions, &movieNowPlaying); err != nil {
 		return nil, err
@@ -536,7 +536,7 @@ type MoviePopular struct {
 //
 // https://developers.themoviedb.org/3/movies/get-popular-movies
 func (c *Client) GetMoviePopular(urlOptions map[string]string) (*MoviePopular, error) {
-	url := c.baseURL.JoinPath(movieURL, "popular")
+	url := c.baseURL.JoinPath(moviePath, "popular")
 	var moviePopular MoviePopular
 	if err := c.get(url, urlOptions, &moviePopular); err != nil {
 		return nil, err
@@ -553,7 +553,7 @@ type MovieTopRated struct {
 //
 // https://developers.themoviedb.org/3/movies/get-top-rated-movies
 func (c *Client) GetMovieTopRated(urlOptions map[string]string) (*MovieTopRated, error) {
-	url := c.baseURL.JoinPath(movieURL, "top_rated")
+	url := c.baseURL.JoinPath(moviePath, "top_rated")
 	var movieTopRated MovieTopRated
 	if err := c.get(url, urlOptions, &movieTopRated); err != nil {
 		return nil, err
@@ -577,7 +577,7 @@ type MovieUpcoming struct {
 //
 // https://developers.themoviedb.org/3/movies/get-upcoming
 func (c *Client) GetMovieUpcoming(urlOptions map[string]string) (*MovieUpcoming, error) {
-	url := c.baseURL.JoinPath(movieURL, "upcoming")
+	url := c.baseURL.JoinPath(moviePath, "upcoming")
 	var movieUpcoming MovieUpcoming
 	if err := c.get(url, urlOptions, &movieUpcoming); err != nil {
 		return nil, err
@@ -594,23 +594,16 @@ func (c *Client) GetMovieUpcoming(urlOptions map[string]string) (*MovieUpcoming,
 //
 // https://developers.themoviedb.org/3/movies/rate-movie
 func (c *Client) PostMovieRating(id int, rating float32, urlOptions map[string]string) (*Response, error) {
-	u := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "rating")
-	q := u.Query()
-	q.Add("session_id", c.sessionID)
-	for key, value := range urlOptions {
-		q.Add(key, value)
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "rating")
+	if urlOptions == nil {
+		urlOptions = map[string]string{}
 	}
-	u.RawQuery = q.Encode()
+	urlOptions["session_id"] = c.sessionID
 	body := struct {
 		Value float32 `json:"value"`
 	}{Value: rating}
-	response := Response{}
-	if err := c.request(
-		u.String(),
-		body,
-		http.MethodPost,
-		&response,
-	); err != nil {
+	var response Response
+	if err := c.request(url, http.MethodPost, urlOptions, body, &response); err != nil {
 		return nil, err
 	}
 	return &response, nil
@@ -625,20 +618,13 @@ func (c *Client) PostMovieRating(id int, rating float32, urlOptions map[string]s
 //
 // https://developers.themoviedb.org/3/movies/delete-movie-rating
 func (c *Client) DeleteMovieRating(id int, urlOptions map[string]string) (*Response, error) {
-	u := c.baseURL.JoinPath(movieURL, fmt.Sprintf("%d", id), "rating")
-	q := u.Query()
-	q.Add("session_id", c.sessionID)
-	for key, value := range urlOptions {
-		q.Add(key, value)
+	url := c.baseURL.JoinPath(moviePath, fmt.Sprintf("%d", id), "rating")
+	if urlOptions == nil {
+		urlOptions = map[string]string{}
 	}
-	u.RawQuery = q.Encode()
-	response := Response{}
-	if err := c.request(
-		u.String(),
-		[]byte{},
-		http.MethodDelete,
-		&response,
-	); err != nil {
+	urlOptions["session_id"] = c.sessionID
+	var response Response
+	if err := c.request(url, http.MethodDelete, urlOptions, nil, &response); err != nil {
 		return nil, err
 	}
 	return &response, nil
