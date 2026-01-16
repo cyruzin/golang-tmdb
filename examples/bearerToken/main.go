@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB bearer token authentication.
 package main
 
 import (
@@ -8,7 +9,7 @@ import (
 )
 
 func main() {
-	tmdbClient, err := tmdb.InitV4(os.Getenv("BearerToken"))
+	tmdbClient, err := tmdb.New(tmdb.WithBearerToken(os.Getenv("BearerToken")))
 
 	if err != nil {
 		fmt.Println(err)

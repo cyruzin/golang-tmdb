@@ -9,13 +9,13 @@ type CompanyDetails struct {
 	Description   string `json:"description"`
 	Headquarters  string `json:"headquarters"`
 	Homepage      string `json:"homepage"`
-	ID            int64  `json:"id"`
+	ID            int    `json:"id"`
 	LogoPath      string `json:"logo_path"`
 	Name          string `json:"name"`
 	OriginCountry string `json:"origin_country"`
 	ParentCompany struct {
 		Name     string `json:"name"`
-		ID       int64  `json:"id"`
+		ID       int    `json:"id"`
 		LogoPath string `json:"logo_path"`
 	} `json:"parent_company"`
 }
@@ -23,18 +23,10 @@ type CompanyDetails struct {
 // GetCompanyDetails get a companies details by id.
 //
 // https://developers.themoviedb.org/3/companies/get-company-details
-func (c *Client) GetCompanyDetails(
-	id int,
-) (*CompanyDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s",
-		baseURL,
-		companyURL,
-		id,
-		c.apiKey,
-	)
-	companyDetails := CompanyDetails{}
-	if err := c.get(tmdbURL, &companyDetails); err != nil {
+func (c *Client) GetCompanyDetails(id int) (*CompanyDetails, error) {
+	url := c.baseURL.JoinPath(companyPath, fmt.Sprintf("%d", id))
+	var companyDetails CompanyDetails
+	if err := c.get(url, nil, &companyDetails); err != nil {
 		return nil, err
 	}
 	return &companyDetails, nil
@@ -43,25 +35,17 @@ func (c *Client) GetCompanyDetails(
 // CompanyAlternativeNames type is a struct for alternative
 // names JSON response.
 type CompanyAlternativeNames struct {
-	ID int64 `json:"id"`
+	ID int `json:"id"`
 	*CompanyAlternativeNamesResult
 }
 
 // GetCompanyAlternativeNames get the alternative names of a company.
 //
 // https://developers.themoviedb.org/3/companies/get-company-alternative-names
-func (c *Client) GetCompanyAlternativeNames(
-	id int,
-) (*CompanyAlternativeNames, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/alternative_names?api_key=%s",
-		baseURL,
-		companyURL,
-		id,
-		c.apiKey,
-	)
-	companyAlternativeNames := CompanyAlternativeNames{}
-	if err := c.get(tmdbURL, &companyAlternativeNames); err != nil {
+func (c *Client) GetCompanyAlternativeNames(id int) (*CompanyAlternativeNames, error) {
+	url := c.baseURL.JoinPath(companyPath, fmt.Sprintf("%d", id), "alternative_names")
+	var companyAlternativeNames CompanyAlternativeNames
+	if err := c.get(url, nil, &companyAlternativeNames); err != nil {
 		return nil, err
 	}
 	return &companyAlternativeNames, nil
@@ -76,7 +60,7 @@ type CompanyImage struct {
 
 // CompanyImages type is a struct for images JSON response.
 type CompanyImages struct {
-	ID    int64          `json:"id"`
+	ID    int            `json:"id"`
 	Logos []CompanyImage `json:"logos"`
 }
 
@@ -91,18 +75,10 @@ type CompanyImages struct {
 // call them as a PNG.
 //
 // https://developers.themoviedb.org/3/companies/get-company-images
-func (c *Client) GetCompanyImages(
-	id int,
-) (*CompanyImages, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s",
-		baseURL,
-		companyURL,
-		id,
-		c.apiKey,
-	)
-	companyImages := CompanyImages{}
-	if err := c.get(tmdbURL, &companyImages); err != nil {
+func (c *Client) GetCompanyImages(id int) (*CompanyImages, error) {
+	url := c.baseURL.JoinPath(companyPath, fmt.Sprintf("%d", id), "images")
+	var companyImages CompanyImages
+	if err := c.get(url, nil, &companyImages); err != nil {
 		return nil, err
 	}
 	return &companyImages, nil

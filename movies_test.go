@@ -12,7 +12,7 @@ const (
 
 func (suite *TMBDTestSuite) TestGetMovieDetails() {
 	bumblebee, err := suite.client.GetMovieDetails(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal("Bumblebee", bumblebee.Title)
 	suite.Equal([]string{"US"}, bumblebee.OriginCountry)
 }
@@ -26,13 +26,13 @@ func (suite *TMBDTestSuite) TestGetMovieDetailsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	jackreacher, err := suite.client.GetMovieDetails(jackReacherID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal("Jack Reacher: O Último Tiro", jackreacher.Title)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAlternativeTitles() {
 	bumblebee, err := suite.client.GetMovieAlternativeTitles(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	for _, v := range bumblebee.Titles {
 		if v.Iso3166_1 == "US" {
 			suite.NotNil(v.Title)
@@ -49,13 +49,13 @@ func (suite *TMBDTestSuite) TestGetMovieAlternativeTitlesWithOptions() {
 	options := make(map[string]string)
 	options["country"] = "RU"
 	bumblebee, err := suite.client.GetMovieAlternativeTitles(bumblebeeID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieChanges() {
 	bumblebee, err := suite.client.GetMovieChanges(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	for _, v := range bumblebee.Changes {
 		for _, v := range v.Items {
 			suite.NotNil(v.ID)
@@ -74,7 +74,7 @@ func (suite *TMBDTestSuite) TestGetMovieChangesWithOptions() {
 	options["end_date"] = "2019-01-12"
 	options["page"] = "1"
 	bumblebee, err := suite.client.GetMovieChanges(bumblebeeID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	for _, v := range bumblebee.Changes {
 		for _, v := range v.Items {
 			suite.NotNil(v.ID)
@@ -84,8 +84,8 @@ func (suite *TMBDTestSuite) TestGetMovieChangesWithOptions() {
 
 func (suite *TMBDTestSuite) TestGetMovieCredits() {
 	bumblebee, err := suite.client.GetMovieCredits(bumblebeeID, nil)
-	suite.Nil(err)
-	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+	suite.NoError(err)
+	suite.Equal(bumblebeeID, bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieCreditsFail() {
@@ -95,7 +95,7 @@ func (suite *TMBDTestSuite) TestGetMovieCreditsFail() {
 
 func (suite *TMBDTestSuite) TestGetMovieExternalIDs() {
 	bumblebee, err := suite.client.GetMovieExternalIDs(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal("bumblebeemovie", bumblebee.FacebookID)
 }
 
@@ -106,7 +106,7 @@ func (suite *TMBDTestSuite) TestGetMovieExternalIDsFail() {
 
 func (suite *TMBDTestSuite) TestGetMovieImages() {
 	bumblebee, err := suite.client.GetMovieImages(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(bumblebee.Backdrops[0].FilePath)
 }
 
@@ -119,13 +119,13 @@ func (suite *TMBDTestSuite) TestGetMovieImagesWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	bumblebee, err := suite.client.GetMovieImages(bumblebeeID, options)
-	suite.Nil(err)
-	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+	suite.NoError(err)
+	suite.Equal(bumblebeeID, bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieKeywords() {
 	bumblebee, err := suite.client.GetMovieKeywords(bumblebeeID)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal("technology", bumblebee.Keywords[0].Name)
 }
 
@@ -136,7 +136,7 @@ func (suite *TMBDTestSuite) TestGetMovieKeywordsFail() {
 
 func (suite *TMBDTestSuite) TestGetMovieReleaseDates() {
 	bumblebee, err := suite.client.GetMovieReleaseDates(bumblebeeID)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotEmpty(bumblebee.Results[0].Iso3166_1)
 }
 
@@ -149,25 +149,27 @@ func (suite *TMBDTestSuite) TestGetMovieAccountStates() {
 	options := make(map[string]string)
 	options["session_id"] = sessionID
 	_, err := suite.client.GetMovieAccountStates(jackReacherID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieAccountStatesFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	options := make(map[string]string)
 	options["session_id"] = "koQubnkaZ"
 	_, err := suite.client.GetMovieAccountStates(jackReacherID, options)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieVideos() {
 	bumblebee, err := suite.client.GetMovieVideos(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(bumblebee.Results[0].ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieVideosFail() {
 	_, err := suite.client.GetMovieVideos(0, nil)
+	suite.Error(err)
 	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
@@ -175,18 +177,19 @@ func (suite *TMBDTestSuite) TestGetMovieVideosWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	bumblebee, err := suite.client.GetMovieVideos(bumblebeeID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(bumblebee.Results[0].ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTranslations() {
 	bumblebee, err := suite.client.GetMovieTranslations(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotEmpty(bumblebee.Translations[0].Iso3166_1)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTranslationsFail() {
 	_, err := suite.client.GetMovieTranslations(0, nil)
+	suite.Error(err)
 	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
@@ -194,18 +197,19 @@ func (suite *TMBDTestSuite) TestGetMovieTranslationsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	bumblebee, err := suite.client.GetMovieTranslations(bumblebeeID, options)
-	suite.Nil(err)
-	suite.Equal(int64(bumblebeeID), bumblebee.ID)
+	suite.NoError(err)
+	suite.Equal(bumblebeeID, bumblebee.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendations() {
 	bumblebee, err := suite.client.GetMovieRecommendations(bumblebeeID, nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), bumblebee.Page)
+	suite.NoError(err)
+	suite.Equal(1, bumblebee.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieRecommendationsFail() {
 	_, err := suite.client.GetMovieRecommendations(0, nil)
+	suite.Error(err)
 	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
@@ -213,29 +217,31 @@ func (suite *TMBDTestSuite) TestGetMovieRecommendationsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	jackreacher, err := suite.client.GetMovieRecommendations(jackReacherID, options)
-	suite.Nil(err)
-	suite.Equal(int64(1), jackreacher.Page)
+	suite.NoError(err)
+	suite.Equal(1, jackreacher.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieWatchProviders() {
 	bumblebee, err := suite.client.GetMovieWatchProviders(bumblebeeID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal("https://www.themoviedb.org/movie/424783-bumblebee/watch?locale=AR", bumblebee.Results["AR"].Link)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieWatchProvidersFail() {
 	_, err := suite.client.GetMovieWatchProviders(0, nil)
+	suite.Error(err)
 	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
 func (suite *TMBDTestSuite) TestGetMovieSimilar() {
 	bumblebee, err := suite.client.GetMovieSimilar(bumblebeeID, nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), bumblebee.Page)
+	suite.NoError(err)
+	suite.Equal(1, bumblebee.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieSimilarFail() {
 	_, err := suite.client.GetMovieSimilar(0, nil)
+	suite.Error(err)
 	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
@@ -243,18 +249,19 @@ func (suite *TMBDTestSuite) TestGetMovieSimilarWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	jackreacher, err := suite.client.GetMovieSimilar(jackReacherID, options)
-	suite.Nil(err)
-	suite.Equal(int64(1), jackreacher.Page)
+	suite.NoError(err)
+	suite.Equal(1, jackreacher.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReviews() {
 	aquaman, err := suite.client.GetMovieReviews(aquamanID, nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.NoError(err)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieReviewsFail() {
 	_, err := suite.client.GetMovieReviews(0, nil)
+	suite.Error(err)
 	suite.Equal("code: 6 | success: false | message: Invalid id: The pre-requisite id is invalid or not found.", err.Error())
 }
 
@@ -262,18 +269,19 @@ func (suite *TMBDTestSuite) TestGetMovieReviewsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	aquaman, err := suite.client.GetMovieReviews(aquamanID, options)
-	suite.Nil(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.NoError(err)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLists() {
 	aquaman, err := suite.client.GetMovieLists(aquamanID, nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.NoError(err)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieListsFail() {
 	_, err := suite.client.GetMovieLists(0, nil)
+	suite.Error(err)
 	suite.NotNil(err)
 }
 
@@ -281,19 +289,20 @@ func (suite *TMBDTestSuite) TestGetMovieListsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	aquaman, err := suite.client.GetMovieLists(aquamanID, options)
-	suite.Nil(err)
-	suite.Equal(int64(1), aquaman.Page)
+	suite.NoError(err)
+	suite.Equal(1, aquaman.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLatest() {
 	movie, err := suite.client.GetMovieLatest(nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(movie.VoteCount)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieLatestFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetMovieLatest(nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -301,19 +310,20 @@ func (suite *TMBDTestSuite) TestGetMovieLatestWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	movie, err := suite.client.GetMovieLatest(options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(movie.VoteCount)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieNowPlaying() {
 	movies, err := suite.client.GetMovieNowPlaying(nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieNowPlayingFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetMovieNowPlaying(nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -321,19 +331,20 @@ func (suite *TMBDTestSuite) TestGetMovieNowPlayingWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMovieNowPlaying(options)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMoviePopular() {
 	movies, err := suite.client.GetMoviePopular(nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMoviePopularFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetMoviePopular(nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -341,19 +352,20 @@ func (suite *TMBDTestSuite) TestGetMoviePopularWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMoviePopular(options)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTopRated() {
 	movies, err := suite.client.GetMovieTopRated(nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieTopRatedFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetMovieTopRated(nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -361,19 +373,20 @@ func (suite *TMBDTestSuite) TestGetMovieTopRatedWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMovieTopRated(options)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieUpcoming() {
 	movies, err := suite.client.GetMovieUpcoming(nil)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestGetMovieUpcomingFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetMovieUpcoming(nil)
+	suite.Error(err)
 	suite.Equal("code: 7 | success: false | message: Invalid API key: You must be granted a valid key.", err.Error())
 }
 
@@ -381,15 +394,14 @@ func (suite *TMBDTestSuite) TestGetMovieUpcomingWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "en-US"
 	movies, err := suite.client.GetMovieUpcoming(options)
-	suite.Nil(err)
-	suite.Equal(int64(1), movies.Page)
+	suite.NoError(err)
+	suite.Equal(1, movies.Page)
 }
 
 func (suite *TMBDTestSuite) TestPostMovieRating() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.PostMovieRating(aquamanID, 10, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(response.StatusCode)
 }
 
@@ -400,10 +412,9 @@ func (suite *TMBDTestSuite) TestPostMovieRatingFail() {
 }
 
 func (suite *TMBDTestSuite) TestDeleteMovieRating() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	response, err := suite.client.DeleteMovieRating(aquamanID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.Equal(13, response.StatusCode)
 }
 
@@ -418,9 +429,8 @@ func BenchmarkGetMovieDetails(b *testing.B) {
 	tmdbClient.apiKey = apiKey
 
 	b.ReportAllocs()
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		_, err := tmdbClient.GetMovieDetails(500, nil)
 		if err != nil {
 			b.Error(err)

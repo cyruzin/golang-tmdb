@@ -7,7 +7,7 @@ type PersonDetails struct {
 	Birthday           string   `json:"birthday"`
 	KnownForDepartment string   `json:"known_for_department"`
 	Deathday           string   `json:"deathday"`
-	ID                 int64    `json:"id"`
+	ID                 int      `json:"id"`
 	Name               string   `json:"name"`
 	AlsoKnownAs        []string `json:"also_known_as"`
 	Gender             int      `json:"gender"`
@@ -78,17 +78,9 @@ func (c *Client) GetPersonDetails(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personDetails := PersonDetails{}
-	if err := c.get(tmdbURL, &personDetails); err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id))
+	var personDetails PersonDetails
+	if err := c.get(url, urlOptions, &personDetails); err != nil {
 		return nil, err
 	}
 	return &personDetails, nil
@@ -120,18 +112,9 @@ func (c *Client) GetPersonChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonChanges, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/changes?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personChanges := PersonChanges{}
-	err := c.get(tmdbURL, &personChanges)
-	if err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "changes")
+	var personChanges PersonChanges
+	if err := c.get(url, urlOptions, &personChanges); err != nil {
 		return nil, err
 	}
 	return &personChanges, nil
@@ -143,12 +126,12 @@ type PersonMovieCredits struct {
 		Character        string  `json:"character"`
 		CreditID         string  `json:"credit_id"`
 		PosterPath       string  `json:"poster_path"`
-		ID               int64   `json:"id"`
+		ID               int     `json:"id"`
 		Order            int     `json:"order"`
 		Video            bool    `json:"video"`
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
+		GenreIDs         []int   `json:"genre_ids"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
 		Popularity       float32 `json:"popularity"`
@@ -158,7 +141,7 @@ type PersonMovieCredits struct {
 		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
-		ID               int64   `json:"id"`
+		ID               int     `json:"id"`
 		Department       string  `json:"department"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
@@ -168,14 +151,14 @@ type PersonMovieCredits struct {
 		ReleaseDate      string  `json:"release_date"`
 		Title            string  `json:"title"`
 		Popularity       float32 `json:"popularity"`
-		GenreIDs         []int64 `json:"genre_ids"`
+		GenreIDs         []int   `json:"genre_ids"`
 		BackdropPath     string  `json:"backdrop_path"`
 		Adult            bool    `json:"adult"`
 		PosterPath       string  `json:"poster_path"`
 		CreditID         string  `json:"credit_id"`
 		VoteMetrics
 	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 }
 
 // GetPersonMovieCredits get the movie credits for a person.
@@ -185,17 +168,9 @@ func (c *Client) GetPersonMovieCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonMovieCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/movie_credits?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personMovieCredits := PersonMovieCredits{}
-	if err := c.get(tmdbURL, &personMovieCredits); err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "movie_credits")
+	var personMovieCredits PersonMovieCredits
+	if err := c.get(url, urlOptions, &personMovieCredits); err != nil {
 		return nil, err
 	}
 	return &personMovieCredits, nil
@@ -206,8 +181,8 @@ type PersonTVCredits struct {
 	Cast []struct {
 		CreditID         string   `json:"credit_id"`
 		OriginalName     string   `json:"original_name"`
-		ID               int64    `json:"id"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		ID               int      `json:"id"`
+		GenreIDs         []int    `json:"genre_ids"`
 		Character        string   `json:"character"`
 		Name             string   `json:"name"`
 		PosterPath       string   `json:"poster_path"`
@@ -221,7 +196,7 @@ type PersonTVCredits struct {
 		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		Department       string   `json:"department"`
 		OriginalLanguage string   `json:"original_language"`
 		EpisodeCount     int      `json:"episode_count"`
@@ -229,7 +204,7 @@ type PersonTVCredits struct {
 		Overview         string   `json:"overview"`
 		OriginCountry    []string `json:"origin_country"`
 		OriginalName     string   `json:"original_name"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		GenreIDs         []int    `json:"genre_ids"`
 		Name             string   `json:"name"`
 		FirstAirDate     string   `json:"first_air_date"`
 		BackdropPath     string   `json:"backdrop_path"`
@@ -238,7 +213,7 @@ type PersonTVCredits struct {
 		CreditID         string   `json:"credit_id"`
 		VoteMetrics
 	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 }
 
 // GetPersonTVCredits get the TV show credits for a person.
@@ -248,17 +223,9 @@ func (c *Client) GetPersonTVCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonTVCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/tv_credits?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personTVCredits := PersonTVCredits{}
-	if err := c.get(tmdbURL, &personTVCredits); err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "tv_credits")
+	var personTVCredits PersonTVCredits
+	if err := c.get(url, urlOptions, &personTVCredits); err != nil {
 		return nil, err
 	}
 	return &personTVCredits, nil
@@ -267,7 +234,7 @@ func (c *Client) GetPersonTVCredits(
 // PersonCombinedCredits type is a struct for combined credits JSON response.
 type PersonCombinedCredits struct {
 	Cast []struct {
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		Character        string   `json:"character"`
 		OriginalTitle    string   `json:"original_title"`
 		Overview         string   `json:"overview"`
@@ -277,7 +244,7 @@ type PersonCombinedCredits struct {
 		Title            string   `json:"title"`
 		Popularity       float32  `json:"popularity"`
 		OriginalLanguage string   `json:"original_language"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		GenreIDs         []int    `json:"genre_ids"`
 		BackdropPath     string   `json:"backdrop_path"`
 		Adult            bool     `json:"adult"`
 		PosterPath       string   `json:"poster_path"`
@@ -290,7 +257,7 @@ type PersonCombinedCredits struct {
 		VoteMetrics
 	} `json:"cast"`
 	Crew []struct {
-		ID               int64   `json:"id"`
+		ID               int     `json:"id"`
 		Department       string  `json:"department"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
@@ -302,13 +269,13 @@ type PersonCombinedCredits struct {
 		BackdropPath     string  `json:"backdrop_path"`
 		Title            string  `json:"title"`
 		Popularity       float32 `json:"popularity"`
-		GenreIDs         []int64 `json:"genre_ids"`
+		GenreIDs         []int   `json:"genre_ids"`
 		Adult            bool    `json:"adult"`
 		ReleaseDate      string  `json:"release_date"`
 		CreditID         string  `json:"credit_id"`
 		VoteMetrics
 	} `json:"crew"`
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 }
 
 // GetPersonCombinedCredits get the movie and TV credits together in a single response.
@@ -318,17 +285,9 @@ func (c *Client) GetPersonCombinedCredits(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonCombinedCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/combined_credits?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personCombinedCredits := PersonCombinedCredits{}
-	if err := c.get(tmdbURL, &personCombinedCredits); err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "combined_credits")
+	var personCombinedCredits PersonCombinedCredits
+	if err := c.get(url, urlOptions, &personCombinedCredits); err != nil {
 		return nil, err
 	}
 	return &personCombinedCredits, nil
@@ -336,10 +295,10 @@ func (c *Client) GetPersonCombinedCredits(
 
 // PersonExternalIDs type is a struct for external ids JSON response.
 type PersonExternalIDs struct {
-	ID          int64  `json:"id,omitempty"`
+	ID          int    `json:"id,omitempty"`
 	TwitterID   string `json:"twitter_id"`
 	FacebookID  string `json:"facebook_id"`
-	TvrageID    int64  `json:"tvrage_id"`
+	TvrageID    int    `json:"tvrage_id"`
 	InstagramID string `json:"instagram_id"`
 	FreebaseMid string `json:"freebase_mid"`
 	IMDbID      string `json:"imdb_id"`
@@ -357,20 +316,12 @@ func (c *Client) GetPersonExternalIDs(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonExternalIDs, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/external_ids?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personExternalIDS := PersonExternalIDs{}
-	if err := c.get(tmdbURL, &personExternalIDS); err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "external_ids")
+	var personExternalIDs PersonExternalIDs
+	if err := c.get(url, urlOptions, &personExternalIDs); err != nil {
 		return nil, err
 	}
-	return &personExternalIDS, nil
+	return &personExternalIDs, nil
 }
 
 // PersonImage type is a struct for a single image.
@@ -391,15 +342,9 @@ type PersonImages struct {
 func (c *Client) GetPersonImages(
 	id int,
 ) (*PersonImages, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-	)
-	personImages := PersonImages{}
-	if err := c.get(tmdbURL, &personImages); err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "images")
+	var personImages PersonImages
+	if err := c.get(url, nil, &personImages); err != nil {
 		return nil, err
 	}
 	return &personImages, nil
@@ -408,7 +353,7 @@ func (c *Client) GetPersonImages(
 // PersonTranslations type is a struct for translations JSON response.
 type PersonTranslations struct {
 	Translations []Translation `json:"translations"`
-	ID           int64         `json:"id,omitempty"`
+	ID           int           `json:"id,omitempty"`
 }
 
 // GetPersonTranslations get a list of translations that have been created for a person.
@@ -418,17 +363,9 @@ func (c *Client) GetPersonTranslations(
 	id int,
 	urlOptions map[string]string,
 ) (*PersonTranslations, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/translations?api_key=%s%s",
-		baseURL,
-		personURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	personTranslations := PersonTranslations{}
-	if err := c.get(tmdbURL, &personTranslations); err != nil {
+	url := c.baseURL.JoinPath(personPath, fmt.Sprintf("%d", id), "translations")
+	var personTranslations PersonTranslations
+	if err := c.get(url, urlOptions, &personTranslations); err != nil {
 		return nil, err
 	}
 	return &personTranslations, nil
@@ -438,7 +375,7 @@ func (c *Client) GetPersonTranslations(
 type PersonLatest struct {
 	Birthday     string   `json:"birthday"`
 	Deathday     string   `json:"deathday"`
-	ID           int64    `json:"id"`
+	ID           int      `json:"id"`
 	Name         string   `json:"name"`
 	AlsoKnownAs  []string `json:"also_known_as"`
 	Gender       int      `json:"gender"`
@@ -458,16 +395,9 @@ type PersonLatest struct {
 func (c *Client) GetPersonLatest(
 	urlOptions map[string]string,
 ) (*PersonLatest, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%slatest?api_key=%s%s",
-		baseURL,
-		personURL,
-		c.apiKey,
-		options,
-	)
-	personLatest := PersonLatest{}
-	if err := c.get(tmdbURL, &personLatest); err != nil {
+	url := c.baseURL.JoinPath(personPath, "latest")
+	var personLatest PersonLatest
+	if err := c.get(url, urlOptions, &personLatest); err != nil {
 		return nil, err
 	}
 	return &personLatest, nil
@@ -478,13 +408,13 @@ type PersonPopular struct {
 	PaginatedResultsMeta
 	Results []struct {
 		Popularity  float32 `json:"popularity"`
-		ID          int64   `json:"id"`
+		ID          int     `json:"id"`
 		ProfilePath string  `json:"profile_path"`
 		Name        string  `json:"name"`
 		KnownFor    []struct {
 			OriginalTitle    string   `json:"original_title,omitempty"`
 			OriginalName     string   `json:"original_name,omitempty"`
-			ID               int64    `json:"id"`
+			ID               int      `json:"id"`
 			MediaType        string   `json:"media_type"`
 			Name             string   `json:"name,omitempty"`
 			Title            string   `json:"title,omitempty"`
@@ -492,7 +422,7 @@ type PersonPopular struct {
 			FirstAirDate     string   `json:"first_air_date,omitempty"`
 			ReleaseDate      string   `json:"release_date,omitempty"`
 			Popularity       float32  `json:"popularity"`
-			GenreIDs         []int64  `json:"genre_ids"`
+			GenreIDs         []int    `json:"genre_ids"`
 			OriginalLanguage string   `json:"original_language"`
 			BackdropPath     string   `json:"backdrop_path"`
 			Overview         string   `json:"overview"`
@@ -510,16 +440,9 @@ type PersonPopular struct {
 func (c *Client) GetPersonPopular(
 	urlOptions map[string]string,
 ) (*PersonPopular, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%spopular?api_key=%s%s",
-		baseURL,
-		personURL,
-		c.apiKey,
-		options,
-	)
-	personPopular := PersonPopular{}
-	if err := c.get(tmdbURL, &personPopular); err != nil {
+	url := c.baseURL.JoinPath(personPath, "popular")
+	var personPopular PersonPopular
+	if err := c.get(url, urlOptions, &personPopular); err != nil {
 		return nil, err
 	}
 	return &personPopular, nil

@@ -4,9 +4,9 @@ package tmdb
 type AccountCreatedListsResults struct {
 	Results []struct {
 		Description   string `json:"description"`
-		FavoriteCount int64  `json:"favorite_count"`
-		ID            int64  `json:"id"`
-		ItemCount     int64  `json:"item_count"`
+		FavoriteCount int    `json:"favorite_count"`
+		ID            int    `json:"id"`
+		ItemCount     int    `json:"item_count"`
 		Iso639_1      string `json:"iso_639_1"`
 		ListType      string `json:"list_type"`
 		Name          string `json:"name"`
@@ -19,7 +19,7 @@ type AccountCreatedListsResults struct {
 // release date, poster and backdrop paths, popularity metrics, genre IDs, and flags
 // indicating whether the movie is for adults or contains video content.
 type MovieResult struct {
-	ID               int64   `json:"id"`
+	ID               int     `json:"id"`
 	Title            string  `json:"title"`
 	OriginalTitle    string  `json:"original_title"`
 	OriginalLanguage string  `json:"original_language"`
@@ -28,7 +28,7 @@ type MovieResult struct {
 	PosterPath       string  `json:"poster_path"`
 	BackdropPath     string  `json:"backdrop_path"`
 	Popularity       float32 `json:"popularity"`
-	GenreIDs         []int64 `json:"genre_ids"`
+	GenreIDs         []int   `json:"genre_ids"`
 	Adult            bool    `json:"adult"`
 	Video            bool    `json:"video"`
 	VoteMetrics
@@ -40,7 +40,7 @@ type AccountFavoriteMoviesResults struct {
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
 		GenreIDs         []int   `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		ID               int     `json:"id"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
 		Overview         string  `json:"overview"`
@@ -58,7 +58,7 @@ type AccountFavoriteMoviesResults struct {
 // overview, first air date, poster and backdrop paths, popularity score, vote count
 // and average, associated genre IDs, and the countries of origin.
 type TVShowResult struct {
-	ID               int64    `json:"id"`
+	ID               int      `json:"id"`
 	Name             string   `json:"name"`
 	OriginalName     string   `json:"original_name"`
 	OriginalLanguage string   `json:"original_language"`
@@ -67,7 +67,7 @@ type TVShowResult struct {
 	PosterPath       string   `json:"poster_path"`
 	BackdropPath     string   `json:"backdrop_path"`
 	Popularity       float32  `json:"popularity"`
-	GenreIDs         []int64  `json:"genre_ids"`
+	GenreIDs         []int    `json:"genre_ids"`
 	OriginCountry    []string `json:"origin_country"`
 	Adult            bool     `json:"adult"`
 	VoteMetrics
@@ -78,8 +78,8 @@ type AccountFavoriteTVShowsResults struct {
 	Results []struct {
 		BackdropPath     string   `json:"backdrop_path"`
 		FirstAirDate     string   `json:"first_air_date"`
-		GenreIDs         []int64  `json:"genre_ids"`
-		ID               int64    `json:"id"`
+		GenreIDs         []int    `json:"genre_ids"`
+		ID               int      `json:"id"`
 		OriginalLanguage string   `json:"original_language"`
 		OriginalName     string   `json:"original_name"`
 		Overview         string   `json:"overview"`
@@ -96,12 +96,12 @@ type AccountRatedTVEpisodesResults struct {
 	Results []struct {
 		AirDate        string  `json:"air_date"`
 		EpisodeNumber  int     `json:"episode_number"`
-		ID             int64   `json:"id"`
+		ID             int     `json:"id"`
 		Name           string  `json:"name"`
 		Overview       string  `json:"overview"`
 		ProductionCode string  `json:"production_code"`
 		SeasonNumber   int     `json:"season_number"`
-		ShowID         int64   `json:"show_id"`
+		ShowID         int     `json:"show_id"`
 		StillPath      string  `json:"still_path"`
 		Rating         float32 `json:"rating"`
 		VoteMetrics
@@ -111,8 +111,8 @@ type AccountRatedTVEpisodesResults struct {
 // ChangesMovieResults Result Types
 type ChangesMovieResults struct {
 	Results []struct {
-		ID    int64 `json:"id"`
-		Adult bool  `json:"adult"`
+		ID    int  `json:"id"`
+		Adult bool `json:"adult"`
 	} `json:"results"`
 }
 
@@ -137,7 +137,7 @@ type DiscoverTVResults struct {
 // SearchCompaniesResults Result Types
 type SearchCompaniesResults struct {
 	Results []struct {
-		ID            int64  `json:"id"`
+		ID            int    `json:"id"`
 		LogoPath      string `json:"logo_path"`
 		Name          string `json:"name"`
 		OriginCountry string `json:"origin_country"`
@@ -149,7 +149,7 @@ type SearchCollectionsResults struct {
 	Results []struct {
 		Adult            bool   `json:"adult"`
 		BackdropPath     string `json:"backdrop_path"`
-		ID               int64  `json:"id"`
+		ID               int    `json:"id"`
 		Name             string `json:"name"`
 		OriginalLanguage string `json:"original_language"`
 		OriginalName     string `json:"original_name"`
@@ -161,7 +161,7 @@ type SearchCollectionsResults struct {
 // SearchKeywordsResults Result Types
 type SearchKeywordsResults struct {
 	Results []struct {
-		ID   int64  `json:"id"`
+		ID   int    `json:"id"`
 		Name string `json:"name"`
 	} `json:"results"`
 }
@@ -176,13 +176,13 @@ type SearchMultiResults struct {
 	Results []struct {
 		PosterPath       string   `json:"poster_path,omitempty"`
 		Popularity       float32  `json:"popularity"`
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		Overview         string   `json:"overview,omitempty"`
 		BackdropPath     string   `json:"backdrop_path,omitempty"`
 		MediaType        string   `json:"media_type"`
 		FirstAirDate     string   `json:"first_air_date,omitempty"`
 		OriginCountry    []string `json:"origin_country,omitempty"`
-		GenreIDs         []int64  `json:"genre_ids,omitempty"`
+		GenreIDs         []int    `json:"genre_ids,omitempty"`
 		OriginalLanguage string   `json:"original_language,omitempty"`
 		Name             string   `json:"name,omitempty"`
 		OriginalName     string   `json:"original_name,omitempty"`
@@ -198,8 +198,8 @@ type SearchMultiResults struct {
 			Overview         string  `json:"overview"`
 			ReleaseDate      string  `json:"release_date"`
 			OriginalTitle    string  `json:"original_title"`
-			GenreIDs         []int64 `json:"genre_ids"`
-			ID               int64   `json:"id"`
+			GenreIDs         []int   `json:"genre_ids"`
+			ID               int     `json:"id"`
 			MediaType        string  `json:"media_type"`
 			OriginalLanguage string  `json:"original_language"`
 			Title            string  `json:"title"`
@@ -215,15 +215,15 @@ type SearchMultiResults struct {
 // SearchPeopleResults Result Types
 type SearchPeopleResults struct {
 	Results []struct {
-		Adult    bool  `json:"adult"`
-		Gender   int   `json:"gender,omitempty"`
-		ID       int64 `json:"id"`
+		Adult    bool `json:"adult"`
+		Gender   int  `json:"gender,omitempty"`
+		ID       int  `json:"id"`
 		KnownFor []struct {
 			Adult            bool     `json:"adult,omitempty"` // Movie
 			BackdropPath     string   `json:"backdrop_path"`
 			FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
-			GenreIDs         []int64  `json:"genre_ids"`
-			ID               int64    `json:"id"`
+			GenreIDs         []int    `json:"genre_ids"`
+			ID               int      `json:"id"`
 			MediaType        string   `json:"media_type"`
 			Name             string   `json:"name,omitempty"` // TV
 			OriginalLanguage string   `json:"original_language"`
@@ -256,8 +256,8 @@ type TrendingResults struct {
 		Adult              bool     `json:"adult,omitempty"`
 		Gender             int      `json:"gender,omitempty"`
 		BackdropPath       string   `json:"backdrop_path,omitempty"`
-		GenreIDs           []int64  `json:"genre_ids,omitempty"`
-		ID                 int64    `json:"id"`
+		GenreIDs           []int    `json:"genre_ids,omitempty"`
+		ID                 int      `json:"id"`
 		OriginalLanguage   string   `json:"original_language"`
 		OriginalTitle      string   `json:"original_title,omitempty"`
 		Overview           string   `json:"overview,omitempty"`
@@ -323,6 +323,7 @@ type MovieVideosResults struct {
 	} `json:"results"`
 }
 
+// WatchProviderResult represents watch provider options for a single region.
 type WatchProviderResult struct {
 	Link     string           `json:"link"`
 	Flatrate *[]WatchProvider `json:"flatrate"`
@@ -330,8 +331,9 @@ type WatchProviderResult struct {
 	Buy      *[]WatchProvider `json:"buy"`
 }
 
+// WatchProviderResults represents watch provider options across multiple regions.
 type WatchProviderResults struct {
-	ID      int64                          `json:"id"`
+	ID      int                            `json:"id"`
 	Results map[string]WatchProviderResult `json:"results"`
 }
 
@@ -342,8 +344,8 @@ type MovieRecommendationsResults struct {
 		Adult            bool    `json:"adult"`
 		Overview         string  `json:"overview"`
 		ReleaseDate      string  `json:"release_date"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
 		OriginalTitle    string  `json:"original_title"`
 		OriginalLanguage string  `json:"original_language"`
 		Title            string  `json:"title"`
@@ -368,9 +370,9 @@ type MovieReviewsResults struct {
 type MovieListsResults struct {
 	Results []struct {
 		Description   string `json:"description"`
-		FavoriteCount int64  `json:"favorite_count"`
-		ID            int64  `json:"id"`
-		ItemCount     int64  `json:"item_count"`
+		FavoriteCount int    `json:"favorite_count"`
+		ID            int    `json:"id"`
+		ItemCount     int    `json:"item_count"`
 		Iso639_1      string `json:"iso_639_1"`
 		ListType      string `json:"list_type"`
 		Name          string `json:"name"`
@@ -385,8 +387,8 @@ type MovieNowPlayingResults struct {
 		Adult            bool    `json:"adult"`
 		Overview         string  `json:"overview"`
 		ReleaseDate      string  `json:"release_date"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
 		OriginalTitle    string  `json:"original_title"`
 		OriginalLanguage string  `json:"original_language"`
 		Title            string  `json:"title"`
@@ -404,8 +406,8 @@ type MoviePopularResults struct {
 		Adult            bool    `json:"adult"`
 		Overview         string  `json:"overview"`
 		ReleaseDate      string  `json:"release_date"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
 		OriginalTitle    string  `json:"original_title"`
 		OriginalLanguage string  `json:"original_language"`
 		Title            string  `json:"title"`
@@ -433,7 +435,7 @@ type TVEpisodeGroupsResults struct {
 		ID           string `json:"id"`
 		Name         string `json:"name"`
 		Network      struct {
-			ID            int64  `json:"id"`
+			ID            int    `json:"id"`
 			LogoPath      string `json:"logo_path"`
 			Name          string `json:"name"`
 			OriginCountry string `json:"origin_country"`
@@ -445,7 +447,7 @@ type TVEpisodeGroupsResults struct {
 // TVKeywordsResults Result Types
 type TVKeywordsResults struct {
 	Results []struct {
-		ID   int64  `json:"id"`
+		ID   int    `json:"id"`
 		Name string `json:"name"`
 	} `json:"results"`
 }
@@ -455,12 +457,12 @@ type TVRecommendationsResults struct {
 	Results []struct {
 		PosterPath       string   `json:"poster_path"`
 		Popularity       float32  `json:"popularity"`
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		BackdropPath     string   `json:"backdrop_path"`
 		Overview         string   `json:"overview"`
 		FirstAirDate     string   `json:"first_air_date"`
 		OriginCountry    []string `json:"origin_country"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		GenreIDs         []int    `json:"genre_ids"`
 		OriginalLanguage string   `json:"original_language"`
 		Name             string   `json:"name"`
 		OriginalName     string   `json:"original_name"`
@@ -481,9 +483,9 @@ type TVReviewsResults struct {
 // TVScreenedTheatricallyResults Result Types
 type TVScreenedTheatricallyResults struct {
 	Results []struct {
-		ID            int64 `json:"id"`
-		EpisodeNumber int   `json:"episode_number"`
-		SeasonNumber  int   `json:"season_number"`
+		ID            int `json:"id"`
+		EpisodeNumber int `json:"episode_number"`
+		SeasonNumber  int `json:"season_number"`
 	} `json:"results"`
 }
 
@@ -492,21 +494,21 @@ type TVWatchProvidersResults struct {
 	Results map[string]struct {
 		Link     string `json:"link"`
 		Flatrate []struct {
-			DisplayPriority int64  `json:"display_priority"`
+			DisplayPriority int    `json:"display_priority"`
 			LogoPath        string `json:"logo_path"`
-			ProviderID      int64  `json:"provider_id"`
+			ProviderID      int    `json:"provider_id"`
 			ProviderName    string `json:"provider_name"`
 		} `json:"flatrate,omitempty"`
 		Rent []struct {
-			DisplayPriority int64  `json:"display_priority"`
+			DisplayPriority int    `json:"display_priority"`
 			LogoPath        string `json:"logo_path"`
-			ProviderID      int64  `json:"provider_id"`
+			ProviderID      int    `json:"provider_id"`
 			ProviderName    string `json:"provider_name"`
 		} `json:"rent,omitempty"`
 		Buy []struct {
-			DisplayPriority int64  `json:"display_priority"`
+			DisplayPriority int    `json:"display_priority"`
 			LogoPath        string `json:"logo_path"`
-			ProviderID      int64  `json:"provider_id"`
+			ProviderID      int    `json:"provider_id"`
 			ProviderName    string `json:"provider_name"`
 		} `json:"buy,omitempty"`
 	} `json:"results"`
@@ -516,20 +518,21 @@ type TVWatchProvidersResults struct {
 type TVAiringTodayResults struct {
 	Results []struct {
 		OriginalName     string   `json:"original_name"`
-		GenreIDs         []int64  `json:"genre_ids"`
+		GenreIDs         []int    `json:"genre_ids"`
 		Name             string   `json:"name"`
 		Popularity       float32  `json:"popularity"`
 		OriginCountry    []string `json:"origin_country"`
 		FirstAirDate     string   `json:"first_air_date"`
 		BackdropPath     string   `json:"backdrop_path"`
 		OriginalLanguage string   `json:"original_language"`
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		Overview         string   `json:"overview"`
 		PosterPath       string   `json:"poster_path"`
 		VoteMetrics
 	} `json:"results"`
 }
 
+// VideoResult represents a single video (trailer, teaser, etc.) for a movie or TV show.
 type VideoResult struct {
 	ID          string `json:"id"`
 	Iso639_1    string `json:"iso_639_1"`
@@ -543,7 +546,8 @@ type VideoResult struct {
 	Type        string `json:"type"`
 }
 
+// VideoResults represents a collection of videos for a movie or TV show.
 type VideoResults struct {
-	ID      int64         `json:"id"`
+	ID      int           `json:"id"`
 	Results []VideoResult `json:"results"`
 }

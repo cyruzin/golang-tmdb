@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB client with custom HTTP client configuration.
 package main
 
 import (
@@ -10,12 +11,11 @@ import (
 )
 
 func main() {
-
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
-
-	// Setting a custom config for http.Client.
-	tmdbClient.SetClientConfig(http.Client{Timeout: time.Second * 5})
-
+	// Setting a custom config for http.Client using functional options.
+	tmdbClient, err := tmdb.New(
+		tmdb.WithAPIKey(os.Getenv("APIKey")),
+		tmdb.WithHTTPClient(http.Client{Timeout: time.Second * 5}),
+	)
 	if err != nil {
 		fmt.Println(err)
 	}

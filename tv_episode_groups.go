@@ -1,10 +1,6 @@
 package tmdb
 
-import (
-	"fmt"
-
-	json "github.com/goccy/go-json"
-)
+import "encoding/json"
 
 // TVEpisodeGroupsDetails type is a struct for details JSON response.
 type TVEpisodeGroupsDetails struct {
@@ -18,12 +14,12 @@ type TVEpisodeGroupsDetails struct {
 		Episodes []struct {
 			AirDate        string          `json:"air_date"`
 			EpisodeNumber  int             `json:"episode_number"`
-			ID             int64           `json:"id"`
+			ID             int             `json:"id"`
 			Name           string          `json:"name"`
 			Overview       string          `json:"overview"`
 			ProductionCode json.RawMessage `json:"production_code"`
 			SeasonNumber   int             `json:"season_number"`
-			ShowID         int64           `json:"show_id"`
+			ShowID         int             `json:"show_id"`
 			StillPath      string          `json:"still_path"`
 			Order          int             `json:"order"`
 			VoteMetrics
@@ -33,7 +29,7 @@ type TVEpisodeGroupsDetails struct {
 	ID      string `json:"id"`
 	Name    string `json:"name"`
 	Network struct {
-		ID            int64  `json:"id"`
+		ID            int    `json:"id"`
 		LogoPath      string `json:"logo_path"`
 		Name          string `json:"name"`
 		OriginCountry string `json:"origin_country"`
@@ -53,21 +49,10 @@ type TVEpisodeGroupsDetails struct {
 // 7. TV
 //
 // https://developers.themoviedb.org/3/tv-episode-groups/get-tv-episode-group-details
-func (c *Client) GetTVEpisodeGroupsDetails(
-	id string,
-	urlOptions map[string]string,
-) (*TVEpisodeGroupsDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%sepisode_group/%s?api_key=%s%s",
-		baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvEpisodeGroupDetails := TVEpisodeGroupsDetails{}
-	if err := c.get(tmdbURL, &tvEpisodeGroupDetails); err != nil {
+func (c *Client) GetTVEpisodeGroupsDetails(id string, urlOptions map[string]string) (*TVEpisodeGroupsDetails, error) {
+	url := c.baseURL.JoinPath(tvPath, "episode_group", id)
+	var tvEpisodeGroupDetails TVEpisodeGroupsDetails
+	if err := c.get(url, urlOptions, &tvEpisodeGroupDetails); err != nil {
 		return nil, err
 	}
 	return &tvEpisodeGroupDetails, nil

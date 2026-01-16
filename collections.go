@@ -4,7 +4,7 @@ import "fmt"
 
 // CollectionDetails type is a struct for details JSON response.
 type CollectionDetails struct {
-	ID           int64  `json:"id"`
+	ID           int    `json:"id"`
 	Name         string `json:"name"`
 	Overview     string `json:"overview"`
 	PosterPath   string `json:"poster_path"`
@@ -12,8 +12,8 @@ type CollectionDetails struct {
 	Parts        []struct {
 		Adult            bool    `json:"adult"`
 		BackdropPath     string  `json:"backdrop_path"`
-		GenreIDs         []int64 `json:"genre_ids"`
-		ID               int64   `json:"id"`
+		GenreIDs         []int   `json:"genre_ids"`
+		ID               int     `json:"id"`
 		MediaType        string  `json:"media_type"`
 		OriginalLanguage string  `json:"original_language"`
 		OriginalTitle    string  `json:"original_title"`
@@ -30,17 +30,10 @@ type CollectionDetails struct {
 // GetCollectionDetails get collection details by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-details
-func (c *Client) GetCollectionDetails(
-	id int,
-	urlOptions map[string]string,
-) (*CollectionDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d?api_key=%s%s",
-		baseURL, collectionURL, id, c.apiKey, options,
-	)
-	collectionDetails := CollectionDetails{}
-	if err := c.get(tmdbURL, &collectionDetails); err != nil {
+func (c *Client) GetCollectionDetails(id int, urlOptions map[string]string) (*CollectionDetails, error) {
+	url := c.baseURL.JoinPath(collectionPath, fmt.Sprintf("%d", id))
+	var collectionDetails CollectionDetails
+	if err := c.get(url, urlOptions, &collectionDetails); err != nil {
 		return nil, err
 	}
 	return &collectionDetails, nil
@@ -54,7 +47,7 @@ type CollectionImage struct {
 
 // CollectionImages type is a struct for images JSON response.
 type CollectionImages struct {
-	ID        int64             `json:"id"`
+	ID        int               `json:"id"`
 	Backdrops []CollectionImage `json:"backdrops"`
 	Posters   []CollectionImage `json:"posters"`
 }
@@ -62,17 +55,10 @@ type CollectionImages struct {
 // GetCollectionImages get the images for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-images
-func (c *Client) GetCollectionImages(
-	id int,
-	urlOptions map[string]string,
-) (*CollectionImages, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/images?api_key=%s%s",
-		baseURL, collectionURL, id, c.apiKey, options,
-	)
-	collectionImages := CollectionImages{}
-	if err := c.get(tmdbURL, &collectionImages); err != nil {
+func (c *Client) GetCollectionImages(id int, urlOptions map[string]string) (*CollectionImages, error) {
+	url := c.baseURL.JoinPath(collectionPath, fmt.Sprintf("%d", id), "images")
+	var collectionImages CollectionImages
+	if err := c.get(url, urlOptions, &collectionImages); err != nil {
 		return nil, err
 	}
 	return &collectionImages, nil
@@ -80,24 +66,17 @@ func (c *Client) GetCollectionImages(
 
 // CollectionTranslations type is a struct for translations JSON response.
 type CollectionTranslations struct {
-	ID           int64         `json:"id"`
+	ID           int           `json:"id"`
 	Translations []Translation `json:"translations"`
 }
 
 // GetCollectionTranslations get the list translations for a collection by id.
 //
 // https://developers.themoviedb.org/3/collections/get-collection-translations
-func (c *Client) GetCollectionTranslations(
-	id int,
-	urlOptions map[string]string,
-) (*CollectionTranslations, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d/translations?api_key=%s%s",
-		baseURL, collectionURL, id, c.apiKey, options,
-	)
-	collectionTranslations := CollectionTranslations{}
-	if err := c.get(tmdbURL, &collectionTranslations); err != nil {
+func (c *Client) GetCollectionTranslations(id int, urlOptions map[string]string) (*CollectionTranslations, error) {
+	url := c.baseURL.JoinPath(collectionPath, fmt.Sprintf("%d", id), "translations")
+	var collectionTranslations CollectionTranslations
+	if err := c.get(url, urlOptions, &collectionTranslations); err != nil {
 		return nil, err
 	}
 	return &collectionTranslations, nil

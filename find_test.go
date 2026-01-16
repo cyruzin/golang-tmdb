@@ -13,24 +13,24 @@ var options = map[string]string{
 
 func (suite *TMBDTestSuite) TestGetFindMovieByID() {
 	results, err := suite.client.GetFindByID(interstellarID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(results)
 }
 
 func (suite *TMBDTestSuite) TestGetFindTVByID() {
 	results, err := suite.client.GetFindByID(theWalkingDeadID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(results)
 }
 
 func (suite *TMBDTestSuite) TestGetFindPersonByID() {
 	results, err := suite.client.GetFindByID(alPacinoID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(results)
 }
 
 func (suite *TMBDTestSuite) TestGetFindByIDFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetFindByID(theWalkingDeadID, options)
-	suite.NotNil(err)
+	suite.Error(err)
 }

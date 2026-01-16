@@ -5,21 +5,21 @@ const listID = 1
 
 func (suite *TMBDTestSuite) TestGetListDetails() {
 	list, err := suite.client.GetListDetails(listID, nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(list.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetListDetailsFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "bad"
 	_, err := suite.client.GetListDetails(listID, nil)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestGetListDetailsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "pt-BR"
 	list, err := suite.client.GetListDetails(listID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(list.ID)
 }
 
@@ -27,16 +27,16 @@ func (suite *TMBDTestSuite) TestGetListItemStatus() {
 	options := make(map[string]string)
 	options["movie_id"] = "10658"
 	list, err := suite.client.GetListItemStatus(listID, options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(list.ID)
 }
 
 func (suite *TMBDTestSuite) TestGetListItemStatusFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	options := make(map[string]string)
 	options["movie_id"] = "10658"
 	_, err := suite.client.GetListItemStatus(listID, options)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 // Commented because this test creates a lots of repeated lists
@@ -50,7 +50,7 @@ func (suite *TMBDTestSuite) TestGetListItemStatusFail() {
 // 		Language:    "en",
 // 	}
 // 	response, err := suite.client.CreateList(&createList)
-// 	suite.Nil(err)
+// 	suite.NoError(err)
 // 	suite.NotNil(response.StatusMessage)
 // }
 
@@ -66,9 +66,8 @@ func (suite *TMBDTestSuite) TestCreateListFail() {
 }
 
 func (suite *TMBDTestSuite) TestClearList() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
-	_, err = suite.client.ClearList(128331, true)
+	suite.client.sessionID = sessionID
+	_, err := suite.client.ClearList(128331, true)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
@@ -79,9 +78,8 @@ func (suite *TMBDTestSuite) TestClearListFail() {
 }
 
 func (suite *TMBDTestSuite) TestDeleteList() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
-	_, err = suite.client.DeleteList(128331)
+	suite.client.sessionID = sessionID
+	_, err := suite.client.DeleteList(128331)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
@@ -97,10 +95,9 @@ func (suite *TMBDTestSuite) TestDeleteListFail() {
 }
 
 func (suite *TMBDTestSuite) TestAddMovie() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	mediaID := ListMedia{MediaID: 500}
-	_, err = suite.client.AddMovie(128331, &mediaID)
+	_, err := suite.client.AddMovie(128331, &mediaID)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 
@@ -112,10 +109,9 @@ func (suite *TMBDTestSuite) TestAddMovieFail() {
 }
 
 func (suite *TMBDTestSuite) TestRemoveMovie() {
-	err := suite.client.SetSessionID(sessionID)
-	suite.Nil(err)
+	suite.client.sessionID = sessionID
 	mediaID := ListMedia{MediaID: 500}
-	_, err = suite.client.RemoveMovie(128331, &mediaID)
+	_, err := suite.client.RemoveMovie(128331, &mediaID)
 	suite.Equal("code: 34 | success: false | message: The resource you requested could not be found.", err.Error())
 }
 

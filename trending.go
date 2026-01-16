@@ -1,9 +1,5 @@
 package tmdb
 
-import (
-	"fmt"
-)
-
 // Trending type is a struct for trending JSON response.
 type Trending struct {
 	*TrendingResults
@@ -35,22 +31,10 @@ type Trending struct {
 // week - View the trending list for the week.
 //
 // https://developers.themoviedb.org/3/trending/get-trending
-func (c *Client) GetTrending(
-	mediaType string,
-	timeWindow string,
-	urlOptions map[string]string,
-) (*Trending, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s/trending/%s/%s?api_key=%s%s",
-		baseURL,
-		mediaType,
-		timeWindow,
-		c.apiKey,
-		options,
-	)
-	trending := Trending{}
-	if err := c.get(tmdbURL, &trending); err != nil {
+func (c *Client) GetTrending(mediaType string, timeWindow string, urlOptions map[string]string) (*Trending, error) {
+	url := c.baseURL.JoinPath("trending", mediaType, timeWindow)
+	var trending Trending
+	if err := c.get(url, urlOptions, &trending); err != nil {
 		return nil, err
 	}
 	return &trending, nil

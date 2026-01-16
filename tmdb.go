@@ -6,44 +6,114 @@ package tmdb
 import (
 	"bytes"
 	"context"
-	"errors"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
-
-	json "github.com/goccy/go-json"
 )
 
-// TMDb constants
+var (
+	defaultBaseURL   *url.URL
+	alternateBaseURL *url.URL
+)
+
 const (
-	defaultBaseURL    = "https://api.themoviedb.org/3"
-	alternateBaseURL  = "https://api.tmdb.org/3"
-	permissionURL     = "https://www.themoviedb.org/authenticate/"
-	authenticationURL = "/authentication/"
-	movieURL          = "/movie/"
-	tvURL             = "/tv/"
-	tvSeasonURL       = "/season/"
-	tvEpisodeURL      = "/episode/"
-	personURL         = "/person/"
-	searchURL         = "/search/"
-	collectionURL     = "/collection/"
-	companyURL        = "/company/"
-	configurationURL  = "/configuration/"
-	creditURL         = "/credit/"
-	discoverURL       = "/discover/"
-	networkURL        = "/network/"
-	keywordURL        = "/keyword/"
-	genreURL          = "/genre/"
-	guestSessionURL   = "/guest_session/"
-	listURL           = "/list/"
-	accountURL        = "/account/"
-	watchProvidersURL = "/watch/providers/"
+	authenticationPath = "/authentication"
+	moviePath          = "/movie"
+	tvPath             = "/tv"
+	tvSeasonPath       = "/season"
+	personPath         = "/person"
+	searchPath         = "/search"
+	collectionPath     = "/collection"
+	companyPath        = "/company"
+	configurationPath  = "/configuration"
+	creditPath         = "/credit"
+	discoverPath       = "/discover"
+	networkPath        = "/network"
+	keywordPath        = "/keyword"
+	genrePath          = "/genre"
+	guestSessionPath   = "/guest_session"
+	listPath           = "/list"
+	accountPath        = "/account"
+	watchProvidersPath = "/watch/providers"
 )
 
-var baseURL = defaultBaseURL
+func init() {
+	var err error
+	defaultBaseURL, err = url.Parse("https://api.themoviedb.org/3")
+	if err != nil {
+		panic(fmt.Errorf("defaultBaseURL failed to parse: %w", err))
+	}
+	alternateBaseURL, err = url.Parse("https://api.tmdb.org/3")
+	if err != nil {
+		panic(fmt.Errorf("alternateBaseURL failed to parse: %w", err))
+	}
+}
+
+// customTransport wraps the base transport to modify requests.
+type customTransport struct {
+	base http.RoundTripper
+	// client reference to read apiKey/bearerToken dynamically
+	client *Client
+}
+
+// RoundTrip implements http.RoundTripper, adding authentication and headers to requests.
+func (t *customTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	if t.client.apiKey == "" && t.client.bearerToken == "" {
+		return nil, fmt.Errorf("apiKey and bearerToken is empty")
+	}
+	req.Header.Add("content-type", "application/json;charset=utf-8")
+	if t.client.apiKey != "" {
+		q := req.URL.Query()
+		q.Add("api_key", t.client.apiKey)
+		req.URL.RawQuery = q.Encode()
+	}
+
+	if t.client.bearerToken != "" {
+		req.Header.Add("Authorization", "Bearer "+t.client.bearerToken)
+	}
+
+	base := t.base
+	if base == nil {
+		base = http.DefaultTransport
+	}
+
+	// Buffer the request body for potential retries
+	var bodyBytes []byte
+	if req.Body != nil {
+		var err error
+		bodyBytes, err = io.ReadAll(req.Body)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read request body: %w", err)
+		}
+		req.Body.Close()
+		req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+	}
+
+	var retries int
+	for {
+		resp, err := base.RoundTrip(req)
+		if err != nil {
+			return nil, err
+		}
+		if t.client.autoRetry && shouldRetry(resp.StatusCode) && retries < t.client.maxRetries {
+			retries++
+			if err := resp.Body.Close(); err != nil {
+				return nil, err
+			}
+			// Reset request body for retry
+			if bodyBytes != nil {
+				req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+			}
+			time.Sleep(retryDuration(resp))
+			continue
+		}
+		return resp, nil
+	}
+}
 
 // Client type is a struct to instantiate this pkg.
 type Client struct {
@@ -56,8 +126,12 @@ type Client struct {
 	// Auto retry flag to indicates if the client
 	// should retry the previous operation.
 	autoRetry bool
+	// Maximum number of retries for rate-limited requests.
+	maxRetries int
 	// http.Client for custom configuration.
 	http http.Client
+	// baseURL for API requests.
+	baseURL *url.URL
 }
 
 // Response type is a struct for http responses.
@@ -66,39 +140,116 @@ type Response struct {
 	StatusMessage string `json:"status_message"`
 }
 
-// Init setups the Client with an apiKey.
-func Init(apiKey string) (*Client, error) {
-	if apiKey == "" {
-		return nil, errors.New("api key is empty")
+// ClientOption configures a Client.
+type ClientOption func(*Client) error
+
+// WithSessionID sets the session ID for authenticated requests.
+func WithSessionID(sid string) ClientOption {
+	return func(c *Client) error {
+		if sid == "" {
+			return fmt.Errorf("the session id is empty")
+		}
+		c.sessionID = sid
+		return nil
 	}
-	return &Client{apiKey: apiKey}, nil
 }
 
-// InitV4 setups the Client with an bearer token.
-func InitV4(bearerToken string) (*Client, error) {
-	if bearerToken == "" {
-		return nil, errors.New("bearer token is empty")
+// WithHTTPClient sets a custom http.Client configuration.
+func WithHTTPClient(httpClient http.Client) ClientOption {
+	return func(c *Client) error {
+		c.http = httpClient
+		return nil
 	}
-	return &Client{bearerToken: bearerToken}, nil
 }
 
-// SetSessionID will set the session id.
-func (c *Client) SetSessionID(sid string) error {
-	if sid == "" {
-		return errors.New("the session id is empty")
+// WithAutoRetry enables automatic retry on rate limit errors.
+func WithAutoRetry() ClientOption {
+	return func(c *Client) error {
+		c.autoRetry = true
+		return nil
 	}
-	c.sessionID = sid
-	return nil
 }
 
-// SetClientConfig sets a custom configuration for the http.Client.
-func (c *Client) SetClientConfig(httpClient http.Client) {
-	c.http = httpClient
+// WithMaxRetries sets the maximum number of retries for rate-limited requests.
+// Only applies when WithAutoRetry is enabled. Default is 3.
+func WithMaxRetries(n int) ClientOption {
+	return func(c *Client) error {
+		if n < 0 {
+			return fmt.Errorf("max retries cannot be negative")
+		}
+		c.maxRetries = n
+		return nil
+	}
 }
 
-// SetClientAutoRetry sets autoRetry flag to true.
-func (c *Client) SetClientAutoRetry() {
-	c.autoRetry = true
+// WithTimeout sets the request timeout. Default is 10 seconds.
+func WithTimeout(d time.Duration) ClientOption {
+	return func(c *Client) error {
+		c.http.Timeout = d
+		return nil
+	}
+}
+
+// WithAlternateBaseURL sets the alternate base URL.
+func WithAlternateBaseURL() ClientOption {
+	return func(c *Client) error {
+		c.baseURL = alternateBaseURL
+		return nil
+	}
+}
+
+// WithCustomBaseURL sets a custom base URL.
+func WithCustomBaseURL(customURL string) ClientOption {
+	return func(c *Client) error {
+		u, err := url.Parse(customURL)
+		if err != nil {
+			return err
+		}
+
+		c.baseURL = u
+		return nil
+	}
+}
+
+// WithAPIKey sets the API key for v3 authentication.
+func WithAPIKey(apiKey string) ClientOption {
+	return func(c *Client) error {
+		if apiKey == "" {
+			return fmt.Errorf("api key is empty")
+		}
+		c.apiKey = apiKey
+		return nil
+	}
+}
+
+// WithBearerToken sets the bearer token for v4 authentication.
+func WithBearerToken(bearerToken string) ClientOption {
+	return func(c *Client) error {
+		if bearerToken == "" {
+			return fmt.Errorf("bearer token is empty")
+		}
+		c.bearerToken = bearerToken
+		return nil
+	}
+}
+
+// New creates a new Client with the given options.
+// At least one of WithAPIKey or WithBearerToken must be provided.
+func New(options ...ClientOption) (*Client, error) {
+	c := &Client{baseURL: defaultBaseURL, maxRetries: 3}
+	for _, opt := range options {
+		if err := opt(c); err != nil {
+			return nil, err
+		}
+	}
+	if c.apiKey == "" && c.bearerToken == "" {
+		return nil, fmt.Errorf("either API key or bearer token is required")
+	}
+	if c.http.Timeout == 0 {
+		c.http.Timeout = time.Second * 10
+	}
+	c.http.Transport = &customTransport{base: c.http.Transport, client: c}
+	return c, nil
 }
 
 // Auto retry default duration.
@@ -123,133 +274,75 @@ func shouldRetry(status int) bool {
 	return status == http.StatusAccepted || status == http.StatusTooManyRequests
 }
 
-func (c *Client) get(url string, data any) error {
-	if url == "" {
-		return errors.New("url field is empty")
+func applyQueryOpts(u *url.URL, opts map[string]string) {
+	if len(opts) > 0 {
+		q := u.Query()
+		for key, value := range opts {
+			q.Add(key, value)
+		}
+		u.RawQuery = q.Encode()
 	}
-	if c.http.Timeout == 0 {
-		c.http.Timeout = time.Second * 10
+}
+
+// TODO: Add context.Context as the first parameter to all public API methods,
+// then pass it through to get/request. This will allow callers to control
+// cancellation and timeouts per-request.
+
+func (c *Client) get(u *url.URL, opts map[string]string, dst any) error {
+	if u == nil {
+		return fmt.Errorf("url is nil")
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
-	defer cancel()
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	applyQueryOpts(u, opts)
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, u.String(), nil)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
 	}
-	req.Header.Add("content-type", "application/json;charset=utf-8")
-	if c.bearerToken != "" {
-		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
+	res, err := c.http.Do(req)
+	if err != nil {
+		return err
 	}
-	for {
-		res, err := c.http.Do(req)
-		if err != nil {
-			return err
-		}
-		defer res.Body.Close()
-		if res.StatusCode == http.StatusTooManyRequests && c.autoRetry {
-			time.Sleep(retryDuration(res))
-			continue
-		}
-		if res.StatusCode == http.StatusNoContent {
-			return nil
-		}
-		if res.StatusCode != http.StatusOK {
-			return c.decodeError(res)
-		}
-		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
-			return fmt.Errorf("could not decode the data: %s", err)
-		}
-		break
+	defer res.Body.Close()
+	if res.StatusCode == http.StatusNoContent {
+		return nil
+	}
+	if res.StatusCode != http.StatusOK {
+		return c.decodeError(res)
+	}
+	if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
 	}
 	return nil
 }
 
-func (c *Client) request(
-	url string,
-	body any,
-	method string,
-	data any,
-) error {
-	if url == "" {
-		return errors.New("url field is empty")
+func (c *Client) request(u *url.URL, method string, opts map[string]string, body any, dst any) error {
+	if u == nil {
+		return fmt.Errorf("url is nil")
 	}
-	if c.http.Timeout == 0 {
-		c.http.Timeout = time.Second * 10
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), c.http.Timeout)
-	defer cancel()
+	applyQueryOpts(u, opts)
 	bodyBytes := new(bytes.Buffer)
-	err := json.NewEncoder(bodyBytes).Encode(body)
+	if err := json.NewEncoder(bodyBytes).Encode(body); err != nil {
+		return fmt.Errorf("failed to encode request body to JSON: %w", err)
+	}
+	req, err := http.NewRequestWithContext(context.Background(), method, u.String(), bodyBytes)
 	if err != nil {
-		return fmt.Errorf("failed to encode request body to JSON: %s", err)
+		return fmt.Errorf("could not fetch the url: %w", err)
 	}
-	req, err := http.NewRequestWithContext(
-		ctx,
-		method,
-		url,
-		bytes.NewBuffer(bodyBytes.Bytes()),
-	)
+	res, err := c.http.Do(req)
 	if err != nil {
-		return fmt.Errorf("could not fetch the url: %s", err)
+		return err
 	}
-	req.Header.Add("content-type", "application/json;charset=utf-8")
-	if c.bearerToken != "" {
-		req.Header.Add("Authorization", "Bearer "+c.bearerToken)
+	defer res.Body.Close()
+	// Checking if the response is greater or equal
+	// to 300 or less than 200.
+	if res.StatusCode >= http.StatusMultipleChoices ||
+		res.StatusCode < http.StatusOK ||
+		res.StatusCode == http.StatusNoContent {
+		return c.decodeError(res)
 	}
-	for {
-		res, err := c.http.Do(req)
-		if err != nil {
-			return errors.New(err.Error())
-		}
-		defer res.Body.Close()
-		if c.autoRetry && shouldRetry(res.StatusCode) {
-			time.Sleep(retryDuration(res))
-			continue
-		}
-		// Checking if the response is greater or equal
-		// to 300 or less than 200.
-		if res.StatusCode >= http.StatusMultipleChoices ||
-			res.StatusCode < http.StatusOK ||
-			res.StatusCode == http.StatusNoContent {
-			return c.decodeError(res)
-		}
-		if err = json.NewDecoder(res.Body).Decode(data); err != nil {
-			return fmt.Errorf("could not decode the data: %s", err)
-		}
-		break
+	if err = json.NewDecoder(res.Body).Decode(dst); err != nil {
+		return fmt.Errorf("could not decode the data: %s", err)
 	}
 	return nil
-}
-
-func (c *Client) fmtOptions(
-	urlOptions map[string]string,
-) string {
-	options := ""
-	if len(urlOptions) > 0 {
-		for key, value := range urlOptions {
-			options += fmt.Sprintf(
-				"&%s=%s",
-				key,
-				url.QueryEscape(value),
-			)
-		}
-	}
-	return options
-}
-
-// SetAlternateBaseURL sets an alternate base url.
-func (c *Client) SetAlternateBaseURL() {
-	baseURL = alternateBaseURL
-}
-
-// SetCustomBaseURL sets an custom base url.
-func (c *Client) SetCustomBaseURL(url string) {
-	baseURL = url
-}
-
-// GetBaseURL gets the current base url.
-func (c *Client) GetBaseURL() string {
-	return baseURL
 }
 
 // Error type represents an error returned by the TMDB API.
@@ -259,6 +352,7 @@ type Error struct {
 	StatusCode    int    `json:"status_code,omitempty"`
 }
 
+// Error implements the error interface for API errors.
 func (e Error) Error() string {
 	return fmt.Sprintf(
 		"code: %d | success: %t | message: %s",
@@ -280,9 +374,8 @@ func (c *Client) decodeError(r *http.Response) error {
 			http.StatusText(r.StatusCode),
 		)
 	}
-	buf := bytes.NewBuffer(resBody)
 	var clientError Error
-	if err := json.NewDecoder(buf).Decode(&clientError); err != nil {
+	if err := json.Unmarshal(resBody, &clientError); err != nil {
 		return fmt.Errorf(
 			"couldn't decode error: (%d) [%s]",
 			len(resBody),

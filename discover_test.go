@@ -7,19 +7,19 @@ func (suite *TMBDTestSuite) TestGetDiscoverMovie() {
 	o["include_video"] = "false"
 	o["sort_by"] = "popularity.desc"
 	discover, err := suite.client.GetDiscoverMovie(o)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(discover)
 }
 
 func (suite *TMBDTestSuite) TestGetDiscoverMovieFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	o := make(map[string]string)
 	o["language"] = "en-US"
 	o["include_adult"] = "false"
 	o["include_video"] = "false"
 	o["sort_by"] = "popularity.desc"
 	_, err := suite.client.GetDiscoverMovie(o)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestGetDiscoverTV() {
@@ -30,12 +30,12 @@ func (suite *TMBDTestSuite) TestGetDiscoverTV() {
 	o["sort_by"] = "popularity.desc"
 	o["include_null_first_air_dates"] = "false"
 	discover, err := suite.client.GetDiscoverTV(o)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(discover)
 }
 
 func (suite *TMBDTestSuite) TestGetDiscoverTVFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	o := make(map[string]string)
 	o["page"] = "1"
 	o["language"] = "en-US"
@@ -43,5 +43,5 @@ func (suite *TMBDTestSuite) TestGetDiscoverTVFail() {
 	o["sort_by"] = "popularity.desc"
 	o["include_null_first_air_dates"] = "false"
 	_, err := suite.client.GetDiscoverTV(o)
-	suite.NotNil(err)
+	suite.Error(err)
 }

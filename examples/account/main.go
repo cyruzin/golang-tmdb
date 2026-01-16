@@ -1,3 +1,4 @@
+// Package main demonstrates TMDB account API usage.
 package main
 
 import (
@@ -8,12 +9,11 @@ import (
 )
 
 func main() {
-	tmdbClient, err := tmdb.Init(os.Getenv("APIKey"))
+	tmdbClient, err := tmdb.New(
+		tmdb.WithAPIKey(os.Getenv("APIKey")),
+		tmdb.WithSessionID(os.Getenv("SessionID")),
+	)
 	if err != nil {
-		fmt.Println(err)
-	}
-
-	if err := tmdbClient.SetSessionID(os.Getenv("SessionID")); err != nil {
 		fmt.Println(err)
 	}
 

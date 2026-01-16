@@ -2,44 +2,44 @@ package tmdb
 
 func (suite *TMBDTestSuite) TestGetAvailableWatchProviderRegions() {
 	watchProviderRegions, err := suite.client.GetAvailableWatchProviderRegions(nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(watchProviderRegions)
 }
 
 func (suite *TMBDTestSuite) TestGetAvailableWatchProviderRegionsFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetAvailableWatchProviderRegions(nil)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestGetAvailableWatchProviderRegionsWithOptions() {
 	options := make(map[string]string)
 	options["language"] = "de-DE"
 	watchProviderRegions, err := suite.client.GetAvailableWatchProviderRegions(options)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(watchProviderRegions)
 }
 
 func (suite *TMBDTestSuite) TestGetWatchProvidersMovie() {
 	watchProviders, err := suite.client.GetWatchProvidersMovie(nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(watchProviders)
 }
 
 func (suite *TMBDTestSuite) TestGetWatchProvidersMovieFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetWatchProvidersMovie(nil)
-	suite.NotNil(err)
+	suite.Error(err)
 }
 
 func (suite *TMBDTestSuite) TestGetWatchProvidersTv() {
 	watchProviders, err := suite.client.GetWatchProvidersTv(nil)
-	suite.Nil(err)
+	suite.NoError(err)
 	suite.NotNil(watchProviders)
 }
 
 func (suite *TMBDTestSuite) TestGetWatchProvidersTvFail() {
-	suite.client.apiKey = ""
+	suite.client.apiKey = "badkey"
 	_, err := suite.client.GetWatchProvidersTv(nil)
-	suite.NotNil(err)
+	suite.Error(err)
 }

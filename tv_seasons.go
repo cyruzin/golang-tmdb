@@ -1,6 +1,8 @@
 package tmdb
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // TVSeasonDetails is a struct for details JSON response.
 type TVSeasonDetails struct {
@@ -9,17 +11,17 @@ type TVSeasonDetails struct {
 	Episodes []struct {
 		AirDate        string `json:"air_date"`
 		EpisodeNumber  int    `json:"episode_number"`
-		ID             int64  `json:"id"`
+		ID             int    `json:"id"`
 		Name           string `json:"name"`
 		Overview       string `json:"overview"`
 		ProductionCode string `json:"production_code"`
 		Runtime        int    `json:"runtime"`
 		SeasonNumber   int    `json:"season_number"`
-		ShowID         int64  `json:"show_id"`
+		ShowID         int    `json:"show_id"`
 		StillPath      string `json:"still_path"`
 		VoteMetrics
 		Crew []struct {
-			ID          int64  `json:"id"`
+			ID          int    `json:"id"`
 			CreditID    string `json:"credit_id"`
 			Name        string `json:"name"`
 			Department  string `json:"department"`
@@ -28,7 +30,7 @@ type TVSeasonDetails struct {
 			ProfilePath string `json:"profile_path"`
 		} `json:"crew"`
 		GuestStars []struct {
-			ID          int64  `json:"id"`
+			ID          int    `json:"id"`
 			Name        string `json:"name"`
 			CreditID    string `json:"credit_id"`
 			Character   string `json:"character"`
@@ -39,7 +41,7 @@ type TVSeasonDetails struct {
 	} `json:"episodes"`
 	Name         string  `json:"name"`
 	Overview     string  `json:"overview"`
-	ID           int64   `json:"id"`
+	ID           int     `json:"id"`
 	PosterPath   string  `json:"poster_path"`
 	SeasonNumber int     `json:"season_number"`
 	VoteAverage  float32 `json:"vote_average"`
@@ -77,7 +79,7 @@ type TVSeasonTranslationsAppend struct {
 
 // TVSeasonTranslations type is a struct
 type TVSeasonTranslations struct {
-	ID           int64         `json:"id,omitempty"`
+	ID           int           `json:"id,omitempty"`
 	Translations []Translation `json:"translations"`
 }
 
@@ -97,19 +99,9 @@ func (c *Client) GetTVSeasonDetails(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonDetails, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d?api_key=%s%s",
-		baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		c.apiKey,
-		options,
-	)
-	tvSeasonDetails := TVSeasonDetails{}
-	if err := c.get(tmdbURL, &tvSeasonDetails); err != nil {
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber))
+	var tvSeasonDetails TVSeasonDetails
+	if err := c.get(url, urlOptions, &tvSeasonDetails); err != nil {
 		return nil, err
 	}
 	return &tvSeasonDetails, nil
@@ -125,8 +117,8 @@ type TVSeasonChanges struct {
 			Iso639_1  string `json:"iso_639_1"`
 			Iso3166_1 string `json:"iso_3166_1"`
 			Value     struct {
-				EpisodeID     int64 `json:"episode_id"`
-				EpisodeNumber int   `json:"episode_number"`
+				EpisodeID     int `json:"episode_id"`
+				EpisodeNumber int `json:"episode_number"`
 			} `json:"value"`
 		} `json:"items"`
 		Key string `json:"key"`
@@ -144,17 +136,9 @@ func (c *Client) GetTVSeasonChanges(
 	id int,
 	urlOptions map[string]string,
 ) (*TVSeasonChanges, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%sseason/%d/changes?api_key=%s%s",
-		baseURL,
-		tvURL,
-		id,
-		c.apiKey,
-		options,
-	)
-	tvSeasonChanges := TVSeasonChanges{}
-	if err := c.get(tmdbURL, &tvSeasonChanges); err != nil {
+	url := c.baseURL.JoinPath(tvPath, "season", fmt.Sprintf("%d", id), "changes")
+	var tvSeasonChanges TVSeasonChanges
+	if err := c.get(url, urlOptions, &tvSeasonChanges); err != nil {
 		return nil, err
 	}
 	return &tvSeasonChanges, nil
@@ -166,7 +150,7 @@ type TVSeasonCredits struct {
 		Character   string `json:"character"`
 		CreditID    string `json:"credit_id"`
 		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
+		ID          int    `json:"id"`
 		Name        string `json:"name"`
 		Order       int    `json:"order"`
 		ProfilePath string `json:"profile_path"`
@@ -175,7 +159,7 @@ type TVSeasonCredits struct {
 		CreditID    string `json:"credit_id"`
 		Department  string `json:"department"`
 		Gender      int    `json:"gender"`
-		ID          int64  `json:"id"`
+		ID          int    `json:"id"`
 		Job         string `json:"job"`
 		Name        string `json:"name"`
 		ProfilePath string `json:"profile_path"`
@@ -191,31 +175,21 @@ func (c *Client) GetTVSeasonCredits(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonCredits, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d/credits?api_key=%s%s",
-		baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		c.apiKey,
-		options,
-	)
-	tVSeasonCredits := TVSeasonCredits{}
-	if err := c.get(tmdbURL, &tVSeasonCredits); err != nil {
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "credits")
+	var tvSeasonCredits TVSeasonCredits
+	if err := c.get(url, urlOptions, &tvSeasonCredits); err != nil {
 		return nil, err
 	}
-	return &tVSeasonCredits, nil
+	return &tvSeasonCredits, nil
 }
 
 // TVSeasonExternalIDs type is a struct for external ids JSON response.
 type TVSeasonExternalIDs struct {
 	FreebaseMID string `json:"freebase_mid"`
 	FreebaseID  string `json:"freebase_id"`
-	TVDBID      int64  `json:"tvdb_id"`
-	TVRageID    int64  `json:"tvrage_id"`
-	ID          int64  `json:"id,omitempty"`
+	TVDBID      int    `json:"tvdb_id"`
+	TVRageID    int    `json:"tvrage_id"`
+	ID          int    `json:"id,omitempty"`
 }
 
 // GetTVSeasonExternalIDs get the external ids for a TV season.
@@ -231,19 +205,9 @@ func (c *Client) GetTVSeasonExternalIDs(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonExternalIDs, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d/external_ids?api_key=%s%s",
-		baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		c.apiKey,
-		options,
-	)
-	tvSeasonExternalIDs := TVSeasonExternalIDs{}
-	if err := c.get(tmdbURL, &tvSeasonExternalIDs); err != nil {
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "external_ids")
+	var tvSeasonExternalIDs TVSeasonExternalIDs
+	if err := c.get(url, urlOptions, &tvSeasonExternalIDs); err != nil {
 		return nil, err
 	}
 	return &tvSeasonExternalIDs, nil
@@ -257,7 +221,7 @@ type TVSeasonImage struct {
 
 // TVSeasonImages type is a struct for images JSON response.
 type TVSeasonImages struct {
-	ID      int64           `json:"id,omitempty"`
+	ID      int             `json:"id,omitempty"`
 	Posters []TVSeasonImage `json:"posters"`
 }
 
@@ -274,19 +238,9 @@ func (c *Client) GetTVSeasonImages(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*TVSeasonImages, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d/images?api_key=%s%s",
-		baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		c.apiKey,
-		options,
-	)
-	tvSeasonImages := TVSeasonImages{}
-	if err := c.get(tmdbURL, &tvSeasonImages); err != nil {
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "images")
+	var tvSeasonImages TVSeasonImages
+	if err := c.get(url, urlOptions, &tvSeasonImages); err != nil {
 		return nil, err
 	}
 	return &tvSeasonImages, nil
@@ -300,19 +254,9 @@ func (c *Client) GetTVSeasonVideos(
 	seasonNumber int,
 	urlOptions map[string]string,
 ) (*VideoResults, error) {
-	options := c.fmtOptions(urlOptions)
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d/videos?api_key=%s%s",
-		baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		c.apiKey,
-		options,
-	)
-	tvSeasonVideos := VideoResults{}
-	if err := c.get(tmdbURL, &tvSeasonVideos); err != nil {
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "videos")
+	var tvSeasonVideos VideoResults
+	if err := c.get(url, urlOptions, &tvSeasonVideos); err != nil {
 		return nil, err
 	}
 	return &tvSeasonVideos, nil
@@ -325,17 +269,9 @@ func (c *Client) GetTVSeasonTranslations(
 	id int,
 	seasonNumber int,
 ) (*TVSeasonTranslations, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%d%s%d/translations?api_key=%s",
-		baseURL,
-		tvURL,
-		id,
-		tvSeasonURL,
-		seasonNumber,
-		c.apiKey,
-	)
-	tvSeasonTranslations := TVSeasonTranslations{}
-	if err := c.get(tmdbURL, &tvSeasonTranslations); err != nil {
+	url := c.baseURL.JoinPath(tvPath, fmt.Sprintf("%d", id), tvSeasonPath, fmt.Sprintf("%d", seasonNumber), "translations")
+	var tvSeasonTranslations TVSeasonTranslations
+	if err := c.get(url, nil, &tvSeasonTranslations); err != nil {
 		return nil, err
 	}
 	return &tvSeasonTranslations, nil

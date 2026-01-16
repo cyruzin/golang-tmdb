@@ -1,9 +1,5 @@
 package tmdb
 
-import (
-	"fmt"
-)
-
 // CreditsDetails type is a struct for credits JSON response.
 type CreditsDetails struct {
 	CreditType string `json:"credit_type"`
@@ -13,14 +9,14 @@ type CreditsDetails struct {
 		Adult            bool     `json:"adult,omitempty"`          // Movie
 		OriginalName     string   `json:"original_name,omitempty"`  // TV
 		OriginalTitle    string   `json:"original_title,omitempty"` // Movie
-		ID               int64    `json:"id"`
+		ID               int      `json:"id"`
 		Name             string   `json:"name,omitempty"`           // TV
 		FirstAirDate     string   `json:"first_air_date,omitempty"` // TV
 		PosterPath       string   `json:"poster_path"`
 		ReleaseDate      string   `json:"release_date,omitempty"` // Movie
 		Title            string   `json:"title,omitempty"`        // Movie
 		Video            bool     `json:"video,omitempty"`        // Movie
-		GenreIDs         []int64  `json:"genre_ids"`
+		GenreIDs         []int    `json:"genre_ids"`
 		OriginalLanguage string   `json:"original_language"`
 		BackdropPath     string   `json:"backdrop_path"`
 		Overview         string   `json:"overview"`
@@ -29,7 +25,7 @@ type CreditsDetails struct {
 		Character        string   `json:"character"`
 		Episodes         []struct {
 			AirDate       string `json:"air_date"`
-			EpisodeNumber int64  `json:"episode_number"`
+			EpisodeNumber int    `json:"episode_number"`
 			Name          string `json:"name"`
 			Overview      string `json:"overview"`
 			SeasonNumber  int    `json:"season_number"`
@@ -44,12 +40,12 @@ type CreditsDetails struct {
 		Adult    bool   `json:"adult"`
 		Gender   int    `json:"gender"`
 		Name     string `json:"name"`
-		ID       int64  `json:"id"`
+		ID       int    `json:"id"`
 		KnownFor []struct {
 			Adult        bool   `json:"adult,omitempty"`
 			BackdropPath string `json:"backdrop_path"`
-			// GenreIDs         []int64  `json:"genre_ids"` // FIXME: -> []float32
-			// ID               int64    `json:"id"` // FIXME: -> float32
+			// GenreIDs         []int  `json:"genre_ids"` // FIXME: -> []float32
+			// ID               int    `json:"id"` // FIXME: -> float32
 			OriginalLanguage string   `json:"original_language"`
 			OriginalTitle    string   `json:"original_title,omitempty"`
 			Overview         string   `json:"overview"`
@@ -74,18 +70,10 @@ type CreditsDetails struct {
 // GetCreditDetails get a movie or TV credit details by id.
 //
 // https://developers.themoviedb.org/3/credits/get-credit-details
-func (c *Client) GetCreditDetails(
-	id string,
-) (*CreditsDetails, error) {
-	tmdbURL := fmt.Sprintf(
-		"%s%s%s?api_key=%s",
-		baseURL,
-		creditURL,
-		id,
-		c.apiKey,
-	)
-	creditsDetails := CreditsDetails{}
-	if err := c.get(tmdbURL, &creditsDetails); err != nil {
+func (c *Client) GetCreditDetails(id string) (*CreditsDetails, error) {
+	url := c.baseURL.JoinPath(creditPath, id)
+	var creditsDetails CreditsDetails
+	if err := c.get(url, nil, &creditsDetails); err != nil {
 		return nil, err
 	}
 	return &creditsDetails, nil
