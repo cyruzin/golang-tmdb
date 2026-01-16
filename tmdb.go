@@ -242,17 +242,25 @@ func shouldRetry(status int) bool {
 	return status == http.StatusAccepted || status == http.StatusTooManyRequests
 }
 
+func applyQueryOpts(u *url.URL, opts map[string]string) {
+	if len(opts) > 0 {
+		q := u.Query()
+		for key, value := range opts {
+			q.Add(key, value)
+		}
+		u.RawQuery = q.Encode()
+	}
+}
+
+// TODO: Add context.Context as the first parameter to all public API methods,
+// then pass it through to get/request. This will allow callers to control
+// cancellation and timeouts per-request.
+
 func (c *Client) get(u *url.URL, opts map[string]string, dst any) error {
 	if u == nil {
 		return fmt.Errorf("url is nil")
 	}
-	if len(opts) > 0 {
-		q := u.Query()
-		for key, value := range opts {
-			q.Add(key, url.QueryEscape(value))
-		}
-		u.RawQuery = q.Encode()
-	}
+	applyQueryOpts(u, opts)
 	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, u.String(), nil)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %s", err)
@@ -278,23 +286,12 @@ func (c *Client) request(u *url.URL, method string, opts map[string]string, body
 	if u == nil {
 		return fmt.Errorf("url is nil")
 	}
-	if len(opts) > 0 {
-		q := u.Query()
-		for key, value := range opts {
-			q.Add(key, url.QueryEscape(value))
-		}
-		u.RawQuery = q.Encode()
-	}
+	applyQueryOpts(u, opts)
 	bodyBytes := new(bytes.Buffer)
 	if err := json.NewEncoder(bodyBytes).Encode(body); err != nil {
 		return fmt.Errorf("failed to encode request body to JSON: %w", err)
 	}
-	req, err := http.NewRequestWithContext(
-		context.Background(),
-		method,
-		u.String(),
-		bytes.NewBuffer(bodyBytes.Bytes()),
-	)
+	req, err := http.NewRequestWithContext(context.Background(), method, u.String(), bodyBytes)
 	if err != nil {
 		return fmt.Errorf("could not fetch the url: %w", err)
 	}
