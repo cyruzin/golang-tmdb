@@ -81,14 +81,32 @@ func (t *customTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 		base = http.DefaultTransport
 	}
 
+	// Buffer the request body for potential retries
+	var bodyBytes []byte
+	if req.Body != nil {
+		var err error
+		bodyBytes, err = io.ReadAll(req.Body)
+		if err != nil {
+			return nil, fmt.Errorf("failed to read request body: %w", err)
+		}
+		req.Body.Close()
+		req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+	}
+
+	var retries int
 	for {
 		resp, err := base.RoundTrip(req)
 		if err != nil {
 			return nil, err
 		}
-		if t.client.autoRetry && shouldRetry(resp.StatusCode) {
+		if t.client.autoRetry && shouldRetry(resp.StatusCode) && retries < t.client.maxRetries {
+			retries++
 			if err := resp.Body.Close(); err != nil {
 				return nil, err
+			}
+			// Reset request body for retry
+			if bodyBytes != nil {
+				req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
 			}
 			time.Sleep(retryDuration(resp))
 			continue
@@ -108,6 +126,8 @@ type Client struct {
 	// Auto retry flag to indicates if the client
 	// should retry the previous operation.
 	autoRetry bool
+	// Maximum number of retries for rate-limited requests.
+	maxRetries int
 	// http.Client for custom configuration.
 	http http.Client
 	// baseURL for API requests.
@@ -146,6 +166,18 @@ func WithHTTPClient(httpClient http.Client) ClientOption {
 func WithAutoRetry() ClientOption {
 	return func(c *Client) error {
 		c.autoRetry = true
+		return nil
+	}
+}
+
+// WithMaxRetries sets the maximum number of retries for rate-limited requests.
+// Only applies when WithAutoRetry is enabled. Default is 3.
+func WithMaxRetries(n int) ClientOption {
+	return func(c *Client) error {
+		if n < 0 {
+			return fmt.Errorf("max retries cannot be negative")
+		}
+		c.maxRetries = n
 		return nil
 	}
 }
@@ -204,7 +236,7 @@ func WithBearerToken(bearerToken string) ClientOption {
 // New creates a new Client with the given options.
 // At least one of WithAPIKey or WithBearerToken must be provided.
 func New(options ...ClientOption) (*Client, error) {
-	c := &Client{baseURL: defaultBaseURL}
+	c := &Client{baseURL: defaultBaseURL, maxRetries: 3}
 	for _, opt := range options {
 		if err := opt(c); err != nil {
 			return nil, err
@@ -342,9 +374,8 @@ func (c *Client) decodeError(r *http.Response) error {
 			http.StatusText(r.StatusCode),
 		)
 	}
-	buf := bytes.NewBuffer(resBody)
 	var clientError Error
-	if err := json.NewDecoder(buf).Decode(&clientError); err != nil {
+	if err := json.Unmarshal(resBody, &clientError); err != nil {
 		return fmt.Errorf(
 			"couldn't decode error: (%d) [%s]",
 			len(resBody),
